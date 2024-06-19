@@ -9,8 +9,30 @@ export default NextAuth({
       authorizationParams: {
         hd: "aeg.eus",
       },
+      authorization: {
+        params: {
+          scope: "openid profile email https://www.googleapis.com/auth/classroom.courses.readonly https://www.googleapis.com/auth/classroom.rosters.readonly",
+        }
+      }
     }),
   ],
+  callbacks: {
+    async redirect({ url, baseUrl }) {
+      return baseUrl + "/dashboard";
+    },
+    async jwt({ token, account, user }) {
+      if (account) {
+        token.accessToken = account.access_token;
+        token.idToken = account.id_token;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
   
   secret: process.env.NEXTAUTH_SECRET,
   redirectUri: process.env.NEXTAUTH_URL + "/api/auth/callback/google",
