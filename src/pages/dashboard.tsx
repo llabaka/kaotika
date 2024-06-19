@@ -56,7 +56,7 @@ export default function Dashboard() {
     try {
       const res = await fetch(`/api/students?courseId=${courseId}`, {
         headers: {
-          Authorization: `Bearer ${session.accessToken}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       });
 

@@ -10,7 +10,7 @@ const Home = () => {
         {session ? (
           <>
             <h1 className="text-4xl font-bold mb-8 text-white">
-              Welcome {session.user.email}
+              Welcome {session?.user?.email}
             </h1>
             <button
               onClick={() => signOut()}
