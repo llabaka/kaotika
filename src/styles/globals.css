@@ -16,14 +16,15 @@
   }
 }
 
+@font-face {
+  font-family: 'kaotika';
+  src: url('../fonts/kaotika.ttf') format('truetype');
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: 'kaotika', serif;
+  background-color: #1a202c;
+  color: #f9d564;
 }
 
 @layer utilities {

@@ -13,6 +13,18 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      fontFamily: {
+        'kaotika': ['kaotika', 'serif'],
+      },
+      colors: {
+        medieval: {
+          'dark': '#1a202c',
+          'gold': '#f9d564',
+          'green': '#4e6e45',
+          'red': '#7e2d2f',
+          'blue': '#2d6187',
+        },
+      },
     },
   },
   plugins: [],
