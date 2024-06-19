@@ -17,13 +17,10 @@ const config: Config = {
         'kaotika': ['kaotika', 'serif'],
       },
       colors: {
-        medieval: {
-          'dark': '#1a202c',
-          'gold': '#f9d564',
-          'green': '#4e6e45',
-          'red': '#7e2d2f',
-          'blue': '#2d6187',
-        },
+        medievalGold: '#DAA520',
+        medievalRed: '#8B0000',
+        medievalBlue: '#000080',
+        medievalGray: '#2F4F4F',
       },
     },
   },
