@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useState } from 'react';
 import CourseList from '../components/CourseList';
 import CourseTopics from '../components/CourseTopics';
@@ -9,36 +9,52 @@ export default function Dashboard() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
   const [assignments, setAssignments] = useState<any[]>([]);
+  const [topics, setTopics] = useState<any[]>([]);
 
   if (!session) {
     return <div>Loading...</div>;
   }
 
-  const handleCourseSelect = (courseId: string) => {
+  const handleCourseSelect = async (courseId: string) => {
     setSelectedCourse(courseId);
     setSelectedAssignment(null);
-    fetch(`/api/classroom/${courseId}/assignments`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAssignments(data)
-      });
-      
+    try {
+      const response = await fetch(`/api/classroom/${courseId}/topics`)
+      const topics = await response.json();
+      console.log(`Course ${courseId} topics: ${topics}`);
+      setTopics(topics)
+    } catch(err) {
+      console.error(`Course topics error: ${err}`);
+    }
+    finally {
+    // End Loading
+    }  
   };
 
   const handleAssignmentClick = (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
   };
 
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
+
   return (
     <div>
-      <h1 className="text-4xl font-bold mb-8 text-white">Welcome, {session.user?.name}</h1>
+      <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'column'}}>
+        <h1 className="text-center text-6xl mb-8 text-yellow-600">Welcome to Kaotika, {session.user?.name}</h1>
+        <button
+          onClick={handleSignOut}
+          className="text-4xl mb-8 px-6 py-6  bg-red-500 border-yellow-600 text-yellow-600 rounded-lg hover:bg-yellow-700"
+        ></button>
+      </div>
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1 }}>
           {!selectedCourse ? (
             <CourseList onSelectCourse={handleCourseSelect} />
           ) : (
-            <CourseTopics courseId={selectedCourse} onAssignmentClick={handleAssignmentClick} />
+            
+            <CourseTopics courseId={selectedCourse} topics={topics} onAssignmentClick={handleAssignmentClick} />
           )}
         </div>
         <div style={{ flex: 2 }}>

@@ -4,16 +4,20 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 const Home = () => {
   const { data: session } = useSession();
 
+  const handleSignOut = async () => {
+    await signOut({ callbackUrl: '/' });
+  };
+  
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="text-center">
         {session ? (
           <>
-            <h1 className="text-4xl font-bold mb-8 text-white">
+            <h1 className="text-center text-4xl mb-8 text-white">
               Welcome {session?.user?.email}
             </h1>
             <button
-              onClick={() => signOut()}
+              onClick={handleSignOut}
               className="text-4xl font-bold mb-8 px-6 py-3 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 focus:outline-none"
             >
               Sign Out

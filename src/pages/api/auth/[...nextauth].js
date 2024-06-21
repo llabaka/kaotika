@@ -18,7 +18,12 @@ export default NextAuth({
   ],
   callbacks: {
     async redirect({ url, baseUrl }) {
-      return baseUrl + "/dashboard";
+      // Redirect to dashboard after signin and home page after signout
+      // if (url === '/') {
+      //   return baseUrl + '/dashboard';
+      // }
+      // return baseUrl;
+      return baseUrl + '/dashboard';
     },
     async jwt({ token, account, user }) {
       if (account) {
@@ -33,7 +38,9 @@ export default NextAuth({
       return session;
     },
   },
-  
+  pages: {
+    signOut: '/',  
+  },
   secret: process.env.NEXTAUTH_SECRET,
   redirectUri: process.env.NEXTAUTH_URL + "/api/auth/callback/google",
   

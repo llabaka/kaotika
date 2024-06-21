@@ -20,11 +20,13 @@ export default function CourseList({ onSelectCourse }: CourseListProps) {
 
   return (
     <div>
-      <h2>Courses</h2>
-      <ul>
+      <h2 className="text-center text-4xl mb-8 text-white">Classroom Courses</h2>
+      <ul className="grid grid-cols-1 gap-4">
         {courses.map((course) => (
-          <li className="text-4xl font-bold mb-8 text-white" key={course.id} onClick={() => onSelectCourse(course.id)}>
-            {course.name}
+          <li key={course.id} className="border rounded-lg p-4" onClick={() => onSelectCourse(course.id)}>
+            <div className="flex justify-between items-center">
+              <span className="text-3xl mb-8 text-white">{course.name}</span> 
+            </div> 
           </li>
         ))}
       </ul>
