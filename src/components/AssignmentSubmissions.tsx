@@ -20,10 +20,10 @@ export default function AssignmentSubmissions({ courseId, assignments }: Assignm
 
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-8 text-yellow">Assignments</h2>
+      <h1 className="text-4xl mb-8 text-yellow-500">ASIGNACIONES</h1>
       <ul>
         {assignments.map((assignment) => (
-          <li className="text-4xl font-bold mb-8 text-yellow" key={assignment.id} onClick={() => handleAssignmentClick(assignment.id)}>
+          <li className="text-4xl  mb-8 text-yellow" key={assignment.id} onClick={() => handleAssignmentClick(assignment.id)}>
             {assignment.title}
           </li>
         ))}

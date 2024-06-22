@@ -3,10 +3,11 @@ import { useState } from 'react';
 import CourseList from '../components/CourseList';
 import CourseTopics from '../components/CourseTopics';
 import AssignmentSubmissions from '../components/AssignmentSubmissions';
+import AssignmentStudents from '@/components/AssignmentStudents';
 
 export default function Dashboard() {
   const { data: session } = useSession();
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<string>("");
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
   const [assignments, setAssignments] = useState<any[]>([]);
   const [topics, setTopics] = useState<any[]>([]);
@@ -16,13 +17,15 @@ export default function Dashboard() {
   }
 
   const handleCourseSelect = async (courseId: string) => {
-    setSelectedCourse(courseId);
-    setSelectedAssignment(null);
+    
     try {
       const response = await fetch(`/api/classroom/${courseId}/topics`)
       const topics = await response.json();
-      console.log(`Course ${courseId} topics: ${topics}`);
-      setTopics(topics)
+      console.log(`Course ${courseId} topics:`);
+      console.log(topics.topic);
+      setTopics(topics.topic)
+      setSelectedCourse(courseId);
+      setSelectedAssignment(null);
     } catch(err) {
       console.error(`Course topics error: ${err}`);
     }
@@ -32,6 +35,7 @@ export default function Dashboard() {
   };
 
   const handleAssignmentClick = (assignmentId: string) => {
+    console.log(assignmentId)
     setSelectedAssignment(assignmentId);
   };
 
@@ -59,7 +63,7 @@ export default function Dashboard() {
         </div>
         <div style={{ flex: 2 }}>
           {selectedAssignment && (
-            <AssignmentSubmissions courseId={selectedCourse as string} assignments={assignments} />
+            <AssignmentStudents courseId={selectedCourse} assignmentId={selectedAssignment} />
           )}
         </div>
       </div>
