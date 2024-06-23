@@ -17,14 +17,7 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      // Redirect to dashboard after signin and home page after signout
-      // if (url === '/') {
-      //   return baseUrl + '/dashboard';
-      // }
-      // return baseUrl;
-      return baseUrl + '/dashboard';
-    },
+    
     async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
@@ -39,6 +32,7 @@ export default NextAuth({
     },
   },
   pages: {
+    signIn: '/dashboard',
     signOut: '/',  
   },
   secret: process.env.NEXTAUTH_SECRET,

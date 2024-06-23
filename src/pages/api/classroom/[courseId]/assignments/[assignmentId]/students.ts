@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       courseWorkId: assignmentId as string,
     });
 
-    const students = data.studentSubmissions.map((submission) => ({
+    const students = data.studentSubmissions?.map((submission) => ({
       id: submission.id,
       userId: submission.userId,
       grade: submission.assignedGrade,

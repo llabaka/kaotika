@@ -1,22 +1,35 @@
 import { useEffect, useState } from 'react';
-
+import Loading from '../components/Loading';
 interface Course {
   id: string;
   name: string;
 }
-
 interface CourseListProps {
   onSelectCourse: (courseId: string) => void;
 }
 
 export default function CourseList({ onSelectCourse }: CourseListProps) {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch('/api/classroom/courses')
-      .then((res) => res.json())
-      .then((data) => setCourses(data.courses));
+    (async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('/api/classroom/courses')
+        const data = await response.json();
+        setCourses(data.courses);
+      } catch (err) {
+        console.error(`Course list error: ${err}`);
+      } finally {
+        setLoading(false);
+      }  
+    })();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div>
