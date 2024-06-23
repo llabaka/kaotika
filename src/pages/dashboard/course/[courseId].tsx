@@ -11,6 +11,7 @@ const CoursePage: React.FC = () => {
     const [course, setCourse] = useState<any>(null);
     const [topics, setTopics] = useState<any[]>([]);
     const [assignments, setAssignments] = useState<any[]>([]);
+    const [studentsGrades, setStudentsGrades] = useState<any[]>([]);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -53,6 +54,8 @@ const CoursePage: React.FC = () => {
       const assignments = await res.json();
       console.log('Assignments:', assignments);
       setAssignments(assignments);
+      setSelectedAssignment(null);  // Clear selected assignment when topic changes
+      setStudentsGrades([]);
     } catch (error) {
       console.error('Failed to fetch assignments:', error);
     } finally {
@@ -62,6 +65,16 @@ const CoursePage: React.FC = () => {
 
   const handleAssignmentSelect = async (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
+    setLoading(true);
+    try {                       
+      const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
+      const data = await res.json();
+      setStudentsGrades(data);
+    } catch (error) {
+      console.error('Failed to fetch student grades:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (status === 'loading' || loading) {
@@ -75,7 +88,7 @@ const CoursePage: React.FC = () => {
       <div className="mt-8 text-center">
         <h1 className="text-4xl mb-4">{course.name}</h1>
         <div className="flex">
-          <div className="w-1/2 p-4">
+          <div className="w-1/3 p-4">
             <h2 className="text-4xl mb-4">Topics</h2>
             <div className="relative inline-block">
                 <select
@@ -94,7 +107,7 @@ const CoursePage: React.FC = () => {
                 </select>
             </div>
           </div>
-          <div className="w-1/2 p-4">
+          <div className="w-1/3 p-4">
           {selectedTopic && (
               <>
                 <h2 className="text-4xl mb-4">Assignments</h2>
@@ -110,7 +123,7 @@ const CoursePage: React.FC = () => {
                 {assignments
                   .filter((assignment) => assignment.maxPoints) 
                   .map((assignment) => (
-                    <option key={assignment.id} value={assignment.topicId}>
+                    <option key={assignment.id} value={assignment.id}>
                       {assignment.title} - Max Points: {assignment.maxPoints}
                     </option>
                        
@@ -120,6 +133,24 @@ const CoursePage: React.FC = () => {
               </>
             )}
           </div>
+          <div className="w-1/3 p-4">
+          {selectedAssignment && (
+              <>
+                <h2 className="text-4xl mb-4">Student Grades</h2>
+                <ul>
+                  {studentsGrades.length > 0 ? (
+                    studentsGrades.map((grade) => (
+                      <li key={grade.id} className="mb-2 text-lg text-white">
+                        {grade.studentName} - Grade: {grade.grade}
+                      </li>
+                    ))
+                  ) : (
+                    <li className="text-lg text-white">No grades found</li>
+                  )}
+                </ul>
+              </>
+            )}
+            </div>
         </div>
       </div>
     </Layout>

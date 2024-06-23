@@ -16,7 +16,9 @@ const CourseDropdown: React.FC = () => {
 
   useEffect(() => {
     if (!session) return;
-    
+    const accessToken = session.accessToken;
+
+    console.log('Access Token:', accessToken);
     const fetchCourses = async () => {
       try {
         const res = await fetch('/api/classroom/courses/');
