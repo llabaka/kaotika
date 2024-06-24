@@ -9,6 +9,20 @@ interface Player {
     class: string;
 }
 
+interface Attribute {
+  con: number;
+  dex: number;
+  int: number;
+  str: number;
+}
+
+interface Class {
+  attributes: Attribute;
+  description: string;
+  name: string;
+  _id: string;
+}
+
 const PlayerPage = () => {
   const { data: session } = useSession();
   const [playerData, setPlayerData] = useState<Player | null>(null);
@@ -16,6 +30,8 @@ const PlayerPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState('');
+  const [classes, setClasses] = useState<Class[]>([]);
+  const [currentClass, setCurrentClass] = useState<Class | null>(null);
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -23,14 +39,15 @@ const PlayerPage = () => {
         try {
           setLoading(true);
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
-          console.log(res)
-          if (res.status === 404) {
-            //const data = await res.json();
-            //setIsRegistered(true);
-          //} else if (res.status === 404) {
+          if (res.status === 200) {
+            const data = await res.json();
+            setIsRegistered(true);
+          } else if (res.status === 404) {
+            const response = await res.json();
             setIsRegistered(false);
-          //} else {
-            //setError('An error occurred while checking registration');
+            setClasses(response.data.classes);
+          } else {
+            setError('An error occurred while checking registration');
           }
         } catch (error) {
           setError('An error occurred while checking registration');
@@ -62,6 +79,11 @@ const PlayerPage = () => {
     }
   };
 
+  const handleSelectedOption = (selectedOption: string) => {
+    const currentClass = classes.find((obj) => obj._id === selectedOption);
+    setCurrentClass(currentClass as Class);
+  }
+
   if (loading) {
     return <Loading />;
   }
@@ -78,23 +100,30 @@ const PlayerPage = () => {
         </div>
       ) : (
         <div className="w-full p-4">
-            <h2 className="text-4xl mb-4">Register</h2>        
+            <h2 className="text-4xl mb-4">Select your Hero Class and Attributes</h2>        
             <select
                 className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
-                onChange={(e) => setSelectedOption(e.target.value)}
+                onChange={(e) => handleSelectedOption(e.target.value)}
                 value={selectedOption}
             >
-                <option value="" disabled>Select an option</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                <option value="" disabled>Select an Class</option>
+                {classes.map((item) => (
+                    <option key={item._id} value={item._id}>
+                    {item.name}
+                    </option>
+                ))}
             </select>
         
             <div className="text-center">
                 <div className="mb-5">
-                    {selectedOption === 'option1' && <p className="text-4xl mb-4">Description for option 1</p>}
-                    {selectedOption === 'option2' && <p className="text-4xl mb-4">Description for option 2</p>}
-                    {selectedOption === 'option3' && <p className="text-4xl mb-4">Description for option 3</p>}
+                  <p className="text-4xl mb-4">{currentClass?.name}</p>
+                  <p className="text-4xl mb-4">{currentClass?.description}</p>
+                  
+                    <p className="text-4xl mb-4">Constitution: {currentClass?.attributes.con}</p>
+                    <p className="text-4xl mb-4">Skill: {currentClass?.attributes.dex}</p>
+                    <p className="text-4xl mb-4">Strength: {currentClass?.attributes.str}</p>
+                    <p className="text-4xl mb-4">Intelligence: {currentClass?.attributes.int}</p>
+                 
                 </div>
                 <button
                     onClick={handleRegister}

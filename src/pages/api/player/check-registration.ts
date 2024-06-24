@@ -8,14 +8,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    //const response = await fetch(`https://api.external-service.com/check-registration?email=${email}`);
-    //const data = await response.json();
+    const response = await fetch(`https://kaotika-server.fly.dev/players/email/${email}`);
+    const data = await response.json();
 
-    // if (response.status === 200) {
-    //   return res.status(200).json(data);
-    // } else {
-      return res.status(404).json("data");
-    //}
+    if (response.status === 200) {
+      return res.status(200).json(data);
+    } else {
+      return res.status(404).json(data);
+    }
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
   }
