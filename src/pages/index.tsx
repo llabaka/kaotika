@@ -9,9 +9,15 @@ const Home = () => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      router.push('/dashboard');
+      console.log('User is authenticated on HomePage:', session);
+      const email = session?.user?.email || '';
+      if (email.endsWith('@gmail.com')) {
+        router.push('/player');
+      } else {
+        router.push('/dashboard');
+      }
     }
-  }, [status, router]);
+  }, [status]);
   
   return (
     <div className="flex items-center justify-center h-screen">

@@ -6,9 +6,9 @@ import {NextUIProvider} from "@nextui-org/react";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-      
+      <NextUIProvider>
         <Component {...pageProps} />
-      
+      </NextUIProvider>
     </SessionProvider>
   );
 }

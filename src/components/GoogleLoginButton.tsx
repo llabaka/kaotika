@@ -1,8 +1,26 @@
 import { signIn, useSession } from "next-auth/react";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import MedievalButton from "./MedievalButton";
 
 export default function GoogleLoginButton() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log('useEffect triggered with status:', status);
+    if (status === 'authenticated') {
+      console.log('User is authenticated:', session);
+      const email = session?.email || '';
+      console.log(email.endsWith('@gmail.com'));
+      if (email.endsWith('@gmail.com')) {
+        router.push('/player');
+      } else {
+        console.log("Entra dashboard ruta")
+        router.push('/dashboard');
+      }
+    }
+  }, [status]);
 
   if (!session) {
     return (

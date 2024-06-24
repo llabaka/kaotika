@@ -6,13 +6,12 @@ export default NextAuth({
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      authorizationParams: {
-        hd: "aeg.eus",
-      },
       authorization: {
         params: {
           scope: 'openid email profile https://www.googleapis.com/auth/classroom.courses.readonly https://www.googleapis.com/auth/classroom.rosters.readonly https://www.googleapis.com/auth/classroom.topics.readonly https://www.googleapis.com/auth/classroom.student-submissions.students.readonly https://www.googleapis.com/auth/classroom.topics https://www.googleapis.com/auth/classroom.coursework.students',
         },
+        prompt: 'consent',
+        access_type: 'offline',
       }
     }),
   ],
@@ -28,12 +27,9 @@ export default NextAuth({
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      session.email = token.email;
       return session;
     },
-  },
-  pages: {
-    signIn: '/dashboard',
-    signOut: '/',  
   },
   secret: process.env.NEXTAUTH_SECRET,
   redirectUri: process.env.NEXTAUTH_URL + "/api/auth/callback/google",
