@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Loading from './Loading';
 
 interface Course {
   id: string;
@@ -11,7 +12,7 @@ const CourseDropdown: React.FC = () => {
   const { data: session } = useSession();
   const [courses, setCourses] = useState<Course[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const CourseDropdown: React.FC = () => {
     console.log('Access Token:', accessToken);
     const fetchCourses = async () => {
       try {
+        setLoading(true);
         const res = await fetch('/api/classroom/courses/');
         const data = await res.json();
         setCourses(data.courses);
@@ -40,7 +42,9 @@ const CourseDropdown: React.FC = () => {
   };
 
   return (
+    
     <div className="flex justify-center mt-8">
+      {(loading) ? <Loading /> : null}
       <div className="relative inline-block w-1/2">
         <select
           className="block w-full bg-gray-800 text-white border border-gray-800 rounded-md py-4 pl-6 pr-10 text-4xl"

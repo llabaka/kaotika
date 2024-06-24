@@ -3,6 +3,19 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import Layout from '../../../components/Layout';
 import Loading from '../../../components/Loading';
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableColumn,
+  TableRow,
+  TableCell
+} from "@nextui-org/table";
+
+interface Assignment {
+  title: string;
+  maxPoints: number;
+}
 
 const CoursePage: React.FC = () => {
     const { data: session, status } = useSession();
@@ -11,6 +24,7 @@ const CoursePage: React.FC = () => {
     const [course, setCourse] = useState<any>(null);
     const [topics, setTopics] = useState<any[]>([]);
     const [assignments, setAssignments] = useState<any[]>([]);
+    const [currentAssignment, setCurrentAssignment] = useState<Assignment>();
     const [studentsGrades, setStudentsGrades] = useState<any[]>([]);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
@@ -65,6 +79,8 @@ const CoursePage: React.FC = () => {
 
   const handleAssignmentSelect = async (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
+    const currentAssignment = await assignments.filter(assignement => assignement.id === assignmentId)[0];
+    setCurrentAssignment(currentAssignment);
     setLoading(true);
     try {                       
       const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
@@ -77,20 +93,16 @@ const CoursePage: React.FC = () => {
     }
   };
 
-  if (status === 'loading' || loading) {
-    return <Loading />;
-  }
-
   if (!session || !course) return null;
 
   return (
     <Layout>
+      {(loading) ? <Loading /> : null}
       <div className="mt-8 text-center">
         <h1 className="text-4xl mb-4">{course.name}</h1>
         <div className="flex">
-          <div className="w-1/3 p-4">
-            <h2 className="text-4xl mb-4">Topics</h2>
-            <div className="relative inline-block">
+          <div className="w-1/2 p-4">
+            <h2 className="text-4xl mb-4">Topics</h2>        
                 <select
                     className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
                     onChange={(e) => handleTopicSelect(e.target.value)}
@@ -105,13 +117,11 @@ const CoursePage: React.FC = () => {
                     </option>
                 ))}
                 </select>
-            </div>
           </div>
-          <div className="w-1/3 p-4">
+          <div className="w-1/2 p-4">
           {selectedTopic && (
               <>
                 <h2 className="text-4xl mb-4">Assignments</h2>
-                <div className="relative inline-block">
                 <select
                     className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
                     onChange={(e) => handleAssignmentSelect(e.target.value)}
@@ -129,25 +139,38 @@ const CoursePage: React.FC = () => {
                        
                   ))}
                 </select> 
-                </div>
               </>
             )}
           </div>
-          <div className="w-1/3 p-4">
+        </div>
+        <div className="flex">
+          <div className="w-full p-4">
           {selectedAssignment && (
               <>
                 <h2 className="text-4xl mb-4">Student Grades</h2>
-                <ul>
-                  {studentsGrades.length > 0 ? (
-                    studentsGrades.map((grade) => (
-                      <li key={grade.id} className="mb-2 text-lg text-white">
-                        {grade.studentName} - Grade: {grade.grade}
-                      </li>
-                    ))
-                  ) : (
-                    <li className="text-lg text-white">No grades found</li>
-                  )}
-                </ul>
+                <Table 
+                  color="warning"
+                  selectionMode="single"  
+                  aria-label="Kaotika Students">
+                  <TableHeader>
+                    <TableColumn className="text-3xl mb-4 text-center">NAME</TableColumn>
+                    <TableColumn className="text-3xl mb-4 text-center">TASK</TableColumn>
+                    <TableColumn className="text-3xl mb-4 text-center">MAX POINTS</TableColumn>
+                    <TableColumn className="text-3xl mb-4 text-center">POINTS</TableColumn>
+                    <TableColumn className="text-3xl mb-4 text-center">PENDING</TableColumn>
+                  </TableHeader>
+                  <TableBody>
+                    {studentsGrades.map((grade,index) => (
+                      <TableRow key={index}>
+                      <TableCell>{grade.studentName}</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.title}</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.maxPoints}</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center">{grade.grade}</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center">TRUE</TableCell>
+                    </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </>
             )}
             </div>

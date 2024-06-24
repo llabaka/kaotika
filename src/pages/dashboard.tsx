@@ -15,14 +15,11 @@ const Dashboard: React.FC = () => {
     if (!session) router.push('/'); // Redirect to home if not authenticated
   }, [session, status, router]);
 
-  if (status === 'loading' || loading) {
-    return <Loading />;
-  }
-
   if (!session) return null; // Render nothing if no session (to prevent flicker)
 
   return (
     <Layout>
+      {(loading) ? <Loading /> : null}
       <div className="mt-8 text-center">
         <CoursesDropdown />
       </div>

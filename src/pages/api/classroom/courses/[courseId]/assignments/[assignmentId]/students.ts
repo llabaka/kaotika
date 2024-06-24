@@ -39,7 +39,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           userId: submission.userId as string
         });
         const student = studentRes.data;
-
+        console.log('Student data', student);
         return {
           id: submission.id,
           studentName: `${student.name?.fullName}`,
