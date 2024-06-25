@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
+import { Progress } from "@nextui-org/react";
+import Image from 'next/image'
 import Loading from '@/components/Loading';
 
 interface Player {
@@ -20,6 +22,7 @@ interface Class {
   attributes: Attribute;
   description: string;
   name: string;
+  img: string;
   _id: string;
 }
 
@@ -80,6 +83,7 @@ const PlayerPage = () => {
   };
 
   const handleSelectedOption = (selectedOption: string) => {
+    setSelectedOption(selectedOption);
     const currentClass = classes.find((obj) => obj._id === selectedOption);
     setCurrentClass(currentClass as Class);
   }
@@ -90,19 +94,20 @@ const PlayerPage = () => {
   if (error) return <div className="text-4xl text-center">{error}</div>;
 
   return (
-    <div className="container mx-auto mt-10">
+    <div className="mx-auto mt-10 flex-col">
       {isRegistered ? (
-        <div>
+        <div className="w-full p-4">
           <h1 className="text-3xl font-bold">Welcome, {playerData?.name}</h1>
           <p>Email: {playerData?.email}</p>
           <p>Other data: {playerData?.image}</p>
           <p>Other data: {playerData?.class}</p>
         </div>
       ) : (
-        <div className="w-full p-4">
-            <h2 className="text-4xl mb-4">Select your Hero Class and Attributes</h2>        
+        <div className="w-full flex p-4">
+          <div className="w-1/3 p-4">
+          <h1 className="text-6xl mb-4">Select your Hero Class </h1>        
             <select
-                className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
+                className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-4xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
                 value={selectedOption}
             >
@@ -113,25 +118,95 @@ const PlayerPage = () => {
                     </option>
                 ))}
             </select>
-        
-            <div className="text-center">
-                <div className="mb-5">
-                  <p className="text-4xl mb-4">{currentClass?.name}</p>
-                  <p className="text-4xl mb-4">{currentClass?.description}</p>
-                  
-                    <p className="text-4xl mb-4">Constitution: {currentClass?.attributes.con}</p>
-                    <p className="text-4xl mb-4">Skill: {currentClass?.attributes.dex}</p>
-                    <p className="text-4xl mb-4">Strength: {currentClass?.attributes.str}</p>
-                    <p className="text-4xl mb-4">Intelligence: {currentClass?.attributes.int}</p>
-                 
-                </div>
-                <button
-                    onClick={handleRegister}
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
-                >
-                REGISTER
-                </button>
+            {selectedOption ? (
+              <div className="mb-5 mt-10">
+                <h1 className="text-6xl mb-4">{currentClass?.name}</h1>
+                <p className="text-4xl text-white mb-4">{currentClass?.description}</p>
+              </div>
+            ): null}
+          </div>
+          {selectedOption ? (
+            <>
+          <div className="w-1/3 p-4 text-center">
+            <img
+              className="mx-auto mb-8"
+              src={currentClass?.img} 
+              alt={currentClass?.name}
+            />
+          </div>
+          <div className="w-1/3 p-4">
+            <div className="mb-5">
+              <h1 className="text-6xl mb-4">Initial attribute points</h1>
+              <Progress
+                size="lg"
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-default",
+                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+                  label: "tracking-wider text-4xl text-default-300 mt-10",
+                  value: "text-foreground/90",
+                }}
+                label="Constitution"
+                value={currentClass?.attributes.con}
+                showValueLabel={true}
+              />
+              <Progress
+                size="lg"
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-default",
+                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+                  label: "tracking-wider text-4xl text-default-300 mt-10",
+                  value: "text-foreground/60",
+                }}
+                label="Dexterity"
+                value={currentClass?.attributes.dex}
+                showValueLabel={true}
+              />
+              <Progress
+                size="lg"
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-default",
+                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+                  label: "tracking-wider text-4xl text-default-300 mt-10",
+                  value: "text-foreground/60",
+                }}
+                label="Strength"
+                value={currentClass?.attributes.str}
+                showValueLabel={true}
+              />
+              <Progress
+                size="lg"
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-default",
+                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500 mb-10",
+                  label: "tracking-wider text-4xl text-default-300 mt-10",
+                  value: "text-4xl text-default-300 mt-10",
+                }}
+                label="Intelligence"
+                value={currentClass?.attributes.int}
+                showValueLabel={false}
+              />              
             </div>
+            <button
+                onClick={handleRegister}
+                className="bg-blue-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
+            >
+            REGISTER
+            </button>
+          </div>
+          </>
+          ) : null}
         </div>
         ) }
     </div>
