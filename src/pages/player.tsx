@@ -1,8 +1,8 @@
 import { useSession } from 'next-auth/react';
 import { useState, useEffect } from 'react';
 import { Progress } from "@nextui-org/react";
-import Image from 'next/image'
 import Loading from '@/components/Loading';
+import Layout from '@/components/Layout';
 
 interface Player {
     name: string;
@@ -94,6 +94,7 @@ const PlayerPage = () => {
   if (error) return <div className="text-4xl text-center">{error}</div>;
 
   return (
+    <Layout>
     <div className="mx-auto mt-10 flex-col">
       {isRegistered ? (
         <div className="w-full p-4">
@@ -210,7 +211,7 @@ const PlayerPage = () => {
         </div>
         ) }
     </div>
-    
+    </Layout>
     );
 }
 export default PlayerPage;
