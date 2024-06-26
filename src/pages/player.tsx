@@ -12,14 +12,12 @@ interface Player {
 }
 
 interface Attribute {
-  con: number;
-  dex: number;
-  int: number;
-  str: number;
+  name: string;
+  value: number;
 }
 
 interface Class {
-  attributes: Attribute;
+  attributes: Attribute[];
   description: string;
   name: string;
   img: string;
@@ -106,7 +104,7 @@ const PlayerPage = () => {
       ) : (
         <div className="w-full flex p-4">
           <div className="w-1/3 p-4">
-          <h1 className="text-6xl mb-4">Select your Hero Class </h1>        
+          <h1 className="text-6xl mb-4">Select your Hero Profile </h1>        
             <select
                 className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-4xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
@@ -138,66 +136,23 @@ const PlayerPage = () => {
           <div className="w-1/3 p-4">
             <div className="mb-5">
               <h1 className="text-6xl mb-4">Initial attribute points</h1>
-              <Progress
-                size="lg"
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-default",
-                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-                  label: "tracking-wider text-4xl text-default-300 mt-10",
-                  value: "text-foreground/90",
-                }}
-                label="Constitution"
-                value={currentClass?.attributes.con}
-                showValueLabel={true}
-              />
-              <Progress
-                size="lg"
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-default",
-                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-                  label: "tracking-wider text-4xl text-default-300 mt-10",
-                  value: "text-foreground/60",
-                }}
-                label="Dexterity"
-                value={currentClass?.attributes.dex}
-                showValueLabel={true}
-              />
-              <Progress
-                size="lg"
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-default",
-                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-                  label: "tracking-wider text-4xl text-default-300 mt-10",
-                  value: "text-foreground/60",
-                }}
-                label="Strength"
-                value={currentClass?.attributes.str}
-                showValueLabel={true}
-              />
-              <Progress
-                size="lg"
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-default",
-                  indicator: "bg-gradient-to-r from-pink-500 to-yellow-500 mb-10",
-                  label: "tracking-wider text-4xl text-default-300 mt-10",
-                  value: "text-4xl text-default-300 mt-10",
-                }}
-                label="Intelligence"
-                value={currentClass?.attributes.int}
-                showValueLabel={false}
-              />              
+              {currentClass?.attributes.map((attribute) => (
+                  <Progress
+                  size="lg"
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-default",
+                    indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
+                    label: "tracking-wider text-4xl text-default-300 mt-10",
+                    value: "text-foreground/90",
+                  }}
+                  label={attribute.name}
+                  value={attribute.value}
+                  showValueLabel={true}
+                />  
+              ))}                   
             </div>
             <button
                 onClick={handleRegister}

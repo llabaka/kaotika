@@ -155,7 +155,6 @@ const CoursePage: React.FC = () => {
                   <TableHeader>
                     <TableColumn className="text-3xl mb-4 text-center">NAME</TableColumn>
                     <TableColumn className="text-3xl mb-4 text-center">TASK</TableColumn>
-                    <TableColumn className="text-3xl mb-4 text-center">MAX POINTS</TableColumn>
                     <TableColumn className="text-3xl mb-4 text-center">POINTS</TableColumn>
                     <TableColumn className="text-3xl mb-4 text-center">PENDING</TableColumn>
                   </TableHeader>
@@ -164,8 +163,7 @@ const CoursePage: React.FC = () => {
                       <TableRow key={index}>
                       <TableCell>{grade.studentName}</TableCell>
                       <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.title}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.maxPoints}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center">{grade.grade}</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center">{grade.grade} / {currentAssignment?.maxPoints}</TableCell>
                       <TableCell className="text-3xl mb-4 text-center">TRUE</TableCell>
                     </TableRow>
                     ))}
