@@ -1,4 +1,5 @@
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Progress } from "@nextui-org/react";
 import Loading from '@/components/Loading';
@@ -16,7 +17,7 @@ interface Attribute {
   value: number;
 }
 
-interface Class {
+interface Profile {
   attributes: Attribute[];
   description: string;
   name: string;
@@ -25,14 +26,15 @@ interface Class {
 }
 
 const PlayerPage = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [playerData, setPlayerData] = useState<Player | null>(null);
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedOption, setSelectedOption] = useState('');
-  const [classes, setClasses] = useState<Class[]>([]);
-  const [currentClass, setCurrentClass] = useState<Class | null>(null);
+  const [profiles, setProfiles] = useState<Profile[]>([]);
+  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -46,7 +48,7 @@ const PlayerPage = () => {
           } else if (res.status === 404) {
             const response = await res.json();
             setIsRegistered(false);
-            setClasses(response.data.classes);
+            setProfiles(response.data.profiles);
           } else {
             setError('An error occurred while checking registration');
           }
@@ -82,9 +84,18 @@ const PlayerPage = () => {
 
   const handleSelectedOption = (selectedOption: string) => {
     setSelectedOption(selectedOption);
-    const currentClass = classes.find((obj) => obj._id === selectedOption);
-    setCurrentClass(currentClass as Class);
+    const profile = profiles.find((obj) => obj._id === selectedOption);
+    setCurrentProfile(profile as Profile);
   }
+
+  const handleNext = () => {
+    router.push('/equipment');
+  };
+
+  const handleBack = () => {
+    router.push('/welcome');
+  };
+
 
   if (loading) {
     return <Loading />;
@@ -111,7 +122,7 @@ const PlayerPage = () => {
                 value={selectedOption}
             >
                 <option value="" disabled>Select an Class</option>
-                {classes.map((item) => (
+                {profiles.map((item) => (
                     <option key={item._id} value={item._id}>
                     {item.name}
                     </option>
@@ -119,8 +130,8 @@ const PlayerPage = () => {
             </select>
             {selectedOption ? (
               <div className="mb-5 mt-10">
-                <h1 className="text-6xl mb-4">{currentClass?.name}</h1>
-                <p className="text-4xl text-white mb-4">{currentClass?.description}</p>
+                <h1 className="text-6xl mb-4">{currentProfile?.name}</h1>
+                <p className="text-4xl text-white mb-4">{currentProfile?.description}</p>
               </div>
             ): null}
           </div>
@@ -129,14 +140,14 @@ const PlayerPage = () => {
           <div className="w-1/3 p-4 text-center">
             <img
               className="mx-auto mb-8"
-              src={currentClass?.img} 
-              alt={currentClass?.name}
+              src={currentProfile?.img} 
+              alt={currentProfile?.name}
             />
           </div>
           <div className="w-1/3 p-4">
             <div className="mb-5">
               <h1 className="text-6xl mb-4">Initial attribute points</h1>
-              {currentClass?.attributes.map((attribute) => (
+              {currentProfile?.attributes.map((attribute) => (
                   <Progress
                   size="lg"
                   radius="sm"
@@ -155,10 +166,16 @@ const PlayerPage = () => {
               ))}                   
             </div>
             <button
-                onClick={handleRegister}
+                onClick={handleNext}
                 className="bg-blue-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
             >
-            REGISTER
+            Next
+            </button>
+            <button
+                onClick={handleBack}
+                className="bg-red-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
+            >
+            Back
             </button>
           </div>
           </>
