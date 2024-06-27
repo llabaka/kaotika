@@ -104,7 +104,7 @@ const PlayerPage = () => {
 
   return (
     <Layout>
-    <div className="mx-auto mt-10 flex-col">
+    <div className="mx-auto flex-col">
       {isRegistered ? (
         <div className="w-full p-4">
           <h1 className="text-3xl font-bold">Welcome, {playerData?.name}</h1>
@@ -115,9 +115,9 @@ const PlayerPage = () => {
       ) : (
         <div className="w-full flex p-4">
           <div className="w-1/3 p-4">
-          <h1 className="text-6xl mb-4">Select your Hero Profile </h1>        
+          <h1 className="text-3xl mb-4">Select your Hero Profile </h1>        
             <select
-                className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-4xl"
+                className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
                 value={selectedOption}
             >
@@ -130,8 +130,8 @@ const PlayerPage = () => {
             </select>
             {selectedOption ? (
               <div className="mb-5 mt-10">
-                <h1 className="text-6xl mb-4">{currentProfile?.name}</h1>
-                <p className="text-4xl text-white mb-4">{currentProfile?.description}</p>
+                <h1 className="text-3xl mb-4">{currentProfile?.name}</h1>
+                <p className="text-3xl text-white mb-4">{currentProfile?.description}</p>
               </div>
             ): null}
           </div>
@@ -146,7 +146,7 @@ const PlayerPage = () => {
           </div>
           <div className="w-1/3 p-4">
             <div className="mb-5">
-              <h1 className="text-6xl mb-4">Initial attribute points</h1>
+              <h1 className="text-3xl mb-4">Initial attribute points</h1>
               {currentProfile?.attributes.map((attribute) => (
                   <Progress
                   size="lg"
@@ -156,7 +156,7 @@ const PlayerPage = () => {
                   classNames={{
                     track: "drop-shadow-md border border-default",
                     indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-                    label: "tracking-wider text-4xl text-default-300 mt-10",
+                    label: "tracking-wider text-3xl text-default-300 mt-3",
                     value: "text-foreground/90",
                   }}
                   label={attribute.name}
@@ -167,13 +167,13 @@ const PlayerPage = () => {
             </div>
             <button
                 onClick={handleNext}
-                className="bg-blue-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
+                className="bg-blue-500 w-full text-white text-3xl py-2 px-4 mt-5 rounded"
             >
             Next
             </button>
             <button
                 onClick={handleBack}
-                className="bg-red-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
+                className="bg-red-500 w-full text-white text-3xl py-2 px-4 mt-5 rounded"
             >
             Back
             </button>
