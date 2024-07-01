@@ -2,8 +2,11 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Progress } from "@nextui-org/react";
+import {Modal, ModalContent, ModalBody, useDisclosure} from "@nextui-org/react";
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
+import KaotikaNextButton from '@/components/KaotikaNextButton';
+import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 
 interface Player {
     name: string;
@@ -15,6 +18,7 @@ interface Player {
 interface Attribute {
   name: string;
   value: number;
+  description: string;
 }
 
 interface Profile {
@@ -26,6 +30,7 @@ interface Profile {
 }
 
 const PlayerPage = () => {
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const router = useRouter();
   const { data: session } = useSession();
   const [playerData, setPlayerData] = useState<Player | null>(null);
@@ -35,6 +40,7 @@ const PlayerPage = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const [currentAttribute, setCurrentAttribute] = useState<Attribute>();
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -96,6 +102,11 @@ const PlayerPage = () => {
     router.push('/welcome');
   };
 
+  const handleAttributeClick = (attribute: Attribute) => {
+    setCurrentAttribute(attribute);
+    onOpen();
+  }
+
 
   if (loading) {
     return <Loading />;
@@ -104,7 +115,7 @@ const PlayerPage = () => {
 
   return (
     <Layout>
-    <div className="mx-auto flex-col">
+    <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered ? (
         <div className="w-full p-4">
           <h1 className="text-3xl font-bold">Welcome, {playerData?.name}</h1>
@@ -117,11 +128,11 @@ const PlayerPage = () => {
           <div className="w-1/3 p-4">
           <h1 className="text-3xl mb-4">Select your Hero Profile </h1>        
             <select
-                className="block w-full bg-gray-800 text-white border py-4 pl-6 pr-10 text-3xl"
+                className="block w-full bg-gray-700 border-medievalSepia py-4 pl-6 pr-10 text-3xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
                 value={selectedOption}
             >
-                <option value="" disabled>Select an Class</option>
+                <option value="" disabled>Select a profile</option>
                 {profiles.map((item) => (
                     <option key={item._id} value={item._id}>
                     {item.name}
@@ -130,16 +141,16 @@ const PlayerPage = () => {
             </select>
             {selectedOption ? (
               <div className="mb-5 mt-10">
-                <h1 className="text-3xl mb-4">{currentProfile?.name}</h1>
-                <p className="text-3xl text-white mb-4">{currentProfile?.description}</p>
+                <p className="text-3xl text-medievalDarkSepia mb-4">{currentProfile?.description}</p>
               </div>
             ): null}
           </div>
           {selectedOption ? (
             <>
           <div className="w-1/3 p-4 text-center">
+            <h1 className="text-3xl mb-4">{currentProfile?.name}</h1>
             <img
-              className="mx-auto mb-8"
+              className="mx-auto mb-8 sepia hover:sepia-0 transition"
               src={currentProfile?.img} 
               alt={currentProfile?.name}
             />
@@ -148,35 +159,42 @@ const PlayerPage = () => {
             <div className="mb-5">
               <h1 className="text-3xl mb-4">Initial attribute points</h1>
               {currentProfile?.attributes.map((attribute) => (
+                <div onClick={() => handleAttributeClick(attribute)} className='p-2 cursor-pointer hover:bg-neutral-600 transition rounded-lg'>
                   <Progress
-                  size="lg"
-                  radius="sm"
-                  minValue={0}
-                  maxValue={100}
-                  classNames={{
-                    track: "drop-shadow-md border border-default",
-                    indicator: "bg-gradient-to-r from-pink-500 to-yellow-500",
-                    label: "tracking-wider text-3xl text-default-300 mt-3",
-                    value: "text-foreground/90",
-                  }}
-                  label={attribute.name}
-                  value={attribute.value}
-                  showValueLabel={true}
-                />  
+                    size="lg" 
+                    radius="sm"
+                    minValue={0}
+                    maxValue={100}
+                    classNames={{
+                      track: "drop-shadow-md border border-sepia",
+                      indicator: "bg-medievalSepia",
+                      label: "text-medievalSepia tracking-wider text-3xl",
+                      value: "text-3xl text-medievalSepia/100",
+                    }}
+                    formatOptions={{style: "decimal"}}
+                    label={attribute.name}
+                    value={attribute.value}
+                    showValueLabel={true}
+                  />  
+                </div>
               ))}                   
             </div>
-            <button
-                onClick={handleNext}
-                className="bg-blue-500 w-full text-white text-3xl py-2 px-4 mt-5 rounded"
-            >
-            Next
-            </button>
-            <button
-                onClick={handleBack}
-                className="bg-red-500 w-full text-white text-3xl py-2 px-4 mt-5 rounded"
-            >
-            Back
-            </button>
+              <KaotikaNextButton handleNext={handleNext} />
+              <KaotikaBackButton handleBack={handleBack} />
+              <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='lg' placement='top'>
+                <ModalContent>
+                  {(onClose) => (
+                    <>
+                      <ModalBody>
+                      <h1 className="text-4xl text-center text-medievalSepia">{currentAttribute?.name.toUpperCase()}</h1>
+                        <p className="text-3xl mb-4">
+                          {currentAttribute?.description}
+                        </p>
+                      </ModalBody>
+                    </>
+                  )}
+                </ModalContent>
+              </Modal>
           </div>
           </>
           ) : null}

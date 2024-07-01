@@ -9,7 +9,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div>
       <Header />
-      <main className="pt-40"> {/* Add padding to account for the fixed header */}
+      <main className="pt-32"> {/* Add padding to account for the fixed header */}
         {children}
       </main>
     </div>

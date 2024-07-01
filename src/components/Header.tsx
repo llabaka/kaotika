@@ -31,8 +31,8 @@ const Header: React.FC = () => {
           navigation
         }
         <div className="flex items-center">
-          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={100} height={100} className="rounded-full" />
-          <button onClick={handleSignOut} className="text-4xl px-3 py-6 ml-2 text-red-500 hover:text-red-700">
+          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={100} height={100} className="sepia rounded-full" />
+          <button onClick={handleSignOut} className="text-4xl px-3 py-6 ml-2 text-medievalSepia hover:text-darkSepia">
             Logout
           </button>
         </div>

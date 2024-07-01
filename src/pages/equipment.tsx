@@ -1,3 +1,4 @@
+import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -67,19 +68,20 @@ const Equipment = () => {
   ];
 
   return (
-    <div className="flex flex-col justify-center h-screen bg-gray-800 text-white">
+    <Layout>
+    <div className="flex flex-col h-screen bg-gray-800 text-medievalSepia">
       <div className="flex justify-center">
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Armor</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-gray-600">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
               {armorOptions.map((armor) => (
                 <img
                   key={armor.id}
                   src={armor.imgSrc}
                   alt={armor.description}
                   style={{'width': '200px'}}
-                  className={`cursor-pointer p-2 ${selectedArmor === armor.id ? 'border-4 border-yellow-500' : ''}`}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
                   onClick={() => setSelectedArmor(armor.id)}
                 />
               ))}
@@ -88,14 +90,14 @@ const Equipment = () => {
           </div>
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Weapons</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-gray-600">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
               {weaponOptions.map((weapon) => (
                 <img
                   key={weapon.id}
                   src={weapon.imgSrc}
                   alt={weapon.id}
                   style={{'width': '200px'}}
-                  className={`cursor-pointer p-2 ${selectedWeapon === weapon.id ? 'border-4 border-yellow-500' : ''}`}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedWeapon(weapon.id)}
                 />
               ))}
@@ -104,14 +106,14 @@ const Equipment = () => {
           </div>
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Artifacts</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-gray-600">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
               {artifactOptions.map((artifact) => (
                 <img
                   key={artifact.id}
                   src={artifact.imgSrc}
                   alt={artifact.id}
                   style={{'width': '200px'}}
-                  className={`cursor-pointer p-2 ${selectedArtifact === artifact.id ? 'border-4 border-yellow-500' : ''}`}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedArtifact(artifact.id)}
                 />
               ))}
@@ -122,15 +124,16 @@ const Equipment = () => {
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Potions</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-gray-600">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
               {potionOptions.map((potion) => (
                 <img
                   key={potion.id}
                   src={potion.imgSrc}
                   alt={potion.id}
                   style={{'width': '200px'}}
-                  className={`cursor-pointer p-2 ${selectedPotion === potion.id ? 'border-4 border-yellow-500' : ''}`}
-                  onClick={() => setSelectedPotion(potion.id)}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => {setSelectedPotion(potion.id)}}
+                  
                 />
               ))}
             </div>
@@ -139,20 +142,24 @@ const Equipment = () => {
         </div>
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
-            <h2 className="text-4xl mb-4">Potions</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-gray-600">
-              {potionOptions.map((potion) => (
-                <img
-                  key={potion.id}
-                  src={potion.imgSrc}
-                  alt={potion.id}
-                  style={{'width': '200px'}}
-                  className={`cursor-pointer p-2 ${selectedPotion === potion.id ? 'border-4 border-yellow-500' : ''}`}
-                  onClick={() => setSelectedPotion(potion.id)}
-                />
-              ))}
+            <h2 className="text-4xl mb-4">Inventory</h2>
+            <div className="flex m-4 relative bg-cover bg-center w-full" style={{ backgroundImage: 'url(/images/character-silhouette.png)' }}>
+              <div className="w-1/3 flex justify-center items-center">
+                <div className="w-12 h-32 bg-black m-2" style={{'border': '7px ridge #c28b56'}}>
+                  {selectedWeapon && <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} alt="Selected Weapon" className="w-full h-full object-contain" />}
+                </div>
+              </div>
+              <div className="w-1/3 flex justify-center items-center">
+                <div className="w-48 h-48 bg-black m-2" style={{'border': '7px ridge #c28b56'}}>
+                  {selectedArmor && <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} alt="Selected Armor" className="w-full h-full object-contain" />}
+                </div>
+              </div>
+              <div className="w-1/3 flex justify-center items-center">
+                <div className="w-24 h-24 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
+                  {selectedArtifact && <img src={artifactOptions.find(artifact => artifact.id === selectedArtifact)?.imgSrc} alt="Selected Artifact" className="object-contain rounded-full" />}
+                </div>
+              </div>
             </div>
-            {/* {selectedPotion && <p className="mt-4">{potionOptions.find(potion => potion.id === selectedPotion)?.description}</p>} */}
           </div>
         </div>
       </div>
@@ -174,6 +181,7 @@ const Equipment = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

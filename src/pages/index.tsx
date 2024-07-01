@@ -37,7 +37,7 @@ const Home = () => {
             <GoogleLoginButton />
           </div>
           <div>
-            <h1 className="text-3xl mb-4">Developed by Mortimer. Version: {publicRuntimeConfig?.version}</h1>
+            <h1 className="text-3xl mb-4 text-medievalSepia">Developed by Mortimer. Version: {publicRuntimeConfig?.version}</h1>
           </div>
         </>
         ) : (
