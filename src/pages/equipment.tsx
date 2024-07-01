@@ -44,9 +44,9 @@ const Equipment = () => {
   ];
 
   const artifactOptions = [
-    { id: 'artifact1', imgSrc: '/images/equipment/artifact_1.png', description: 'Description of artifact 1' },
-    { id: 'artifact2', imgSrc: '/images/equipment/artifact_2.png', description: 'Description of artifact 2' },
-    { id: 'artifact3', imgSrc: '/images/equipment/artifact_3.png', description: 'Description of artifact 3' },
+    { id: 'artifact1', imgSrc: '/images/equipment/artifacts/artifact_1.jpg', description: 'Description of artifact 1' },
+    { id: 'artifact2', imgSrc: '/images/equipment/artifacts/artifact_2.jpg', description: 'Description of artifact 2' },
+    { id: 'artifact3', imgSrc: '/images/equipment/artifacts/artifact_3.jpg', description: 'Description of artifact 3' },
     // { id: 'weapon4', imgSrc: '/images/equipment/maze_1.jpg', description: 'Description of Weapon 4' },
     // { id: 'weapon5', imgSrc: '/images/equipment/maze_2.jpg', description: 'Description of Weapon 5' },
     // { id: 'weapon6', imgSrc: '/images/equipment/maze_3.jpg', description: 'Description of Weapon 6' },

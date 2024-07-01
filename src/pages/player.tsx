@@ -25,7 +25,7 @@ interface Profile {
   attributes: Attribute[];
   description: string;
   name: string;
-  img: string;
+  image: string;
   _id: string;
 }
 
@@ -126,7 +126,7 @@ const PlayerPage = () => {
       ) : (
         <div className="w-full flex p-4">
           <div className="w-1/3 p-4">
-          <h1 className="text-3xl mb-4">Select your Hero Profile </h1>        
+          <h1 className="text-4xl mb-4">Select your Hero Profile </h1>        
             <select
                 className="block w-full bg-gray-700 border-medievalSepia py-4 pl-6 pr-10 text-3xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
@@ -148,19 +148,20 @@ const PlayerPage = () => {
           {selectedOption ? (
             <>
           <div className="w-1/3 p-4 text-center">
-            <h1 className="text-3xl mb-4">{currentProfile?.name}</h1>
+            <h1 className="text-4xl mb-4">{currentProfile?.name}</h1>
             <img
               className="mx-auto mb-8 sepia hover:sepia-0 transition"
-              src={currentProfile?.img} 
+              src={currentProfile?.image} 
               alt={currentProfile?.name}
             />
           </div>
           <div className="w-1/3 p-4">
             <div className="mb-5">
-              <h1 className="text-3xl mb-4">Initial attribute points</h1>
+              <h1 className="text-4xl mb-4">Initial attribute points</h1>
               {currentProfile?.attributes.map((attribute) => (
                 <div onClick={() => handleAttributeClick(attribute)} className='p-2 cursor-pointer hover:bg-neutral-600 transition rounded-lg'>
                   <Progress
+                    key={attribute.name}
                     size="lg" 
                     radius="sm"
                     minValue={0}
@@ -181,13 +182,13 @@ const PlayerPage = () => {
             </div>
               <KaotikaNextButton handleNext={handleNext} />
               <KaotikaBackButton handleBack={handleBack} />
-              <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='lg' placement='top'>
-                <ModalContent className='border-medievalSepia border-1 bg-black/10'>
+              <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl' placement='top'>
+                <ModalContent className='border-medievalSepia border-1 bg-black/80'>
                   {(onClose) => (
                     <>
                       <ModalBody>
-                      <h1 className="text-4xl text-center text-medievalSepia">{currentAttribute?.name.toUpperCase()}</h1>
-                        <p className="text-3xl mb-4">
+                      <h1 className="text-5xl text-center text-medievalSepia">{currentAttribute?.name}</h1>
+                        <p className="text-4xl text-medievalSepia">
                           {currentAttribute?.description}
                         </p>
                       </ModalBody>
