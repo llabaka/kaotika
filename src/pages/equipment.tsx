@@ -69,19 +69,19 @@ const Equipment = () => {
 
   return (
     <Layout>
-    <div className="flex flex-col h-screen bg-gray-800 text-medievalSepia">
+    <div className="flex flex-col h-screen bg-gray-800 text-medievalSepia bg-cover bg-center" style={{ backgroundImage: 'url(/images/background.jpg)'}}>
       <div className="flex justify-center">
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Armor</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {armorOptions.map((armor) => (
                 <img
                   key={armor.id}
                   src={armor.imgSrc}
                   alt={armor.description}
-                  style={{'width': '200px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
+                  style={{'width': '125px'}}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
                   onClick={() => setSelectedArmor(armor.id)}
                 />
               ))}
@@ -90,14 +90,14 @@ const Equipment = () => {
           </div>
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Weapons</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {weaponOptions.map((weapon) => (
                 <img
                   key={weapon.id}
                   src={weapon.imgSrc}
                   alt={weapon.id}
-                  style={{'width': '200px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'width': '125px'}}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedWeapon(weapon.id)}
                 />
               ))}
@@ -106,14 +106,14 @@ const Equipment = () => {
           </div>
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Artifacts</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {artifactOptions.map((artifact) => (
                 <img
                   key={artifact.id}
                   src={artifact.imgSrc}
                   alt={artifact.id}
-                  style={{'width': '200px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'width': '125px'}}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedArtifact(artifact.id)}
                 />
               ))}
@@ -124,14 +124,14 @@ const Equipment = () => {
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Potions</h2>
-            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia">
+            <div className="p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {potionOptions.map((potion) => (
                 <img
                   key={potion.id}
                   src={potion.imgSrc}
                   alt={potion.id}
-                  style={{'width': '200px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition ${selectedPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'width': '125px'}}
+                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setSelectedPotion(potion.id)}}
                   
                 />

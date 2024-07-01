@@ -182,7 +182,7 @@ const PlayerPage = () => {
               <KaotikaNextButton handleNext={handleNext} />
               <KaotikaBackButton handleBack={handleBack} />
               <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='lg' placement='top'>
-                <ModalContent>
+                <ModalContent className='border-medievalSepia border-1 bg-black/10'>
                   {(onClose) => (
                     <>
                       <ModalBody>
