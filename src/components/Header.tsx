@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className="fixed w-full bg-gray-900 text-white shadow-md py-4">
+    <header className="fixed w-full bg-black text-white shadow-md py-4">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/images/kaotika.png" alt="Logo" width={200} height={60} />
