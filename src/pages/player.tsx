@@ -166,7 +166,7 @@ const PlayerPage = () => {
             <div className="mb-5">
               <h1 className="text-4xl mb-4">Initial attribute points</h1>
               {currentProfile?.attributes.map((attribute) => (
-                <div onClick={() => handleAttributeClick(attribute)} className='p-2 cursor-pointer hover:bg-neutral-600 transition rounded-lg'>
+                <div key={attribute.name} onClick={() => handleAttributeClick(attribute)} className='p-2 cursor-pointer hover:bg-neutral-600 transition rounded-lg'>
                   <Progress
                     key={attribute.name}
                     size="lg" 

@@ -1,15 +1,21 @@
 import KaotikaNextButton from '@/components/KaotikaNextButton';
 import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import Layout from '@/components/Layout';
-import { Modal, ModalBody, ModalContent, useDisclosure, Tooltip } from '@nextui-org/react';
+import { Tooltip } from '@nextui-org/react';
+import { Progress } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+type Attribute = {
+  name: string;
+  description: string;
+  value: number;
+};
 
 const Equipment = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [selectedArmor, setSelectedArmor] = useState('');
   const [selectedWeapon, setSelectedWeapon] = useState('');
   const [selectedArtifact, setSelectedArtifact] = useState('');
@@ -34,6 +40,17 @@ const Equipment = () => {
   const handleBack = () => {
     router.push('/player');
   };
+
+  const sumAttributeValues = (currentAtrributes: Attribute[], toAdd: string[], toSubtract: string[] = [], modifier:number = 1): number => {
+    return currentAtrributes.reduce((sum: number, attr: Attribute) => {
+      if(toAdd.includes(attr.name)) {
+        return sum + attr.value;
+      } else if (toSubtract.includes(attr.name)) {
+        return sum - (attr.value / modifier)
+      }
+      return sum;
+    }, 0)
+  }
 
   const armorOptions = [
     { id: '1' , imgSrc: '/images/equipment/robe_1.jpg', description: 'Description of Armor 1' },
@@ -91,18 +108,17 @@ const Equipment = () => {
     <Layout>
     <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <div className="flex justify-center">
-        <div className="w-1/3 p-4">
+        <div className="w-1/4 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Armor</h2>
-            <div className="w-full p-5 justify-around grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
+            <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {armorOptions.map((armor) => (
                 <Tooltip className="text-4xl mb-4" showArrow={true} content={armor.description}>
                 <img
                   key={armor.id}
                   src={armor.imgSrc}
                   alt={armor.description}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
                   onClick={() => setSelectedArmor(armor.id)}
                 />
                 </Tooltip>
@@ -118,8 +134,7 @@ const Equipment = () => {
                   key={weapon.id}
                   src={weapon.imgSrc}
                   alt={weapon.id}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedWeapon(weapon.id)}
                 />
                 </Tooltip>
@@ -135,8 +150,7 @@ const Equipment = () => {
                   key={artifact.id}
                   src={artifact.imgSrc}
                   alt={artifact.id}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedArtifact(artifact.id)}
                 />
                 </Tooltip>
@@ -144,7 +158,7 @@ const Equipment = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 p-4">
+        <div className="w-1/4 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Healing Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
@@ -154,8 +168,7 @@ const Equipment = () => {
                   key={potion.id}
                   src={potion.imgSrc}
                   alt={potion.id}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setSelectedHealingPotion(potion.id)}}
                   
                 />
@@ -172,8 +185,7 @@ const Equipment = () => {
                   key={potion.id}
                   src={potion.imgSrc}
                   alt={potion.id}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setSelectedAntidotePotion(potion.id)}}
                 />
                 </Tooltip>
@@ -189,8 +201,7 @@ const Equipment = () => {
                   key={potion.id}
                   src={potion.imgSrc}
                   alt={potion.id}
-                  style={{'width': '150px'}}
-                  className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setselectedEnhancerPotion(potion.id)}}
                 />
                 </Tooltip>
@@ -198,83 +209,165 @@ const Equipment = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 p-4">
+        <div className="w-1/2 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Inventory</h2>
-            <div className="w-full p-5 grid grid-cols-3 gap-12 border-1 rounded-lg border-sepia bg-black/70">
+            <div className="w-full p-5 grid grid-cols-6 gap-12 border-1 rounded-lg border-sepia bg-black/70">
               {selectedWeapon ? <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} 
                 alt="Selected Weapon" 
                 className="w-full h-full object-contain rounded-full" 
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
               {selectedArmor ? <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} 
                 alt="Selected Armor" 
                 className="w-full h-full object-contain rounded-full" 
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
               {selectedArtifact ? <img src={artifactOptions.find(artifact => artifact.id === selectedArtifact)?.imgSrc} 
                 alt="Selected Artifact" 
                 className="w-full h-full object-contain rounded-full" 
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
               {selectedHealingPotion ? <img src={healingPotions.find(potion => potion.id === selectedHealingPotion)?.imgSrc} 
                 alt="Selected Healing Potion" 
                 className="w-full h-full object-contain rounded-full" 
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}
               />}
               {selectedAntidotePotion ? <img src={antidotePotions.find(potion => potion.id === selectedAntidotePotion)?.imgSrc} 
                 alt="Selected Antidote Potion" 
                 className="w-full h-full object-contain rounded-full"
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}  
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
               />}
               {selectedEnhancerPotion ? <img src={enhancerPotions.find(potion => potion.id === selectedEnhancerPotion)?.imgSrc} 
                 alt="Selected Enhanced Potion" 
                 className="w-full h-full object-contain rounded-full"
-                style={{'border': '7px ridge #c28b56'}} />
+                style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}  
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
               />}
-              <h1>Hit Points (CON + STR): </h1>
-              <h1>Defense (CON + DEX + INT/2):</h1>
-              <h1>Attack (STR + CON - INS):</h1>
-              <h1>Magic resistance (INT + CHA):</h1>
-              <h1>CFP (2 * INS -10):</h1>
-              <h1>BFA(attack + 2 * INS):</h1>      
             </div>  
+            <h2 className="text-4xl mb-4">Player attributes</h2>
+            <div className="w-full p-5 border-1 rounded-lg border-sepia bg-black/70">
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Hit Points (CON + STR)"
+                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Strength']): 0}
+                showValueLabel={true}
+              />
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Defense (CON + DEX + INT)"
+                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Dexterity', 'Intelligence']): 0}
+                showValueLabel={true}
+              />
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Attack (CON + STR - INS/2)"
+                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Strength'], ['Insanity'], 2): 0}
+                showValueLabel={true}
+              />    
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Magic resistance (INT + CHA)"
+                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Intelligence', 'Charisma']): 0}
+                showValueLabel={true}
+              />  
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="CFP (2 * INS -10)"
+                value={currentAtrributes ? 2 * sumAttributeValues(currentAtrributes, ['Insanity']) -10 : 0}
+                showValueLabel={true}
+              />  
+              <Progress
+                key={1}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={100}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-2xl",
+                  value: "text-2xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="BFA(STR + CON + INS)"
+                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Strength', 'Constitution', 'Insanity']): 0}
+                showValueLabel={true}
+              />  
+            </div> 
+            <KaotikaNextButton handleNext={handleNext} />
+            <KaotikaBackButton handleBack={handleBack} />                
           </div>
         </div>
       </div>
       <div className="flex justify-center">
         <div className="w-1/3 p-4 text-center">
-          <KaotikaNextButton handleNext={handleNext} />
-          <KaotikaBackButton handleBack={handleBack} />
-          <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl' placement='top'>
-                <ModalContent className='border-medievalSepia border-1 bg-black/80'>
-                  {(onClose) => (
-                    <>
-                      <ModalBody>
-                      <h1 className="text-5xl text-center text-medievalSepia">Nombre del elemento</h1>
-                        <p className="text-4xl text-medievalSepia">
-                          Descripción del elemento
-                        </p>
-                        <p className="text-4xl text-medievalSepia">
-                          Modificadores del elemento
-                        </p>
-                      </ModalBody>
-                    </>
-                  )}
-                </ModalContent>
-              </Modal>
         </div>
       </div>
     </div>
