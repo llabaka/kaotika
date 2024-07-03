@@ -95,7 +95,14 @@ const PlayerPage = () => {
   }
 
   const handleNext = () => {
-    router.push('/equipment');
+    const createQueryString = (name: string, value: Attribute[]) => {
+      const params = new URLSearchParams();
+      params.set(name, JSON.stringify(value));
+  
+      return params.toString();
+    };
+
+    router.push(`/equipment?${createQueryString("attributes", currentProfile?.attributes as Attribute[])}`);
   };
 
   const handleBack = () => {

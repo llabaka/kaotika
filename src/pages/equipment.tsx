@@ -1,12 +1,14 @@
 import KaotikaNextButton from '@/components/KaotikaNextButton';
 import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import Layout from '@/components/Layout';
-import { Modal, ModalBody, ModalContent, useDisclosure } from '@nextui-org/react';
+import { Modal, ModalBody, ModalContent, useDisclosure, Tooltip } from '@nextui-org/react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import {  useEffect, useState } from 'react';
 
 const Equipment = () => {
   const router = useRouter();
+  const { data: session } = useSession();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [selectedArmor, setSelectedArmor] = useState('');
   const [selectedWeapon, setSelectedWeapon] = useState('');
@@ -14,8 +16,15 @@ const Equipment = () => {
   const [selectedHealingPotion, setSelectedHealingPotion] = useState('');
   const [selectedAntidotePotion, setSelectedAntidotePotion] = useState('');
   const [selectedEnhancerPotion, setselectedEnhancerPotion] = useState('');
+  const [currentAtrributes, setCurrentAttributes] = useState()
+
+  useEffect(() => {
+    const attributes = router.query.attributes;
+    setCurrentAttributes(JSON.parse(attributes as string));
+  }, []);
 
   const handleNext = () => {
+    console.log(session)
     //TODO REGISTER
     // if (selectedArmor && selectedWeapon && selectedHealingPotion && selectedAntidotePotion && selectedEnhancerPotion) {
     //   router.push(`/register?class=${router.query.class}&armor=${selectedArmor}&weapon=${selectedWeapon}&potion=${selectedHealingPotion}`);
@@ -87,6 +96,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Armor</h2>
             <div className="w-full p-5 justify-around grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {armorOptions.map((armor) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={armor.description}>
                 <img
                   key={armor.id}
                   src={armor.imgSrc}
@@ -95,6 +105,7 @@ const Equipment = () => {
                   className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor === armor.id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
                   onClick={() => setSelectedArmor(armor.id)}
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -102,6 +113,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Weapons</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {weaponOptions.map((weapon) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={weapon.description}>
                 <img
                   key={weapon.id}
                   src={weapon.imgSrc}
@@ -110,6 +122,7 @@ const Equipment = () => {
                   className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon === weapon.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedWeapon(weapon.id)}
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -117,6 +130,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Artifacts</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {artifactOptions.map((artifact) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={artifact.description}>
                 <img
                   key={artifact.id}
                   src={artifact.imgSrc}
@@ -125,6 +139,7 @@ const Equipment = () => {
                   className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact === artifact.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => setSelectedArtifact(artifact.id)}
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -134,6 +149,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Healing Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {healingPotions.map((potion) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={potion.description}>
                 <img
                   key={potion.id}
                   src={potion.imgSrc}
@@ -143,6 +159,7 @@ const Equipment = () => {
                   onClick={() => {setSelectedHealingPotion(potion.id)}}
                   
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -150,6 +167,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Antidote Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {antidotePotions.map((potion) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={potion.description}>
                 <img
                   key={potion.id}
                   src={potion.imgSrc}
@@ -157,8 +175,8 @@ const Equipment = () => {
                   style={{'width': '150px'}}
                   className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setSelectedAntidotePotion(potion.id)}}
-                  
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -166,6 +184,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Enhancer Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {enhancerPotions.map((potion) => (
+                <Tooltip className="text-4xl mb-4" showArrow={true} content={potion.description}>
                 <img
                   key={potion.id}
                   src={potion.imgSrc}
@@ -173,8 +192,8 @@ const Equipment = () => {
                   style={{'width': '150px'}}
                   className={`sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion === potion.id ? 'border-3 sepia-0 border-sepia' : ''}`}
                   onClick={() => {setselectedEnhancerPotion(potion.id)}}
-                  
                 />
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -225,13 +244,12 @@ const Equipment = () => {
                 :
                 <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}  
               />}
-              <h1>Hit Points (CON + STR):</h1>
-              <h1>Attack (STR + DEX):</h1>
-              <h1>Attack Speed (DEX + CON):</h1>
-              <h1>Defense (INT + DEX):</h1>
+              <h1>Hit Points (CON + STR): </h1>
+              <h1>Defense (CON + DEX + INT/2):</h1>
+              <h1>Attack (STR + CON - INS):</h1>
               <h1>Magic resistance (INT + CHA):</h1>
-              <h1>Magic resistance (INT + CHA):</h1>
-              <h1>Magic resistance (INT + CHA):</h1>      
+              <h1>CFP (2 * INS -10):</h1>
+              <h1>BFA(attack + 2 * INS):</h1>      
             </div>  
           </div>
         </div>
