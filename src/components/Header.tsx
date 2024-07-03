@@ -22,16 +22,16 @@ const Header: React.FC = () => {
   }
 
   return (
-    <header className="fixed w-full bg-black text-white shadow-md py-4">
+    <header className="fixed w-full bg-black text-white shadow-md py-4 z-50">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center"> 
           <Image src="/images/kaotika.png" alt="Logo" width={200} height={60} />
         </div>
         {
           navigation
         }
         <div className="flex items-center">
-          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={100} height={100} className="sepia rounded-full" />
+          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={48} height={48} className="sepia rounded-full" />
           <button onClick={handleSignOut} className="text-4xl px-3 py-6 ml-2 text-medievalSepia hover:text-darkSepia">
             Logout
           </button>

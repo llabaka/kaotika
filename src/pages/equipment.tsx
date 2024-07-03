@@ -1,9 +1,13 @@
+import KaotikaNextButton from '@/components/KaotikaNextButton';
+import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import Layout from '@/components/Layout';
+import { Modal, ModalBody, ModalContent, useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const Equipment = () => {
   const router = useRouter();
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const [selectedArmor, setSelectedArmor] = useState('');
   const [selectedWeapon, setSelectedWeapon] = useState('');
   const [selectedArtifact, setSelectedArtifact] = useState('');
@@ -76,7 +80,7 @@ const Equipment = () => {
 
   return (
     <Layout>
-    <div className="flex flex-col h-screen text-medievalSepia bg-cover bg-center" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
+    <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <div className="flex justify-center">
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
@@ -178,60 +182,81 @@ const Equipment = () => {
         <div className="w-1/3 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Inventory</h2>
-            <div className="flex flex-col p-24 m-4 border-1 rounded-lg border-sepia">
-              <div className='flex'>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-64 h-64 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedWeapon && <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} alt="Selected Weapon" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-96 h-96 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedArmor && <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} alt="Selected Armor" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-64 h-64 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedArtifact && <img src={artifactOptions.find(artifact => artifact.id === selectedArtifact)?.imgSrc} alt="Selected Artifact" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-              </div>
-              <div className='flex'>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-32 h-32 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedHealingPotion && <img src={healingPotions.find(potion => potion.id === selectedHealingPotion)?.imgSrc} alt="Selected Weapon" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-32 h-32 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedAntidotePotion && <img src={antidotePotions.find(potion => potion.id === selectedAntidotePotion)?.imgSrc} alt="Selected Armor" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-                <div className="w-1/3 flex justify-center items-center">
-                  <div className="w-32 h-32 bg-black m-2 rounded-full" style={{'border': '7px ridge #c28b56'}}>
-                    {selectedEnhancerPotion && <img src={enhancerPotions.find(potion => potion.id === selectedEnhancerPotion)?.imgSrc} alt="Selected Artifact" className="w-full h-full object-contain rounded-full" />}
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="w-full p-5 grid grid-cols-3 gap-12 border-1 rounded-lg border-sepia bg-black/70">
+              {selectedWeapon ? <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} 
+                alt="Selected Weapon" 
+                className="w-full h-full object-contain rounded-full" 
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+              }
+              {selectedArmor ? <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} 
+                alt="Selected Armor" 
+                className="w-full h-full object-contain rounded-full" 
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+              }
+              {selectedArtifact ? <img src={artifactOptions.find(artifact => artifact.id === selectedArtifact)?.imgSrc} 
+                alt="Selected Artifact" 
+                className="w-full h-full object-contain rounded-full" 
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}} />
+              }
+              {selectedHealingPotion ? <img src={healingPotions.find(potion => potion.id === selectedHealingPotion)?.imgSrc} 
+                alt="Selected Healing Potion" 
+                className="w-full h-full object-contain rounded-full" 
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}
+              />}
+              {selectedAntidotePotion ? <img src={antidotePotions.find(potion => potion.id === selectedAntidotePotion)?.imgSrc} 
+                alt="Selected Antidote Potion" 
+                className="w-full h-full object-contain rounded-full"
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}  
+              />}
+              {selectedEnhancerPotion ? <img src={enhancerPotions.find(potion => potion.id === selectedEnhancerPotion)?.imgSrc} 
+                alt="Selected Enhanced Potion" 
+                className="w-full h-full object-contain rounded-full"
+                style={{'border': '7px ridge #c28b56'}} />
+                :
+                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '7px ridge #c28b56'}}  
+              />}
+              <h1>Hit Points (CON + STR):</h1>
+              <h1>Attack (STR + DEX):</h1>
+              <h1>Attack Speed (DEX + CON):</h1>
+              <h1>Defense (INT + DEX):</h1>
+              <h1>Magic resistance (INT + CHA):</h1>
+              <h1>Magic resistance (INT + CHA):</h1>
+              <h1>Magic resistance (INT + CHA):</h1>      
+            </div>  
           </div>
         </div>
       </div>
       <div className="flex justify-center">
         <div className="w-1/3 p-4 text-center">
-          <button
-              onClick={handleNext}
-              className="bg-blue-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
-              disabled={!selectedArmor || !selectedWeapon || !selectedArtifact || !selectedHealingPotion || !selectedAntidotePotion || !selectedEnhancerPotion}
-          >
-          Next
-          </button>
-          <button
-              onClick={handleBack}
-              className="bg-red-500 w-full text-white text-4xl py-2 px-4 mt-10 rounded"
-          >
-          Back
-          </button>
+          <KaotikaNextButton handleNext={handleNext} />
+          <KaotikaBackButton handleBack={handleBack} />
+          <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl' placement='top'>
+                <ModalContent className='border-medievalSepia border-1 bg-black/80'>
+                  {(onClose) => (
+                    <>
+                      <ModalBody>
+                      <h1 className="text-5xl text-center text-medievalSepia">Nombre del elemento</h1>
+                        <p className="text-4xl text-medievalSepia">
+                          Descripción del elemento
+                        </p>
+                        <p className="text-4xl text-medievalSepia">
+                          Modificadores del elemento
+                        </p>
+                      </ModalBody>
+                    </>
+                  )}
+                </ModalContent>
+              </Modal>
         </div>
       </div>
     </div>
