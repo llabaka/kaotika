@@ -6,12 +6,9 @@ import { Progress } from "@nextui-org/react";
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-
-type Attribute = {
-  name: string;
-  description: string;
-  value: number;
-};
+import Loading from '@/components/Loading';
+import { Profile } from '@/_common/interfaces/Profile';
+import { Attribute } from '@/_common/interfaces/Attribute';
 
 const Equipment = () => {
   const router = useRouter();
@@ -22,31 +19,51 @@ const Equipment = () => {
   const [selectedHealingPotion, setSelectedHealingPotion] = useState('');
   const [selectedAntidotePotion, setSelectedAntidotePotion] = useState('');
   const [selectedEnhancerPotion, setselectedEnhancerPotion] = useState('');
-  const [currentAtrributes, setCurrentAttributes] = useState()
+  const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(false);
+
 
   useEffect(() => {
-    const attributes = router.query.attributes;
-    setCurrentAttributes(JSON.parse(attributes as string));
+    const profile = router.query.profile;
+    setCurrentProfile(JSON.parse(profile as string));
   }, []);
 
-  const handleNext = () => {
+  const handleNext = async() => {
     console.log(session)
-    //TODO REGISTER
-    // if (selectedArmor && selectedWeapon && selectedHealingPotion && selectedAntidotePotion && selectedEnhancerPotion) {
-    //   router.push(`/register?class=${router.query.class}&armor=${selectedArmor}&weapon=${selectedWeapon}&potion=${selectedHealingPotion}`);
-    // }
+    setLoading(true);
+    const { class: playerClass, equipment, potion } = router.query;
+
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        playerClass,
+        equipment,
+        potion,
+      }),
+    });
+
+    if (response.ok) {
+      router.push('/dashboard');
+    } else {
+      // Handle error
+      console.error('Failed to register player');
+      setLoading(false);
+    }
   };
 
   const handleBack = () => {
     router.push('/player');
   };
 
-  const sumAttributeValues = (currentAtrributes: Attribute[], toAdd: string[], toSubtract: string[] = [], modifier:number = 1): number => {
+  const sumAttributeValues = (currentAtrributes: Attribute[], toAdd: string[], toSubtract: string[] = [],multiplicationModifier:number = 1, divisionModifier:number = 1): number => {
     return currentAtrributes.reduce((sum: number, attr: Attribute) => {
       if(toAdd.includes(attr.name)) {
-        return sum + attr.value;
+        return sum + attr.value * multiplicationModifier;
       } else if (toSubtract.includes(attr.name)) {
-        return sum - (attr.value / modifier)
+        return sum - (attr.value / divisionModifier)
       }
       return sum;
     }, 0)
@@ -56,21 +73,9 @@ const Equipment = () => {
     { id: '1' , imgSrc: '/images/equipment/robe_1.jpg', description: 'Description of Armor 1' },
     { id: '2' , imgSrc: '/images/equipment/robe_3.jpg', description: 'Description of Armor 2' },
     { id: '3' , imgSrc: '/images/equipment/robe_6.jpg', description: 'Description of Armor 3' },
-    // { id: '4' , imgSrc: '/images/equipment/armor_1.jpg', description: 'Description of Armor 4' },
-    // { id: '5' , imgSrc: '/images/equipment/armor_4.jpg', description: 'Description of Armor 5' },
-    // { id: '6' , imgSrc: '/images/equipment/armor_5.jpg', description: 'Description of Armor 6' },
-    // { id: '7' , imgSrc: '/images/equipment/armor_6.jpg', description: 'Description of Armor 7' },
-    // { id: '8' , imgSrc: '/images/equipment/armor_7.jpg', description: 'Description of Armor 8' },
-    // { id: '9' , imgSrc: '/images/equipment/armor_8.jpg', description: 'Description of Armor 9' },
   ];
 
   const weaponOptions = [
-    // { id: 'weapon1', imgSrc: '/images/equipment/shield_1.jpg', description: 'Description of Weapon 1' },
-    // { id: 'weapon2', imgSrc: '/images/equipment/shield_3.jpg', description: 'Description of Weapon 2' },
-    // { id: 'weapon3', imgSrc: '/images/equipment/shield_4.jpg', description: 'Description of Weapon 3' },
-    // { id: 'weapon4', imgSrc: '/images/equipment/maze_1.jpg', description: 'Description of Weapon 4' },
-    // { id: 'weapon5', imgSrc: '/images/equipment/maze_2.jpg', description: 'Description of Weapon 5' },
-    // { id: 'weapon6', imgSrc: '/images/equipment/maze_3.jpg', description: 'Description of Weapon 6' },
     { id: 'weapon7', imgSrc: '/images/equipment/sword_4.jpg', description: 'Description of Weapon 7' },
     { id: 'weapon8', imgSrc: '/images/equipment/sword_2.jpg', description: 'Description of Weapon 8' },
     { id: 'weapon9', imgSrc: '/images/equipment/sword_3.jpg', description: 'Description of Weapon 9' },
@@ -80,12 +85,6 @@ const Equipment = () => {
     { id: 'artifact1', imgSrc: '/images/equipment/artifacts/artifact_1.jpg', description: 'Description of artifact 1' },
     { id: 'artifact2', imgSrc: '/images/equipment/artifacts/artifact_2.jpg', description: 'Description of artifact 2' },
     { id: 'artifact3', imgSrc: '/images/equipment/artifacts/artifact_3.jpg', description: 'Description of artifact 3' },
-    // { id: 'weapon4', imgSrc: '/images/equipment/maze_1.jpg', description: 'Description of Weapon 4' },
-    // { id: 'weapon5', imgSrc: '/images/equipment/maze_2.jpg', description: 'Description of Weapon 5' },
-    // { id: 'weapon6', imgSrc: '/images/equipment/maze_3.jpg', description: 'Description of Weapon 6' },
-    // { id: 'weapon7', imgSrc: '/images/equipment/sword_4.jpg', description: 'Description of Weapon 7' },
-    // { id: 'weapon8', imgSrc: '/images/equipment/sword_2.jpg', description: 'Description of Weapon 8' },
-    // { id: 'weapon9', imgSrc: '/images/equipment/sword_3.jpg', description: 'Description of Weapon 9' },
   ];
 
   const healingPotions = [
@@ -103,6 +102,10 @@ const Equipment = () => {
     { id: 'potion8', imgSrc: '/images/equipment/potions/potion_11.jpg', description: 'Description of Potion 8' },
     { id: 'potion9', imgSrc: '/images/equipment/potions/potion_12.jpg', description: 'Description of Potion 9' }
   ];
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <Layout>
@@ -213,15 +216,15 @@ const Equipment = () => {
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Inventory</h2>
             <div className="w-full p-5 grid grid-cols-6 gap-12 border-1 rounded-lg border-sepia bg-black/70">
-              {selectedWeapon ? <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} 
-                alt="Selected Weapon" 
+              {selectedArmor ? <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} 
+                alt="Selected Armor" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
                 <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
-              {selectedArmor ? <img src={armorOptions.find(armor => armor.id === selectedArmor)?.imgSrc} 
-                alt="Selected Armor" 
+              {selectedWeapon ? <img src={weaponOptions.find(weapon => weapon.id === selectedWeapon)?.imgSrc} 
+                alt="Selected Weapon" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
@@ -255,111 +258,113 @@ const Equipment = () => {
                 :
                 <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
               />}
-            </div>  
-            <h2 className="text-4xl mb-4">Player attributes</h2>
-            <div className="w-full p-5 border-1 rounded-lg border-sepia bg-black/70">
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="Hit Points (CON + STR)"
-                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Strength']): 0}
-                showValueLabel={true}
-              />
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="Defense (CON + DEX + INT)"
-                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Dexterity', 'Intelligence']): 0}
-                showValueLabel={true}
-              />
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="Attack (CON + STR - INS/2)"
-                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Constitution', 'Strength'], ['Insanity'], 2): 0}
-                showValueLabel={true}
-              />    
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="Magic resistance (INT + CHA)"
-                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Intelligence', 'Charisma']): 0}
-                showValueLabel={true}
-              />  
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="CFP (2 * INS -10)"
-                value={currentAtrributes ? 2 * sumAttributeValues(currentAtrributes, ['Insanity']) -10 : 0}
-                showValueLabel={true}
-              />  
-              <Progress
-                key={1}
-                size="lg" 
-                radius="sm"
-                minValue={0}
-                maxValue={100}
-                classNames={{
-                  track: "drop-shadow-md border border-sepia",
-                  indicator: "bg-medievalSepia",
-                  label: "text-medievalSepia tracking-wider text-2xl",
-                  value: "text-2xl text-medievalSepia/100",
-                }}
-                formatOptions={{style: "decimal"}}
-                label="BFA(STR + CON + INS)"
-                value={currentAtrributes ? sumAttributeValues(currentAtrributes, ['Strength', 'Constitution', 'Insanity']): 0}
-                showValueLabel={true}
-              />  
+            </div> 
+            <div className="w-full flex flex-col items-center m-4">
+              <h2 className="text-4xl mb-4">{currentProfile?.name} attributes</h2> 
+              <div className="w-full p-5 border-1 rounded-lg border-sepia bg-black/70">
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={300}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Hit Points (Max 300)"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Constitution', 'Strength'], [], 3): 0}
+                  showValueLabel={true}
+                />
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Attack"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Strength'], ['Insanity'],1, 2): 0}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Defense"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Constitution', 'Dexterity', 'Intelligence']): 0}
+                  showValueLabel={true}
+                />
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Magic resistance"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Intelligence', 'Charisma']): 0}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="CFP (critical or fumble probability)"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Insanity']): 0}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={1}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={100}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="BCFA (base critical & fumble attack)"
+                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Strength', 'Insanity']): 0}
+                  showValueLabel={true}
+                />  
+              </div>
             </div> 
             <KaotikaNextButton handleNext={handleNext} />
             <KaotikaBackButton handleBack={handleBack} />                

@@ -7,33 +7,16 @@ import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
 import KaotikaBackButton from '@/components/KaotikaPrevbutton';
+import { Profile } from '@/_common/interfaces/Profile';
+import { Attribute } from '@/_common/interfaces/Attribute';
 
-interface Player {
-    name: string;
-    email: string;
-    image: string;
-    class: string;
-}
 
-interface Attribute {
-  name: string;
-  value: number;
-  description: string;
-}
 
-interface Profile {
-  attributes: Attribute[];
-  description: string;
-  name: string;
-  image: string;
-  _id: string;
-}
 
 const PlayerPage = () => {
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const router = useRouter();
   const { data: session } = useSession();
-  const [playerData, setPlayerData] = useState<Player | null>(null);
   const [isRegistered, setIsRegistered] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,25 +52,6 @@ const PlayerPage = () => {
     }
   }, [session]);
 
-  const handleRegister = async () => {
-    try {
-      const res = await fetch(`/api/player/register`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: session?.user?.email, option: selectedOption })
-      });
-      const data = await res.json();
-      if (res.status === 200) {
-        setPlayerData(data);
-        setIsRegistered(true);
-      } else {
-        setError('An error occurred while registering');
-      }
-    } catch (error) {
-      setError('An error occurred while registering');
-    }
-  };
-
   const handleSelectedOption = (selectedOption: string) => {
     setSelectedOption(selectedOption);
     const profile = profiles.find((obj) => obj._id === selectedOption);
@@ -95,14 +59,14 @@ const PlayerPage = () => {
   }
 
   const handleNext = () => {
-    const createQueryString = (name: string, value: Attribute[]) => {
+    const createQueryString = (name: string, value: Profile) => {
       const params = new URLSearchParams();
       params.set(name, JSON.stringify(value));
   
       return params.toString();
     };
 
-    router.push(`/equipment?${createQueryString("attributes", currentProfile?.attributes as Attribute[])}`);
+    router.push(`/equipment?${createQueryString("profile", currentProfile as Profile)}`);
   };
 
   const handleBack = () => {
@@ -125,10 +89,8 @@ const PlayerPage = () => {
     <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered ? (
         <div className="w-full p-4">
-          <h1 className="text-3xl font-bold">Welcome, {playerData?.name}</h1>
-          <p>Email: {playerData?.email}</p>
-          <p>Other data: {playerData?.image}</p>
-          <p>Other data: {playerData?.class}</p>
+          <h1 className="text-3xl font-bold">Welcome, </h1>
+          
         </div>
       ) : (
         <div className="w-full flex p-4">
