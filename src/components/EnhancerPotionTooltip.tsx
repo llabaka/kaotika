@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { EnhancerPotion } from '@/_common/EnhancerPotion';
+import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 
 interface Props {
   element: EnhancerPotion;
