@@ -37,6 +37,7 @@ const PlayerPage = () => {
           } else if (res.status === 404) {
             const response = await res.json();
             setIsRegistered(false);
+            console.log(response.data.profiles)
             setProfiles(response.data.profiles);
           } else {
             setError('An error occurred while checking registration');
