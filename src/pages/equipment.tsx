@@ -44,6 +44,11 @@ const Equipment = () => {
   const [tempInsanity, setTempInsanity] = useState(0);
   const [tempCharisma, setTempCharisma] = useState(0);
   const [hitPoints, setHitPoints] = useState(0);
+  const [attack, setAttack] = useState(0);
+  const [defense, setDefense] = useState(0);
+  const [magicResistance, setmagicResistance] = useState(0);
+  const [cfp, setCFP] = useState(0);
+  const [bcfa, setBCFA] = useState(0);
   const [loading, setLoading] = useState(false);
 
 
@@ -56,15 +61,12 @@ const Equipment = () => {
 
   const handleNext = async() => {
     setLoading(true);
-  
-
     const response = await fetch('/api/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        
+      body: JSON.stringify({       
       }),
     });
 
@@ -81,53 +83,127 @@ const Equipment = () => {
     router.push('/player');
   };
 
-  const sumAttributeValues = (currentAtrributes: Attribute[], toAdd: string[], toSubtract: string[] = [],multiplicationModifier:number = 1, divisionModifier:number = 1): number => {
-    return currentAtrributes.reduce((sum: number, attr: Attribute) => {
-      if(toAdd.includes(attr.name)) {
-        return sum + attr.value * multiplicationModifier;
-      } else if (toSubtract.includes(attr.name)) {
-        return sum - (attr.value / divisionModifier)
-      }
-      return sum;
-    }, 0)
+  const handleSelectedArmor = (armor: Armor) => {
+    setSelectedArmor(armor);
   }
 
-  const handleSelectedArmor = (armor: Armor) => {
-    setSelectedArmor(armor)
+  const handleSelectedWeapon = (weapon: Weapon) => {
+    setSelectedWeapon(weapon);
+  }
+
+  const handleSelectedArtifact = (artifact: Artifact) => {
+    setSelectedArtifact(artifact);
   }
 
   useEffect(() => {
+    console.log("ARMOR CHANGED");
+    console.log(selectedArmor);
     if(selectedArmor) setArmorModifiers(selectedArmor.modifiers);    
   }, [selectedArmor]);
 
   useEffect(() => {
+    console.log("ARMOR MODIFIERS");
     armorModifiers?.map(modifier => {
+      console.log("MODIFIER");
+      console.log(modifier);
       changeAttributeValue(modifier.attribute, modifier.value);
     })
-  }, [armorModifiers])
+  }, [armorModifiers]);
+
+  useEffect(() => {
+    console.log("WEAPON CHANGED");
+    if(selectedWeapon) setWeaponModifiers(selectedWeapon.modifiers);    
+  }, [selectedWeapon]);
+
+  useEffect(() => {
+    console.log("WEAPON MODIFIERS");
+    weaponModifiers?.map(modifier => {
+      console.log("MODIFIER");
+      changeAttributeValue(modifier.attribute, modifier.value);
+    })
+  }, [weaponModifiers]);
+
+  useEffect(() => {
+    console.log("ARTIFACT CHANGED");
+    if(selectedArtifact) setArtifactModifiers(selectedArtifact.modifiers);    
+  }, [selectedArtifact]);
+
+  useEffect(() => {
+    console.log("ARTIFACT MODIFIERS");
+    artifactModifiers?.map(modifier => {
+      console.log("MODIFIER");
+      changeAttributeValue(modifier.attribute, modifier.value);
+    })
+  }, [artifactModifiers]);
   
   useEffect(() => {
+    console.log("CALCULATE ALL");
     calculateHitPoints();
-  }, [currentProfile,tempConstitution])
+    calculateAttack();
+    calculateDefense();
+    calculateMagicResistance();
+    calculateCFP();
+    calculateBCFA();
+  }, [currentProfile, tempConstitution, tempStrength, tempIntelligence, tempDexterity, tempCharisma, tempInsanity])
   
   const changeAttributeValue = (attributeName: string, newValue: number) => {
-
-    if (currentAttributes) {
-      if(attributeName === 'Constitution') setTempConstitution(newValue);
-      if(attributeName === "Strength") setTempStrength(newValue)
-      if(attributeName === "Intelligence") setTempIntelligence(newValue)
-      if(attributeName === "Dexterity") setTempDexterity(newValue)
-      if(attributeName === "Charisma") setTempCharisma(newValue)
-      if(attributeName === "Insanity") setTempInsanity(newValue)
-    } 
+    console.log("CURRENT CHANGE ATTRIBUTE ", attributeName); 
+    if(attributeName === 'Constitution') setTempConstitution(newValue);
+    if(attributeName === "Strength") setTempStrength(newValue)
+    if(attributeName === "Intelligence") setTempIntelligence(newValue)
+    if(attributeName === "Dexterity") setTempDexterity(newValue)
+    if(attributeName === "Charisma") setTempCharisma(newValue)
+    if(attributeName === "Insanity") setTempInsanity(newValue) 
   };
 
   const calculateHitPoints = (): void => {
+    console.log("calculateHitPoints");
     if (!currentProfile) return ;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
     setHitPoints( (strength + tempStrength)  + (constitution + tempConstitution)); 
   };
+
+  const calculateAttack = (): void => {
+    console.log("calculateAttack");
+    if(!currentProfile) return;
+    const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
+    const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
+    setAttack((strength + tempStrength) - (insanity + tempInsanity)/2);
+  }
+
+  const calculateDefense = (): void => {
+    console.log("calculateDefense");
+    if(!currentProfile) return;
+    const dexterity = currentProfile.attributes.find(attr => attr.name === 'Dexterity')?.value || 0;
+    const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
+    const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
+    setDefense((dexterity + tempDexterity) + (constitution + tempConstitution) + (intelligence + tempIntelligence)/2)
+  }
+
+  const calculateMagicResistance = (): void => {
+    console.log("calculateMagicResistance");
+    if(!currentProfile) return;
+    const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
+    const charisma = currentProfile.attributes.find(attr => attr.name === 'Charisma')?.value || 0;
+    setmagicResistance((intelligence + tempIntelligence) + (charisma + tempCharisma));
+
+  }
+
+  const calculateCFP = (): void => {
+    console.log("calculateCFP");
+    if(!currentProfile) return;
+    const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
+    setCFP((insanity + tempInsanity));
+  }
+
+  const calculateBCFA =(): void => {
+    console.log("calculateBCFA");
+    if(!currentProfile) return;
+    const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
+    const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
+    setBCFA((strength + tempStrength) + (insanity + tempInsanity));
+  }
 
   if (loading) {
     return <Loading />;
@@ -158,13 +234,13 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Weapons</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.weapons.map((weapon) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement="bottom" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon}/>}>
                 <img
                   key={weapon._id}
                   src={weapon.image}
                   alt={weapon._id}
                   className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon?._id === weapon._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => setSelectedWeapon(weapon)}
+                  onClick={() => handleSelectedWeapon(weapon)}
                 />
                 </Tooltip>
               ))}
@@ -180,7 +256,7 @@ const Equipment = () => {
                   src={artifact.image}
                   alt={artifact.description}
                   className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact?._id === artifact._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => setSelectedArtifact(artifact)}
+                  onClick={() => handleSelectedArtifact(artifact)}
                 />
                 </Tooltip>
               ))}
@@ -321,7 +397,7 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Attack"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Strength'], ['Insanity'],1, 2): 0}
+                  value={attack}
                   showValueLabel={true}
                 />  
                 <Progress
@@ -338,7 +414,7 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Defense"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Constitution', 'Dexterity', 'Intelligence']): 0}
+                  value={defense}
                   showValueLabel={true}
                 />
                 <Progress
@@ -355,7 +431,7 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Magic resistance"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Intelligence', 'Charisma']): 0}
+                  value={magicResistance}
                   showValueLabel={true}
                 />  
                 <Progress
@@ -372,7 +448,7 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="CFP (critical or fumble probability)"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Insanity']): 0}
+                  value={cfp}
                   showValueLabel={true}
                 />  
                 <Progress
@@ -389,7 +465,7 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="BCFA (base critical & fumble attack)"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Strength', 'Insanity']): 0}
+                  value={bcfa}
                   showValueLabel={true}
                 />  
               </div>
