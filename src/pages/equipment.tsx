@@ -86,9 +86,9 @@ const Equipment = () => {
         <div className="w-1/4 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Armor</h2>
-            <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
+            <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/90">
               {currentProfile?.equipment.armors.map((armor) => (
-                <Tooltip className="text-4xl mb-4" placement='top' size='sm' showArrow={true} content={<ArmorTooltip element={armor}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' size='sm' showArrow={true} content={<ArmorTooltip element={armor}/>}>
                 <img
                   key={armor._id}
                   src={armor.image}
@@ -104,7 +104,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Weapons</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.weapons.map((weapon) => (
-                <Tooltip className="text-4xl mb-4" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon}/>}>
                 <img
                   key={weapon._id}
                   src={weapon.image}
@@ -120,7 +120,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Artifacts</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.artifacts.map((artifact) => (
-                <Tooltip className="text-4xl mb-4" size='sm' showArrow={true} content={<ArtifactTooltip element={artifact}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<ArtifactTooltip element={artifact}/>}>
                 <img
                   key={artifact._id}
                   src={artifact.image}
@@ -138,7 +138,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Healing Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.healing_potions.map((potion) => (
-                <Tooltip className="text-4xl mb-4" size='sm' showArrow={true} content={<HealingPotionTooltip element={potion}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<HealingPotionTooltip element={potion}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
@@ -155,7 +155,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Antidote Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.antidote_potions.map((potion) => (
-                <Tooltip className="text-4xl mb-4" size='sm' showArrow={true} content={<AntidotePotionTooltip element={potion}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<AntidotePotionTooltip element={potion}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
@@ -171,7 +171,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Enhancer Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.enhancer_potions.map((potion) => (
-                <Tooltip className="text-4xl mb-4" size='sm' showArrow={true} content={<EnhancerPotionTooltip element={potion}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<EnhancerPotionTooltip element={potion}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
