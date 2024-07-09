@@ -16,8 +16,8 @@ const WeaponTooltip: React.FC<Props> = ({ element }) => {
           <p className="text-3xl mb-4 text-darkSepia">Base Percentage</p>
           <p className="text-3xl mb-4">{element.base_percentage}</p>
           <p className="text-3xl mb-4 text-darkSepia">Modifiers:</p>
-          {element.modifiers.map(modifier => {
-            return <p className="text-3xl mb-4">{modifier.attribute}: {modifier.value}</p>
+          {element.modifiers.map((modifier, index) => {
+            return <p key={index} className="text-3xl mb-4">{modifier.attribute}: {modifier.value}</p>
           })}
           
         </div>

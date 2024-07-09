@@ -27,6 +27,8 @@ const Home = () => {
         {!session ? (
           <>
           <div>
+            <h1 className="text-8xl mb-4 text-medievalSepia">LEGENDS</h1>
+            <h1 className="text-6xl mb-4 text-medievalSepia">of</h1>
             <img
               className="mx-auto mb-8"
               src="/images/kaotika.png"  

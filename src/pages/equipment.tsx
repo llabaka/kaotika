@@ -15,29 +15,48 @@ import ArtifactTooltip from '@/components/ArtifactTooltip';
 import HealingPotionTooltip from '@/components/HealingPotionTooltip';
 import AntidotePotionTooltip from '@/components/AntidotePotionTooltip';
 import EnhancerPotionTooltip from '@/components/EnhancerPotionTooltip';
+import { Armor } from '@/_common/interfaces/Armor';
+import { Modifier } from '@/_common/interfaces/Modifier';
+import { Weapon } from '@/_common/interfaces/Weapon';
+import { Artifact } from '@/_common/interfaces/Artifact';
+import { HealingPotion } from '@/_common/interfaces/HealingPotion';
+import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
+import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 
 const Equipment = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [selectedArmor, setSelectedArmor] = useState('');
-  const [selectedWeapon, setSelectedWeapon] = useState('');
-  const [selectedArtifact, setSelectedArtifact] = useState('');
-  const [selectedHealingPotion, setSelectedHealingPotion] = useState('');
-  const [selectedAntidotePotion, setSelectedAntidotePotion] = useState('');
-  const [selectedEnhancerPotion, setselectedEnhancerPotion] = useState('');
+  const [selectedArmor, setSelectedArmor] = useState<Armor>();
+  const [selectedWeapon, setSelectedWeapon] = useState<Weapon>();
+  const [selectedArtifact, setSelectedArtifact] = useState<Artifact>();
+  const [selectedHealingPotion, setSelectedHealingPotion] = useState<HealingPotion>();
+  const [selectedAntidotePotion, setSelectedAntidotePotion] = useState<AntidotePotion>();
+  const [selectedEnhancerPotion, setselectedEnhancerPotion] = useState<EnhancerPotion>();
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
+  const [currentAttributes, setCurrentAttributes] = useState<Attribute[]>()
+  const [armorModifiers, setArmorModifiers] = useState<Modifier[] | null>(null);
+  const [weaponModifiers, setWeaponModifiers] = useState<Modifier[] | null>(null);
+  const [artifactModifiers, setArtifactModifiers] = useState<Modifier[] | null>(null);
+  const [tempStrength, setTempStrength] = useState(0);
+  const [tempConstitution, setTempConstitution] = useState(0);
+  const [tempDexterity, setTempDexterity] = useState(0);
+  const [tempIntelligence, setTempIntelligence] = useState(0);
+  const [tempInsanity, setTempInsanity] = useState(0);
+  const [tempCharisma, setTempCharisma] = useState(0);
+  const [hitPoints, setHitPoints] = useState(0);
   const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
     const profile = router.query.profile;
     setCurrentProfile(JSON.parse(profile as string));
+    setCurrentAttributes(currentProfile?.attributes);
+
   }, []);
 
   const handleNext = async() => {
-    console.log(session)
     setLoading(true);
-    const { class: playerClass, equipment, potion } = router.query;
+  
 
     const response = await fetch('/api/register', {
       method: 'POST',
@@ -45,9 +64,7 @@ const Equipment = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        playerClass,
-        equipment,
-        potion,
+        
       }),
     });
 
@@ -75,6 +92,43 @@ const Equipment = () => {
     }, 0)
   }
 
+  const handleSelectedArmor = (armor: Armor) => {
+    setSelectedArmor(armor)
+  }
+
+  useEffect(() => {
+    if(selectedArmor) setArmorModifiers(selectedArmor.modifiers);    
+  }, [selectedArmor]);
+
+  useEffect(() => {
+    armorModifiers?.map(modifier => {
+      changeAttributeValue(modifier.attribute, modifier.value);
+    })
+  }, [armorModifiers])
+  
+  useEffect(() => {
+    calculateHitPoints();
+  }, [currentProfile,tempConstitution])
+  
+  const changeAttributeValue = (attributeName: string, newValue: number) => {
+
+    if (currentAttributes) {
+      if(attributeName === 'Constitution') setTempConstitution(newValue);
+      if(attributeName === "Strength") setTempStrength(newValue)
+      if(attributeName === "Intelligence") setTempIntelligence(newValue)
+      if(attributeName === "Dexterity") setTempDexterity(newValue)
+      if(attributeName === "Charisma") setTempCharisma(newValue)
+      if(attributeName === "Insanity") setTempInsanity(newValue)
+    } 
+  };
+
+  const calculateHitPoints = (): void => {
+    if (!currentProfile) return ;
+    const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
+    const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
+    setHitPoints( (strength + tempStrength)  + (constitution + tempConstitution)); 
+  };
+
   if (loading) {
     return <Loading />;
   }
@@ -93,8 +147,8 @@ const Equipment = () => {
                   key={armor._id}
                   src={armor.image}
                   alt={armor.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor === armor._id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
-                  onClick={() => setSelectedArmor(armor._id)}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor?._id === armor._id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
+                  onClick={() => handleSelectedArmor(armor)}
                 />
                 </Tooltip>
               ))}
@@ -109,8 +163,8 @@ const Equipment = () => {
                   key={weapon._id}
                   src={weapon.image}
                   alt={weapon._id}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon === weapon._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => setSelectedWeapon(weapon._id)}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon?._id === weapon._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => setSelectedWeapon(weapon)}
                 />
                 </Tooltip>
               ))}
@@ -125,8 +179,8 @@ const Equipment = () => {
                   key={artifact._id}
                   src={artifact.image}
                   alt={artifact.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact === artifact._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => setSelectedArtifact(artifact._id)}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact?._id === artifact._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => setSelectedArtifact(artifact)}
                 />
                 </Tooltip>
               ))}
@@ -143,8 +197,8 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => {setSelectedHealingPotion(potion._id)}}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => {setSelectedHealingPotion(potion)}}
                   
                 />
                 </Tooltip>
@@ -160,8 +214,8 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => {setSelectedAntidotePotion(potion._id)}}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => {setSelectedAntidotePotion(potion)}}
                 />
                 </Tooltip>
               ))}
@@ -176,8 +230,8 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
-                  onClick={() => {setselectedEnhancerPotion(potion._id)}}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  onClick={() => {setselectedEnhancerPotion(potion)}}
                 />
                 </Tooltip>
               ))}
@@ -188,54 +242,56 @@ const Equipment = () => {
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Inventory</h2>
             <div className="w-full p-5 grid grid-cols-6 gap-12 border-1 rounded-lg border-sepia bg-black/70">
-              {selectedArmor ? <img src={currentProfile?.equipment.armors.find(armor => armor._id === selectedArmor)?.image} 
+              {selectedArmor ? <img src={currentProfile?.equipment.armors.find(armor => armor._id === selectedArmor._id)?.image} 
+                key={selectedArmor._id}
                 alt="Selected Armor" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
+                <img key={"img_0"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
-              {selectedWeapon ? <img src={currentProfile?.equipment.weapons.find(weapon => weapon._id === selectedWeapon)?.image} 
+              {selectedWeapon ? <img src={currentProfile?.equipment.weapons.find(weapon => weapon._id === selectedWeapon._id)?.image} 
+                key={selectedWeapon._id}
                 alt="Selected Weapon" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
+                <img key={"img_1"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
-              {selectedArtifact ? <img src={currentProfile?.equipment.artifacts.find(artifact => artifact._id === selectedArtifact)?.image} 
+              {selectedArtifact ? <img src={currentProfile?.equipment.artifacts.find(artifact => artifact._id === selectedArtifact._id)?.image} 
                 alt="Selected Artifact" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
+                <img key={"img_2"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}} />
               }
-              {selectedHealingPotion ? <img src={currentProfile?.equipment.healing_potions.find(potion => potion._id === selectedHealingPotion)?.image} 
+              {selectedHealingPotion ? <img src={currentProfile?.equipment.healing_potions.find(potion => potion._id === selectedHealingPotion._id)?.image} 
                 alt="Selected Healing Potion" 
                 className="w-full h-full object-contain rounded-full" 
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}
+                <img key={"img_3"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}
               />}
-              {selectedAntidotePotion ? <img src={currentProfile?.equipment.antidote_potions.find(potion => potion._id === selectedAntidotePotion)?.image} 
+              {selectedAntidotePotion ? <img src={currentProfile?.equipment.antidote_potions.find(potion => potion._id === selectedAntidotePotion._id)?.image} 
                 alt="Selected Antidote Potion" 
                 className="w-full h-full object-contain rounded-full"
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
+                <img key={"img_4"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
               />}
-              {selectedEnhancerPotion ? <img src={currentProfile?.equipment.enhancer_potions.find(potion => potion._id === selectedEnhancerPotion)?.image} 
+              {selectedEnhancerPotion ? <img src={currentProfile?.equipment.enhancer_potions.find(potion => potion._id === selectedEnhancerPotion._id)?.image} 
                 alt="Selected Enhanced Potion" 
                 className="w-full h-full object-contain rounded-full"
                 style={{'border': '3px ridge #c28b56'}} />
                 :
-                <img src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
+                <img key={"img_5"} src="/images/img.jpg" alt="Inventory" className="w-full h-full object-contain rounded-full" style={{'border': '3px ridge #c28b56'}}  
               />}
             </div> 
             <div className="w-full flex flex-col items-center m-4">
               <h2 className="text-4xl mb-4">{currentProfile?.name} attributes</h2> 
               <div className="w-full p-5 border-1 rounded-lg border-sepia bg-black/70">
                 <Progress
-                  key={1}
+                  key={"p-1"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -248,11 +304,11 @@ const Equipment = () => {
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Hit Points (Max 300)"
-                  value={currentProfile?.attributes ? sumAttributeValues(currentProfile.attributes, ['Constitution', 'Strength'], []): 0}
+                  value={hitPoints}
                   showValueLabel={true}
                 />
                 <Progress
-                  key={1}
+                  key={"p-2"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -269,7 +325,7 @@ const Equipment = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={1}
+                  key={"p-3"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -286,7 +342,7 @@ const Equipment = () => {
                   showValueLabel={true}
                 />
                 <Progress
-                  key={1}
+                  key={"p-4"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -303,7 +359,7 @@ const Equipment = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={1}
+                  key={"p-5"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -320,7 +376,7 @@ const Equipment = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={1}
+                  key={"p-6"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
