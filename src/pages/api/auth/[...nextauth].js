@@ -17,7 +17,7 @@ export default NextAuth({
   ],
   callbacks: {
     
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user}) {
       if (account) {
         token.accessToken = account.access_token;
         token.idToken = account.id_token;

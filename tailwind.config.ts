@@ -29,7 +29,7 @@ const config: Config = {
       },
       borderColor: {
         sepia: '#cda882'
-      }
+      },
     },
   },
   plugins: [nextui()],

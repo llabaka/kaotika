@@ -14,7 +14,7 @@ const Home = () => {
       console.log('User is authenticated on HomePage:', session);
       const email = session?.user?.email || '';
       if (email.endsWith('@gmail.com')) {
-        router.push('/welcome');
+        router.push('/player');
       } else {
         router.push('/dashboard');
       }

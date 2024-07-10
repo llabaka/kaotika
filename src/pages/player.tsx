@@ -32,7 +32,7 @@ const PlayerPage = () => {
           setLoading(true);
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
           if (res.status === 200) {
-            const data = await res.json();
+            const player = await res.json();
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();
@@ -97,9 +97,15 @@ const PlayerPage = () => {
           
         </div>
       ) : (
+        <>
+        <div className="flex flex-col items-center bg-gray-800 text-medievalSepia ">
+          <h1 className="text-6xl mb-2 animate-pulse">Welcome to Legends of Kaotika, {session?.user?.name}</h1>
+          <h2 className="text-4xl p-20 font-light">Today marks the beginning of your journey, a path filled with challenges and discoveries. As you step into this new adventure of Kaotika, remember that your dedication and commitment will be your greatest guides. Embrace the spirit of the Old School, where tradition meets innovation, and let it lead you to unparalleled growth and mastery. The road ahead may be demanding, but with determination and the support of your peers, you will achieve greatness. Welcome to the brotherhood; your adventure starts now.</h2>
+          <h2 className="text-4xl mb-2">Let's set up your acolyte</h2>
+        </div>
         <div className="w-full flex p-4">
           <div className="w-1/3 p-4">
-          <h1 className="text-4xl mb-4">Select your Hero Profile </h1>        
+          <h1 className="text-4xl mb-4 animate-bounce">Select your Hero Profile </h1>        
             <select
                 className="block w-full bg-gray-700 border-medievalSepia py-4 pl-6 pr-10 text-3xl"
                 onChange={(e) => handleSelectedOption(e.target.value)}
@@ -173,6 +179,7 @@ const PlayerPage = () => {
           </>
           ) : null}
         </div>
+        </>
         ) }
     </div>
     </Layout>
