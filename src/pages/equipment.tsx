@@ -26,7 +26,7 @@ import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 const Equipment = () => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [selectedArmor, setSelectedArmor] = useState<Armor>();
+  const [selectedArmor, setSelectedArmor] = useState<Armor | null>();
   const [selectedWeapon, setSelectedWeapon] = useState<Weapon>();
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact>();
   const [selectedHealingPotion, setSelectedHealingPotion] = useState<HealingPotion>();
@@ -66,12 +66,24 @@ const Equipment = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({       
+      body: JSON.stringify({  
+        name: session?.user?.name,
+        email: session?.user?.email,
+        avatar: session?.user?.image,
+        profile: currentProfile?._id,
+        equipment:{
+          armor: selectedArmor?._id,
+          weapon: selectedWeapon?._id, 
+          artifact:selectedArtifact?._id,
+          healing_potion: selectedHealingPotion?._id,
+          antidote_potion: selectedAntidotePotion?._id,
+          enhancer_potion: selectedEnhancerPotion?._id
+        }         
       }),
     });
 
     if (response.ok) {
-      router.push('/dashboard');
+      router.push('/player');
     } else {
       // Handle error
       console.error('Failed to register player');
@@ -84,16 +96,22 @@ const Equipment = () => {
   };
 
   const handleSelectedArmor = (armor: Armor) => {
-    const previousModifiers = selectedArmor?.modifiers.map(modifier => modifier)
-    if(previousModifiers) {
-      previousModifiers.map(modifier => {
-        removeTempAttributeValue(modifier.attribute, modifier.value);
-      })
+    if(selectedArmor === armor) {      
+      return;
     }
+    const previousModifiers = selectedArmor?.modifiers.map(modifier => modifier)
+      if(previousModifiers) {
+        previousModifiers.map(modifier => {
+          removeTempAttributeValue(modifier.attribute, modifier.value);
+        })
+      }
     setSelectedArmor(armor);
   }
 
   const handleSelectedWeapon = (weapon: Weapon) => {
+    if(selectedWeapon === weapon) {      
+      return;
+    }
     const previousModifiers = selectedWeapon?.modifiers.map(modifier => modifier)
     if(previousModifiers) {
       previousModifiers.map(modifier => {
@@ -104,6 +122,9 @@ const Equipment = () => {
   }
 
   const handleSelectedArtifact = (artifact: Artifact) => {
+    if(selectedArtifact === artifact) {      
+      return;
+    }
     const previousModifiers = selectedArtifact?.modifiers.map(modifier => modifier)
     if(previousModifiers) {
       previousModifiers.map(modifier => {
@@ -166,22 +187,22 @@ const Equipment = () => {
   
   const changeAttributeValue = (attributeName: string, newValue: number) => {
     console.log("CURRENT CHANGE ATTRIBUTE ", attributeName); 
-    if(attributeName === 'Constitution') setTempConstitution(newValue);
-    if(attributeName === "Strength") setTempStrength(newValue)
-    if(attributeName === "Intelligence") setTempIntelligence(newValue)
-    if(attributeName === "Dexterity") setTempDexterity(newValue)
-    if(attributeName === "Charisma") setTempCharisma(newValue)
-    if(attributeName === "Insanity") setTempInsanity(newValue) 
+    if(attributeName === 'Constitution') setTempConstitution(newValue + tempConstitution);
+    if(attributeName === "Strength") setTempStrength(newValue + tempStrength)
+    if(attributeName === "Intelligence") setTempIntelligence(newValue + tempIntelligence)
+    if(attributeName === "Dexterity") setTempDexterity(newValue + tempDexterity)
+    if(attributeName === "Charisma") setTempCharisma(newValue + tempCharisma)
+    if(attributeName === "Insanity") setTempInsanity(newValue + tempInsanity) 
   };
 
   const removeTempAttributeValue = (attributeName: string, newValue: number) => {
     console.log("REMOVE TEMP ATTRIBUTE ", attributeName); 
-    if(attributeName === 'Constitution') setTempConstitution((previous) => previous - newValue);
-    if(attributeName === "Strength") setTempStrength((previous) => previous - newValue);
-    if(attributeName === "Intelligence") setTempIntelligence((previous) => previous - newValue);
-    if(attributeName === "Dexterity") setTempDexterity((previous) => previous - newValue);
-    if(attributeName === "Charisma") setTempCharisma((previous) => previous - newValue);
-    if(attributeName === "Insanity") setTempInsanity((previous) => previous - newValue);
+    if(attributeName === 'Constitution') setTempConstitution((previous) => newValue - previous);
+    if(attributeName === "Strength") setTempStrength((previous) => newValue - previous);
+    if(attributeName === "Intelligence") setTempIntelligence((previous) => newValue - previous);
+    if(attributeName === "Dexterity") setTempDexterity((previous) => newValue - previous);
+    if(attributeName === "Charisma") setTempCharisma((previous) => newValue - previous);
+    if(attributeName === "Insanity") setTempInsanity((previous) => newValue - previous);
   };
 
   const calculateHitPoints = (): void => {
@@ -206,6 +227,7 @@ const Equipment = () => {
     const dexterity = currentProfile.attributes.find(attr => attr.name === 'Dexterity')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
     const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
+    console.log(tempDexterity);
     setDefense((dexterity + tempDexterity) + (constitution + tempConstitution) + (intelligence + tempIntelligence)/2)
   }
 
@@ -244,7 +266,7 @@ const Equipment = () => {
         <div className="w-1/4 p-4">
           <div className="flex flex-col items-center m-4">
             <h2 className="text-4xl mb-4">Armor</h2>
-            <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/90">
+            <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.armors.map((armor) => (
                 <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' size='sm' showArrow={true} content={<ArmorTooltip element={armor}/>}>
                 <img

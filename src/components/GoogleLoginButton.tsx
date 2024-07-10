@@ -16,7 +16,6 @@ export default function GoogleLoginButton() {
       if (email.endsWith('@gmail.com')) {
         router.push('/player');
       } else {
-        console.log("Entra dashboard ruta")
         router.push('/dashboard');
       }
     }
