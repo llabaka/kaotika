@@ -84,14 +84,32 @@ const Equipment = () => {
   };
 
   const handleSelectedArmor = (armor: Armor) => {
+    const previousModifiers = selectedArmor?.modifiers.map(modifier => modifier)
+    if(previousModifiers) {
+      previousModifiers.map(modifier => {
+        removeTempAttributeValue(modifier.attribute, modifier.value);
+      })
+    }
     setSelectedArmor(armor);
   }
 
   const handleSelectedWeapon = (weapon: Weapon) => {
+    const previousModifiers = selectedWeapon?.modifiers.map(modifier => modifier)
+    if(previousModifiers) {
+      previousModifiers.map(modifier => {
+        removeTempAttributeValue(modifier.attribute, modifier.value);
+      })
+    }
     setSelectedWeapon(weapon);
   }
 
   const handleSelectedArtifact = (artifact: Artifact) => {
+    const previousModifiers = selectedArtifact?.modifiers.map(modifier => modifier)
+    if(previousModifiers) {
+      previousModifiers.map(modifier => {
+        removeTempAttributeValue(modifier.attribute, modifier.value);
+      })
+    }
     setSelectedArtifact(artifact);
   }
 
@@ -154,6 +172,16 @@ const Equipment = () => {
     if(attributeName === "Dexterity") setTempDexterity(newValue)
     if(attributeName === "Charisma") setTempCharisma(newValue)
     if(attributeName === "Insanity") setTempInsanity(newValue) 
+  };
+
+  const removeTempAttributeValue = (attributeName: string, newValue: number) => {
+    console.log("REMOVE TEMP ATTRIBUTE ", attributeName); 
+    if(attributeName === 'Constitution') setTempConstitution((previous) => previous - newValue);
+    if(attributeName === "Strength") setTempStrength((previous) => previous - newValue);
+    if(attributeName === "Intelligence") setTempIntelligence((previous) => previous - newValue);
+    if(attributeName === "Dexterity") setTempDexterity((previous) => previous - newValue);
+    if(attributeName === "Charisma") setTempCharisma((previous) => previous - newValue);
+    if(attributeName === "Insanity") setTempInsanity((previous) => previous - newValue);
   };
 
   const calculateHitPoints = (): void => {
