@@ -99,16 +99,16 @@ const Equipment = () => {
     if(selectedArmor === armor) {      
       return;
     }
-    const previousModifiers = selectedArmor?.modifiers.map(modifier => modifier)
-      if(previousModifiers) {
-        previousModifiers.map(modifier => {
-          removeTempAttributeValue(modifier.attribute, modifier.value);
-        })
-      } else {
-        armor?.modifiers.map(modifier => {
-          removeTempAttributeValue(modifier.attribute, modifier.value, false);
-        })
-      }
+    if(!selectedArmor) {
+      armor?.modifiers.map(modifier => {
+        changeAttributeValue(modifier.attribute, modifier.value, false);
+      })
+    } else {
+      setArmorModifiers(null);
+      //selectedArmor.modifiers.map(modifier => {removeTempAttributeValue(modifier.attribute,modifier.value)})
+      armor.modifiers.map(modifier => changeAttributeValue(modifier.attribute, modifier.value))
+    }
+  
     setSelectedArmor(armor);
   }
 
@@ -116,15 +116,14 @@ const Equipment = () => {
     if(selectedWeapon === weapon) {      
       return;
     }
-    const previousModifiers = selectedWeapon?.modifiers.map(modifier => modifier)
-    if(previousModifiers) {
-      previousModifiers.map(modifier => {
-        removeTempAttributeValue(modifier.attribute, modifier.value);
+    if(!selectedWeapon) {
+      weapon?.modifiers.map(modifier => {
+        changeAttributeValue(modifier.attribute, modifier.value, false);
       })
     } else {
-      weapon?.modifiers.map(modifier => {
-        removeTempAttributeValue(modifier.attribute, modifier.value, false);
-      })
+      setWeaponModifiers(null);
+      //selectedWeapon.modifiers.map(modifier => {removeTempAttributeValue(modifier.attribute,modifier.value)})
+      weapon.modifiers.map(modifier => changeAttributeValue(modifier.attribute, modifier.value))
     }
     setSelectedWeapon(weapon);
   }
@@ -133,6 +132,11 @@ const Equipment = () => {
     if(selectedArtifact === artifact) {      
       return;
     }
+    if(!selectedArtifact) {
+      artifact?.modifiers.map(modifier => {
+        changeAttributeValue(modifier.attribute, modifier.value);
+      })
+    }
     const previousModifiers = selectedArtifact?.modifiers.map(modifier => modifier)
     if(previousModifiers) {
       previousModifiers.map(modifier => {
@@ -140,7 +144,7 @@ const Equipment = () => {
       })
     } else {
       artifact?.modifiers.map(modifier => {
-        removeTempAttributeValue(modifier.attribute, modifier.value, false);
+        removeTempAttributeValue(modifier.attribute, modifier.value);
       })
     }
     setSelectedArtifact(artifact);
@@ -152,36 +156,15 @@ const Equipment = () => {
   }, [selectedArmor]);
 
   useEffect(() => {
-    console.log("ARMOR MODIFIERS");
-    armorModifiers?.map(modifier => {
-      //removeTempAttributeValue(modifier.attribute, modifier.value);
-    })
-  }, [armorModifiers]);
-
-  useEffect(() => {
     console.log("WEAPON CHANGED");
     if(selectedWeapon) setWeaponModifiers(selectedWeapon.modifiers);    
   }, [selectedWeapon]);
 
   useEffect(() => {
-    console.log("WEAPON MODIFIERS");
-    weaponModifiers?.map(modifier => {
-      //removeTempAttributeValue(modifier.attribute, modifier.value);
-    })
-  }, [weaponModifiers]);
-
-  useEffect(() => {
     console.log("ARTIFACT CHANGED");
     if(selectedArtifact) setArtifactModifiers(selectedArtifact.modifiers);    
   }, [selectedArtifact]);
-
-  useEffect(() => {
-    console.log("ARTIFACT MODIFIERS");
-    artifactModifiers?.map(modifier => {
-      //removeTempAttributeValue(modifier.attribute, modifier.value);
-    })
-  }, [artifactModifiers]);
-  
+ 
   useEffect(() => {
     console.log(`CHANGED TEMP ATTRIBUTES : 
       Constitution:${tempConstitution}
@@ -199,7 +182,7 @@ const Equipment = () => {
     calculateBCFA();
   }, [currentProfile, tempConstitution, tempStrength, tempIntelligence, tempDexterity, tempCharisma, tempInsanity])
   
-  const changeAttributeValue = (attributeName: string, newValue: number) => {
+  const changeAttributeValue = (attributeName: string, newValue: number, isPreviousSelected: boolean = true) => {
     console.log("CURRENT CHANGE ATTRIBUTE ", attributeName); 
     console.log("CURRENT CHANGE ATTRIBUTE ", newValue); 
     console.log(`CURRENT TEMP ATTRIBUTES : 
@@ -210,30 +193,33 @@ const Equipment = () => {
       Charisma:${tempCharisma}
       Insanity:${tempInsanity}
       `);
-    if(attributeName === 'Constitution') setTempConstitution(newValue + tempConstitution);
-    if(attributeName === "Strength") setTempStrength(newValue + tempStrength)
-    if(attributeName === "Intelligence") setTempIntelligence(newValue + tempIntelligence)
-    if(attributeName === "Dexterity") setTempDexterity(newValue + tempDexterity)
-    if(attributeName === "Charisma") setTempCharisma(newValue + tempCharisma)
-    if(attributeName === "Insanity") setTempInsanity(newValue + tempInsanity) 
+      if(attributeName === 'Constitution') setTempConstitution((previous) => isPreviousSelected ? tempConstitution + newValue - previous : tempConstitution + newValue);
+      if(attributeName === "Strength") setTempStrength((previous) => isPreviousSelected ? tempStrength + newValue - previous : tempStrength + newValue);
+      if(attributeName === "Intelligence") setTempIntelligence((previous) => isPreviousSelected ? tempIntelligence + newValue - previous : tempIntelligence + newValue);
+      if(attributeName === "Dexterity") setTempDexterity((previous) => isPreviousSelected ? tempDexterity + newValue - previous : tempDexterity + newValue);
+      if(attributeName === "Charisma") setTempCharisma((previous) => isPreviousSelected ? tempCharisma + newValue - previous : tempCharisma + newValue);
+      if(attributeName === "Insanity") setTempInsanity((previous) => isPreviousSelected ? tempInsanity + newValue - previous : tempInsanity + newValue); 
   };
 
-  const removeTempAttributeValue = (attributeName: string, newValue: number, isPreviousSelected: boolean = true) => {
-    if(isPreviousSelected){
-      console.log("REMOVE TEMP ATTRIBUTE ", attributeName); 
-      console.log("REMOVE TEMP ATTRIBUTE ", newValue); 
-    } else {
-      console.log("ADD TEMP ATTRIBUTE ", attributeName); 
-    console.log("ADD TEMP ATTRIBUTE ", newValue); 
-    }
-    
-    
-    if(attributeName === 'Constitution') setTempConstitution((previous) => isPreviousSelected ? tempConstitution + newValue - previous : tempConstitution + newValue);
-    if(attributeName === "Strength") setTempStrength((previous) => isPreviousSelected ? tempStrength + newValue - previous : tempStrength + newValue);
-    if(attributeName === "Intelligence") setTempIntelligence((previous) => isPreviousSelected ? tempIntelligence + newValue - previous : tempIntelligence + newValue);
-    if(attributeName === "Dexterity") setTempDexterity((previous) => isPreviousSelected ? tempDexterity + newValue - previous : tempDexterity + newValue);
-    if(attributeName === "Charisma") setTempCharisma((previous) => isPreviousSelected ? tempCharisma + newValue - previous : tempCharisma + newValue);
-    if(attributeName === "Insanity") setTempInsanity((previous) => isPreviousSelected ? tempInsanity + newValue - previous : tempInsanity + newValue);
+  const removeTempAttributeValue = (attributeName: string, newValue: number) => {
+    console.log("CURRENT DELETE ATTRIBUTE ", attributeName); 
+    console.log("CURRENT DELETE ATTRIBUTE ", newValue); 
+    console.log(`CURRENT TEMP ATTRIBUTES : 
+      Constitution:${tempConstitution}
+      Strength:${tempStrength}
+      Intelligence:${tempIntelligence}
+      Dexterity:${tempDexterity}
+      Charisma:${tempCharisma}
+      Insanity:${tempInsanity}
+      `);
+    if(attributeName === 'Constitution'){
+      setTempConstitution((previous) => previous - newValue );
+    } 
+    if(attributeName === "Strength") setTempStrength((previous) => previous - newValue  );
+    if(attributeName === "Intelligence") setTempIntelligence((previous) => previous - newValue  );
+    if(attributeName === "Dexterity") setTempDexterity((previous) => previous - newValue );
+    if(attributeName === "Charisma") setTempCharisma((previous) => previous - newValue  );
+    if(attributeName === "Insanity") setTempInsanity((previous) => previous - newValue  );
     
   };
 
