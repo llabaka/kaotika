@@ -9,6 +9,7 @@ import KaotikaNextButton from '@/components/KaotikaNextButton';
 import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import { Profile } from '@/_common/interfaces/Profile';
 import { Attribute } from '@/_common/interfaces/Attribute';
+import { Player } from '@/_common/interfaces/Player';
 
 
 
@@ -24,6 +25,8 @@ const PlayerPage = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [currentAttribute, setCurrentAttribute] = useState<Attribute>();
+  const [player, setPlayer] = useState<Player>();
+  
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -32,7 +35,9 @@ const PlayerPage = () => {
           setLoading(true);
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
           if (res.status === 200) {
-            const player = await res.json();
+            const data = await res.json();
+            setPlayer(data.data.player[0]);
+            console.log(`Registered player ${player}`)
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();
@@ -53,6 +58,11 @@ const PlayerPage = () => {
     }
   }, [session]);
 
+  useEffect(() => {
+    console.log(player)
+  }, [player])
+  
+
   const handleSelectedOption = (selectedOption: string) => {
     setSelectedOption(selectedOption);
     const profile = profiles.find((obj) => obj._id === selectedOption);
@@ -70,10 +80,6 @@ const PlayerPage = () => {
     router.push(`/equipment?${createQueryString("profile", currentProfile as Profile)}`);
   };
 
-  const handleBack = () => {
-    router.push('/welcome');
-  };
-
   const handleAttributeClick = (attribute: Attribute) => {
     setCurrentAttribute(attribute);
     onOpen();
@@ -88,13 +94,11 @@ const PlayerPage = () => {
   return (
     <Layout>
     <div className="mx-auto flex-col text-medievalSepia">
-      {isRegistered ? (
+      {isRegistered && player ? (
         <div className="w-full p-4">
-          <h1 className="text-3xl font-bold">Welcome, </h1>
-          <h1 className="text-3xl font-bold">Welcome, </h1>
-          <h1 className="text-3xl font-bold">Welcome, </h1>
-          <h1 className="text-3xl font-bold">Welcome, </h1>
-          
+          <h1 className="text-3xl text-center font-light">Welcome, {player?.name}</h1>
+          <h1 className="text-3xl text-center font-light">Level: {player?.level} </h1>
+          <h1 className="text-3xl text-center font-light">Gold: {player?.gold} </h1>   
         </div>
       ) : (
         <>
@@ -160,7 +164,6 @@ const PlayerPage = () => {
               ))}                   
             </div>
               <KaotikaNextButton handleNext={handleNext} />
-              <KaotikaBackButton handleBack={handleBack} />
               <Modal isOpen={isOpen} onOpenChange={onOpenChange} size='4xl' placement='top'>
                 <ModalContent className='border-medievalSepia border-1 bg-black/80'>
                   {(onClose) => (

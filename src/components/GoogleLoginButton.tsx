@@ -24,7 +24,7 @@ export default function GoogleLoginButton() {
   if (!session) {
     return (
       <MedievalButton onClick={() => signIn("google")}>
-        Iniciar sesión con Google
+        Google Signin
       </MedievalButton>
     );
   } else {

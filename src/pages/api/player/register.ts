@@ -1,26 +1,30 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { email, option } = req.body;
+  if (req.method === 'POST') {
+    console.log("POST API")
+    console.log(req.body);
+    try {
+      const response = await fetch('https://kaotika-server.fly.dev/players', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(req.body),
+      });
 
-  if (!email || !option) {
-    return res.status(400).json({ error: 'Email and option are required' });
-  }
+      if (!response.ok) {
+        throw new Error('Failed to register player');
+      }
 
-  try {
-    const response = await fetch(`https://api.external-service.com/register`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, option })
-    });
-    const data = await response.json();
-
-    if (response.status === 200) {
-      return res.status(200).json(data);
-    } else {
-      return res.status(response.status).json({ error: data.message });
+      const result = await response.json();
+      console.log(result);
+      res.status(200).json(result);
+    } catch (error) {
+      console.error('Failed to register player:', error);
+      res.status(500).json({ error: 'Failed to register player' });
     }
-  } catch (error) {
-    return res.status(500).json({ error: 'Internal server error' });
+  } else {
+    res.status(405).json({ error: 'Method not allowed' });
   }
 }
