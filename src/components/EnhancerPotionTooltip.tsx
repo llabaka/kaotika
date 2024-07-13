@@ -14,9 +14,7 @@ const EnhancerPotionTooltip: React.FC<Props> = ({ element }) => {
           <h1 className="text-3xl mb-4 text-darkSepia">Turns</h1>
           <p className="text-3xl mb-4">{element.duration}</p>
           <h1 className="text-3xl mb-4 text-darkSepia">Modifiers</h1> 
-          {element.modifiers.map((modifier, index) => {
-            return <p key={index} className="text-3xl mb-4 text-center">{modifier.attribute}: {modifier.value}</p>
-          })}
+          
           
         </div>
     )

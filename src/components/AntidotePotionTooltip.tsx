@@ -14,9 +14,7 @@ const AntidotePotionTooltip: React.FC<Props> = ({ element }) => {
           <p className="text-3xl mb-2 text-darkSepia">Recovery {element.recovery_effect.type}</p>         
           <p className="text-2xl mb-2 ">{element.recovery_effect.name}</p>       
           <p className="text-3xl mb-2 text-darkSepia">Modifiers</p>       
-          {element.recovery_effect.modifiers.map((modifier, index) => {
-            return <p key={index} className="text-2xl mb-2">{modifier.attribute}: {modifier.value}</p>  
-          })}      
+              
        
         </div>
     )
