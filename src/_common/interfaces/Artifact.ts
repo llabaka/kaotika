@@ -6,6 +6,6 @@ export interface Artifact {
   description: string,
   image: string,
   modifiers_charisma: Modifier[],
-  modifiers: Modifier[],
+  modifiers: Modifier,
   min_level: number
 }

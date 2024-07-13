@@ -33,16 +33,31 @@ const Equipment = () => {
   const [selectedAntidotePotion, setSelectedAntidotePotion] = useState<AntidotePotion>();
   const [selectedEnhancerPotion, setselectedEnhancerPotion] = useState<EnhancerPotion>();
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
-  const [currentAttributes, setCurrentAttributes] = useState<Attribute[]>()
-  const [armorModifiers, setArmorModifiers] = useState<Modifier[] | null>(null);
-  const [weaponModifiers, setWeaponModifiers] = useState<Modifier[] | null>(null);
-  const [artifactModifiers, setArtifactModifiers] = useState<Modifier[] | null>(null);
-  // const [tempStrength, setTempStrength] = useState(0);
-  // const [tempConstitution, setTempConstitution] = useState(0);
-  // const [tempDexterity, setTempDexterity] = useState(0);
-  // const [tempIntelligence, setTempIntelligence] = useState(0);
-  // const [tempInsanity, setTempInsanity] = useState(0);
-  // const [tempCharisma, setTempCharisma] = useState(0);
+  const [armorModifiers, setArmorModifiers] = useState<Modifier>({
+    intelligence: 0,
+    dexterity: 0,
+    constitution: 0,
+    insanity: 0,
+    charisma: 0,
+    strength: 0
+  });
+  const [weaponModifiers, setWeaponModifiers] = useState<Modifier>({
+    intelligence: 0,
+    dexterity: 0,
+    constitution: 0,
+    insanity: 0,
+    charisma: 0,
+    strength: 0
+  });
+  const [artifactModifiers, setArtifactModifiers] = useState<Modifier>({
+    intelligence: 0,
+    dexterity: 0,
+    constitution: 0,
+    insanity: 0,
+    charisma: 0,
+    strength: 0
+  });
+
   const [hitPoints, setHitPoints] = useState(0);
   const [attack, setAttack] = useState(0);
   const [defense, setDefense] = useState(0);
@@ -55,9 +70,27 @@ const Equipment = () => {
   useEffect(() => {
     const profile = router.query.profile;
     setCurrentProfile(JSON.parse(profile as string));
-    setCurrentAttributes(currentProfile?.attributes);
-
   }, []);
+
+  useEffect(() => {
+    console.log("CALCULATE ALL");
+    calculateHitPoints();
+    calculateAttack();
+    calculateDefense();
+    calculateMagicResistance();
+    calculateCFP();
+    calculateBCFA();
+  }, [currentProfile])
+
+  useEffect(() => {
+    console.log("CALCULATE ALL");
+    calculateHitPoints();
+    calculateAttack();
+    calculateDefense();
+    calculateMagicResistance();
+    calculateCFP();
+    calculateBCFA();
+  }, [armorModifiers, weaponModifiers])
 
   const handleNext = async() => {
     setLoading(true);
@@ -99,16 +132,7 @@ const Equipment = () => {
     if(selectedArmor === armor) {      
       return;
     }
-    // if(!selectedArmor) {
-    //   armor?.modifiers.map(modifier => {
-    //     changeAttributeValue(modifier.attribute, modifier.value, false);
-    //   })
-    // } else {
-    //   //setArmorModifiers(null);
-    //   //selectedArmor.modifiers.map(modifier => {removeTempAttributeValue(modifier.attribute,modifier.value)})
-    //   //armor.modifiers.map(modifier => changeAttributeValue(modifier.attribute, modifier.value))
-    // }
-  
+    
     setSelectedArmor(armor);
   }
 
@@ -116,15 +140,7 @@ const Equipment = () => {
     if(selectedWeapon === weapon) {      
       return;
     }
-    // if(!selectedWeapon) {
-    //   weapon?.modifiers.map(modifier => {
-    //     changeAttributeValue(modifier.attribute, modifier.value);
-    //   })
-    // } else {
-    //   setWeaponModifiers(null);
-    //   //selectedWeapon.modifiers.map(modifier => {removeTempAttributeValue(modifier.attribute,modifier.value)})
-    //   weapon.modifiers.map(modifier => changeAttributeValue(modifier.attribute, modifier.value))
-    // }
+
     setSelectedWeapon(weapon);
   }
 
@@ -132,144 +148,67 @@ const Equipment = () => {
     if(selectedArtifact === artifact) {      
       return;
     }
-    // if(!selectedArtifact) {
-    //   artifact?.modifiers.map(modifier => {
-    //     changeAttributeValue(modifier.attribute, modifier.value);
-    //   })
-    // }
-    // const previousModifiers = selectedArtifact?.modifiers.map(modifier => modifier)
-    // if(previousModifiers) {
-    //   previousModifiers.map(modifier => {
-    //     removeTempAttributeValue(modifier.attribute, modifier.value);
-    //   })
-    // } else {
-    //   artifact?.modifiers.map(modifier => {
-    //     removeTempAttributeValue(modifier.attribute, modifier.value);
-    //   })
-    // }
+   
     setSelectedArtifact(artifact);
   }
 
   useEffect(() => {
     console.log("ARMOR CHANGED");
-    selectedArmor?.modifiers.map(modifier => {
-      changeAttributeValue(modifier.attribute, modifier.value);
-    })
-    // if(selectedArmor) setArmorModifiers(selectedArmor.modifiers);    
+    if(selectedArmor)setArmorModifiers(selectedArmor?.modifiers)   
   }, [selectedArmor]);
 
   useEffect(() => {
     console.log("WEAPON CHANGED");
-    if(selectedWeapon) setWeaponModifiers(selectedWeapon.modifiers);    
+    if(selectedWeapon)setWeaponModifiers(selectedWeapon?.modifiers) 
   }, [selectedWeapon]);
 
   useEffect(() => {
     console.log("ARTIFACT CHANGED");
     if(selectedArtifact) setArtifactModifiers(selectedArtifact.modifiers);    
   }, [selectedArtifact]);
+
  
- 
-  
-  const changeAttributeValue = (attributeName: string, newValue: number, ) => {
-    let increaseConstitution = 0, increaseStrength = 0, increaseIntelligence = 0, increaseDexterity = 0, increaseCharisma = 0, increaseInsanity = 0;
-    if(selectedArmor ){
-      if(attributeName === 'Constitution') increaseConstitution += newValue;
-      if(attributeName === "Strength") increaseStrength += newValue;
-      if(attributeName === "Intelligence") increaseIntelligence += newValue;
-      if(attributeName === "Dexterity") increaseDexterity += newValue;
-      if(attributeName === "Charisma") increaseCharisma += newValue;
-      if(attributeName === "Insanity") increaseInsanity += newValue; 
-    }
-    if(selectedWeapon ){
-      if(attributeName === 'Constitution') increaseConstitution += newValue;
-      if(attributeName === "Strength") increaseStrength += newValue;
-      if(attributeName === "Intelligence") increaseIntelligence += newValue;
-      if(attributeName === "Dexterity") increaseDexterity += newValue;
-      if(attributeName === "Charisma") increaseCharisma += newValue;
-      if(attributeName === "Insanity") increaseInsanity += newValue; 
-    }
-      
-    if(selectedArtifact){
-      if(attributeName === 'Constitution') increaseConstitution += newValue;
-      if(attributeName === "Strength") increaseStrength += newValue;
-      if(attributeName === "Intelligence") increaseIntelligence += newValue;
-      if(attributeName === "Dexterity") increaseDexterity += newValue;
-      if(attributeName === "Charisma") increaseCharisma += newValue;
-      if(attributeName === "Insanity") increaseInsanity += newValue;   
-    }
-    calculateHitPoints(increaseConstitution, increaseStrength);
-    calculateAttack(increaseStrength, increaseInsanity);
-    calculateDefense(increaseIntelligence, increaseDexterity, increaseConstitution);
-    calculateMagicResistance(increaseCharisma, increaseIntelligence);
-    calculateCFP(increaseInsanity);
-    calculateBCFA(increaseStrength, increaseInsanity);
-
-     
-  };
-
-  const removeTempAttributeValue = (attributeName: string, newValue: number) => {
-    console.log("CURRENT DELETE ATTRIBUTE ", attributeName); 
-    console.log("CURRENT DELETE ATTRIBUTE ", newValue); 
-    console.log(`CURRENT TEMP ATTRIBUTES : 
-      Constitution:${tempConstitution}
-      Strength:${tempStrength}
-      Intelligence:${tempIntelligence}
-      Dexterity:${tempDexterity}
-      Charisma:${tempCharisma}
-      Insanity:${tempInsanity}
-      `);
-    if(attributeName === 'Constitution'){
-      setTempConstitution((previous) => previous - newValue );
-    } 
-    if(attributeName === "Strength") setTempStrength((previous) => previous - newValue  );
-    if(attributeName === "Intelligence") setTempIntelligence((previous) => previous - newValue  );
-    if(attributeName === "Dexterity") setTempDexterity((previous) => previous - newValue );
-    if(attributeName === "Charisma") setTempCharisma((previous) => previous - newValue  );
-    if(attributeName === "Insanity") setTempInsanity((previous) => previous - newValue  );
-    
-  };
-
-  const calculateHitPoints = (tempConstitution:number ,tempStrength: number): void => {
+  const calculateHitPoints = (): void => {
     if (!currentProfile) return ;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
-    setHitPoints( (strength + tempStrength)  + (constitution + tempConstitution)); 
+    setHitPoints( ( strength + armorModifiers.strength  + weaponModifiers.strength)  + (constitution + armorModifiers.constitution +weaponModifiers.constitution)); 
   };
 
-  const calculateAttack = (tempStrength: number,tempInsanity: number ): void => {
+  const calculateAttack = (): void => {
     if(!currentProfile) return;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setAttack((strength + tempStrength) - (insanity + tempInsanity)/2);
+    setAttack((strength + armorModifiers.strength + weaponModifiers.strength) - ((insanity + armorModifiers.insanity + weaponModifiers.insanity)/2));
   }
 
-  const calculateDefense = (tempIntelligence:  number,tempDexterity:  number,tempConstitution:  number): void => {
+  const calculateDefense = (): void => {
     if(!currentProfile) return;
     const dexterity = currentProfile.attributes.find(attr => attr.name === 'Dexterity')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
     const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
-    setDefense((dexterity + tempDexterity) + (constitution + tempConstitution) + (intelligence + tempIntelligence)/2)
+    setDefense((dexterity + armorModifiers.dexterity + weaponModifiers.dexterity) + (constitution + armorModifiers.constitution + weaponModifiers.constitution) + ((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence)/2));
   }
 
-  const calculateMagicResistance = (tempCharisma: number, tempIntelligence: number): void => {
+  const calculateMagicResistance = (): void => {
     if(!currentProfile) return;
     const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
     const charisma = currentProfile.attributes.find(attr => attr.name === 'Charisma')?.value || 0;
-    setmagicResistance((intelligence + tempIntelligence) + (charisma + tempCharisma));
+    setmagicResistance((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence) + (charisma + armorModifiers.charisma + weaponModifiers.charisma));
 
   }
 
-  const calculateCFP = (tempInsanity: number): void => {
+  const calculateCFP = (): void => {
     if(!currentProfile) return;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setCFP((insanity + tempInsanity));
+    setCFP((insanity + armorModifiers.insanity + weaponModifiers.insanity));
   }
 
-  const calculateBCFA =(tempStrength: number, tempInsanity: number): void => {
+  const calculateBCFA =(): void => {
     if(!currentProfile) return;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setBCFA((strength + tempStrength) + (insanity + tempInsanity));
+    setBCFA((strength + armorModifiers.strength + weaponModifiers.strength) + (insanity + armorModifiers.insanity + weaponModifiers.insanity));
   }
 
   if (loading) {
@@ -552,3 +491,4 @@ const Equipment = () => {
 };
 
 export default Equipment;
+

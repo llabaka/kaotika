@@ -34,9 +34,12 @@ const WeaponTooltip: React.FC<Props> = ({ element }) => {
             </tbody>
           </table>
           <p className="text-3xl mb-2 text-darkSepia">Modifiers:</p>
-          {element.modifiers.map((modifier, index) => {
-            return <p key={index} className="text-2xl mb-2 font-light">{modifier.attribute}: {modifier.value}</p>
-          })}
+          {element.modifiers.constitution ? <p className="text-2xl mb-2">Constitution: {element.modifiers.constitution}</p> : null}
+          {element.modifiers.charisma ? <p className="text-2xl mb-2">Charisma: {element.modifiers.charisma}</p> : null}
+          {element.modifiers.dexterity ? <p className="text-2xl mb-2">Dexterity: {element.modifiers.dexterity}</p> : null}
+          {element.modifiers.insanity ? <p className="text-2xl mb-2">Insanity: {element.modifiers.insanity}</p> : null}
+          {element.modifiers.intelligence ? <p className="text-2xl mb-2">Intelligence: {element.modifiers.intelligence}</p> : null}
+          {element.modifiers.strength ? <p className="text-2xl mb-2">Strength: {element.modifiers.strength}</p> : null} 
           
         </div>
     )

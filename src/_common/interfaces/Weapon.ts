@@ -8,6 +8,6 @@ export interface Weapon {
   image: string,
   damage: string,
   base_percentage: number,
-  modifiers: Modifier[],
+  modifiers: Modifier,
   min_level: number
 }
