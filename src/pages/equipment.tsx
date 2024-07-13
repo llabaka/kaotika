@@ -90,7 +90,7 @@ const Equipment = () => {
     calculateMagicResistance();
     calculateCFP();
     calculateBCFA();
-  }, [armorModifiers, weaponModifiers])
+  }, [armorModifiers, weaponModifiers, artifactModifiers])
 
   const handleNext = async() => {
     setLoading(true);
@@ -172,14 +172,14 @@ const Equipment = () => {
     if (!currentProfile) return ;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
-    setHitPoints( ( strength + armorModifiers.strength  + weaponModifiers.strength)  + (constitution + armorModifiers.constitution +weaponModifiers.constitution)); 
+    setHitPoints( ( strength + armorModifiers.strength  + weaponModifiers.strength + artifactModifiers.strength)  + (constitution + armorModifiers.constitution + weaponModifiers.constitution + artifactModifiers.constitution)); 
   };
 
   const calculateAttack = (): void => {
     if(!currentProfile) return;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setAttack((strength + armorModifiers.strength + weaponModifiers.strength) - ((insanity + armorModifiers.insanity + weaponModifiers.insanity)/2));
+    setAttack((strength + armorModifiers.strength + weaponModifiers.strength + artifactModifiers.strength) - ((insanity + armorModifiers.insanity + weaponModifiers.insanity + artifactModifiers.insanity)/2));
   }
 
   const calculateDefense = (): void => {
@@ -187,28 +187,28 @@ const Equipment = () => {
     const dexterity = currentProfile.attributes.find(attr => attr.name === 'Dexterity')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
     const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
-    setDefense((dexterity + armorModifiers.dexterity + weaponModifiers.dexterity) + (constitution + armorModifiers.constitution + weaponModifiers.constitution) + ((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence)/2));
+    setDefense((dexterity + armorModifiers.dexterity + weaponModifiers.dexterity + artifactModifiers.dexterity) + (constitution + armorModifiers.constitution + weaponModifiers.constitution + artifactModifiers.constitution) + ((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence + artifactModifiers.intelligence)/2));
   }
 
   const calculateMagicResistance = (): void => {
     if(!currentProfile) return;
     const intelligence = currentProfile.attributes.find(attr => attr.name === 'Intelligence')?.value || 0;
     const charisma = currentProfile.attributes.find(attr => attr.name === 'Charisma')?.value || 0;
-    setmagicResistance((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence) + (charisma + armorModifiers.charisma + weaponModifiers.charisma));
+    setmagicResistance((intelligence + armorModifiers.intelligence + weaponModifiers.intelligence + artifactModifiers.intelligence) + (charisma + armorModifiers.charisma + weaponModifiers.charisma + artifactModifiers.charisma));
 
   }
 
   const calculateCFP = (): void => {
     if(!currentProfile) return;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setCFP((insanity + armorModifiers.insanity + weaponModifiers.insanity));
+    setCFP((insanity + armorModifiers.insanity + weaponModifiers.insanity + artifactModifiers.insanity));
   }
 
   const calculateBCFA =(): void => {
     if(!currentProfile) return;
     const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
     const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
-    setBCFA((strength + armorModifiers.strength + weaponModifiers.strength) + (insanity + armorModifiers.insanity + weaponModifiers.insanity));
+    setBCFA((strength + armorModifiers.strength + weaponModifiers.strength + artifactModifiers.strength) + (insanity + armorModifiers.insanity + weaponModifiers.insanity + artifactModifiers.insanity));
   }
 
   if (loading) {

@@ -7,6 +7,6 @@ export interface EnhancerPotion {
   image: string,
   type: string,
   duration: number,
-  modifiers: Modifier[],
+  modifiers: Modifier,
   min_level: number
 }
