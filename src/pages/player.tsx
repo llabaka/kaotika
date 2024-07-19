@@ -10,6 +10,9 @@ import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import { Profile } from '@/_common/interfaces/Profile';
 import { Attribute } from '@/_common/interfaces/Attribute';
 import { Player } from '@/_common/interfaces/Player';
+import PlayerAttributes from '@/components/player/PlayerAttributes';
+import PlayerEquipment from '@/components/player/PlayerEquipment';
+import PlayerInventory from '@/components/player/PlayerInventory';
 
 
 
@@ -95,10 +98,59 @@ const PlayerPage = () => {
     <Layout>
     <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered && player ? (
-        <div className="w-full p-4">
-          <h1 className="text-3xl text-center font-light">Welcome, {player?.name}</h1>
-          <h1 className="text-3xl text-center font-light">Level: {player?.level} </h1>
-          <h1 className="text-3xl text-center font-light">Gold: {player?.gold} </h1>   
+        <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
+          <div className="flex justify-center">
+          <div className="w-1/3 p-4">
+              <h2 className="text-4xl mb-4 text-center">PlayerAttributes</h2>
+          </div>
+          <div className="w-1/3 p-4">
+              <h2 className="text-4xl mb-4 text-center">{player.name}</h2>
+              <div className="w-full h-full p-8 border-1 rounded-lg border-sepia bg-black/70">
+              <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
+                <div className="col-start-3 col-span-2"><img src="/images/helmet_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div className="col-start-1 col-end-3"><img src="/images/sword_back.jpg" alt="Inventory" className="object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '150px'}} /></div>
+                <div className="col-start-3 col-end-5"><img src="/images/armor_back.jpg" alt="Inventory" className="w-full h-full object-contain rounded-sm" style={{'border': '3px ridge #000000'}} /></div>
+                <div className="col-end-7 col-span-2"><img src="/images/shield_back.jpg" alt="Inventory" className="object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '150px'}} /></div>
+                <div className="col-start-1 col-end-3"><img src="/images/artifact_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div className="col-start-3 col-end-5"><img src="/images/boots_back.jpg" alt="Inventory" className="w-full h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div className="col-end-7 col-span-2"><img src="/images/artifact_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+              </div>
+              <h2 className="text-4xl mb-4 text-center">Level {player.level}</h2>
+              <h2 className="text-4xl mb-4 text-center">Gold {player.gold}</h2>
+              </div>
+          </div>
+          <div className="w-1/3 p-4">
+              <h2 className="text-4xl mb-4 text-center">PlayerInventory</h2>
+              <div className="w-full h-full p-12 border-1 rounded-lg border-sepia bg-black/70">
+              <div className="grid grid-cols-6 gap-0 justify-items-center">
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+                <div><img src="/images/img.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
+              </div>
+              </div>
+          </div>
+          </div>
         </div>
       ) : (
         <>
@@ -115,12 +167,12 @@ const PlayerPage = () => {
                 onChange={(e) => handleSelectedOption(e.target.value)}
                 value={selectedOption}
             >
-                <option value="" disabled>Select a profile</option>
-                {profiles.map((item) => (
-                    <option key={item._id} value={item._id}>
-                    {item.name}
-                    </option>
-                ))}
+              <option value="" disabled>Select a profile</option>
+              {profiles.map((item) => (
+                  <option key={item._id} value={item._id}>
+                  {item.name}
+                  </option>
+              ))}
             </select>
             {selectedOption ? (
               <div className="mb-5 mt-10">
