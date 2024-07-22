@@ -1,8 +1,9 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, ReactNode, ReactHTMLElement } from 'react';
 import { Progress } from "@nextui-org/react";
 import {Modal, ModalContent, ModalBody, useDisclosure} from "@nextui-org/react";
+import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
@@ -13,11 +14,12 @@ import { Player } from '@/_common/interfaces/Player';
 import PlayerAttributes from '@/components/player/PlayerAttributes';
 import PlayerEquipment from '@/components/player/PlayerEquipment';
 import PlayerInventory from '@/components/player/PlayerInventory';
-
-
-
+import Droppable from '@/components/Droppable';
+import Draggable from '@/components/Draggable';
+import {CSS} from '@dnd-kit/utilities';
 
 const PlayerPage = () => {
+  const grid_1 = useRef(null);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const router = useRouter();
   const { data: session } = useSession();
@@ -29,7 +31,13 @@ const PlayerPage = () => {
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [currentAttribute, setCurrentAttribute] = useState<Attribute>();
   const [player, setPlayer] = useState<Player>();
-  
+  const [currentHelmet, setCurrentHelmet] = useState<string | null>(null);
+  const [currentWeapon, setCurrentWeapon] = useState<string | null>(null);
+  const [currentArmor, setCurrentArmor] = useState<string | null>(null);
+  const [currentShield, setCurrentShield] = useState<string | null>(null);
+  const [currentArtifact, setCurrentArtifact] = useState<string | null>(null);
+  const [currentBoots, setCurrentBoots] = useState<string | null>(null);
+  const [currentRing, setCurrentRing] = useState<string | null>(null);
 
   useEffect(() => {
     if (session?.user?.email) {
@@ -88,6 +96,40 @@ const PlayerPage = () => {
     onOpen();
   }
 
+  const handleDragStart = (event: DragOverEvent) => {
+    
+    const {active, over} = event;
+    
+    if (over && active.data.current?.supports.includes(over.data.current?.type)) {
+      console.log("over")
+    }
+  }
+
+  const handleDragOver = (event: DragOverEvent) => {
+    const {active, over} = event;
+    if (over && active.data.current?.supports.includes(over.data.current?.type)) {
+      //console.log(over)
+    }
+  }
+
+  const handleDragEnd =(event: DragEndEvent)=> {
+    const {active, over} = event;
+    
+    if (over && active.data.current?.supports.includes(over.data.current?.type)) {
+      const img = (document.getElementById(active.id.toString()) as HTMLImageElement)
+      const baseUrl = 'https://www.localhost:3000';
+      const src = img.src.replace(baseUrl, "");
+      if(over.data.current?.type === 'helmet') setCurrentHelmet(src);
+      if(over.data.current?.type === 'weapon') setCurrentWeapon(src);
+      if(over.data.current?.type === 'armor') setCurrentArmor(src);
+      if(over.data.current?.type === 'shield') setCurrentShield(src);
+      if(over.data.current?.type === 'artifact') setCurrentArtifact(src);
+      if(over.data.current?.type === 'boot') setCurrentBoots(src);
+      if(over.data.current?.type === 'ring') setCurrentRing(src);
+    }
+  }
+
+  
 
   if (loading) {
     return <Loading />;
@@ -98,57 +140,101 @@ const PlayerPage = () => {
     <Layout>
     <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered && player ? (
+        <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} onDragStart={handleDragStart}>
         <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
           <div className="flex justify-center">
           <div className="w-1/3 p-4">
-              <h2 className="text-4xl mb-4 text-center border-1 rounded-l-3xl  border-sepia bg-black/70 p-3">Attributes</h2>
-              <div className="w-full h-full p-12 border-1 rounded-lg border-sepia bg-black/70 rounded-l-3xl">
-              </div>
+            <h2 className="text-4xl mb-4 text-center border-1 rounded-l-3xl  border-sepia bg-black/70 p-3">Attributes</h2>
+            <div className="w-full h-full p-12 border-1 rounded-lg border-sepia bg-black/70 rounded-l-3xl">
+            </div>
           </div>
           <div className="w-1/3 p-4">
-              <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.name}</h2>
-              <div className="w-full h-full p-8 border-1 rounded-lg border-sepia bg-black/70">
-                <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
-                  <div className="col-start-3 col-span-2"><img src="/images/helmet_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
-                  <div className="col-start-1 col-end-3"><img src="/images/sword_back.jpg" alt="Inventory" className="object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '150px'}} /></div>
-                  <div className="col-start-3 col-end-5"><img src="/images/armor_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '200px'}} /></div>
-                  <div className="col-end-7 col-span-2"><img src="/images/shield_back.jpg" alt="Inventory" className="object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '150px'}} /></div>
-                  <div className="col-start-1 col-end-3"><img src="/images/artifact_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '75px'}} /></div>
-                  <div className="col-start-3 col-end-5"><img src="/images/boots_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-sm" style={{'border': '3px ridge #000000', 'width': '100px'}} /></div>
-                  <div className="col-end-7 col-span-2"><img src="/images/artifact_back.jpg" alt="Inventory" className="w-1/4 h-full object-contain rounded-full" style={{'border': '3px ridge #000000', 'width': '75px'}} /></div>
+            <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.name}</h2>
+            <div className="w-full h-full p-8 border-1 rounded-lg border-sepia bg-black/70">
+              <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
+                <div className="col-start-3 col-span-2">
+                  <Droppable id={100} type='helmet' children={currentHelmet 
+                  ? 
+                    <Draggable id="helmet_1" type={['helmet', 'inventory']} src={currentHelmet} className="w-1/4 h-full object-contain rrounded-sm" width="100px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="helmet_2" type={[]} src="/images/helmet_back.jpg" className="w-1/4 h-full object-contain rounded-sm" width="100px" border="3px ridge #000000" />}/>
                 </div>
-                <div className="grid grid-cols-2 gap-4 justify-items-center items-center pt-10">
-                  <h2 className="text-4xl mb-4 text-center">Level: {player.level}</h2>
-                  <h2 className="text-4xl mb-4 text-center">XP: {player.experience}</h2>
-                  <h2 className="text-4xl mb-4 text-center">Gold: {player.gold}</h2>
+                <div className="col-start-1 col-end-3">
+                  <Droppable id={200} type='weapon' children={currentWeapon 
+                  ? 
+                    <Draggable id="weapon_1" type={['weapon', 'inventory']} src={currentWeapon} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="weapon_2" type={[]} src="/images/sword_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #000000" />}/>
+                </div>
+                <div className="col-start-3 col-end-5">
+                  <Droppable id={300} type='armor' children={currentArmor 
+                  ? 
+                    <Draggable id="armor_1" type={['armor', 'inventory']} src={currentArmor} className="w-1/4 h-full object-contain rounded-sm" width="200px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="armor_2" type={[]} src="/images/armor_back.jpg" className="w-1/4 h-full object-contain rounded-sm" width="200px" border="3px ridge #000000" />}/>
+                </div>
+                <div className="col-end-7 col-span-2">
+                  <Droppable id={400} type='shield' children={currentShield 
+                  ? 
+                    <Draggable id="shield_1" type={['shield', 'inventory']} src={currentShield} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="shield_2" type={[]} src="/images/shield_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #000000" />}/>
+                </div>
+                <div className="col-start-1 col-end-3">
+                  <Droppable id={500} type='artifact' children={currentArtifact 
+                  ? 
+                    <Draggable id="artifact_1" type={['artifact', 'inventory']} src={currentArtifact} className="w-1/4 h-full object-contain rounded-full" width="75px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="artifact_2" type={[]} src="/images/artifact_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="75px" border="3px ridge #000000" />}/>
+                  </div>
+                <div className="col-start-3 col-end-5">
+                <Droppable id={600} type='boot' children={currentBoots 
+                  ? 
+                    <Draggable id="boot_1" type={['boot', 'inventory']} src={currentBoots} className="w-1/4 h-full object-contain rrounded-sm" width="100px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="boot_2" type={[]} src="/images/boots_back.jpg" className="w-1/4 h-full object-contain rounded-sm" width="100px" border="3px ridge #000000" />}/>
+                  </div>
+                <div className="col-end-7 col-span-2">
+                  <Droppable id={700} type='ring' children={currentRing 
+                  ? 
+                    <Draggable id="ring_1" type={['ring', 'inventory']} src={currentRing} className="w-1/4 h-full object-contain rounded-full" width="75px" border="3px ridge #cda882" /> 
+                  : 
+                    <Draggable id="ring_2" type={[]} src="/images/ring_back.png" className="w-1/4 h-full object-contain rounded-full" width="75px" border="3px ridge #000000" />}/>
                 </div>
               </div>
+              <div className="grid grid-cols-2 gap-4 justify-items-center items-center pt-10">
+                <h2 className="text-4xl mb-4 text-center">Level: {player.level}</h2>
+                <h2 className="text-4xl mb-4 text-center">XP: {player.experience}</h2>
+                <h2 className="text-4xl mb-4 text-center">Gold: {player.gold}</h2>
+              </div>
+            </div>
           </div>
           <div className="w-1/3 p-4">
-              <h2 className="text-4xl mb-4 text-center border-1 border-sepia bg-black/70 p-3">Inventory</h2>
-              <div className="w-full h-full bg-black/70 flex flex-col">
+            <h2 className="text-4xl mb-4 text-center border-1 border-sepia bg-black/70 p-3">Inventory</h2>
+            <div className="w-full h-full bg-black/70 flex flex-col">
               <div className="grid grid-cols-4 grid-rows-4 flex-grow">
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>
-                <div className="bg-black/30" style={{'border': '3px ridge #000000'}}></div>        
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={1}  type='inventory' children={<Draggable id="23" type={['weapon', 'inventory']} src="/images/equipment/weapons/sword_1.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={2}  type='inventory' children={<Draggable id="24" type={['shield', 'inventory']} src="/images/equipment/shields/shield_1.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={3}  type='inventory' children={<Draggable id="25" type={['shield', 'inventory']} src="/images/equipment/shield_3.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={4}  type='inventory' children={<Draggable id="26" type={['ring', 'inventory']} src="/images/equipment/rings/ring_1.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={5}  type='inventory' children={<Draggable id="27" type={['ring', 'inventory']} src="/images/equipment/rings/ring_2.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={6}  type='inventory' children={<Draggable id="28" type={['helmet', 'inventory']} src="/images/equipment/helmets/helmet_2.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={7}  type='inventory' children={<Draggable id="29" type={['boot', 'inventory']} src="/images/equipment/boots/boot_2.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={8}  type='inventory' children={<Draggable id="30" type={['armor', 'inventory']} src="/images/equipment/armors/armor_1.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={9}  type='inventory' children={<Draggable id="31" type={['artifact', 'inventory']} src="/images/equipment/artifacts/artifact_1.png" className={undefined} width="150px" border="" />}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={10} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={11} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={12} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={13} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={14} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={15} type='inventory'  children={null}/></div>
+                <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}><Droppable id={16} type='inventory'  children={null}/></div>        
               </div>
-              </div>
+            </div>
           </div>
           </div>
         </div>
+        </DndContext>
       ) : (
         <>
         <div className="flex flex-col items-center bg-gray-800 text-medievalSepia ">
