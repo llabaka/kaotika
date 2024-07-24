@@ -1,6 +1,6 @@
 import { Modifier } from "./Modifier"
 
-export interface Armor {
+export interface Boot {
   _id: string,
   name: string,
   description: string,

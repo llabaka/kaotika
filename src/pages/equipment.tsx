@@ -73,7 +73,6 @@ const Equipment = () => {
   }, []);
 
   useEffect(() => {
-    console.log("CALCULATE ALL");
     calculateHitPoints();
     calculateAttack();
     calculateDefense();
@@ -83,7 +82,6 @@ const Equipment = () => {
   }, [currentProfile])
 
   useEffect(() => {
-    console.log("CALCULATE ALL");
     calculateHitPoints();
     calculateAttack();
     calculateDefense();
@@ -153,17 +151,14 @@ const Equipment = () => {
   }
 
   useEffect(() => {
-    console.log("ARMOR CHANGED");
     if(selectedArmor)setArmorModifiers(selectedArmor?.modifiers)   
   }, [selectedArmor]);
 
   useEffect(() => {
-    console.log("WEAPON CHANGED");
     if(selectedWeapon)setWeaponModifiers(selectedWeapon?.modifiers) 
   }, [selectedWeapon]);
 
   useEffect(() => {
-    console.log("ARTIFACT CHANGED");
     if(selectedArtifact) setArtifactModifiers(selectedArtifact.modifiers);    
   }, [selectedArtifact]);
 

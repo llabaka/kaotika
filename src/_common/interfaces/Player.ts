@@ -6,6 +6,10 @@ import { Artifact } from "./Artifact";
 import { Armor } from "./Armor";
 import { Weapon } from "./Weapon";
 import { Profile } from "./Profile";
+import { Helmet } from "./Helmet";
+import { Shield } from "./Shield";
+import { Boot } from "./Boot";
+import { Ring } from "./Ring";
 
 export interface Player {
   _id: string;
@@ -18,11 +22,27 @@ export interface Player {
   is_active: boolean;
   profile: Profile;
   equipment:{
-    armor: Armor,
+    helmet: Helmet,
     weapon: Weapon,
+    armor: Armor,
+    shield: Shield,
     artifact: Artifact,
+    boot: Boot,
+    ring: Ring,
     healing_potion: HealingPotion,
     antidote_potion: AntidotePotion,
     enhancer_potion: EnhancerPotion,
-  } 
+  },
+  inventory: {
+    helmets: Helmet[],
+    weapons: Weapon[],
+    armors: Armor[],
+    shields: Shield[],
+    artifacts: Artifact[],
+    boots: Boot[],
+    rings: Ring[],
+    healing_potions: HealingPotion[],
+    antidote_potions: AntidotePotion[],
+    enhancer_potions: EnhancerPotion[],
+  }
 }
