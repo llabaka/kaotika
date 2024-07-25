@@ -1,28 +1,20 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef, ReactNode, ReactHTMLElement } from 'react';
+import { useState, useEffect } from 'react';
 import { Progress } from "@nextui-org/react";
 import {Modal, ModalContent, ModalBody, useDisclosure} from "@nextui-org/react";
 import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
-import KaotikaBackButton from '@/components/KaotikaPrevbutton';
 import { Profile } from '@/_common/interfaces/Profile';
 import { Attribute } from '@/_common/interfaces/Attribute';
 import { Player } from '@/_common/interfaces/Player';
-import PlayerAttributes from '@/components/player/PlayerAttributes';
-import PlayerEquipment from '@/components/player/PlayerEquipment';
-import PlayerInventory from '@/components/player/PlayerInventory';
 import Droppable from '@/components/Droppable';
 import Draggable from '@/components/Draggable';
-import {CSS} from '@dnd-kit/utilities';
-import { HealingPotion } from '@/_common/interfaces/HealingPotion';
-import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
-import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 
 const PlayerPage = () => {
-  const grid_1 = useRef(null);
+
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
   const router = useRouter();
   const { data: session } = useSession();
@@ -54,12 +46,10 @@ const PlayerPage = () => {
           if (res.status === 200) {
             const data = await res.json();
             setPlayer(data.data.player[0]);
-            console.log(`Registered player ${player}`)
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();
             setIsRegistered(false);
-            console.log(response.data.profiles)
             setProfiles(response.data.profiles);
           } else {
             setError('An error occurred while checking registration');
@@ -138,8 +128,6 @@ const PlayerPage = () => {
     }
   }
 
-  
-
   if (loading) {
     return <Loading />;
   }
@@ -158,7 +146,7 @@ const PlayerPage = () => {
             </div>
           </div>
           <div className="w-1/3 p-4">
-            <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.name}</h2>
+            <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.nickname}</h2>
             <div className="w-full h-full p-8 border-1 rounded-lg border-sepia bg-black/70">
               <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
                 <div className="col-start-3 col-span-2">
@@ -274,11 +262,6 @@ const PlayerPage = () => {
         </DndContext>
       ) : (
         <>
-        <div className="flex flex-col items-center bg-gray-800 text-medievalSepia ">
-          <h1 className="text-6xl mb-2 animate-pulse">Welcome to Legends of Kaotika, {session?.user?.name}</h1>
-          <h2 className="text-4xl p-20 font-light">Today marks the beginning of your journey, a path filled with challenges and discoveries. As you step into this new adventure of Kaotika, remember that your dedication and commitment will be your greatest guides. Embrace the spirit of the Old School, where tradition meets innovation, and let it lead you to unparalleled growth and mastery. The road ahead may be demanding, but with determination and the support of your peers, you will achieve greatness. Welcome to the brotherhood; your adventure starts now.</h2>
-          <h2 className="text-4xl mb-2">Let's set up your acolyte</h2>
-        </div>
         <div className="w-full flex p-4">
           <div className="w-1/3 p-4">
           <h1 className="text-4xl mb-4 animate-bounce">Select your Hero Profile </h1>        

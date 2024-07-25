@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import getConfig from 'next/config';
 import { useEffect } from 'react';
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import Loading from '@/components/Loading';
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -10,17 +11,24 @@ const Home = () => {
   const { publicRuntimeConfig } = getConfig();
 
   useEffect(() => {
+    
     if (status === 'authenticated') {
       console.log('User is authenticated on HomePage:', session);
       const email = session?.user?.email || '';
-      if (email.endsWith('@gmail.com')) {
-        router.push('/player');
-      } else {
-        router.push('/dashboard');
+      const fetchPlayer = async () => {
+        try {        
+          const res = await fetch(`/api/player/check-registration?email=${email}`);
+          if(res.status === 200 && email.endsWith('@gmail.com')) router.push('/player');
+          if(res.status === 200 && email.endsWith('@aeg.eus')) router.push('/dashboard'); 
+          if(res.status === 404) router.push('/welcome');           
+        } catch (error) {
+          console.error('Failed to fetch player:', error);
+        } 
       }
+      fetchPlayer();
     }
   }, [status]);
-  
+
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="text-center flex-row">
@@ -43,7 +51,7 @@ const Home = () => {
           </div>
         </>
         ) : (
-          null
+          <Loading />
         )}
       </div>
     </div>

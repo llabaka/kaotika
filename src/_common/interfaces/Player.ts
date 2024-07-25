@@ -14,6 +14,7 @@ import { Ring } from "./Ring";
 export interface Player {
   _id: string;
   name: string;
+  nickname: string;
   avatar: string;
   email: string;
   experience: number;

@@ -92,6 +92,7 @@ const Equipment = () => {
 
   const handleNext = async() => {
     setLoading(true);
+    const nickname = sessionStorage.getItem('nickname');
     const response = await fetch('/api/player/register', {
       method: 'POST',
       headers: {
@@ -99,6 +100,7 @@ const Equipment = () => {
       },
       body: JSON.stringify({  
         name: session?.user?.name,
+        nickname: nickname,
         email: session?.user?.email,
         avatar: session?.user?.image,
         profile: currentProfile?._id,
@@ -224,7 +226,8 @@ const Equipment = () => {
                   key={armor._id}
                   src={armor.image}
                   alt={armor.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor?._id === armor._id ? 'border-3 sepia-0 border-sepia duration-300' : 'border-slate-300 border-dotted'}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor?._id === armor._id ? 'border-3 sepia-0 border-sepia ' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => handleSelectedArmor(armor)}
                 />
                 </Tooltip>
@@ -240,7 +243,8 @@ const Equipment = () => {
                   key={weapon._id}
                   src={weapon.image}
                   alt={weapon._id}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon?._id === weapon._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedWeapon?._id === weapon._id ? 'border-3 sepia-0 border-medievalSepia' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => handleSelectedWeapon(weapon)}
                 />
                 </Tooltip>
@@ -257,6 +261,7 @@ const Equipment = () => {
                   src={artifact.image}
                   alt={artifact.description}
                   className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArtifact?._id === artifact._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => handleSelectedArtifact(artifact)}
                 />
                 </Tooltip>
@@ -274,7 +279,8 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : 'border-slate-300 border-dotted'}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => {setSelectedHealingPotion(potion)}}
                   
                 />
@@ -292,6 +298,7 @@ const Equipment = () => {
                   src={potion.image}
                   alt={potion.description}
                   className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedAntidotePotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => {setSelectedAntidotePotion(potion)}}
                 />
                 </Tooltip>
@@ -307,7 +314,8 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedEnhancerPotion?._id === potion._id ? 'border-3 sepia-0 border-medievalSepia' : ''}`}
+                  style={{'border': '2px ridge #c28b56'}}
                   onClick={() => {setselectedEnhancerPotion(potion)}}
                 />
                 </Tooltip>
