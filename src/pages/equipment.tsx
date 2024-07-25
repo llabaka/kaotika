@@ -224,7 +224,7 @@ const Equipment = () => {
                   key={armor._id}
                   src={armor.image}
                   alt={armor.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor?._id === armor._id ? 'border-3 sepia-0 border-sepia duration-300' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedArmor?._id === armor._id ? 'border-3 sepia-0 border-sepia duration-300' : 'border-slate-300 border-dotted'}`}
                   onClick={() => handleSelectedArmor(armor)}
                 />
                 </Tooltip>
@@ -274,7 +274,7 @@ const Equipment = () => {
                   key={potion._id}
                   src={potion.image}
                   alt={potion.description}
-                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : ''}`}
+                  className={`w-full h-full object-contain sepia hover:sepia-0 cursor-pointer p-2 transition rounded-full ${selectedHealingPotion?._id === potion._id ? 'border-3 sepia-0 border-sepia' : 'border-slate-300 border-dotted'}`}
                   onClick={() => {setSelectedHealingPotion(potion)}}
                   
                 />
