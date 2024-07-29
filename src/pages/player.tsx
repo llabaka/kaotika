@@ -146,7 +146,7 @@ const PlayerPage = () => {
                 <div className="col-start-3 col-span-2">
                   <Droppable id={100} type='helmet' children={currentPlayer.equipment.helmet 
                   ? 
-                    <Draggable id="helmet_1" type={['helmet', 'inventory']} src={currentPlayer.equipment.helmet.image} className="w-1/4 h-full object-contain rrounded-sm" width="100px" border="3px ridge #cda882" /> 
+                    <Draggable id="helmet_1" type={['helmet', 'inventory']} src={currentPlayer.equipment.helmet.image} className="w-1/4 h-full object-contain rounded-sm" width="100px" border="3px ridge #cda882" /> 
                   : 
                     <Draggable id="helmet_2" type={[]} src="/images/helmet_back.jpg" className="w-1/4 h-full object-contain rounded-sm" width="100px" border="3px ridge #000000" />}/>
                 </div>

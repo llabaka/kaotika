@@ -8,13 +8,6 @@ export interface EnhancerPotion {
   type: string,
   value: number,
   duration: number,
-  modifiers: {
-    intelligence: Number,
-    dexterity: Number,
-    constitution: Number,
-    insanity: Number,
-    charisma: Number,
-    strength: Number
-  },
+  modifiers: Modifier,
   min_lvl: number
 }

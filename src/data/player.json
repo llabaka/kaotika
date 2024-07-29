@@ -416,9 +416,75 @@
         }
       ],
       "rings": [],
-      "antidote_potions": [],
-      "healing_potions": [],
-      "enhancer_potions": []
+      "antidote_potions": [
+        {
+          "_id": "668bca125319ea9afdff0761",
+          "name": "Etherbind Tonic",
+          "description": "A mystical tonic made from binding agents and ethereal dust, anchoring the afflicted back to the material plane.",
+          "type": "antidote",
+          "image": "/images/equipment/potions/antidote/antidote_2.png",
+          "value": 10,
+          "recovery_effect": {
+            "_id": "668bca125319ea9afdff0759",
+            "name": "Essence of Restoration",
+            "description": "The Essence of Restoration is a potent elixir that accelerates healing and revitalizes the body.",
+            "type": "healing",
+            "modifiers": {
+              "hit_points": 70,
+              "intelligence": -15,
+              "dexterity": 0,
+              "constitution": 0,
+              "insanity": 0,
+              "charisma": 0,
+              "strength": 0
+            }
+          },
+          "min_lvl": 5,
+          "profiles": []
+        }
+      ],
+      "healing_potions": [
+        {
+          "_id": "668bca125319ea9afdff0750",
+          "name": "Elixir of Vitality",
+          "description": "A rejuvenating potion that restores vigor and vitality to the drinker.",
+          "type": "healing",
+          "image": "/images/equipment/potions/healing/healing_1.png",
+          "value": 10,
+          "modifiers": {
+            "hit_points": 20,
+            "intelligence": 0,
+            "dexterity": 0,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 0,
+            "strength": 0
+          },
+          "min_lvl": 15,
+          "profiles": []
+        }
+      ],
+      "enhancer_potions": [
+        {
+          "_id": "668bca125319ea9afdff0767",
+          "name": "Potion of Increase Strength",
+          "description": "This robust elixir temporarily amplifies the drinker's physical power, significantly boosting muscle strength and stamina.",
+          "type": "enhancer",
+          "image": "/images/equipment/potions/enhancer/enhancer_1.png",
+          "value": 10,
+          "duration": 2,
+          "modifiers": {
+            "intelligence": 0,
+            "dexterity": 0,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 0,
+            "strength": 20
+          },
+          "min_lvl": 20,
+          "profiles": []
+        }
+      ]
     },
     "tasks": [],
     "gold": 32589,

@@ -13,6 +13,6 @@ export interface HealingPotion {
         insanity: Number,
         charisma: Number,
         strength: Number
-      },
+    },
     min_lvl: number
 }
