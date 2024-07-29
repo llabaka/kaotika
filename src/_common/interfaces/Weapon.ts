@@ -9,5 +9,5 @@ export interface Weapon {
   damage: string,
   base_percentage: number,
   modifiers: Modifier,
-  min_level: number
+  min_lvl: number
 }

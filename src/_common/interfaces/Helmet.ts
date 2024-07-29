@@ -5,7 +5,9 @@ export interface Helmet {
   name: string,
   description: string,
   type: string,
+  value: number,
+  defense: number,
   image: string,
   modifiers: Modifier,
-  min_level: number
+  min_lvl: number
 }

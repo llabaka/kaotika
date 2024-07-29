@@ -6,6 +6,7 @@ export interface AntidotePotion {
     description: string,
     image: string,
     type: string,
+    value: number,
     recovery_effect: Curse,
-    min_level: number
+    min_lvl: number
 }

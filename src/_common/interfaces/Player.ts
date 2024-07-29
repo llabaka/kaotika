@@ -21,7 +21,7 @@ export interface Player {
   level: number;
   gold: number;
   is_active: boolean;
-  profile: Profile;
+  profile: Profile | null;
   equipment:{
     helmet: Helmet,
     weapon: Weapon,

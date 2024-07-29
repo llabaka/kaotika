@@ -388,7 +388,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="Hit Points (Max 300)"
+                  label="Hit Points based on CON + STR"
                   value={hitPoints}
                   showValueLabel={true}
                 />
@@ -405,7 +405,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="Attack"
+                  label="Attack based on STR - INS / 2"
                   value={attack}
                   showValueLabel={true}
                 />  
@@ -422,7 +422,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="Defense"
+                  label="Defense based on DEX + CON + INT/2"
                   value={defense}
                   showValueLabel={true}
                 />
@@ -439,7 +439,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="Magic resistance"
+                  label="Magic resistance based on INT + CHA"
                   value={magicResistance}
                   showValueLabel={true}
                 />  
@@ -456,7 +456,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="CFP (critical or fumble probability)"
+                  label="CFP (critical or fumble probability) based on INS"
                   value={cfp}
                   showValueLabel={true}
                 />  
@@ -473,7 +473,7 @@ const Equipment = () => {
                     value: "text-3xl text-medievalSepia/100",
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="BCFA (base critical & fumble attack)"
+                  label="BCFA (base critical & fumble attack) based on STR + INS"
                   value={bcfa}
                   showValueLabel={true}
                 />  

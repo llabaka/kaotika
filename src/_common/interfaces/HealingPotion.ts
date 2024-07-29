@@ -4,6 +4,7 @@ export interface HealingPotion {
     description: string,
     image: string,
     type: string,
+    value: number,
     modifiers: {
         hit_points: number,
         intelligence: Number,
@@ -13,5 +14,5 @@ export interface HealingPotion {
         charisma: Number,
         strength: Number
       },
-    min_level: number
+    min_lvl: number
 }

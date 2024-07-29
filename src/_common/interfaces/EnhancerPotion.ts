@@ -6,7 +6,15 @@ export interface EnhancerPotion {
   description: string,
   image: string,
   type: string,
+  value: number,
   duration: number,
-  modifiers: Modifier,
-  min_level: number
+  modifiers: {
+    intelligence: Number,
+    dexterity: Number,
+    constitution: Number,
+    insanity: Number,
+    charisma: Number,
+    strength: Number
+  },
+  min_lvl: number
 }

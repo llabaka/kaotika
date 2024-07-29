@@ -6,6 +6,8 @@ export interface Boot {
   description: string,
   type: string,
   image: string,
+  value: number,
+  defense: number,
   modifiers: Modifier,
-  min_level: number
+  min_lvl: number
 }

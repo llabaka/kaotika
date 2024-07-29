@@ -4,7 +4,9 @@ export interface Artifact {
   _id: string,
   name: string, 
   description: string,
+  type: string
   image: string,
+  value: number,
   modifiers: Modifier,
-  min_level: number
+  min_lvl: number
 }

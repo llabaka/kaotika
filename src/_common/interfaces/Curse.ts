@@ -5,5 +5,13 @@ export interface Curse {
     name: string;
     description: string;
     type: string;
-    modifiers: Modifier[];
+    modifiers: {
+        hit_points: number,
+        intelligence: Number,
+        dexterity: Number,
+        constitution: Number,
+        insanity: Number,
+        charisma: Number,
+        strength: Number
+    }
 }
