@@ -1,4 +1,3 @@
-import { Attribute } from "./Attribute";
 import { AntidotePotion } from "./AntidotePotion";
 import { HealingPotion } from "./HealingPotion";
 import { EnhancerPotion } from "./EnhancerPotion";
@@ -10,6 +9,7 @@ import { Helmet } from "./Helmet";
 import { Shield } from "./Shield";
 import { Boot } from "./Boot";
 import { Ring } from "./Ring";
+import { Modifier } from "./Modifier";
 
 export interface Player {
   _id: string;
@@ -22,6 +22,7 @@ export interface Player {
   gold: number;
   is_active: boolean;
   profile: Profile | null;
+  attributes: Modifier;
   equipment:{
     helmet: Helmet,
     weapon: Weapon,

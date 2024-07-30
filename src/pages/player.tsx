@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, act } from 'react';
 import { Progress } from "@nextui-org/react";
 import { Tooltip } from '@nextui-org/react';
 import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
@@ -24,6 +24,17 @@ import BootTooltip from '@/components/tooltips/BootTooltip';
 import HealingPotionTooltip from '@/components/tooltips/HealingPotionTooltip';
 import AntidotePotionTooltip from '@/components/tooltips/AntidotePotionTooltip';
 import RingTooltip from '@/components/tooltips/RingTooltip';
+import { Helmet } from '@/_common/interfaces/Helmet';
+import { Weapon } from '@/_common/interfaces/Weapon';
+import { Armor } from '@/_common/interfaces/Armor';
+import { Shield } from '@/_common/interfaces/Shield';
+import { Artifact } from '@/_common/interfaces/Artifact';
+import { Boot } from '@/_common/interfaces/Boot';
+import { Ring } from '@/_common/interfaces/Ring';
+import { HealingPotion } from '@/_common/interfaces/HealingPotion';
+import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
+import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
+import { Modifier } from '@/_common/interfaces/Modifier';
 
 const PlayerPage = () => {
 
@@ -36,17 +47,14 @@ const PlayerPage = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [player, setPlayer] = useState<Player>();
-  const [currentHelmet, setCurrentHelmet] = useState<string | null>(null);
-  const [currentWeapon, setCurrentWeapon] = useState<string | null>(null);
-  const [currentArmor, setCurrentArmor] = useState<string | null>(null);
-  const [currentShield, setCurrentShield] = useState<string | null>(null);
-  const [currentArtifact, setCurrentArtifact] = useState<string | null>(null);
-  const [currentBoots, setCurrentBoots] = useState<string | null>(null);
-  const [currentRing, setCurrentRing] = useState<string | null>(null);
-  const [currentHealingPotion, setCurrentHealingPotion] = useState<string | null>(null);
-  const [currentAntidotePotion, setCurrentAntidotePotion] = useState<string | null>(null);
-  const [currentEnhancerPotion, setCurrentEnhancerPotion] = useState<string | null>(null);
-
+  const [currentAttributes, setCurrentAttributes] = useState<Modifier>();
+  const [hitPoints, setHitPoints] = useState(0);
+  const [attack, setAttack] = useState(0);
+  const [defense, setDefense] = useState(0);
+  const [magicResistance, setmagicResistance] = useState(0);
+  const [cfp, setCFP] = useState(0);
+  const [bcfa, setBCFA] = useState(0);
+  
   useEffect(() => {
     if (session?.user?.email) {
       const fetchPlayerData = async () => {
@@ -76,9 +84,108 @@ const PlayerPage = () => {
   }, [session]);
 
   useEffect(() => {
-    console.log(player)
-  }, [player])
+    calculateAllAttributes();
+  }, [player]);
+
+  useEffect(() => {
+    calculateHitPoints();
+    calculateAttack();
+    calculateDefense();
+    calculateMagicResistance();
+    calculateCFP();
+    calculateBCFA();
+  }, [currentAttributes])
   
+  
+  const calculateAllAttributes = () => {
+    if(player) {
+      const charisma =  
+      player.attributes?.charisma + 
+      player.equipment.helmet.modifiers.charisma + 
+      player.equipment.weapon.modifiers.charisma + 
+      player.equipment.armor.modifiers.charisma + 
+      player.equipment.shield.modifiers.charisma + 
+      player.equipment.artifact.modifiers.charisma + 
+      player.equipment.boot.modifiers.charisma + 
+      player.equipment.ring.modifiers.charisma;
+      const constitution =  
+      player.attributes?.constitution + 
+      player.equipment.helmet.modifiers.constitution + 
+      player.equipment.weapon.modifiers.constitution + 
+      player.equipment.armor.modifiers.constitution + 
+      player.equipment.shield.modifiers.constitution + 
+      player.equipment.artifact.modifiers.constitution + 
+      player.equipment.boot.modifiers.constitution + 
+      player.equipment.ring.modifiers.constitution;
+      const dexterity =  
+      player.attributes?.constitution + 
+      player.equipment.helmet.modifiers.dexterity + 
+      player.equipment.weapon.modifiers.dexterity + 
+      player.equipment.armor.modifiers.dexterity + 
+      player.equipment.shield.modifiers.dexterity + 
+      player.equipment.artifact.modifiers.dexterity + 
+      player.equipment.boot.modifiers.dexterity + 
+      player.equipment.ring.modifiers.dexterity;
+      const insanity =  
+      player.attributes?.constitution + 
+      player.equipment.helmet.modifiers.insanity + 
+      player.equipment.weapon.modifiers.insanity + 
+      player.equipment.armor.modifiers.insanity + 
+      player.equipment.shield.modifiers.insanity + 
+      player.equipment.artifact.modifiers.insanity + 
+      player.equipment.boot.modifiers.insanity + 
+      player.equipment.ring.modifiers.insanity;
+      const intelligence =  
+      player.attributes?.constitution + 
+      player.equipment.helmet.modifiers.intelligence + 
+      player.equipment.weapon.modifiers.intelligence + 
+      player.equipment.armor.modifiers.intelligence + 
+      player.equipment.shield.modifiers.intelligence + 
+      player.equipment.artifact.modifiers.intelligence + 
+      player.equipment.boot.modifiers.intelligence + 
+      player.equipment.ring.modifiers.intelligence;
+      const strength =  
+      player.attributes?.constitution + 
+      player.equipment.helmet.modifiers.strength + 
+      player.equipment.weapon.modifiers.strength + 
+      player.equipment.armor.modifiers.strength + 
+      player.equipment.shield.modifiers.strength + 
+      player.equipment.artifact.modifiers.strength + 
+      player.equipment.boot.modifiers.strength + 
+      player.equipment.ring.modifiers.strength;
+      setCurrentAttributes({constitution, charisma, dexterity, intelligence, strength, insanity })
+    }
+  }
+
+  const calculateHitPoints = (): void => {
+    if (!currentAttributes) return ;
+    setHitPoints( currentAttributes.constitution + currentAttributes.strength); 
+  };
+
+  const calculateAttack = (): void => {
+    if(!currentAttributes) return;
+    setAttack(currentAttributes.strength - currentAttributes.insanity/2);
+  }
+
+  const calculateDefense = (): void => {
+    if(!currentAttributes) return;
+    setDefense(currentAttributes.dexterity + currentAttributes.constitution + currentAttributes.intelligence/2);
+  }
+
+  const calculateMagicResistance = (): void => {
+    if(!currentAttributes) return;
+    setmagicResistance(currentAttributes.intelligence + currentAttributes.charisma);
+  }
+
+  const calculateCFP = (): void => {
+    if(!currentAttributes) return;
+    setCFP(currentAttributes.insanity);
+  }
+
+  const calculateBCFA =(): void => {
+    if(!currentAttributes) return;
+    setBCFA(currentAttributes.strength + currentAttributes.insanity);
+  }
 
   const handleSelectedOption = (selectedOption: string) => {
     setSelectedOption(selectedOption);
@@ -117,20 +224,197 @@ const PlayerPage = () => {
     const {active, over} = event;
     
     if (over && active.data.current?.supports.includes(over.data.current?.type)) {
-      console.log(active)
-      const img = (document.getElementById(active.id.toString()) as HTMLImageElement)
-      const baseUrl = 'https://www.localhost:3000';
-      const src = img.src.replace(baseUrl, "");
-      if(over.data.current?.type === 'helmet') setCurrentHelmet(src);
-      if(over.data.current?.type === 'weapon') setCurrentWeapon(src);
-      if(over.data.current?.type === 'armor') setCurrentArmor(src);
-      if(over.data.current?.type === 'shield') setCurrentShield(src);
-      if(over.data.current?.type === 'artifact') setCurrentArtifact(src);
-      if(over.data.current?.type === 'boot') setCurrentBoots(src);
-      if(over.data.current?.type === 'ring') setCurrentRing(src);
-      if(over.data.current?.type === 'healing') setCurrentHealingPotion(src);
-      if(over.data.current?.type === 'antidote') setCurrentAntidotePotion(src);
-      if(over.data.current?.type === 'enhancer') setCurrentEnhancerPotion(src);
+      
+      if(over.data.current?.type === 'helmet') {
+        const helmet = player?.inventory.helmets.find(helmet => helmet._id === active.id);
+        const currentHelmetEquiped = player?.equipment.helmet;
+        const helmetsOnInventory: Helmet[] = player?.inventory?.helmets?.filter(helmet => helmet._id !== active.id) || [];
+        helmetsOnInventory?.push(currentHelmetEquiped!);
+        if(helmet !== undefined && player?.equipment.weapon !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              helmet: helmet ? helmet:helmet
+            },
+            inventory: {
+              ...player.inventory,
+              helmets: helmetsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'weapon') {
+        const weapon = player?.inventory.weapons.find(weapon => weapon._id === active.id);
+        const currentWeaponEquiped = player?.equipment.weapon;
+        const weaponsOnInventory: Weapon[] = player?.inventory?.weapons?.filter(weapon => weapon._id !== active.id) || [];
+        weaponsOnInventory?.push(currentWeaponEquiped!);
+        if(weapon !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              weapon: weapon
+            },
+            inventory: {
+              ...player.inventory,
+              weapons: weaponsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'armor') {
+        const armor = player?.inventory.armors.find(armor => armor._id === active.id);
+        const currentArmorEquiped = player?.equipment.armor;
+        const armorsOnInventory: Armor[] = player?.inventory?.armors?.filter(armor => armor._id !== active.id) || [];
+        armorsOnInventory?.push(currentArmorEquiped!);
+        if(armor !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              armor: armor
+            },
+            inventory: {
+              ...player.inventory,
+              armors: armorsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'shield') {
+        const shield = player?.inventory.shields.find(shield => shield._id === active.id);
+        const currentShieldEquiped = player?.equipment.shield;
+        const shieldsOnInventory: Shield[] = player?.inventory?.shields?.filter(shield => shield._id !== active.id) || [];
+        shieldsOnInventory?.push(currentShieldEquiped!);
+        if(shield !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              shield: shield
+            },
+            inventory: {
+              ...player.inventory,
+              shields: shieldsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'artifact') {
+        const artifact = player?.inventory.artifacts.find(artifact => artifact._id === active.id);
+        const currentArtifactEquiped = player?.equipment.artifact;
+        const artifactsOnInventory: Artifact[] = player?.inventory?.artifacts?.filter(artifact => artifact._id !== active.id) || [];
+        artifactsOnInventory?.push(currentArtifactEquiped!);
+        if(artifact !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              artifact: artifact
+            },
+            inventory: {
+              ...player.inventory,
+              artifacts: artifactsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'boot') {
+        const boot = player?.inventory.boots.find(boot => boot._id === active.id);
+        const currentBootEquiped = player?.equipment.boot;
+        const bootsOnInventory: Boot[] = player?.inventory?.boots?.filter(boot => boot._id !== active.id) || [];
+        bootsOnInventory?.push(currentBootEquiped!);
+        if(boot !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              boot: boot
+            },
+            inventory: {
+              ...player.inventory,
+              boots: bootsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'ring') {
+        const ring = player?.inventory.rings.find(ring => ring._id === active.id);
+        const currentRingEquiped = player?.equipment.ring;
+        const ringsOnInventory: Ring[] = player?.inventory?.rings?.filter(ring => ring._id !== active.id) || [];
+        ringsOnInventory?.push(currentRingEquiped!);
+        if(ring !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              ring: ring
+            },
+            inventory: {
+              ...player.inventory,
+              rings: ringsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'healing') {
+        const healing = player?.inventory.healing_potions.find(healing => healing._id === active.id);
+        const currentHealingEquiped = player?.equipment.healing_potion;
+        const healingsOnInventory: HealingPotion[] = player?.inventory?.healing_potions?.filter(healing => healing._id !== active.id) || [];
+        healingsOnInventory?.push(currentHealingEquiped!);
+        if(healing !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              healing_potion: healing
+            },
+            inventory: {
+              ...player.inventory,
+              healing_potions: healingsOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'antidote') {
+        const antidote = player?.inventory.antidote_potions.find(antidote => antidote._id === active.id);
+        const currentAntidoteEquiped = player?.equipment.antidote_potion;
+        const antidotesOnInventory: AntidotePotion[] = player?.inventory?.antidote_potions?.filter(antidote => antidote._id !== active.id) || [];
+        antidotesOnInventory?.push(currentAntidoteEquiped!);
+        if(antidote !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              antidote_potion: antidote
+            },
+            inventory: {
+              ...player.inventory,
+              antidote_potions: antidotesOnInventory
+            }
+          });
+        } 
+      }
+      if(over.data.current?.type === 'enhancer') {
+        const enhancer = player?.inventory.enhancer_potions.find(enhancer => enhancer._id === active.id);
+        const currentEnhancerEquiped = player?.equipment.enhancer_potion;
+        const enhancersOnInventory: EnhancerPotion[] = player?.inventory?.enhancer_potions?.filter(enhancer => enhancer._id !== active.id) || [];
+        enhancersOnInventory?.push(currentEnhancerEquiped!);
+        if(enhancer !== undefined && player?.equipment.helmet !== undefined) {
+          setPlayer({
+            ...player, 
+            equipment: { 
+              ...player?.equipment, 
+              enhancer_potion: enhancer
+            },
+            inventory: {
+              ...player.inventory,
+              enhancer_potions: enhancersOnInventory
+            }
+          });
+        } 
+      }
     }
   }
 
@@ -149,6 +433,210 @@ const PlayerPage = () => {
           <div className="w-1/3 p-4">
             <h2 className="text-4xl mb-4 text-center border-1 rounded-l-3xl  border-sepia bg-black/70 p-3">Attributes</h2>
             <div className="w-full h-full p-12 border-1 rounded-lg border-sepia bg-black/70 rounded-l-3xl">
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={300}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Charisma"
+                value={currentAttributes?.charisma}
+                showValueLabel={true}
+              />
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={300}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Constitution"
+                value={currentAttributes?.constitution}
+                showValueLabel={true}
+              />
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={300}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Dexterity"
+                value={currentAttributes?.dexterity}
+                showValueLabel={true}
+              />
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={300}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Insanity"
+                value={currentAttributes?.insanity}
+                showValueLabel={true}
+              />
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={300}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Intelligence"
+                value={currentAttributes?.intelligence}
+                showValueLabel={true}
+              />
+              <Progress
+                key={"p-1"}
+                size="lg" 
+                radius="sm"
+                minValue={0}
+                maxValue={500}
+                classNames={{
+                  track: "drop-shadow-md border border-sepia",
+                  indicator: "bg-medievalSepia",
+                  label: "text-medievalSepia tracking-wider text-3xl",
+                  value: "text-3xl text-medievalSepia/100",
+                }}
+                formatOptions={{style: "decimal"}}
+                label="Strength"
+                value={currentAttributes?.strength}
+                showValueLabel={true}
+              />
+                <Progress
+                  key={"p-1"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Hit Points based on CON + STR"
+                  value={hitPoints}
+                  showValueLabel={true}
+                />
+                <Progress
+                  key={"p-2"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Attack based on STR - INS / 2"
+                  value={attack}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={"p-3"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Defense based on DEX + CON + INT/2"
+                  value={defense}
+                  showValueLabel={true}
+                />
+                <Progress
+                  key={"p-4"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="Magic resistance based on INT + CHA"
+                  value={magicResistance}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={"p-5"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="CFP (critical or fumble probability) based on INS"
+                  value={cfp}
+                  showValueLabel={true}
+                />  
+                <Progress
+                  key={"p-6"}
+                  size="lg" 
+                  radius="sm"
+                  minValue={0}
+                  maxValue={1000}
+                  classNames={{
+                    track: "drop-shadow-md border border-sepia",
+                    indicator: "bg-medievalSepia",
+                    label: "text-medievalSepia tracking-wider text-3xl",
+                    value: "text-3xl text-medievalSepia/100",
+                  }}
+                  formatOptions={{style: "decimal"}}
+                  label="BCFA (base critical & fumble attack) based on STR + INS"
+                  value={bcfa}
+                  showValueLabel={true}
+                />  
             </div>
           </div>
           <div className="w-1/3 p-4">
@@ -236,91 +724,91 @@ const PlayerPage = () => {
             <div className="w-full h-full bg-black/70 flex flex-col">
               <div className="grid grid-cols-8 grid-rows-8 flex-grow">
                 {
-                  player.inventory.helmets.map((helmet, index) => {
+                  player.inventory.helmets.map(helmet => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={10}  type='inventory' children={<Draggable id={helmet.type + index} tooltip={<HelmetTooltip element={helmet}/>} type={[`${helmet.type}`, 'inventory']} element={helmet} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={10}  type='inventory' children={<Draggable id={helmet._id} tooltip={<HelmetTooltip element={helmet}/>} type={[`${helmet.type}`, 'inventory']} element={helmet} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.weapons.map((weapon, index) => {
+                  player.inventory.weapons.map(weapon => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={20}  type='inventory' children={<Draggable id={weapon.type + index} tooltip={<WeaponTooltip element={weapon}/>} type={[`${weapon.type}`, 'inventory']} element={weapon} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon}/>} type={[`${weapon.type}`, 'inventory']} element={weapon} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.armors.map((armor, index) => {
+                  player.inventory.armors.map(armor => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>    
-                          <Droppable id={30}  type='inventory' children={<Draggable id={armor.type + index} tooltip={<ArmorTooltip element={armor}/>} type={[`${armor.type}`, 'inventory']} element={armor} className={undefined} width="150px" border="" />}/>                      
+                          <Droppable id={30}  type='inventory' children={<Draggable id={armor._id} tooltip={<ArmorTooltip element={armor}/>} type={[`${armor.type}`, 'inventory']} element={armor} className={undefined} width="150px" border="" />}/>                      
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.shields.map((shield, index) => {
+                  player.inventory.shields.map(shield => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={40}  type='inventory' children={<Draggable id={shield.type + index} tooltip={<ShieldTooltip element={shield}/>} type={[`${shield.type}`, 'inventory']} element={shield} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={40}  type='inventory' children={<Draggable id={shield._id} tooltip={<ShieldTooltip element={shield}/>} type={[`${shield.type}`, 'inventory']} element={shield} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.artifacts.map((artifact, index) => {
+                  player.inventory.artifacts.map(artifact => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={50}  type='inventory' children={<Draggable id={artifact.type + index} tooltip={<ArtifactTooltip element={artifact}/>} type={[`${artifact.type}`, 'inventory']} element={artifact} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={50}  type='inventory' children={<Draggable id={artifact._id} tooltip={<ArtifactTooltip element={artifact}/>} type={[`${artifact.type}`, 'inventory']} element={artifact} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.boots.map((boot, index) => {
+                  player.inventory.boots.map(boot => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={1}  type='inventory' children={<Draggable id={boot.type + index} tooltip={<BootTooltip element={boot}/>} type={[`${boot.type}`, 'inventory']} element={boot} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={1}  type='inventory' children={<Draggable id={boot._id} tooltip={<BootTooltip element={boot}/>} type={[`${boot.type}`, 'inventory']} element={boot} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.rings.map((ring, index) => {
+                  player.inventory.rings.map(ring => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={1}  type='inventory' children={<Draggable id={ring.type + index} tooltip={<RingTooltip element={ring}/>} type={[`${ring.type}`, 'inventory']} element={ring} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={1}  type='inventory' children={<Draggable id={ring._id} tooltip={<RingTooltip element={ring}/>} type={[`${ring.type}`, 'inventory']} element={ring} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.healing_potions.map((healing, index) => {
+                  player.inventory.healing_potions.map(healing => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={1}  type='inventory' children={<Draggable id={healing.type + index} tooltip={<HealingPotionTooltip element={healing}/>} type={[`${healing.type}`, 'inventory']} element={healing} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={1}  type='inventory' children={<Draggable id={healing._id} tooltip={<HealingPotionTooltip element={healing}/>} type={[`${healing.type}`, 'inventory']} element={healing} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.antidote_potions.map((antidote, index) => {
+                  player.inventory.antidote_potions.map(antidote => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={1}  type='inventory' children={<Draggable id={antidote.type + index} tooltip={<AntidotePotionTooltip element={antidote}/>} type={[`${antidote.type}`, 'inventory']} element={antidote} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={1}  type='inventory' children={<Draggable id={antidote._id} tooltip={<AntidotePotionTooltip element={antidote}/>} type={[`${antidote.type}`, 'inventory']} element={antidote} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
                 }
                 {
-                  player.inventory.enhancer_potions.map((enhancer, index) => {
+                  player.inventory.enhancer_potions.map(enhancer => {
                     return (
                       <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
-                        <Droppable id={1}  type='inventory' children={<Draggable id={enhancer.type + index} tooltip={<EnhancerPotionTooltip element={enhancer}/>} type={[`${enhancer.type}`, 'inventory']} element={enhancer} className={undefined} width="150px" border="" />}/>
+                        <Droppable id={1}  type='inventory' children={<Draggable id={enhancer._id} tooltip={<EnhancerPotionTooltip element={enhancer}/>} type={[`${enhancer.type}`, 'inventory']} element={enhancer} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
                   })
