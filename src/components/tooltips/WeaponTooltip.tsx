@@ -1,12 +1,4 @@
-import React, { Component } from 'react';
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell
-} from "@nextui-org/table";
+import React from 'react';
 import { Weapon } from '@/_common/interfaces/Weapon';
 
 interface Props {
