@@ -4,6 +4,7 @@ import { useState, useEffect, act } from 'react';
 import { Progress } from "@nextui-org/react";
 import { Tooltip } from '@nextui-org/react';
 import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
+import useSound from 'use-sound';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
@@ -54,6 +55,14 @@ const PlayerPage = () => {
   const [magicResistance, setmagicResistance] = useState(0);
   const [cfp, setCFP] = useState(0);
   const [bcfa, setBCFA] = useState(0);
+  const [playHelmet] = useSound('/sounds/helmet.mp3');
+  const [playWeapon] = useSound('/sounds/sword.mp3');
+  const [playArmor] = useSound('/sounds/armor.mp3');
+  const [playShield] = useSound('/sounds/shield.mp3');
+  const [playArtifact] = useSound('/sounds/artifact.mp3');
+  const [playBoot] = useSound('/sounds/boot.mp3');
+  const [playRing] = useSound('/sounds/ring.mp3');
+  const [playPotion] = useSound('/sounds/potion.mp3');
   
   useEffect(() => {
     if (session?.user?.email) {
@@ -231,6 +240,7 @@ const PlayerPage = () => {
         const helmetsOnInventory: Helmet[] = player?.inventory?.helmets?.filter(helmet => helmet._id !== active.id) || [];
         helmetsOnInventory?.push(currentHelmetEquiped!);
         if(helmet !== undefined && player?.equipment.weapon !== undefined) {
+          playHelmet();
           setPlayer({
             ...player, 
             equipment: { 
@@ -250,6 +260,7 @@ const PlayerPage = () => {
         const weaponsOnInventory: Weapon[] = player?.inventory?.weapons?.filter(weapon => weapon._id !== active.id) || [];
         weaponsOnInventory?.push(currentWeaponEquiped!);
         if(weapon !== undefined && player?.equipment.helmet !== undefined) {
+          playWeapon();
           setPlayer({
             ...player, 
             equipment: { 
@@ -269,6 +280,7 @@ const PlayerPage = () => {
         const armorsOnInventory: Armor[] = player?.inventory?.armors?.filter(armor => armor._id !== active.id) || [];
         armorsOnInventory?.push(currentArmorEquiped!);
         if(armor !== undefined && player?.equipment.helmet !== undefined) {
+          playArmor();
           setPlayer({
             ...player, 
             equipment: { 
@@ -288,6 +300,7 @@ const PlayerPage = () => {
         const shieldsOnInventory: Shield[] = player?.inventory?.shields?.filter(shield => shield._id !== active.id) || [];
         shieldsOnInventory?.push(currentShieldEquiped!);
         if(shield !== undefined && player?.equipment.helmet !== undefined) {
+          playShield();
           setPlayer({
             ...player, 
             equipment: { 
@@ -307,6 +320,7 @@ const PlayerPage = () => {
         const artifactsOnInventory: Artifact[] = player?.inventory?.artifacts?.filter(artifact => artifact._id !== active.id) || [];
         artifactsOnInventory?.push(currentArtifactEquiped!);
         if(artifact !== undefined && player?.equipment.helmet !== undefined) {
+          playArtifact();
           setPlayer({
             ...player, 
             equipment: { 
@@ -326,6 +340,7 @@ const PlayerPage = () => {
         const bootsOnInventory: Boot[] = player?.inventory?.boots?.filter(boot => boot._id !== active.id) || [];
         bootsOnInventory?.push(currentBootEquiped!);
         if(boot !== undefined && player?.equipment.helmet !== undefined) {
+          playBoot();
           setPlayer({
             ...player, 
             equipment: { 
@@ -345,6 +360,7 @@ const PlayerPage = () => {
         const ringsOnInventory: Ring[] = player?.inventory?.rings?.filter(ring => ring._id !== active.id) || [];
         ringsOnInventory?.push(currentRingEquiped!);
         if(ring !== undefined && player?.equipment.helmet !== undefined) {
+          playRing();
           setPlayer({
             ...player, 
             equipment: { 
@@ -364,6 +380,7 @@ const PlayerPage = () => {
         const healingsOnInventory: HealingPotion[] = player?.inventory?.healing_potions?.filter(healing => healing._id !== active.id) || [];
         healingsOnInventory?.push(currentHealingEquiped!);
         if(healing !== undefined && player?.equipment.helmet !== undefined) {
+          playPotion();
           setPlayer({
             ...player, 
             equipment: { 
@@ -383,6 +400,7 @@ const PlayerPage = () => {
         const antidotesOnInventory: AntidotePotion[] = player?.inventory?.antidote_potions?.filter(antidote => antidote._id !== active.id) || [];
         antidotesOnInventory?.push(currentAntidoteEquiped!);
         if(antidote !== undefined && player?.equipment.helmet !== undefined) {
+          playPotion();
           setPlayer({
             ...player, 
             equipment: { 
@@ -402,6 +420,7 @@ const PlayerPage = () => {
         const enhancersOnInventory: EnhancerPotion[] = player?.inventory?.enhancer_potions?.filter(enhancer => enhancer._id !== active.id) || [];
         enhancersOnInventory?.push(currentEnhancerEquiped!);
         if(enhancer !== undefined && player?.equipment.helmet !== undefined) {
+          playPotion();
           setPlayer({
             ...player, 
             equipment: { 
