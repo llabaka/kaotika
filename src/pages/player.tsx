@@ -1,8 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { useState, useEffect, act } from 'react';
-import { Progress } from "@nextui-org/react";
-import { Tooltip } from '@nextui-org/react';
+import { useState, useEffect } from 'react';
+import { Progress, Tooltip, User } from "@nextui-org/react";
 import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
 import useSound from 'use-sound';
 import Loading from '@/components/Loading';
@@ -463,8 +462,9 @@ const PlayerPage = () => {
         <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
           <div className="flex justify-center">
           <div className="w-1/3 p-4">
-            <h2 className="text-4xl mb-4 text-center border-1 border-sepia bg-black/70 p-3">Attributes</h2>
-            <div className="w-full h-full p-12 border-1 border-sepia bg-black/70">
+            
+            <div className="w-full h-full p-8 border-1 border-sepia bg-black/70">
+              <h2 className="text-3xl py-2 px-4 mb-4 text-center border-1 bg-black/70  border-sepia">Attribute management is essential for character development.</h2>
               <Progress
                 key={"p-1"}
                 size="lg" 
@@ -672,19 +672,78 @@ const PlayerPage = () => {
             </div>
           </div>
           <div className="w-1/3 p-4">
-            <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.nickname ? player.nickname : player.name}</h2>
             <div className="w-full h-full p-8 border-1 border-sepia bg-black/70">
               {warningVisible 
               ? <KaotikaButton text="WARNING. Your equipment has changed.Save it!" /> 
-              : <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3" style={warningVisible ? mountedStyle : unmountedStyle}>Your equipment is up to date.</h2>
+              : <h2 className="text-3xl py-2 px-4 mb-4 text-center border-1  border-sepia bg-black/70 " style={warningVisible ? mountedStyle : unmountedStyle}>Your equipment is up to date.</h2>
               }
-              <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
+              <div className="grid grid-cols-6 gap-4 justify-items-center items-center content-center">
+                <div className="col-start-1 col-span-1 col-end-2">
+                  <User   
+                    name={player.nickname ? player.nickname : player.name}
+                    description={player.profile?.name}
+                    avatarProps={{
+                      src: `${player.profile?.image}`
+                    }}
+                    classNames={{
+                      base: "bg-black/70 p-4 border-1 border-sepia w-full",
+                      wrapper: "",
+                      name: "text-medievalSepia text-3xl text-darkSepia p-1",
+                      description: "text-3xl text-yellow-300/70 p-1",
+                    }}    
+                  />
+                </div>
+                <div className="col-start-2 col-span-1 col-end-3">
+                  <User   
+                    name="Level"
+                    description={player.level}
+                    avatarProps={{
+                      src: "/images/icons/level.png"
+                    }}
+                    classNames={{
+                      base: "bg-black/70 p-4 border-1 border-sepia w-full",
+                      wrapper: "",
+                      name: "text-medievalSepia text-3xl text-darkSepia p-1",
+                      description: "text-3xl text-yellow-300/70 p-1",
+                    }}    
+                  />
+                </div>
                 <div className="col-start-3 col-span-2">
                   <Droppable id={100} type='helmet' children={player.equipment.helmet 
                   ? 
                     <Draggable id="helmet_1" tooltip={<HelmetTooltip element={player.equipment.helmet}/>} type={['helmet', 'inventory']} element={player.equipment.helmet} className="w-1/4 h-full object-contain rounded-sm" width="150px" border="3px ridge #cda882" /> 
                   : 
                     <img id="helmet_2" src="/images/helmet_back.jpg" className="w-1/4 h-full object-contain rounded-sm" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                </div>
+                <div className="col-start-5 col-span-1">
+                  <User   
+                    name="Experience"
+                    description={player.experience}
+                    avatarProps={{
+                      src: "/images/icons/experience.png"
+                    }}
+                    classNames={{
+                      base: "bg-black/70 p-4 border-1 border-sepia w-full",
+                      wrapper: "",
+                      name: "text-medievalSepia text-3xl text-darkSepia p-1",
+                      description: "text-3xl text-yellow-300/70 p-1",
+                    }}    
+                  />
+                </div>
+                <div className="col-start-6 col-span-1">
+                  <User   
+                    name="Gold"
+                    description={player.gold}
+                    avatarProps={{
+                      src: "/images/icons/gold.png"
+                    }}
+                    classNames={{
+                      base: "bg-black/70 p-4 border-1 border-sepia w-full",
+                      wrapper: "",
+                      name: "text-medievalSepia text-3xl text-darkSepia p-1",
+                      description: "text-3xl text-yellow-300/70 p-1",
+                    }}    
+                  />
                 </div>
                 <div className="col-start-1 col-end-3">
                   <Droppable id={200} type='weapon' children={player.equipment.weapon 
@@ -748,15 +807,9 @@ const PlayerPage = () => {
                 : 
                   <img id="enhancer_2" src="/images/enhancer_potion_back.jpg" className="w-1/4 h-full object-contain" width="150px" style={{'border': "3px ridge #000000"}} />}/>
               </div>
-              <div className="grid grid-cols-3 gap-4 justify-items-center items-center pt-10">
-                <h2 className="text-4xl mb-4 text-center">Level: {player.level}</h2>
-                <h2 className="text-4xl mb-4 text-center">XP: {player.experience}</h2>
-                <h2 className="text-4xl mb-4 text-center">Gold: {player.gold}</h2>
-              </div>
             </div>
           </div>
           <div className="w-1/3 p-4">
-            <h2 className="text-4xl mb-4 text-center border-1 border-sepia bg-black/70 p-3">Inventory</h2>
             <div className="w-full h-full bg-black/70 flex flex-col">
               <div className="grid grid-cols-8 grid-rows-8 flex-grow">
                 {

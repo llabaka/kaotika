@@ -7,7 +7,21 @@
   "level": 100,
   "experience": 32500,
   "is_active": true,
-  "profile": null,
+  "profile": {
+    "_id": "string",
+    "name": "Pariah",
+    "image": "/images/profiles/pariah.jpg",
+    "description": "string",
+    "attributes": [],
+    "equipment":{
+      "armors": [],
+      "weapons": [],
+      "artifacts": [],
+      "healing_potions": [],
+      "antidote_potions": [],
+      "enhancer_potions": []
+    }
+  },
   "attributes": {
     "intelligence": 30,
     "dexterity": 50,
