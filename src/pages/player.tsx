@@ -36,6 +36,11 @@ import { HealingPotion } from '@/_common/interfaces/HealingPotion';
 import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
 import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 import { Modifier } from '@/_common/interfaces/Modifier';
+import _ from 'lodash';
+import KaotikaButton from '@/components/KaotikaButton';
+
+const mountedStyle = { animation: "inAnimation 250ms ease-in" };
+const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
 
 const PlayerPage = () => {
 
@@ -48,6 +53,7 @@ const PlayerPage = () => {
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [currentProfile, setCurrentProfile] = useState<Profile | null>(null);
   const [player, setPlayer] = useState<Player>();
+  const [currentEquipment, setCurrentEquipment] = useState({});
   const [currentAttributes, setCurrentAttributes] = useState<Modifier>();
   const [hitPoints, setHitPoints] = useState(0);
   const [attack, setAttack] = useState(0);
@@ -55,6 +61,7 @@ const PlayerPage = () => {
   const [magicResistance, setmagicResistance] = useState(0);
   const [cfp, setCFP] = useState(0);
   const [bcfa, setBCFA] = useState(0);
+  const [warningVisible, setWarningVisible] = useState(false);
   const [playHelmet] = useSound('/sounds/helmet.mp3');
   const [playWeapon] = useSound('/sounds/sword.mp3');
   const [playArmor] = useSound('/sounds/armor.mp3');
@@ -72,6 +79,7 @@ const PlayerPage = () => {
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
           if (res.status === 200) {
             const data = await res.json();
+            setCurrentEquipment(currentPlayer.equipment);
             setPlayer(currentPlayer);
             setIsRegistered(true);
           } else if (res.status === 404) {
@@ -103,6 +111,11 @@ const PlayerPage = () => {
     calculateMagicResistance();
     calculateCFP();
     calculateBCFA();
+    if(!_.isEqual(currentEquipment, player?.equipment)) {
+      setWarningVisible(true);
+    } else {
+      setWarningVisible(false);
+    }
   }, [currentAttributes])
   
   
@@ -470,7 +483,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
               <Progress
-                key={"p-1"}
+                key={"p-2"}
                 size="lg" 
                 radius="sm"
                 minValue={0}
@@ -487,7 +500,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
               <Progress
-                key={"p-1"}
+                key={"p-3"}
                 size="lg" 
                 radius="sm"
                 minValue={0}
@@ -504,7 +517,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
               <Progress
-                key={"p-1"}
+                key={"p-4"}
                 size="lg" 
                 radius="sm"
                 minValue={0}
@@ -521,7 +534,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
               <Progress
-                key={"p-1"}
+                key={"p-5"}
                 size="lg" 
                 radius="sm"
                 minValue={0}
@@ -538,7 +551,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
               <Progress
-                key={"p-1"}
+                key={"p-6"}
                 size="lg" 
                 radius="sm"
                 minValue={0}
@@ -555,7 +568,7 @@ const PlayerPage = () => {
                 showValueLabel={true}
               />
                 <Progress
-                  key={"p-1"}
+                  key={"p-7"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -572,7 +585,7 @@ const PlayerPage = () => {
                   showValueLabel={true}
                 />
                 <Progress
-                  key={"p-2"}
+                  key={"p-8"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -589,7 +602,7 @@ const PlayerPage = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={"p-3"}
+                  key={"p-9"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -606,7 +619,7 @@ const PlayerPage = () => {
                   showValueLabel={true}
                 />
                 <Progress
-                  key={"p-4"}
+                  key={"p-10"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -623,7 +636,7 @@ const PlayerPage = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={"p-5"}
+                  key={"p-11"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -640,7 +653,7 @@ const PlayerPage = () => {
                   showValueLabel={true}
                 />  
                 <Progress
-                  key={"p-6"}
+                  key={"p-12"}
                   size="lg" 
                   radius="sm"
                   minValue={0}
@@ -661,6 +674,10 @@ const PlayerPage = () => {
           <div className="w-1/3 p-4">
             <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3">{player.nickname ? player.nickname : player.name}</h2>
             <div className="w-full h-full p-8 border-1 border-sepia bg-black/70">
+              {warningVisible 
+              ? <KaotikaButton text="WARNING. Your equipment has changed.Save it!" /> 
+              : <h2 className="text-4xl mb-4 text-center border-1  border-sepia bg-black/70 p-3" style={warningVisible ? mountedStyle : unmountedStyle}>Your equipment is up to date.</h2>
+              }
               <div className="grid grid-cols-6 gap-4 justify-items-center items-center">
                 <div className="col-start-3 col-span-2">
                   <Droppable id={100} type='helmet' children={player.equipment.helmet 
@@ -745,7 +762,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.helmets.map(helmet => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={helmet._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={10}  type='inventory' children={<Draggable id={helmet._id} tooltip={<HelmetTooltip element={helmet}/>} type={[`${helmet.type}`, 'inventory']} element={helmet} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -754,7 +771,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.weapons.map(weapon => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={weapon._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon}/>} type={[`${weapon.type}`, 'inventory']} element={weapon} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -763,7 +780,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.armors.map(armor => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>    
+                      <div key={armor._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>    
                           <Droppable id={30}  type='inventory' children={<Draggable id={armor._id} tooltip={<ArmorTooltip element={armor}/>} type={[`${armor.type}`, 'inventory']} element={armor} className={undefined} width="150px" border="" />}/>                      
                       </div>
                     )
@@ -772,7 +789,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.shields.map(shield => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={shield._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={40}  type='inventory' children={<Draggable id={shield._id} tooltip={<ShieldTooltip element={shield}/>} type={[`${shield.type}`, 'inventory']} element={shield} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -781,7 +798,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.artifacts.map(artifact => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={artifact._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={50}  type='inventory' children={<Draggable id={artifact._id} tooltip={<ArtifactTooltip element={artifact}/>} type={[`${artifact.type}`, 'inventory']} element={artifact} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -790,7 +807,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.boots.map(boot => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={boot._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={1}  type='inventory' children={<Draggable id={boot._id} tooltip={<BootTooltip element={boot}/>} type={[`${boot.type}`, 'inventory']} element={boot} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -799,7 +816,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.rings.map(ring => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={ring._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={1}  type='inventory' children={<Draggable id={ring._id} tooltip={<RingTooltip element={ring}/>} type={[`${ring.type}`, 'inventory']} element={ring} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -808,7 +825,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.healing_potions.map(healing => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={healing._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={1}  type='inventory' children={<Draggable id={healing._id} tooltip={<HealingPotionTooltip element={healing}/>} type={[`${healing.type}`, 'inventory']} element={healing} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -817,7 +834,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.antidote_potions.map(antidote => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={antidote._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={1}  type='inventory' children={<Draggable id={antidote._id} tooltip={<AntidotePotionTooltip element={antidote}/>} type={[`${antidote.type}`, 'inventory']} element={antidote} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
@@ -826,7 +843,7 @@ const PlayerPage = () => {
                 {
                   player.inventory.enhancer_potions.map(enhancer => {
                     return (
-                      <div className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
+                      <div key={enhancer._id} className="flex justify-center items-center bg-black/30" style={{'border': '3px ridge #000000'}}>
                         <Droppable id={1}  type='inventory' children={<Draggable id={enhancer._id} tooltip={<EnhancerPotionTooltip element={enhancer}/>} type={[`${enhancer.type}`, 'inventory']} element={enhancer} className={undefined} width="150px" border="" />}/>
                       </div>
                     )
