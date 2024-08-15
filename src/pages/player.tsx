@@ -679,16 +679,16 @@ const PlayerPage = () => {
                 <div className="grid grid-cols-6 gap-4 justify-items-center items-center content-center">
                   <div className="col-start-1 col-span-2">
                     <User   
-                      name="Profile"
+                      name="Player Profile"
                       description={player.profile?.name}
                       avatarProps={{
                         src: `${player.profile?.image}`
                       }}
                       classNames={{
-                        base: "bg-black/70 p-2 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center",
-                        name: "text-medievalSepia text-3xl text-darkSepia p-1",
-                        description: "text-3xl text-yellow-300/70 p-1",
+                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-2",
+                        name: "text-medievalSepia text-2xl text-darkSepia p-2",
+                        description: "text-4xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
@@ -701,16 +701,16 @@ const PlayerPage = () => {
                   </div>
                   <div className="col-start-5 col-span-2">
                     <User   
-                      name="Level"
+                      name="Player Level"
                       description={player.level}
                       avatarProps={{
                         src: "/images/icons/level.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-2 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center",
-                        name: "text-medievalSepia text-3xl text-darkSepia p-1",
-                        description: "text-3xl text-yellow-300/70 p-1",
+                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-2",
+                        name: "text-medievalSepia text-2xl text-darkSepia p-2",
+                        description: "text-4xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
@@ -779,31 +779,31 @@ const PlayerPage = () => {
                 <div className="grid grid-cols-2 grid-rows-1 flex-grow justify-items-center items-center pt-10">
                   <div className="col-start-1 col-span-1">
                     <User   
-                      name="Exp"
-                      description={player.experience}
+                      name="Player Experience"
+                      description={`${player.experience} xp`}
                       avatarProps={{
                         src: "/images/icons/experience.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-2 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center",
-                        name: "text-medievalSepia text-3xl text-darkSepia p-1",
-                        description: "text-3xl text-yellow-300/70 p-1",
+                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-2",
+                        name: "text-medievalSepia text-2xl text-darkSepia p-2",
+                        description: "text-4xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
                   <div className="col-start-2 col-span-1">
                     <User   
-                      name="Gold"
+                      name="Player Gold"
                       description={player.gold}
                       avatarProps={{
                         src: "/images/icons/gold.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-2 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center",
-                        name: "text-medievalSepia text-3xl text-darkSepia p-1",
-                        description: "text-3xl text-yellow-300/70 p-1",
+                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-2",
+                        name: "text-medievalSepia text-2xl text-darkSepia p-2",
+                        description: "text-4xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
