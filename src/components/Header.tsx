@@ -15,6 +15,9 @@ const Header: React.FC = () => {
       <Link href="/dashboard">
         <span className="text-4xl mx-6 hover:underline">Dashboard</span>
       </Link>
+      <Link href="/player">
+        <span className="text-4xl mx-6 hover:underline">Player</span>
+      </Link>
       {/* Agrega más enlaces de navegación aquí */}
     </nav>);
   } else {
