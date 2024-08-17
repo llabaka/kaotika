@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Progress, Tooltip, User } from "@nextui-org/react";
 import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
 import useSound from 'use-sound';
+import _ from 'lodash';
+import currentPlayer from '../data/player.json';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
@@ -12,8 +14,6 @@ import { Player } from '@/_common/interfaces/Player';
 import Droppable from '@/components/Droppable';
 import Draggable from '@/components/Draggable';
 import AttributeTooltip from '@/components/tooltips/AttributeTooltip';
-import currentPlayer from '../data/player.json';
-import {GRID_NUMBER} from '../constants/constants';
 import ArmorTooltip from '@/components/tooltips/ArmorTooltip';
 import EnhancerPotionTooltip from '@/components/tooltips/EnhancerPotionTooltip';
 import HelmetTooltip from '@/components/tooltips/HelmetTooltip';
@@ -35,8 +35,9 @@ import { HealingPotion } from '@/_common/interfaces/HealingPotion';
 import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
 import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 import { Modifier } from '@/_common/interfaces/Modifier';
-import _ from 'lodash';
 import KaotikaButton from '@/components/KaotikaButton';
+import {GRID_NUMBER, EXP_POINTS} from '../constants/constants';
+import ProgressBar from '@/components/ProgressBar';
 
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
@@ -78,6 +79,8 @@ const PlayerPage = () => {
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
           if (res.status === 200) {
             const data = await res.json();
+
+            //FAKE DATA
             setCurrentEquipment(currentPlayer.equipment);
             setPlayer(currentPlayer);
             setIsRegistered(true);
@@ -218,28 +221,10 @@ const PlayerPage = () => {
     const createQueryString = (name: string, value: Profile) => {
       const params = new URLSearchParams();
       params.set(name, JSON.stringify(value));
-  
       return params.toString();
     };
-
     router.push(`/equipment?${createQueryString("profile", currentProfile as Profile)}`);
   };
-
-  const handleDragStart = (event: DragOverEvent) => {
-    
-    const {active, over} = event;
-    
-    if (over && active.data.current?.supports.includes(over.data.current?.type)) {
-
-    }
-  }
-
-  const handleDragOver = (event: DragOverEvent) => {
-    const {active, over} = event;
-    if (over && active.data.current?.supports.includes(over.data.current?.type)) {
-
-    }
-  }
 
   const handleDragEnd =(event: DragEndEvent)=> {
     const {active, over} = event;
@@ -458,216 +443,24 @@ const PlayerPage = () => {
     <Layout>
     <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered && player ? (
-        <DndContext onDragEnd={handleDragEnd} onDragOver={handleDragOver} onDragStart={handleDragStart}>
+        <DndContext onDragEnd={handleDragEnd}>
         <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
           <div className="flex justify-center">
             <div className="w-1/3 p-4">
               <div className="w-full h-full p-8 border-1 border-sepia bg-black/70">
-                <h2 className="text-3xl py-2 px-4 mb-4 text-center border-1 bg-black/70  border-sepia">Attribute management is essential for character development.</h2>
-                <Progress
-                  key={"p-1"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={300}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100 ",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Charisma"
-                  value={currentAttributes?.charisma}
-                  showValueLabel={true}
-                />
-                <Progress
-                  key={"p-2"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={300}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Constitution"
-                  value={currentAttributes?.constitution}
-                  showValueLabel={true}
-                />
-                <Progress
-                  key={"p-3"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={300}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Dexterity"
-                  value={currentAttributes?.dexterity}
-                  showValueLabel={true}
-                />
-                <Progress
-                  key={"p-4"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={300}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Insanity"
-                  value={currentAttributes?.insanity}
-                  showValueLabel={true}
-                />
-                <Progress
-                  key={"p-5"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={300}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Intelligence"
-                  value={currentAttributes?.intelligence}
-                  showValueLabel={true}
-                />
-                <Progress
-                  key={"p-6"}
-                  size="lg" 
-                  radius="sm"
-                  minValue={0}
-                  maxValue={500}
-                  classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
-                  }}
-                  formatOptions={{style: "decimal"}}
-                  label="Strength"
-                  value={currentAttributes?.strength}
-                  showValueLabel={true}
-                />
-                  <Progress
-                    key={"p-7"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="Hit Points based on CON + STR"
-                    value={hitPoints}
-                    showValueLabel={true}
-                  />
-                  <Progress
-                    key={"p-8"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="Attack based on STR - INS / 2"
-                    value={attack}
-                    showValueLabel={true}
-                  />  
-                  <Progress
-                    key={"p-9"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="Defense based on DEX + CON + INT/2"
-                    value={defense}
-                    showValueLabel={true}
-                  />
-                  <Progress
-                    key={"p-10"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="Magic resistance based on INT + CHA"
-                    value={magicResistance}
-                    showValueLabel={true}
-                  />  
-                  <Progress
-                    key={"p-11"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="CFP (critical or fumble probability) based on INS"
-                    value={cfp}
-                    showValueLabel={true}
-                  />  
-                  <Progress
-                    key={"p-12"}
-                    size="lg" 
-                    radius="sm"
-                    minValue={0}
-                    maxValue={1000}
-                    classNames={{
-                      track: "drop-shadow-md border border-sepia",
-                      indicator: "bg-medievalSepia",
-                      label: "text-medievalSepia tracking-wider text-3xl",
-                      value: "text-3xl text-medievalSepia/100",
-                    }}
-                    formatOptions={{style: "decimal"}}
-                    label="BCFA (base critical & fumble attack) based on STR + INS"
-                    value={bcfa}
-                    showValueLabel={true}
-                  />  
+                <h2 className="text-3xl py-2 px-4 mb-4 text-center border-1 bg-black/70  border-sepia">Use your attributes wisely.</h2>
+                <ProgressBar label="Charisma" value={currentAttributes?.charisma} maxValue={300} />
+                <ProgressBar label="Constitution" value={currentAttributes?.constitution} maxValue={300} />
+                <ProgressBar label="Dexterity" value={currentAttributes?.dexterity} maxValue={300} />
+                <ProgressBar label="Insanity" value={currentAttributes?.insanity} maxValue={300} />
+                <ProgressBar label="Intelligence" value={currentAttributes?.intelligence} maxValue={300} />
+                <ProgressBar label="Strength" value={currentAttributes?.strength} maxValue={500} />
+                <ProgressBar label="Hit Points based on CON + STR" value={hitPoints} maxValue={1000} />
+                <ProgressBar label="Attack based on STR - INS / 2" value={attack} maxValue={1000} />
+                <ProgressBar label="Defense based on DEX + CON + INT/2" value={defense} maxValue={1000} />
+                <ProgressBar label="Magic resistance based on INT + CHA" value={magicResistance} maxValue={1000} />
+                <ProgressBar label="CFP (critical or fumble probability) based on INS" value={cfp} maxValue={1000} />
+                <ProgressBar label="BCFA (base critical & fumble attack) based on STR + INS" value={bcfa} maxValue={1000} />
               </div>
             </div>
             <div className="w-1/3 p-4">
@@ -679,16 +472,16 @@ const PlayerPage = () => {
                 <div className="grid grid-cols-6 gap-4 justify-items-center items-center content-center">
                   <div className="col-start-1 col-span-2">
                     <User   
-                      name="Player Profile"
+                      name="Profile"
                       description={player.profile?.name}
                       avatarProps={{
                         src: `${player.profile?.image}`
                       }}
                       classNames={{
-                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center p-2",
+                        base: "bg-black/70 p-1 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-1",
                         name: "text-medievalSepia text-2xl text-darkSepia p-2",
-                        description: "text-4xl text-yellow-300/70 p-2",
+                        description: "text-2xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
@@ -701,16 +494,16 @@ const PlayerPage = () => {
                   </div>
                   <div className="col-start-5 col-span-2">
                     <User   
-                      name="Player Level"
+                      name="Level"
                       description={player.level}
                       avatarProps={{
                         src: "/images/icons/level.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center p-2",
+                        base: "bg-black/70 p-1 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-1",
                         name: "text-medievalSepia text-2xl text-darkSepia p-2",
-                        description: "text-4xl text-yellow-300/70 p-2",
+                        description: "text-2xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
@@ -738,9 +531,9 @@ const PlayerPage = () => {
                   <div className="col-start-1 col-end-3">
                     <Droppable id={500} type='artifact' children={player.equipment.artifact 
                     ? 
-                      <Draggable id="artifact_1" tooltip={<ArtifactTooltip element={player.equipment.artifact}/>} type={['artifact', 'inventory']} element={player.equipment.artifact} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                      <Draggable id="artifact_1" tooltip={<ArtifactTooltip element={player.equipment.artifact}/>} type={['artifact', 'inventory']} element={player.equipment.artifact} className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                     : 
-                      <img id="artifact_2" src="/images/artifact_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                      <img id="artifact_2" src="/images/artifact_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="100px" style={{'border': "3px ridge #000000"}} />}/>
                     </div>
                   <div className="col-start-3 col-end-5">
                   <Droppable id={600} type='boot' children={player.equipment.boot 
@@ -752,58 +545,73 @@ const PlayerPage = () => {
                   <div className="col-end-7 col-span-2">
                     <Droppable id={700} type='ring' children={player.equipment.ring 
                     ? 
-                      <Draggable id="ring_1" tooltip={<RingTooltip element={player.equipment.ring}/>} type={['ring', 'inventory']} element={player.equipment.ring} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                      <Draggable id="ring_1" tooltip={<RingTooltip element={player.equipment.ring}/>} type={['ring', 'inventory']} element={player.equipment.ring} className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                     : 
-                      <img id="ring_2" src="/images/ring_back.png" className="w-1/4 h-full object-contain rounded-full" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                      <img id="ring_2" src="/images/ring_back.png" className="w-1/4 h-full object-contain rounded-full" width="100px" style={{'border': "3px ridge #000000"}} />}/>
                   </div>
                 </div>
                 <div className="grid grid-cols-3 grid-rows-1 flex-grow justify-items-center items-center pt-10">
                   <Droppable id={800} type='healing' children={player.equipment.healing_potion 
                   ? 
-                    <Draggable id="healing_1" tooltip={<HealingPotionTooltip element={player.equipment.healing_potion}/>} type={['healing', 'inventory']} element={player.equipment.healing_potion} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                    <Draggable id="healing_1" tooltip={<HealingPotionTooltip element={player.equipment.healing_potion}/>} type={['healing', 'inventory']} element={player.equipment.healing_potion} className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                   : 
-                    <img id="healing_2" src="/images/healing_potion_back.jpg" className="w-1/4 h-full object-contain" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                    <img id="healing_2" src="/images/healing_potion_back.jpg" className="w-1/4 h-full object-contain" width="100px" style={{'border': "3px ridge #000000"}} />}/>
 
                   <Droppable id={900} type='antidote' children={player.equipment.antidote_potion 
                   ? 
-                    <Draggable id="antidote_1" tooltip={<AntidotePotionTooltip element={player.equipment.antidote_potion}/>} type={['antidote', 'inventory']} element={player.equipment.antidote_potion} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                    <Draggable id="antidote_1" tooltip={<AntidotePotionTooltip element={player.equipment.antidote_potion}/>} type={['antidote', 'inventory']} element={player.equipment.antidote_potion} className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                   : 
-                    <img id="antidote_2" src="/images/antidote_potion_back.jpg" className="w-1/4 h-full object-contain" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                    <img id="antidote_2" src="/images/antidote_potion_back.jpg" className="w-1/4 h-full object-contain" width="100px" style={{'border': "3px ridge #000000"}} />}/>
 
                   <Droppable id={1000} type='enhancer' children={player.equipment.enhancer_potion 
                   ? 
-                    <Draggable id="enhancer_1" tooltip={<EnhancerPotionTooltip element={player.equipment.enhancer_potion}/>} type={['enhancer', 'inventory']} element={player.equipment.enhancer_potion} className="w-1/4 h-full object-contain rounded-full" width="150px" border="3px ridge #cda882" /> 
+                    <Draggable id="enhancer_1" tooltip={<EnhancerPotionTooltip element={player.equipment.enhancer_potion}/>} type={['enhancer', 'inventory']} element={player.equipment.enhancer_potion} className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                   : 
-                    <img id="enhancer_2" src="/images/enhancer_potion_back.jpg" className="w-1/4 h-full object-contain" width="150px" style={{'border': "3px ridge #000000"}} />}/>
+                    <img id="enhancer_2" src="/images/enhancer_potion_back.jpg" className="w-1/4 h-full object-contain" width="100px" style={{'border': "3px ridge #000000"}} />}/>
                 </div>
-                <div className="grid grid-cols-2 grid-rows-1 flex-grow justify-items-center items-center pt-10">
+                <div className="grid grid-cols-3 grid-rows-1  justify-items-center items-center pt-10">
                   <div className="col-start-1 col-span-1">
                     <User   
-                      name="Player Experience"
+                      name="Experience"
                       description={`${player.experience} xp`}
                       avatarProps={{
                         src: "/images/icons/experience.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center p-2",
+                        base: "bg-black/70 p-1 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-1",
                         name: "text-medievalSepia text-2xl text-darkSepia p-2",
-                        description: "text-4xl text-yellow-300/70 p-2",
+                        description: "text-2xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
                   <div className="col-start-2 col-span-1">
                     <User   
-                      name="Player Gold"
+                      name="Next level"
+                      description={`${(player.level + 1) * EXP_POINTS} xp`}
+                      avatarProps={{
+                        src: "/images/icons/up.png"
+                      }}
+                      classNames={{
+                        base: "bg-black/70 p-1 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-1",
+                        name: "text-medievalSepia text-2xl text-darkSepia p-2",
+                        description: "text-2xl text-yellow-300/70 p-2",
+                      }}    
+                    />
+                  </div>
+                  <div className="col-start-3 col-span-1">
+                    <User   
+                      name="Gold"
                       description={player.gold}
                       avatarProps={{
                         src: "/images/icons/gold.png"
                       }}
                       classNames={{
-                        base: "bg-black/70 p-3 border-1 border-sepia w-full",
-                        wrapper: "justify-items-center items-center content-center p-2",
+                        base: "bg-black/70 p-1 border-1 border-sepia w-full",
+                        wrapper: "justify-items-center items-center content-center p-1",
                         name: "text-medievalSepia text-2xl text-darkSepia p-2",
-                        description: "text-4xl text-yellow-300/70 p-2",
+                        description: "text-2xl text-yellow-300/70 p-2",
                       }}    
                     />
                   </div>
@@ -903,12 +711,22 @@ const PlayerPage = () => {
                       )
                     })
                   }
-                  {
-                    
-                  }
-                  <div className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={23} type='inventory'  children={null}/></div>    
-                  <div className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={24} type='inventory'  children={null}/></div>
-                  <div className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={25} type='inventory'  children={null}/></div>      
+                  { 
+                    Array.from({
+                      length:
+                      GRID_NUMBER 
+                      - player.inventory.helmets.length 
+                      - player.inventory.weapons.length 
+                      - player.inventory.armors.length 
+                      - player.inventory.shields.length
+                      - player.inventory.artifacts.length
+                      - player.inventory.boots.length
+                      - player.inventory.rings.length
+                      - player.inventory.healing_potions.length
+                      - player.inventory.antidote_potions.length
+                      - player.inventory.enhancer_potions.length
+                    }).map((element,index) => <div className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={23} type='inventory'  children={null}/></div> ) 
+                  }                      
                 </div>
               </div>
             </div>
