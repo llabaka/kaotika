@@ -10,7 +10,7 @@ const HealingPotionTooltip: React.FC<Props> = ({ element }) => {
     return (
         <div key={element._id} className='p-4 text-center'>
           <h1 className="text-3xl mb-4 text-darkSepia">{element.name}</h1>
-          <p className="text-3xl mb-4">{element.description}</p>
+          <p className="text-2xl mb-4">{element.description}</p>
           <p className="text-3xl mb-2 text-darkSepia">Modifiers</p> 
           {element.modifiers.hit_points ? <p className="text-2xl mb-2">Hit Points: {element.modifiers.hit_points}</p> : null}
           {element.modifiers.constitution ? <p className="text-2xl mb-2">Constitution: {element.modifiers.constitution.toString()}</p> : null}

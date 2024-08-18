@@ -22,6 +22,7 @@ import { Artifact } from '@/_common/interfaces/Artifact';
 import { HealingPotion } from '@/_common/interfaces/HealingPotion';
 import { AntidotePotion } from '@/_common/interfaces/AntidotePotion';
 import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
+import { PROGRESS_LABEL, PROGRESS_VALUE } from '@/constants/constants';
 
 const Equipment = () => {
   const router = useRouter();
@@ -382,10 +383,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={300}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Hit Points based on CON + STR"
@@ -399,10 +400,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={100}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Attack based on STR - INS / 2"
@@ -416,10 +417,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={100}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Defense based on DEX + CON + INT/2"
@@ -433,10 +434,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={100}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="Magic resistance based on INT + CHA"
@@ -450,10 +451,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={100}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="CFP (critical or fumble probability) based on INS"
@@ -467,10 +468,10 @@ const Equipment = () => {
                   minValue={0}
                   maxValue={100}
                   classNames={{
-                    track: "drop-shadow-md border border-sepia",
-                    indicator: "bg-medievalSepia",
-                    label: "text-medievalSepia tracking-wider text-3xl",
-                    value: "text-3xl text-medievalSepia/100",
+                    track: "drop-shadow-md border border-sepia h-2",
+                    indicator: "bg-medievalSepia h-2",
+                    label: PROGRESS_LABEL,
+                    value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
                   label="BCFA (base critical & fumble attack) based on STR + INS"
