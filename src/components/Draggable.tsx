@@ -20,11 +20,12 @@ interface Props {
   type: string[];
   element: Armor | Helmet | Weapon | Shield | Boot | Ring | Artifact | HealingPotion | AntidotePotion | EnhancerPotion;
   className: string | undefined;
+  tooltipClassName: string;
   width: string;
   border: string;
 }
 
-const Draggable: React.FC<Props> = ({ id, tooltip, type, className, width, border, element}) => {
+const Draggable: React.FC<Props> = ({ id, tooltip, type, tooltipClassName, className, width, border, element}) => {
   const {attributes, listeners, setNodeRef, transform} = useDraggable({
     id: id,
     data: {
@@ -38,7 +39,7 @@ const Draggable: React.FC<Props> = ({ id, tooltip, type, className, width, borde
   };
 
   return (
-    <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' size='sm' showArrow={true} content={tooltip}>
+    <Tooltip className={tooltipClassName} placement='top' size='sm' showArrow={true} content={tooltip}>
     <img id={id} src={element.image} alt="Inventory" className={className} ref={setNodeRef} style={style} {...listeners} {...attributes} />
     </Tooltip>
   );

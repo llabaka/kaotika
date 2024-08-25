@@ -11,6 +11,7 @@ import {
   TableRow,
   TableCell
 } from "@nextui-org/table";
+import KaotikaButton from '@/components/KaotikaButton';
 
 interface Assignment {
   title: string;
@@ -85,6 +86,7 @@ const CoursePage: React.FC = () => {
     try {                       
       const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
       const data = await res.json();
+      console.log(data)
       setStudentsGrades(data);
     } catch (error) {
       console.error('Failed to fetch student grades:', error);
@@ -92,6 +94,11 @@ const CoursePage: React.FC = () => {
       setLoading(false);
     }
   };
+
+  const handleClick = (name:string, grade:number) => {
+    console.log(name);
+    console.log(grade);
+  }
 
   if (!session || !course) return null;
 
@@ -164,7 +171,7 @@ const CoursePage: React.FC = () => {
                       <TableCell>{grade.studentName}</TableCell>
                       <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.title}</TableCell>
                       <TableCell className="text-3xl mb-4 text-center">{grade.grade} / {currentAssignment?.maxPoints}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center">TRUE</TableCell>
+                      <TableCell className="text-3xl mb-4 text-center"><KaotikaButton handleClick={() => handleClick(grade.studentName, grade.grade)} text="SEND" /></TableCell>
                     </TableRow>
                     ))}
                   </TableBody>
