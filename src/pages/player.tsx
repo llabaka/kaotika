@@ -510,7 +510,7 @@ const PlayerPage = () => {
                   <div className="col-start-1 col-end-3">
                     <Droppable id={200} type='weapon' children={player.equipment.weapon 
                     ? 
-                      <Draggable id="weapon_1" tooltip={<WeaponTooltip element={player.equipment.weapon}/>} type={['weapon', 'inventory']} element={player.equipment.weapon} tooltipClassName="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
+                      <Draggable id="weapon_1" tooltip={<WeaponTooltip element={player.equipment.weapon} equiped={null}/>} type={['weapon', 'inventory']} element={player.equipment.weapon} tooltipClassName="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className="w-1/4 h-full object-contain rounded-full" width="100px" border="3px ridge #cda882" /> 
                     : 
                       <img id="weapon_2" src="/images/sword_back.jpg" className="w-1/4 h-full object-contain rounded-full" width="100px" style={{'border': "3px ridge #000000"}} />}/>
                   </div>
@@ -634,7 +634,7 @@ const PlayerPage = () => {
                     player.inventory.weapons.map(weapon => {
                       return (
                         <div key={weapon._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon}/>} type={[`${weapon.type}`, 'inventory']} element={weapon} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon} equiped={player.equipment.weapon}/>} type={[`${weapon.type}`, 'inventory']} element={weapon} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
