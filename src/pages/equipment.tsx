@@ -239,7 +239,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Weapons</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.weapons.map((weapon) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement="bottom" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon} equiped={null}/>}>
+                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement="right" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon} equiped={null}/>}>
                 <img
                   key={weapon._id}
                   src={weapon.image}

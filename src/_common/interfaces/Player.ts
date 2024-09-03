@@ -21,6 +21,7 @@ export interface Player {
   level: number;
   gold: number;
   is_active: boolean;
+  created_date: string;
   profile: Profile | null;
   attributes: Modifier;
   equipment:{
