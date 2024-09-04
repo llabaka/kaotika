@@ -7,11 +7,11 @@ export interface Curse {
     type: string;
     modifiers: {
         hit_points: number,
-        intelligence: Number,
-        dexterity: Number,
-        constitution: Number,
-        insanity: Number,
-        charisma: Number,
-        strength: Number
+        intelligence: number,
+        dexterity: number,
+        constitution: number,
+        insanity: number,
+        charisma: number,
+        strength: number
     }
 }

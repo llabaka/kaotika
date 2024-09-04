@@ -25,13 +25,13 @@ export interface Player {
   profile: Profile | null;
   attributes: Modifier;
   equipment:{
-    helmet: Helmet,
+    helmet: Helmet | null,
     weapon: Weapon,
     armor: Armor,
-    shield: Shield,
+    shield: Shield | null,
     artifact: Artifact,
-    boot: Boot,
-    ring: Ring,
+    boot: Boot | null,
+    ring: Ring | null,
     healing_potion: HealingPotion,
     antidote_potion: AntidotePotion,
     enhancer_potion: EnhancerPotion,
