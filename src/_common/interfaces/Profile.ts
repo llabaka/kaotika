@@ -12,4 +12,12 @@ export interface Profile {
   image: string;
   description: string;
   attributes: Attribute[];
+  equipment:{
+    armors: Armor[],
+    weapons: Weapon[],
+    artifacts: Artifact[],
+    healing_potions: HealingPotion[],
+    antidote_potions: AntidotePotion[],
+    enhancer_potions: EnhancerPotion[],
+  } 
 }
