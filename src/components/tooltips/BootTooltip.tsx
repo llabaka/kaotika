@@ -10,9 +10,9 @@ const BootTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode => 
   return (
     <div key={element._id} className='w-full p-4 text-center'>
       <div className="flex flex-row justify-items-center items-center">
-        <div className="p-4">
+        <div className="w-full p-4">
           <h1 className="text-3xl mb-2 text-darkSepia">{element.name}</h1>
-          <p className="text-2xl mb-2 font-light">{element.description}</p>
+          <p className="text-2xl mb-2">{element.description}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Modifiers</h1>
           {element.modifiers.constitution ? <p className="text-2xl mb-2">Constitution: {element.modifiers.constitution}</p> : <p className="text-2xl mb-2">Constitution: 0</p>}
           {element.modifiers.charisma ? <p className="text-2xl mb-2">Charisma: {element.modifiers.charisma}</p> : <p className="text-2xl mb-2">Charisma: 0</p>}

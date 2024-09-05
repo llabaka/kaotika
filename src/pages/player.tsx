@@ -546,7 +546,7 @@ console.log(player)
                   <div className="col-start-3 col-end-5">
                   <Droppable id={600} type='boot' children={player.equipment.boot 
                     ? 
-                      <Draggable id="boot_1" tooltip={<BootTooltip element={player.equipment.boot} equiped={null}/>} position='top' type={['boot', 'inventory']} element={player.equipment.boot} tooltipClassName="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className="w-1/4 h-full object-contain rrounded-sm" width="100px" border="3px ridge #cda882" /> 
+                      <Draggable id="boot_1" tooltip={<BootTooltip element={player.equipment.boot} equiped={null}/>} position='top' type={['boot', 'inventory']} element={player.equipment.boot} tooltipClassName="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className="w-1/4 h-full object-contain rounded-sm" width="100px" border="3px ridge #cda882" /> 
                     : 
                       <img id="boot_2" src="/images/boots_back.jpg" className="object-contain rounded-sm" width="100px" style={{'border': "3px ridge #000000"}} />}/>
                     </div>
@@ -596,7 +596,7 @@ console.log(player)
                   <div className="col-start-2 col-span-1">
                     <User   
                       name="Next level"
-                      description={`${(player.level + 1) * EXP_POINTS} xp`}
+                      description={`${(player.level) * EXP_POINTS} xp`}
                       avatarProps={{
                         src: "/images/icons/up.png"
                       }}

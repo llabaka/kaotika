@@ -53,7 +53,7 @@ const Draggable: React.FC<Props> = ({ id, tooltip, type, tooltipClassName, class
   };
 
   return (
-    <Tooltip className={tooltipClassName} placement={position} size='sm' showArrow={true} content={tooltip}>
+    <Tooltip className={tooltipClassName} placement={position} size='sm' showArrow={true} content={tooltip} closeDelay={0}>
     <img id={id} src={element.image} alt="Inventory" className={className} ref={setNodeRef} style={style} {...listeners} {...attributes} />
     </Tooltip>
   );
