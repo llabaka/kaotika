@@ -8,7 +8,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    console.log("test")
     const response = await fetch(`https://kaotika-server.fly.dev/players/email/${email}`);
     const data = await response.json();
     if (response.status === 200) {

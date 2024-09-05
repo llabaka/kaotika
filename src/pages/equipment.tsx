@@ -66,6 +66,7 @@ const Equipment = () => {
   const [cfp, setCFP] = useState(0);
   const [bcfa, setBCFA] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [classroomId, setClassroomId] = useState("");
 
 
   useEffect(() => {
@@ -93,6 +94,34 @@ const Equipment = () => {
 
   const handleNext = async() => {
     setLoading(true);
+    const fetchClassroomUserProfile = async () => {
+      if (session?.accessToken) {
+        try {
+          const response = await fetch('/api/classroom/student', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ accessToken: session.accessToken }),
+          });
+
+          const data = await response.json();
+          setClassroomId(data.id);
+        } catch (error) {
+          console.error('Error fetching Classroom user profile:', error);
+        }
+      }
+    };
+
+    fetchClassroomUserProfile();
+    
+  };
+
+  useEffect(() => {
+    registerPlayer();
+  }, [classroomId])
+  
+  const registerPlayer = async () => {
     const nickname = sessionStorage.getItem('nickname');
     const response = await fetch('/api/player/register', {
       method: 'POST',
@@ -104,6 +133,7 @@ const Equipment = () => {
         nickname: nickname,
         email: session?.user?.email,
         avatar: session?.user?.image,
+        classroom_Id: classroomId,
         profile: currentProfile?._id,
         equipment:{
           armor: selectedArmor?._id,
@@ -123,8 +153,7 @@ const Equipment = () => {
       console.error('Failed to register player');
       setLoading(false);
     }
-  };
-
+  }
   const handleBack = () => {
     router.push('/player');
   };

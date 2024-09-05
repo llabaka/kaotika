@@ -24,6 +24,7 @@ export interface Player {
   created_date: string;
   profile: Profile | null;
   attributes: Modifier;
+  classroom_id: string | null;
   equipment:{
     helmet: Helmet | null,
     weapon: Weapon,

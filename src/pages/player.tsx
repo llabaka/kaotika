@@ -38,7 +38,7 @@ import { Modifier } from '@/_common/interfaces/Modifier';
 import KaotikaButton from '@/components/KaotikaButton';
 import {GRID_NUMBER, EXP_POINTS, PROGRESS_LABEL, PROGRESS_VALUE} from '../constants/constants';
 import ProgressBar from '@/components/ProgressBar';
-
+import {getClassroomUserId} from '../utils/googleClassroom';
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
 
@@ -74,20 +74,20 @@ const PlayerPage = () => {
   useEffect(() => {
     if (session?.user?.email) {
       console.log("UseEffect fetch player data")
+      console.log(session)
       const fetchPlayerData = async () => {
         try {
           setLoading(true);
           const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
           if (res.status === 200) {
             const response = await res.json();
-            //console.log(JSON.stringify(response.data, null, "\t"))
-            
-            console.log(currentPlayer);
-            //setCurrentEquipment(response.data.equipment);
-            //setPlayer(response.data);
+            setCurrentEquipment(response.data.equipment);
+
+            setPlayer(response.data);
             //FAKE DATA
-            setCurrentEquipment(currentPlayer.equipment);
-            setPlayer(currentPlayer);
+            
+            //setCurrentEquipment(currentPlayer.equipment);
+            //setPlayer(currentPlayer);
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();
@@ -108,10 +108,12 @@ const PlayerPage = () => {
   }, [session]);
 
   useEffect(() => {
+    console.log(player)
     if(player) calculateAllAttributes();
   }, [player]);
 
   useEffect(() => {
+    console.log(player)
     calculateHitPoints();
     calculateAttack();
     calculateDefense();
@@ -127,7 +129,7 @@ const PlayerPage = () => {
   
   
   const calculateAllAttributes = () => {
-    console.log(player);
+console.log(player)
     if(player) {
       const charisma =  
         player.attributes?.charisma + 
@@ -731,7 +733,7 @@ const PlayerPage = () => {
                       - player.inventory.healing_potions.length
                       - player.inventory.antidote_potions.length
                       - player.inventory.enhancer_potions.length
-                    }).map((element,index) => <div className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={23} type='inventory'  children={null}/></div> ) 
+                    }).map((element,index) => <div key={index} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={23} type='inventory'  children={null}/></div> ) 
                   }                      
                 </div>
               </div>
