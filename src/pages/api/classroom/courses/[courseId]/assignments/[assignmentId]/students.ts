@@ -41,9 +41,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const student = studentRes.data;
         console.log('Student data', student);
         return {
-          id: submission.id,
+          classroom_Id: student.id,
           studentName: `${student.name?.fullName}`,
-          grade: submission.assignedGrade
+          grade: submission.assignedGrade,
+          state: submission.state,
+          courseWorkId: submission.courseWorkId
         };
       })
     );

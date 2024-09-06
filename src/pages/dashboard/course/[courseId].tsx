@@ -61,6 +61,43 @@ const CoursePage: React.FC = () => {
     fetchCourseDetails();
   }, [session, status, router, courseId]);
 
+  useEffect(() => {
+    if(studentsGrades.length > 0) fetchConsolidatedGrades();
+  }, [studentsGrades])
+  
+  const fetchConsolidatedGrades = async () => {
+    try {
+      setLoading(true);
+      const studentGradesResult = studentsGrades.map(function(item) { 
+        delete item.studentName; 
+        delete item.grade;
+        delete item.maxPoints;
+        delete item.courseWorkName;
+        delete item.state;
+        return item; 
+      });
+      console.log(studentGradesResult);
+      const response = await fetch(`/api/classroom/consolidated`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({  
+          studentGradesResult     
+        }),
+      });
+
+      //TODO
+      //Guardar array de clasroomId en estado
+      
+
+    } catch (error) {
+      console.error('Failed to fetch consolidated grades:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleTopicSelect = async (topicId: string) => {
     setSelectedTopic(topicId);
     setLoading(true);
@@ -87,6 +124,12 @@ const CoursePage: React.FC = () => {
       const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
       const data = await res.json();
       console.log(data)
+      data.forEach((element: { courseWorkName: string; maxPoints: number; }) => {
+       element.courseWorkName = currentAssignment.title
+       element.maxPoints = currentAssignment.maxPoints
+      });
+      
+      console.log(data)
       setStudentsGrades(data);
     } catch (error) {
       console.error('Failed to fetch student grades:', error);
@@ -95,9 +138,9 @@ const CoursePage: React.FC = () => {
     }
   };
 
-  const handleClick = (name:string, grade:number) => {
-    console.log(name);
-    console.log(grade);
+  const handleClick = (classroom_Id:string) => {
+    console.log(classroom_Id);
+
   }
 
   if (!session || !course) return null;
@@ -126,7 +169,7 @@ const CoursePage: React.FC = () => {
                 </select>
           </div>
           <div className="w-1/2 p-4">
-          {selectedTopic && (
+            {selectedTopic && (
               <>
                 <h2 className="text-4xl mb-4">Assignments</h2>
                 <select
@@ -160,19 +203,23 @@ const CoursePage: React.FC = () => {
                   selectionMode="single"  
                   aria-label="Kaotika Students">
                   <TableHeader>
-                    <TableColumn className="text-3xl mb-4 text-center">NAME</TableColumn>
-                    <TableColumn className="text-3xl mb-4 text-center">TASK</TableColumn>
-                    <TableColumn className="text-3xl mb-4 text-center">POINTS</TableColumn>
-                    <TableColumn className="text-3xl mb-4 text-center">PENDING</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">ID</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">NAME</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">TASK</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">POINTS</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">STATUS</TableColumn>
+                    <TableColumn className="text-2xl mb-4 text-center">PENDING</TableColumn>
                   </TableHeader>
                   <TableBody>
                     {studentsGrades.map((grade,index) => (
                       <TableRow key={index}>
-                      <TableCell>{grade.studentName}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center">{currentAssignment?.title}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center">{grade.grade} / {currentAssignment?.maxPoints}</TableCell>
-                      <TableCell className="text-3xl mb-4 text-center"><KaotikaButton handleClick={() => handleClick(grade.studentName, grade.grade)} text="SEND" /></TableCell>
-                    </TableRow>
+                        <TableCell className="text-2xl mb-4">{grade.classroom_Id}</TableCell>
+                        <TableCell ><span className="text-xl mb-4">{grade.studentName}</span></TableCell>
+                        <TableCell className="text-2xl mb-4 text-center">{grade.courseWorkName}</TableCell>
+                        <TableCell className="text-3xl mb-4 text-center">{grade.grade} / {grade.maxPoints}</TableCell>
+                        <TableCell ><span className="text-xl mb-4">{grade.state}</span></TableCell>
+                        <TableCell >{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id)} text="SEND" /> : <span className="text-2xl mb-4 text-center text-red-500">PENDING</span>}</TableCell>
+                      </TableRow>
                     ))}
                   </TableBody>
                 </Table>
