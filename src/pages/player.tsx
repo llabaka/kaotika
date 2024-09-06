@@ -191,7 +191,7 @@ console.log(player)
 
   const calculateHitPoints = (): void => {
     if (!currentAttributes) return ;
-    setHitPoints( currentAttributes.constitution + currentAttributes.strength); 
+    setHitPoints( currentAttributes.constitution + currentAttributes.dexterity - currentAttributes.insanity/2); 
   };
 
   const calculateAttack = (): void => {

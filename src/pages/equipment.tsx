@@ -197,9 +197,10 @@ const Equipment = () => {
  
   const calculateHitPoints = (): void => {
     if (!currentProfile) return ;
-    const strength = currentProfile.attributes.find(attr => attr.name === 'Strength')?.value || 0;
+    const dexterity = currentProfile.attributes.find(attr => attr.name === 'Dexterity')?.value || 0;
+    const insanity = currentProfile.attributes.find(attr => attr.name === 'Insanity')?.value || 0;
     const constitution = currentProfile.attributes.find(attr => attr.name === 'Constitution')?.value || 0;
-    setHitPoints( ( strength + armorModifiers.strength  + weaponModifiers.strength + artifactModifiers.strength)  + (constitution + armorModifiers.constitution + weaponModifiers.constitution + artifactModifiers.constitution)); 
+    setHitPoints((dexterity + armorModifiers.dexterity  + weaponModifiers.dexterity + artifactModifiers.dexterity + constitution + armorModifiers.constitution + weaponModifiers.constitution + artifactModifiers.constitution) - (insanity + armorModifiers.insanity + weaponModifiers.insanity + artifactModifiers.insanity)/2); 
   };
 
   const calculateAttack = (): void => {
