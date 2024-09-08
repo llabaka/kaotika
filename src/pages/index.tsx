@@ -13,7 +13,6 @@ const Home = () => {
   useEffect(() => {
     
     if (status === 'authenticated') {
-      console.log('User is authenticated on HomePage:', session);
       const email = session?.user?.email || '';
       const fetchPlayer = async () => {
         try {        

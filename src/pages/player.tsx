@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Progress, Tooltip, User } from "@nextui-org/react";
-import {DndContext, DragEndEvent, DragOverEvent} from '@dnd-kit/core';
+import {DndContext, DragEndEvent} from '@dnd-kit/core';
 import useSound from 'use-sound';
 import _ from 'lodash';
 import currentPlayer from '../data/player.json';
@@ -38,7 +38,7 @@ import { Modifier } from '@/_common/interfaces/Modifier';
 import KaotikaButton from '@/components/KaotikaButton';
 import {GRID_NUMBER, EXP_POINTS, PROGRESS_LABEL, PROGRESS_VALUE} from '../constants/constants';
 import ProgressBar from '@/components/ProgressBar';
-import {getClassroomUserId} from '../utils/googleClassroom';
+
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
 
@@ -73,8 +73,6 @@ const PlayerPage = () => {
   
   useEffect(() => {
     if (session?.user?.email) {
-      console.log("UseEffect fetch player data")
-      console.log(session)
       const fetchPlayerData = async () => {
         try {
           setLoading(true);
@@ -84,8 +82,7 @@ const PlayerPage = () => {
             setCurrentEquipment(response.data.equipment);
 
             setPlayer(response.data);
-            //FAKE DATA
-            
+            //FAKE DATA 
             //setCurrentEquipment(currentPlayer.equipment);
             //setPlayer(currentPlayer);
             setIsRegistered(true);
@@ -108,12 +105,10 @@ const PlayerPage = () => {
   }, [session]);
 
   useEffect(() => {
-    console.log(player)
     if(player) calculateAllAttributes();
   }, [player]);
 
   useEffect(() => {
-    console.log(player)
     calculateHitPoints();
     calculateAttack();
     calculateDefense();
@@ -129,7 +124,6 @@ const PlayerPage = () => {
   
   
   const calculateAllAttributes = () => {
-console.log(player)
     if(player) {
       const charisma =  
         player.attributes?.charisma + 
@@ -463,7 +457,7 @@ console.log(player)
                 <ProgressBar label="Insanity" value={currentAttributes?.insanity} maxValue={300} />
                 <ProgressBar label="Intelligence" value={currentAttributes?.intelligence} maxValue={300} />
                 <ProgressBar label="Strength" value={currentAttributes?.strength} maxValue={500} />
-                <ProgressBar label="Hit Points based on CON + STR" value={hitPoints} maxValue={1000} />
+                <ProgressBar label="Hit Points based on CON + DEX - INS/2" value={hitPoints} maxValue={1000} />
                 <ProgressBar label="Attack based on STR - INS / 2" value={attack} maxValue={1000} />
                 <ProgressBar label="Defense based on DEX + CON + INT/2" value={defense} maxValue={1000} />
                 <ProgressBar label="Magic resistance based on INT + CHA" value={magicResistance} maxValue={1000} />

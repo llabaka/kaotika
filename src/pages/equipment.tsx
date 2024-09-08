@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Loading from '@/components/Loading';
 import { Profile } from '@/_common/interfaces/Profile';
-import { Attribute } from '@/_common/interfaces/Attribute';
 import ArmorTooltip from '@/components/tooltips/ArmorTooltip';
 import WeaponTooltip from '@/components/tooltips/WeaponTooltip';
 import ArtifactTooltip from '@/components/tooltips/ArtifactTooltip';
@@ -66,7 +65,7 @@ const Equipment = () => {
   const [cfp, setCFP] = useState(0);
   const [bcfa, setBCFA] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [classroomId, setClassroomId] = useState("");
+  const [classroomId, setClassroomId] = useState(null);
 
 
   useEffect(() => {
@@ -118,11 +117,12 @@ const Equipment = () => {
   };
 
   useEffect(() => {
-    registerPlayer();
+    if(classroomId)registerPlayer();
   }, [classroomId])
   
   const registerPlayer = async () => {
     const nickname = sessionStorage.getItem('nickname');
+    console.log("Registering player");
     const response = await fetch('/api/player/register', {
       method: 'POST',
       headers: {
@@ -252,7 +252,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Armor</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.armors.map((armor) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' size='sm' showArrow={true} content={<ArmorTooltip element={armor} equiped={null}/>}>
+                <Tooltip key={armor._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' closeDelay={0} size='sm' showArrow={true} content={<ArmorTooltip element={armor} equiped={null}/>}>
                 <img
                   key={armor._id}
                   src={armor.image}
@@ -269,7 +269,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Weapons</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.weapons.map((weapon) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement="right" size='sm' showArrow={true}  content={<WeaponTooltip element={weapon} equiped={null}/>}>
+                <Tooltip key={weapon._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement="right" closeDelay={0} size='sm' showArrow={true}  content={<WeaponTooltip element={weapon} equiped={null}/>}>
                 <img
                   key={weapon._id}
                   src={weapon.image}
@@ -286,7 +286,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Artifacts</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.artifacts.map((artifact) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<ArtifactTooltip element={artifact} equiped={null}/>}>
+                <Tooltip key={artifact._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' closeDelay={0} showArrow={true} content={<ArtifactTooltip element={artifact} equiped={null}/>}>
                 <img
                   key={artifact._id}
                   src={artifact.image}
@@ -305,7 +305,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Healing Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.healing_potions.map((potion) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<HealingPotionTooltip element={potion} equiped={null}/>}>
+                <Tooltip key={potion._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' closeDelay={0} showArrow={true} content={<HealingPotionTooltip element={potion} equiped={null}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
@@ -323,7 +323,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Antidote Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.antidote_potions.map((potion) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<AntidotePotionTooltip element={potion} equiped={null}/>}>
+                <Tooltip key={potion._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' closeDelay={0} showArrow={true} content={<AntidotePotionTooltip element={potion} equiped={null}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
@@ -340,7 +340,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Enhancer Potions</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.enhancer_potions.map((potion) => (
-                <Tooltip className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' showArrow={true} content={<EnhancerPotionTooltip element={potion} equiped={null}/>}>
+                <Tooltip key={potion._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" size='sm' closeDelay={0} showArrow={true} content={<EnhancerPotionTooltip element={potion} equiped={null}/>}>
                 <img
                   key={potion._id}
                   src={potion.image}
@@ -419,7 +419,7 @@ const Equipment = () => {
                     value: PROGRESS_VALUE,
                   }}
                   formatOptions={{style: "decimal"}}
-                  label="Hit Points based on CON + STR"
+                  label="Hit Points based on CON + DEX - INS/2"
                   value={hitPoints}
                   showValueLabel={true}
                 />
