@@ -17,7 +17,7 @@ const Home = () => {
       const fetchPlayer = async () => {
         try {        
           const res = await fetch(`/api/player/check-registration?email=${email}`);
-          if(res.status === 200 && email.endsWith('@gmail.com')) router.push('/player');
+          if(res.status === 200 && email.endsWith('@ikasle.aeg.eus')) router.push('/player');
           if(res.status === 200 && email.endsWith('@aeg.eus')) router.push('/dashboard'); 
           if(res.status === 404) router.push('/welcome');           
         } catch (error) {
