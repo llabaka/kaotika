@@ -62,7 +62,7 @@ const CoursePage: React.FC = () => {
   }, [session, status, router, courseId]);
 
   useEffect(() => {
-    if(studentsGrades.length > 0) fetchConsolidatedGrades();
+    //if(studentsGrades.length > 0) fetchConsolidatedGrades();
   }, [studentsGrades])
   
   const fetchConsolidatedGrades = async () => {

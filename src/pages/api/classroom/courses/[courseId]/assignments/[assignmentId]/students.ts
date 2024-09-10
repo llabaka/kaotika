@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         };
       })
     );
-
+    
     res.status(200).json(grades);
   } catch (error) {
     console.error('Failed to fetch student grades:', error);
