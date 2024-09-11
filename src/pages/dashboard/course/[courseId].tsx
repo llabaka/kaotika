@@ -18,6 +18,19 @@ interface Assignment {
   maxPoints: number;
 }
 
+class Consolidated {
+  clasroomId;
+  courseWorkName;
+  selectedAssignment;
+  grade;
+  constructor(classroom_Id:string, courseWorkName:string, selectedAssignment:string, grade:number){
+    this.clasroomId = classroom_Id;
+    this.courseWorkName = courseWorkName;
+    this.selectedAssignment = selectedAssignment;
+    this.grade = grade;
+  }
+}
+
 const CoursePage: React.FC = () => {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -123,13 +136,11 @@ const CoursePage: React.FC = () => {
     try {                       
       const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
       const data = await res.json();
-      console.log(data)
       data.forEach((element: { courseWorkName: string; maxPoints: number; }) => {
        element.courseWorkName = currentAssignment.title
        element.maxPoints = currentAssignment.maxPoints
       });
       
-      console.log(data)
       setStudentsGrades(data);
     } catch (error) {
       console.error('Failed to fetch student grades:', error);
@@ -138,9 +149,24 @@ const CoursePage: React.FC = () => {
     }
   };
 
-  const handleClick = (classroom_Id:string) => {
-    console.log(classroom_Id);
+  const handleClick = (classroom_Id:string, courseWorkName:string, grade:number) => {
+    const consolidated: Consolidated[] = [];
+    consolidated.push(new Consolidated(classroom_Id, courseWorkName, selectedAssignment!, grade));
+    console.log(consolidated);
+  } 
 
+  const handleClickAllGrades = () => {
+    
+    const consolidated: Consolidated[] = [];
+    studentsGrades.map(student => {
+      if(student.state === 'RETURNED') {
+        delete student.studentName; 
+        delete student.maxPoints;
+        delete student.state;
+        consolidated.push(new Consolidated(student.classroom_Id, student.courseWorkName, selectedAssignment!, student.grade));
+      }
+    });
+    console.log(consolidated);
   }
 
   if (!session || !course) return null;
@@ -197,32 +223,40 @@ const CoursePage: React.FC = () => {
           <div className="w-full p-4">
           {selectedAssignment && (
               <>
-                <h2 className="text-4xl mb-4">Student Grades</h2>
+                <h2 className="text-3xl mb-4">Student Grades</h2>
                 <Table 
                   color="warning"
-                  selectionMode="single"  
+                  selectionMode="single" 
+                  classNames={{
+                    table: "text-xl",
+                    td: "text-xl",
+                    tr: "text-xl",
+                    tbody: "text-xl"
+
+                  }} 
                   aria-label="Kaotika Students">
                   <TableHeader>
-                    <TableColumn className="text-2xl mb-4 text-center">ID</TableColumn>
-                    <TableColumn className="text-2xl mb-4 text-center">NAME</TableColumn>
-                    <TableColumn className="text-2xl mb-4 text-center">TASK</TableColumn>
-                    <TableColumn className="text-2xl mb-4 text-center">POINTS</TableColumn>
-                    <TableColumn className="text-2xl mb-4 text-center">STATUS</TableColumn>
-                    <TableColumn className="text-2xl mb-4 text-center">PENDING</TableColumn>
+                    <TableColumn className="mb-4 text-center">ID</TableColumn>
+                    <TableColumn className="mb-4 text-center">NAME</TableColumn>
+                    <TableColumn className="mb-4 text-center">TASK</TableColumn>
+                    <TableColumn className="mb-4 text-center">POINTS</TableColumn>
+                    <TableColumn className="mb-4 text-center">STATUS</TableColumn>
+                    <TableColumn className="mb-4 text-center">PENDING</TableColumn>
                   </TableHeader>
                   <TableBody>
                     {studentsGrades.map((grade,index) => (
                       <TableRow key={index}>
-                        <TableCell className="text-2xl mb-4">{grade.classroom_Id}</TableCell>
-                        <TableCell ><span className="text-xl mb-4">{grade.studentName}</span></TableCell>
-                        <TableCell className="text-2xl mb-4 text-center">{grade.courseWorkName}</TableCell>
-                        <TableCell className="text-3xl mb-4 text-center">{grade.grade} / {grade.maxPoints}</TableCell>
-                        <TableCell ><span className="text-xl mb-4">{grade.state}</span></TableCell>
-                        <TableCell >{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id)} text="SEND" /> : <span className="text-2xl mb-4 text-center text-red-500">PENDING</span>}</TableCell>
+                        <TableCell className="mb-4">{grade.classroom_Id}</TableCell>
+                        <TableCell ><span className="mb-4">{grade.studentName}</span></TableCell>
+                        <TableCell className="mb-4 text-center">{grade.courseWorkName}</TableCell>
+                        <TableCell className="mb-4 text-center">{grade.grade} / {grade.maxPoints}</TableCell>
+                        <TableCell ><span className="mb-4">{grade.state}</span></TableCell>
+                        <TableCell >{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id, grade.courseWorkName, grade.grade)} text="SEND" /> : <span className="mb-4 text-center text-red-500">PENDING</span>}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
                 </Table>
+                <KaotikaButton  handleClick={() => handleClickAllGrades()} text="SEND ALL" />
               </>
             )}
             </div>

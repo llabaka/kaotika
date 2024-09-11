@@ -80,7 +80,7 @@ const PlayerPage = () => {
           if (res.status === 200) {
             const response = await res.json();
             setCurrentEquipment(response.data.equipment);
-
+            console.log(response.data)
             setPlayer(response.data);
             //FAKE DATA 
             //setCurrentEquipment(currentPlayer.equipment);
