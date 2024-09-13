@@ -38,7 +38,6 @@ const CoursePage: React.FC = () => {
     const [course, setCourse] = useState<any>(null);
     const [topics, setTopics] = useState<any[]>([]);
     const [assignments, setAssignments] = useState<any[]>([]);
-    const [currentAssignment, setCurrentAssignment] = useState<Assignment>();
     const [studentsGrades, setStudentsGrades] = useState<any[]>([]);
     const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
     const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
@@ -74,36 +73,22 @@ const CoursePage: React.FC = () => {
     fetchCourseDetails();
   }, [session, status, router, courseId]);
 
-  useEffect(() => {
-    //if(studentsGrades.length > 0) fetchConsolidatedGrades();
-  }, [studentsGrades])
-  
-  const fetchConsolidatedGrades = async () => {
+  const fetchConsolidatedGrades = async (consolidated: Consolidated[]) => {
     try {
       setLoading(true);
-      const studentGradesResult = studentsGrades.map(function(item) { 
-        delete item.studentName; 
-        delete item.grade;
-        delete item.maxPoints;
-        delete item.courseWorkName;
-        delete item.state;
-        return item; 
-      });
-      console.log(studentGradesResult);
       const response = await fetch(`/api/classroom/consolidated`,{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({  
-          studentGradesResult     
+          consolidated     
         }),
       });
-
+      console.log(response);
       //TODO
-      //Guardar array de clasroomId en estado
+      //Modificar state clasroomIDs 
       
-
     } catch (error) {
       console.error('Failed to fetch consolidated grades:', error);
     } finally {
@@ -131,7 +116,6 @@ const CoursePage: React.FC = () => {
   const handleAssignmentSelect = async (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
     const currentAssignment = await assignments.filter(assignement => assignement.id === assignmentId)[0];
-    setCurrentAssignment(currentAssignment);
     setLoading(true);
     try {                       
       const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
@@ -152,7 +136,7 @@ const CoursePage: React.FC = () => {
   const handleClick = (classroom_Id:string, courseWorkName:string, grade:number) => {
     const consolidated: Consolidated[] = [];
     consolidated.push(new Consolidated(classroom_Id, courseWorkName, selectedAssignment!, grade));
-    console.log(consolidated);
+    fetchConsolidatedGrades(consolidated);
   } 
 
   const handleClickAllGrades = () => {
@@ -166,7 +150,7 @@ const CoursePage: React.FC = () => {
         consolidated.push(new Consolidated(student.classroom_Id, student.courseWorkName, selectedAssignment!, student.grade));
       }
     });
-    console.log(consolidated);
+    fetchConsolidatedGrades(consolidated);
   }
 
   if (!session || !course) return null;
