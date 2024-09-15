@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         headers: {
           'Content-Type': 'application/json',
         },
-        body: req.body,
+        body: JSON.stringify(req.body)
       });
 
       if (!response.ok) {

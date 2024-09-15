@@ -11,6 +11,7 @@ import {
   TableRow,
   TableCell
 } from "@nextui-org/table";
+import { Player } from '@/_common/interfaces/Player';
 import KaotikaButton from '@/components/KaotikaButton';
 
 interface Assignment {
@@ -18,13 +19,14 @@ interface Assignment {
   maxPoints: number;
 }
 
+
 class Consolidated {
-  clasroomId;
+  classroomId;
   courseWorkName;
   selectedAssignment;
   grade;
   constructor(classroom_Id:string, courseWorkName:string, selectedAssignment:string, grade:number){
-    this.clasroomId = classroom_Id;
+    this.classroomId = classroom_Id;
     this.courseWorkName = courseWorkName;
     this.selectedAssignment = selectedAssignment;
     this.grade = grade;
@@ -85,9 +87,9 @@ const CoursePage: React.FC = () => {
           consolidated     
         }),
       });
-      console.log(response);
-      //TODO
-      //Modificar state clasroomIDs 
+      const results = await response.json();
+      console.log(results.data);
+      setStateToDone(results.data)
       
     } catch (error) {
       console.error('Failed to fetch consolidated grades:', error);
@@ -95,7 +97,16 @@ const CoursePage: React.FC = () => {
       setLoading(false);
     }
   };
-
+ 
+  const setStateToDone = (classroomIds: string[]) => {
+    console.log(studentsGrades);
+    const result = studentsGrades.map((student) =>
+      classroomIds.includes(student.classroom_Id) ? { ...student, state: "DONE" } : student
+    );
+    console.log(result);
+    setStudentsGrades(result);
+  };
+  
   const handleTopicSelect = async (topicId: string) => {
     setSelectedTopic(topicId);
     setLoading(true);
@@ -118,20 +129,40 @@ const CoursePage: React.FC = () => {
     const currentAssignment = await assignments.filter(assignement => assignement.id === assignmentId)[0];
     setLoading(true);
     try {                       
-      const res = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
-      const data = await res.json();
-      data.forEach((element: { courseWorkName: string; maxPoints: number; }) => {
-       element.courseWorkName = currentAssignment.title
-       element.maxPoints = currentAssignment.maxPoints
-      });
-      
-      setStudentsGrades(data);
+      const currentTopicStudents = await fetch(`/api/classroom/courses/${courseId}/assignments/${assignmentId}/students`);
+      const currentPlayers = await fetch('/api/player/players');
+      const topicStudents = await currentTopicStudents.json();
+      const topicPlayers = await currentPlayers.json();
+      const playersWithNoGrade = removePlayersWithTaskDone(topicPlayers.data, assignmentId);
+      const studentsWithPendigGrade = removeStudentsByClassroomId(topicStudents, playersWithNoGrade);
+      //studentsWithPendigGrade.forEach((student) => {
+        //student.courseWorkName = currentAssignment.title
+        //student.maxPoints = currentAssignment.maxPoints
+      //});
+      console.log(studentsWithPendigGrade);
+      setStudentsGrades(studentsWithPendigGrade);
     } catch (error) {
       console.error('Failed to fetch student grades:', error);
     } finally {
       setLoading(false);
     }
   };
+
+  const removePlayersWithTaskDone = (players: Player[], taskId: string): Player[] => {
+    return players.filter(player => !player.tasks.some(task => task.selectedAssignment === taskId));
+  }
+
+  const removeStudentsByClassroomId = (students: Player[], playersToRemove: Player[]): Player[] => {
+
+    const classroomIdsToRemove = playersToRemove.flatMap(player => 
+        player.tasks.map(task => task.classroomId)
+    );
+
+    // Filtrar los estudiantes que no tienen ningún classroomId en la lista de IDs a eliminar
+    return students.filter(student => 
+        !student.tasks.some(task => classroomIdsToRemove.includes(task.classroomId))
+    );
+}
 
   const handleClick = (classroom_Id:string, courseWorkName:string, grade:number) => {
     const consolidated: Consolidated[] = [];
@@ -144,9 +175,6 @@ const CoursePage: React.FC = () => {
     const consolidated: Consolidated[] = [];
     studentsGrades.map(student => {
       if(student.state === 'RETURNED') {
-        delete student.studentName; 
-        delete student.maxPoints;
-        delete student.state;
         consolidated.push(new Consolidated(student.classroom_Id, student.courseWorkName, selectedAssignment!, student.grade));
       }
     });
@@ -230,12 +258,12 @@ const CoursePage: React.FC = () => {
                   <TableBody>
                     {studentsGrades.map((grade,index) => (
                       <TableRow key={index}>
-                        <TableCell className="mb-4">{grade.classroom_Id}</TableCell>
-                        <TableCell ><span className="mb-4">{grade.studentName}</span></TableCell>
-                        <TableCell className="mb-4 text-center">{grade.courseWorkName}</TableCell>
-                        <TableCell className="mb-4 text-center">{grade.grade} / {grade.maxPoints}</TableCell>
-                        <TableCell ><span className="mb-4">{grade.state}</span></TableCell>
-                        <TableCell >{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id, grade.courseWorkName, grade.grade)} text="SEND" /> : <span className="mb-4 text-center text-red-500">PENDING</span>}</TableCell>
+                        <TableCell >{grade.classroom_Id}</TableCell>
+                        <TableCell ><span>{grade.studentName}</span></TableCell>
+                        <TableCell className="text-center">{grade.courseWorkName}</TableCell>
+                        <TableCell className="text-center">{grade.grade} / {grade.maxPoints}</TableCell>
+                        <TableCell className="text-center"><span className="mb-4 text-center">{grade.state}</span></TableCell>
+                        <TableCell className="text-center">{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id, grade.courseWorkName, grade.grade)} text="SEND" /> : grade.state === "DONE" ? <span className="mb-4 text-green-500">NO</span> : <span className="mb-4 text-red-500">PENDING</span>}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
