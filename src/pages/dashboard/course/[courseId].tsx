@@ -12,10 +12,21 @@ import {
   TableCell
 } from "@nextui-org/table";
 import { Player } from '@/_common/interfaces/Player';
+import { Task } from '@/_common/interfaces/Tasks';
 import KaotikaButton from '@/components/KaotikaButton';
 
 interface Assignment {
-  title: string;
+  courseWorkName: string;
+  maxPoints: number;
+}
+
+interface Student {
+  classroom_Id: string;
+  studentName: string;
+  grade: number;
+  state: string;
+  courseWorkId: string;
+  courseWorkName: string;
   maxPoints: number;
 }
 
@@ -133,14 +144,15 @@ const CoursePage: React.FC = () => {
       const currentPlayers = await fetch('/api/player/players');
       const topicStudents = await currentTopicStudents.json();
       const topicPlayers = await currentPlayers.json();
-      const playersWithNoGrade = removePlayersWithTaskDone(topicPlayers.data, assignmentId);
-      const studentsWithPendigGrade = removeStudentsByClassroomId(topicStudents, playersWithNoGrade);
-      //studentsWithPendigGrade.forEach((student) => {
-        //student.courseWorkName = currentAssignment.title
-        //student.maxPoints = currentAssignment.maxPoints
-      //});
-      console.log(studentsWithPendigGrade);
-      setStudentsGrades(studentsWithPendigGrade);
+      const pendingStudents = removeStudentsWithTaskEvaluated(topicStudents, topicPlayers.data, assignmentId);
+
+
+      pendingStudents.forEach((student) => {
+        student.courseWorkName = currentAssignment.title
+        student.maxPoints = currentAssignment.maxPoints
+      });
+      console.log(pendingStudents);
+      setStudentsGrades(pendingStudents);
     } catch (error) {
       console.error('Failed to fetch student grades:', error);
     } finally {
@@ -148,21 +160,15 @@ const CoursePage: React.FC = () => {
     }
   };
 
-  const removePlayersWithTaskDone = (players: Player[], taskId: string): Player[] => {
-    return players.filter(player => !player.tasks.some(task => task.selectedAssignment === taskId));
+  const removeStudentsWithTaskEvaluated = (students: Student[], players: Player[], taskId: string): Student[] => {
+    const classroomIdsToRemove: string[] = players
+        .flatMap((player: Player) => 
+            player.tasks
+                .filter((task: Task) => task.selectedAssignment === taskId)
+                .map((task: Task) => task.classroomId)
+        );
+    return students.filter(student => !classroomIdsToRemove.includes(student.classroom_Id));
   }
-
-  const removeStudentsByClassroomId = (students: Player[], playersToRemove: Player[]): Player[] => {
-
-    const classroomIdsToRemove = playersToRemove.flatMap(player => 
-        player.tasks.map(task => task.classroomId)
-    );
-
-    // Filtrar los estudiantes que no tienen ningún classroomId en la lista de IDs a eliminar
-    return students.filter(student => 
-        !student.tasks.some(task => classroomIdsToRemove.includes(task.classroomId))
-    );
-}
 
   const handleClick = (classroom_Id:string, courseWorkName:string, grade:number) => {
     const consolidated: Consolidated[] = [];

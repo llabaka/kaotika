@@ -1,4 +1,4 @@
-export interface Tasks {
+export interface Task {
 	classroomId: string; 
 	courseWorkName: string;
 	grade: number;
