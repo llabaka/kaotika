@@ -10,7 +10,7 @@ import { Shield } from "./Shield";
 import { Boot } from "./Boot";
 import { Ring } from "./Ring";
 import { Modifier } from "./Modifier";
-import { Tasks } from "./Tasks";
+import { Task } from "./Task";
 
 export interface Player {
   _id: string;
@@ -50,5 +50,5 @@ export interface Player {
     antidote_potions: AntidotePotion[],
     enhancer_potions: EnhancerPotion[],
   },
-  tasks: Tasks[]
+  tasks: Task[]
 }

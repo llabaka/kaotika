@@ -12,7 +12,7 @@ import {
   TableCell
 } from "@nextui-org/table";
 import { Player } from '@/_common/interfaces/Player';
-import { Task } from '@/_common/interfaces/Tasks';
+import { Task } from '@/_common/interfaces/Task';
 import KaotikaButton from '@/components/KaotikaButton';
 
 interface Assignment {
