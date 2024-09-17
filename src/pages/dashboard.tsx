@@ -11,11 +11,11 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (status === 'loading') return; // Do nothing while loading
-    if (!session) router.push('/'); // Redirect to home if not authenticated
+    if (status === 'loading') return; 
+    if (!session) router.push('/'); 
   }, [session, status, router]);
 
-  if (!session) return null; // Render nothing if no session (to prevent flicker)
+  if (!session) return null; 
 
   return (
     <Layout>

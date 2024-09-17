@@ -4,6 +4,7 @@ import getConfig from 'next/config';
 import { useEffect } from 'react';
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import Loading from '@/components/Loading';
+import {ACOLYTE_EMAIL, MENTOR_EMAIL} from '@/constants/constants';
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -17,8 +18,8 @@ const Home = () => {
       const fetchPlayer = async () => {
         try {        
           const res = await fetch(`/api/player/check-registration?email=${email}`);
-          if(res.status === 200 && email.endsWith('@ikasle.aeg.eus')) router.push('/player');
-          if(res.status === 200 && email.endsWith('@aeg.eus')) router.push('/dashboard'); 
+          if(res.status === 200 && email.endsWith(ACOLYTE_EMAIL)) router.push('/player');
+          if(res.status === 200 && email.endsWith(MENTOR_EMAIL)) router.push('/dashboard'); 
           if(res.status === 404) router.push('/welcome');           
         } catch (error) {
           console.error('Failed to fetch player:', error);
