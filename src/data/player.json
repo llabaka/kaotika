@@ -129,7 +129,7 @@
       "name": "Arcane Warrior's Boots",
       "description": "Boots enchanted with powerful arcane spells, offering both protection and agility.",
       "type": "boot",
-      "image": "/images/equipment/uniques/boots/boot_10.png",
+      "image": "/images/equipment/boots/boot_10.png",
       "value": 3800,
       "defense": 190,
       "modifiers": {
@@ -405,7 +405,7 @@
         "name": "Abyssal Greaves",
         "description": "Boots forged from the deepest abyss, offering unmatched protection and strength.",
         "type": "boot",
-        "image": "/images/equipment/uniques/boots/boot_8.png",
+        "image": "/images/equipment/boots/boot_8.png",
         "value": 3400,
         "defense": 170,
         "modifiers": {
@@ -423,7 +423,7 @@
         "name": "Titan's Steps",
         "description": "Boots that grant the wearer the power and protection of a titan.",
         "type": "boot",
-        "image": "/images/equipment/uniques/boots/boot_9.png",
+        "image": "/images/equipment/boots/boot_9.png",
         "value": 3600,
         "defense": 180,
         "modifiers": {

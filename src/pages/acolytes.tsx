@@ -77,6 +77,9 @@ const AcolytesPage = () => {
     setSelectedCourse(courseId);
   };
 
+  const handleClick = () => {
+
+  }
 
 	if (loading) {
 		return <Loading />;
@@ -106,7 +109,7 @@ const AcolytesPage = () => {
               <>
                 <Table 
                   color="warning"
-                  selectionMode="single" 
+                  selectionMode="none" 
                   classNames={{
                     table: "text-xl",
                     td: "text-xl",
@@ -123,11 +126,11 @@ const AcolytesPage = () => {
 										<TableColumn className="mb-4 text-center">VALIDATE</TableColumn>
                   </TableHeader>
                   <TableBody>
-                    {students.map((student,index) => (
-                      <TableRow key={index}>
+                    {students.map((student) => (
+                      <TableRow key={student.userId}>
                         <TableCell >{student.userId}</TableCell>
-                        <TableCell ><span>{student.profile.name.givenName}</span></TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className="text-center"><span>{student.profile.name.fullName}</span></TableCell>
+                        <TableCell className='min-w-48'>
 													<Slider 
 														size='md'
 														label="Gold" 
@@ -135,20 +138,28 @@ const AcolytesPage = () => {
 														maxValue={500} 
 														minValue={0} 
 														defaultValue={0}
-														className="max-w-md"
+                            classNames={{
+                              base: "max-w-md",
+                              label: "text-2xl",
+                              value: "text-2xl"
+                            }}
 													/>
 												</TableCell>
-                        <TableCell className="text-center">
+                        <TableCell className='min-w-48'>
 												<Slider 
 													label="Experience" 
 													step={100} 
 													maxValue={1000} 
 													minValue={0} 
 													defaultValue={0}
-													className="max-w-md text-xl"
+													classNames={{
+                            base: "max-w-md",
+                            label: "text-2xl",
+                            value: "text-2xl"
+                          }}
 												/>
 												</TableCell>
-												<TableCell ><KaotikaButton text={'SEND'} /></TableCell>
+												<TableCell ><KaotikaButton text={'SEND'} handleClick={() => handleClick()} /></TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
