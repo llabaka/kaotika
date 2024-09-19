@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/table';
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {Slider} from "@nextui-org/react";
 import KaotikaButton from '@/components/KaotikaButton';
 
@@ -31,16 +31,18 @@ const AcolytesPage = () => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 	const [students, setStudents] = useState<Student[]>([]);
+  const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   useEffect(() => {
+    console.log("useEffect Fetching courses");
     if (!session) return;
-    const accessToken = session.accessToken;
-    console.log('Access Token:', accessToken);
     const fetchCourses = async () => {
       try {
         setLoading(true);
+        console.log("Fetching courses");
         const res = await fetch('/api/classroom/courses/');
         const data = await res.json();
+        console.log(data);
         setCourses(data.courses);
       } catch (error) {
         console.error('Failed to fetch courses:', error);
@@ -50,20 +52,19 @@ const AcolytesPage = () => {
     };
 
     fetchCourses();
-  }, [session]);
+  }, []);
 
 	useEffect(() => {
-		if (!session) return;
-    const accessToken = session.accessToken;
-    console.log('Access Token:', accessToken);
+		if (!session || !selectedCourse) return;
     const fetchStudents = async () => {
       try {
         setLoading(true);
         const res = await fetch(`/api/classroom/courses/${selectedCourse}/students`);
         const data = await res.json();
+        console.log(data.students)
         setStudents(data.students);
       } catch (error) {
-        console.error('Failed to fetch courses:', error);
+        console.error('Failed to fetch students:', error);
       } finally {
         setLoading(false);
       }
@@ -74,6 +75,7 @@ const AcolytesPage = () => {
 	
 
 	const handleCourseSelect = (courseId: string) => {
+    console.log(courseId)
     setSelectedCourse(courseId);
   };
 
@@ -119,11 +121,11 @@ const AcolytesPage = () => {
                   }} 
                   aria-label="Kaotika Students">
                   <TableHeader>
-                    <TableColumn className="mb-4 text-center">ID</TableColumn>
-                    <TableColumn className="mb-4 text-center">NAME</TableColumn>
-                    <TableColumn className="mb-4 text-center">GOLD</TableColumn>
-                    <TableColumn className="mb-4 text-center">XP POINTS</TableColumn>
-										<TableColumn className="mb-4 text-center">VALIDATE</TableColumn>
+                    <TableColumn className="text-center">ID</TableColumn>
+                    <TableColumn className="text-center">NAME</TableColumn>
+                    <TableColumn className="text-center">GOLD</TableColumn>
+                    <TableColumn className="text-center">XP POINTS</TableColumn>
+										<TableColumn className="text-center">VALIDATE</TableColumn>
                   </TableHeader>
                   <TableBody>
                     {students.map((student) => (
@@ -136,10 +138,11 @@ const AcolytesPage = () => {
 														label="Gold" 
 														step={5} 
 														maxValue={500} 
-														minValue={0} 
+														minValue={-500} 
 														defaultValue={0}
                             classNames={{
                               base: "max-w-md",
+                              filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
                               label: "text-2xl",
                               value: "text-2xl"
                             }}
@@ -154,12 +157,20 @@ const AcolytesPage = () => {
 													defaultValue={0}
 													classNames={{
                             base: "max-w-md",
+                            filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
                             label: "text-2xl",
                             value: "text-2xl"
                           }}
 												/>
 												</TableCell>
-												<TableCell ><KaotikaButton text={'SEND'} handleClick={() => handleClick()} /></TableCell>
+												<TableCell className="text-center">
+                          <button
+                            onClick={onOpen}
+                            className="bg-medievalSepia text-black text-4xl py-2 px-4 mt-10 rounded  hover:bg-darkSepia transition"
+                            >
+                            Yes, I want to do it 
+                          </button>
+                        </TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
@@ -167,6 +178,26 @@ const AcolytesPage = () => {
               </>
             )}
     	</div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text">Modal Title</ModalHeader>
+              <ModalBody>
+                <p> 
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Nullam pulvinar risus non risus hendrerit venenatis.
+                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
+                </p>
+              </ModalBody>
+              <ModalFooter>
+                <KaotikaButton text='ACCEPT' handleClick={handleClick} /> 
+                <KaotikaButton text='CANCEL' handleClick={onClose} /> 
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </Layout>
   )
 }
