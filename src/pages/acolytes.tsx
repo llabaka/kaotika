@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from 
 import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
 import {Slider} from "@nextui-org/react";
 import KaotikaButton from '@/components/KaotikaButton';
+import { on } from 'events';
 
 interface Course {
   id: string;
@@ -31,6 +32,7 @@ const AcolytesPage = () => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 	const [students, setStudents] = useState<Student[]>([]);
+  const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   useEffect(() => {
@@ -73,15 +75,20 @@ const AcolytesPage = () => {
     fetchStudents();
 	}, [selectedCourse])
 	
+  useEffect(() => {
+    if(selectedStudent) onOpen();
+  }, [selectedStudent])
+  
 
 	const handleCourseSelect = (courseId: string) => {
     console.log(courseId)
     setSelectedCourse(courseId);
   };
 
-  const handleClick = () => {
-
+  const handleClick = (student: Student) => {
+    setSelectedStudent(student);
   }
+
 
 	if (loading) {
 		return <Loading />;
@@ -140,11 +147,12 @@ const AcolytesPage = () => {
 														maxValue={500} 
 														minValue={-500} 
 														defaultValue={0}
+                            color="foreground"
                             classNames={{
                               base: "max-w-md",
                               filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
                               label: "text-2xl",
-                              value: "text-2xl"
+                              value: "text-3xl"
                             }}
 													/>
 												</TableCell>
@@ -155,17 +163,18 @@ const AcolytesPage = () => {
 													maxValue={1000} 
 													minValue={0} 
 													defaultValue={0}
+                          color="foreground"
 													classNames={{
                             base: "max-w-md",
                             filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
                             label: "text-2xl",
-                            value: "text-2xl"
+                            value: "text-3xl"
                           }}
 												/>
 												</TableCell>
 												<TableCell className="text-center">
                           <button
-                            onClick={onOpen}
+                            onClick={() => handleClick(student)}
                             className="bg-medievalSepia text-black text-4xl py-2 px-4 mt-10 rounded  hover:bg-darkSepia transition"
                             >
                             Yes, I want to do it 
@@ -182,16 +191,12 @@ const AcolytesPage = () => {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 text">Modal Title</ModalHeader>
+              <ModalHeader className="flex flex-col gap-1 text text-center">{selectedStudent?.profile.name.fullName}</ModalHeader>
               <ModalBody>
-                <p> 
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <h2 className="flex flex-col gap-1 text text-center text-xl">Apply this settings?</h2>
               </ModalBody>
               <ModalFooter>
-                <KaotikaButton text='ACCEPT' handleClick={handleClick} /> 
+                <KaotikaButton text='ACCEPT' handleClick={onClose} /> 
                 <KaotikaButton text='CANCEL' handleClick={onClose} /> 
               </ModalFooter>
             </>
