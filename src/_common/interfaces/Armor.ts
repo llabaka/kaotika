@@ -6,6 +6,7 @@ export interface Armor {
   description: string,
   type: string,
   image: string,
+  defense: number,
   value: number,
   modifiers: Modifier,
   min_lvl: number
