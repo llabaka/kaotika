@@ -36,11 +36,13 @@ class Consolidated {
   courseWorkName;
   selectedAssignment;
   grade;
-  constructor(classroom_Id:string, courseWorkName:string, selectedAssignment:string, grade:number){
+  maxPoints;
+  constructor(classroom_Id:string, courseWorkName:string, selectedAssignment:string, grade:number, maxPoints:number){
     this.classroomId = classroom_Id;
     this.courseWorkName = courseWorkName;
     this.selectedAssignment = selectedAssignment;
     this.grade = grade;
+    this.maxPoints = maxPoints;
   }
 }
 
@@ -170,9 +172,9 @@ const CoursePage: React.FC = () => {
     return students.filter(student => !classroomIdsToRemove.includes(student.classroom_Id));
   }
 
-  const handleClick = (classroom_Id:string, courseWorkName:string, grade:number) => {
+  const handleClick = (classroom_Id:string, courseWorkName:string, grade:number, maxPoints:number) => {
     const consolidated: Consolidated[] = [];
-    consolidated.push(new Consolidated(classroom_Id, courseWorkName, selectedAssignment!, grade));
+    consolidated.push(new Consolidated(classroom_Id, courseWorkName, selectedAssignment!, grade, maxPoints));
     fetchConsolidatedGrades(consolidated);
   } 
 
@@ -181,7 +183,7 @@ const CoursePage: React.FC = () => {
     const consolidated: Consolidated[] = [];
     studentsGrades.map(student => {
       if(student.state === 'RETURNED') {
-        consolidated.push(new Consolidated(student.classroom_Id, student.courseWorkName, selectedAssignment!, student.grade));
+        consolidated.push(new Consolidated(student.classroom_Id, student.courseWorkName, selectedAssignment!, student.grade, student.maxPoints));
       }
     });
     fetchConsolidatedGrades(consolidated);
@@ -269,7 +271,7 @@ const CoursePage: React.FC = () => {
                         <TableCell className="text-center">{grade.courseWorkName}</TableCell>
                         <TableCell className="text-center">{grade.grade} / {grade.maxPoints}</TableCell>
                         <TableCell className="text-center"><span className="mb-4 text-center">{grade.state}</span></TableCell>
-                        <TableCell className="text-center">{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id, grade.courseWorkName, grade.grade)} text="SEND" /> : grade.state === "DONE" ? <span className="mb-4 text-green-500">NO</span> : <span className="mb-4 text-red-500">PENDING</span>}</TableCell>
+                        <TableCell className="text-center">{grade.state === "RETURNED" ? <KaotikaButton  handleClick={() => handleClick(grade.classroom_Id, grade.courseWorkName, grade.grade, grade.maxPoints)} text="SEND" /> : grade.state === "DONE" ? <span className="mb-4 text-green-500">NO</span> : <span className="mb-4 text-red-500">PENDING</span>}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>
