@@ -228,6 +228,29 @@ const PlayerPage = () => {
     router.push(`/equipment?${createQueryString("profile", currentProfile as Profile)}`);
   };
 
+  const updatePlayerEquipment = async() => {
+    setLoading(true);
+    console.log("updatePlayerEquipment player");
+    const response = await fetch(`/api/player/equipment?id=${player?._id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({  
+        inventory: player?.inventory,
+        equipment:  player?.equipment      
+      }),
+    });
+
+    if (response.ok) {
+      console.log(response);
+    } else {
+      // Handle error
+      console.error('Failed to patch player equipment');
+      setLoading(false);
+    }
+  }
+
   const handleDragEnd = (event: DragEndEvent) => {
     const {active, over} = event;
     
@@ -468,7 +491,7 @@ const PlayerPage = () => {
             <div className="w-1/3 p-4">
               <div className="w-full h-full p-8 border-1 border-sepia bg-black/70">
                 {warningVisible 
-                ? <KaotikaButton text="WARNING. Your equipment has changed. Save it!" /> 
+                ? <KaotikaButton handleClick={updatePlayerEquipment} text="WARNING. Your equipment has changed. Save it!" /> 
                 : <h2 className="text-3xl py-2 px-4 mb-4 text-center border-1  border-sepia bg-black/70 " style={warningVisible ? mountedStyle : unmountedStyle}>Your equipment is up to date.</h2>
                 }
                 <div className="grid grid-cols-6 gap-4 justify-items-center items-center content-center">
