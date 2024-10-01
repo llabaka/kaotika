@@ -229,24 +229,25 @@ const PlayerPage = () => {
   };
 
   const updatePlayerEquipment = async() => {
-    setLoading(true);
-    console.log("updatePlayerEquipment player");
-    const response = await fetch(`/api/player/equipment?id=${player?._id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({  
-        inventory: player?.inventory,
-        equipment:  player?.equipment      
-      }),
-    });
-
-    if (response.ok) {
-      console.log(response);
-    } else {
-      // Handle error
-      console.error('Failed to patch player equipment');
+    try {
+      setLoading(true);
+      console.log("updatePlayerEquipment player");
+      const response = await fetch(`/api/player/equipment?id=${player?._id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({  
+          inventory: player?.inventory,
+          equipment:  player?.equipment      
+        }),
+      });
+      const results = await response.json();
+      setCurrentEquipment(results.data.equipment);
+      setPlayer(results.data);
+    } catch (error) {
+      console.error('Failed to patch player equipment:', error);
+    } finally {
       setLoading(false);
     }
   }

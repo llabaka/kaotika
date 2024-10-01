@@ -17,12 +17,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			},
 			body: JSON.stringify(req.body),
 		});
-		if (!response.ok) {
-			throw new Error('Failed to patch player equipment');
+		const data = await response.json();
+		if (response.status === 200) {
+		return res.status(200).json(data);
 		}
-		const result = await response.json();
-		console.log(result);
-		res.status(200).json(result);
+		if (response.status === 404) {
+		return res.status(404).json(data);
+		}
 	} catch (error) {
 		console.error('Server error on patching player equipment:', error);
 		res.status(500).json({ error: 'Server error on patching player equipment' });
