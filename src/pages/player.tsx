@@ -228,7 +228,7 @@ const PlayerPage = () => {
     router.push(`/equipment?${createQueryString("profile", currentProfile as Profile)}`);
   };
 
-  const handleDragEnd =(event: DragEndEvent)=> {
+  const handleDragEnd = (event: DragEndEvent) => {
     const {active, over} = event;
     
     if (over && active.data.current?.supports.includes(over.data.current?.type)) {
