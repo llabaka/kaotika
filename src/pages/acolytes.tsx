@@ -3,10 +3,9 @@ import Layout from '@/components/Layout';
 import { useSession } from 'next-auth/react';
 import Loading from '@/components/Loading';
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/table';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, SliderValue} from "@nextui-org/react";
 import {Slider} from "@nextui-org/react";
 import KaotikaButton from '@/components/KaotikaButton';
-import { on } from 'events';
 
 interface Course {
   id: string;
@@ -33,7 +32,9 @@ const AcolytesPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
 	const [students, setStudents] = useState<Student[]>([]);
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
+  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure();
+  const [gold, setGold] = useState<number | number[]>(0);
+  const [experience, setExperience] = useState<number | number[]>(0);
 
   useEffect(() => {
     console.log("useEffect Fetching courses");
@@ -89,6 +90,37 @@ const AcolytesPage = () => {
     setSelectedStudent(student);
   }
 
+  const handleGold = (value: SliderValue) => {
+    setGold(value)
+  }
+
+  const handleExperience = (value: SliderValue) => {
+    setExperience(value)
+  }
+
+  const applyBonification = async() => {
+    try {
+      setLoading(true);
+      console.log("update gold and experience");
+      const response = await fetch(`/api/player/bonification?classroom_Id=${selectedStudent?.userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({  
+          gold,
+          experience     
+        }),
+      });
+      const results = await response.json();
+      console.log(results);
+    } catch (error) {
+      console.error('Failed to patch player bonification:', error);
+    } finally {
+      onClose();
+      setLoading(false);
+    } 
+  }
 
 	if (loading) {
 		return <Loading />;
@@ -130,8 +162,6 @@ const AcolytesPage = () => {
                   <TableHeader>
                     <TableColumn className="text-center">ID</TableColumn>
                     <TableColumn className="text-center">NAME</TableColumn>
-                    <TableColumn className="text-center">GOLD</TableColumn>
-                    <TableColumn className="text-center">XP POINTS</TableColumn>
 										<TableColumn className="text-center">VALIDATE</TableColumn>
                   </TableHeader>
                   <TableBody>
@@ -139,45 +169,12 @@ const AcolytesPage = () => {
                       <TableRow key={student.userId}>
                         <TableCell >{student.userId}</TableCell>
                         <TableCell className="text-center"><span>{student.profile.name.fullName}</span></TableCell>
-                        <TableCell className='min-w-48'>
-													<Slider 
-														size='md'
-														label="Gold" 
-														step={5} 
-														maxValue={500} 
-														minValue={-500} 
-														defaultValue={0}
-                            color="foreground"
-                            classNames={{
-                              base: "max-w-md",
-                              filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
-                              label: "text-2xl",
-                              value: "text-3xl"
-                            }}
-													/>
-												</TableCell>
-                        <TableCell className='min-w-48'>
-												<Slider 
-													label="Experience" 
-													step={100} 
-													maxValue={1000} 
-													minValue={0} 
-													defaultValue={0}
-                          color="foreground"
-													classNames={{
-                            base: "max-w-md",
-                            filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
-                            label: "text-2xl",
-                            value: "text-3xl"
-                          }}
-												/>
-												</TableCell>
 												<TableCell className="text-center">
                           <button
                             onClick={() => handleClick(student)}
                             className="bg-medievalSepia text-black text-4xl py-2 px-4 mt-10 rounded  hover:bg-darkSepia transition"
                             >
-                            Yes, I want to do it 
+                            Apply bonification 
                           </button>
                         </TableCell>
                       </TableRow>
@@ -194,9 +191,41 @@ const AcolytesPage = () => {
               <ModalHeader className="flex flex-col gap-1 text text-center">{selectedStudent?.profile.name.fullName}</ModalHeader>
               <ModalBody>
                 <h2 className="flex flex-col gap-1 text text-center text-xl">Apply this settings?</h2>
+                <Slider 
+                  size='md'
+                  label="Gold" 
+                  step={50} 
+                  maxValue={500} 
+                  minValue={-500} 
+                  defaultValue={0}
+                  color="foreground"
+                  onChangeEnd={handleGold}
+                  classNames={{
+                    base: "max-w-md",
+                    filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
+                    label: "text-2xl",
+                    value: "text-3xl"
+                  }}
+                />
+                <Slider 
+                  size='md'
+                  label="Experience" 
+                  step={100} 
+                  maxValue={500} 
+                  minValue={0} 
+                  defaultValue={0}
+                  color="foreground"
+                  onChangeEnd={handleExperience}
+                  classNames={{
+                    base: "max-w-md",
+                    filler: "bg-gradient-to-r from-blackSepia to-medievalSepia",
+                    label: "text-2xl",
+                    value: "text-3xl"
+                  }}
+                />
               </ModalBody>
               <ModalFooter>
-                <KaotikaButton text='ACCEPT' handleClick={onClose} /> 
+                <KaotikaButton text='ACCEPT' handleClick={applyBonification} /> 
                 <KaotikaButton text='CANCEL' handleClick={onClose} /> 
               </ModalFooter>
             </>
