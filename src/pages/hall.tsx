@@ -68,12 +68,12 @@ const Hall = () => {
                 <TableCell className="text-center">{player.experience}</TableCell>
                 <TableCell className="text-center">{player.gold}</TableCell>
                 <TableCell className="text-center">{player.attributes.constitution + player.attributes.dexterity - player.attributes.insanity / 2 > 0 
-                  ? <div className="flex justify-center"><Image src="/images/icons/heart.png" alt="Heart imager" width={64} height={64} className="sepia rounded-full" /></div>
-                  : <div className="flex justify-center"><Image src="/images/icons/cross.png" alt="Heart imager" width={64} height={64} className="sepia rounded-full" /></div>}
+                  ? <div className="flex justify-center"><Image src="/images/icons/heart.png" alt="Heart image" width={64} height={64} className="sepia rounded-full" /></div>
+                  : <div className="flex justify-center"><Image src="/images/icons/cross.png" alt="Cross imager" width={64} height={64} className="sepia rounded-full" /></div>}
                 </TableCell>
                 <TableCell className="text-center">{player.is_active 
-                  ? <div className="flex justify-center"><Image src="/images/icons/playing.png" alt="Heart imager" width={64} height={64} className="sepia rounded-full" /></div>
-                  : <div className="flex justify-center"><Image src="/images/icons/legend.png" alt="Heart imager" width={64} height={64} className="sepia rounded-full" /></div>}
+                  ? <div className="flex justify-center"><Image src="/images/icons/playing.png" alt="Playing image" width={64} height={64} className="sepia rounded-full" /></div>
+                  : <div className="flex justify-center"><Image src="/images/icons/legend.png" alt="Legend image" width={64} height={64} className="sepia rounded-full" /></div>}
                 </TableCell>
               </TableRow>
             ))}
