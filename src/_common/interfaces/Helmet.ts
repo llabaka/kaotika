@@ -9,5 +9,7 @@ export interface Helmet {
   defense: number,
   image: string,
   modifiers: Modifier,
-  min_lvl: number
+  min_lvl: number,
+  isUnique: boolean,
+  isActive: boolean
 }

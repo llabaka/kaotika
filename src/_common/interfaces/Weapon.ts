@@ -6,8 +6,12 @@ export interface Weapon {
   description: string,
   type: string,
   image: string,
-  damage: string,
+  die_faces: number,
+  die_modifier: number,
+  die_num: number,
   base_percentage: number,
   modifiers: Modifier,
-  min_lvl: number
+  min_lvl: number,
+  isUnique: boolean,
+  isActive: boolean
 }

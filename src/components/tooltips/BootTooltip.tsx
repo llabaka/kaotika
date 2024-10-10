@@ -11,8 +11,14 @@ const BootTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode => 
     <div key={element._id} className='w-full p-4 text-center'>
       <div className="flex flex-row justify-items-center items-center">
         <div className="w-full p-4">
-          <h1 className="text-3xl mb-2 text-darkSepia">{element.name}</h1>
+          <h1 className={`text-3xl mb-2 ${element.isUnique ? "text-orange-500" : "text-darkSepia"}`}>{element.name}</h1>
           <p className="text-2xl mb-2">{element.description}</p>
+          <h1 className="text-3xl mb-2 text-darkSepia">Min Level</h1>
+          <p className="text-2xl mb-2">{element.min_lvl}</p>
+          <h1 className="text-3xl mb-2 text-darkSepia">Defense</h1>
+          <p className="text-2xl mb-2">{element.defense}</p>
+          <h1 className="text-3xl mb-2 text-darkSepia">Value</h1>
+          <p className="text-2xl mb-2">{element.value}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Modifiers</h1>
           {element.modifiers.constitution ? <p className="text-2xl mb-2">Constitution: {element.modifiers.constitution}</p> : <p className="text-2xl mb-2">Constitution: 0</p>}
           {element.modifiers.charisma ? <p className="text-2xl mb-2">Charisma: {element.modifiers.charisma}</p> : <p className="text-2xl mb-2">Charisma: 0</p>}

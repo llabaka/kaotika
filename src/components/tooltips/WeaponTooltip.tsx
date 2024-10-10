@@ -12,10 +12,12 @@ const WeaponTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode =
     <div key={element._id} className='w-full p-4 text-center'>
       <div className="flex flex-row justify-items-center items-center">
         <div className="p-4">
-          <h1 className="text-3xl mb-2 text-darkSepia">{element.name}</h1>
+          <h1 className={`text-3xl mb-2 ${element.isUnique ? "text-orange-500" : "text-darkSepia"}`}>{element.name}</h1>
           <p className="text-2xl mb-2 font-light">{element.description}</p>
+          <h1 className="text-3xl mb-2 text-darkSepia">Min Level</h1>
+          <p className="text-2xl mb-2 font-light">{element.min_lvl}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Damage</h1>
-          <p className="text-2xl mb-2">{element.damage}</p>
+          <p className="text-2xl mb-2">{element.die_num}D{element.die_faces} + {element.die_modifier}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Base Percentage</h1>
           <p className="text-2xl mb-2">{element.base_percentage}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Modifiers</h1>
@@ -32,7 +34,7 @@ const WeaponTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode =
           <h1 className="text-3xl mb-2 text-orange-500">{equiped.name}</h1>
           <p className="text-2xl mb-2">{equiped.description}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Damage</h1>
-          <p className="text-2xl mb-2">{equiped.damage}</p>
+          
           <h1 className="text-3xl mb-2 text-darkSepia">Base Percentage</h1>
           <p className="text-2xl mb-2">{equiped.base_percentage}</p>
           <h1 className="text-3xl mb-2 text-darkSepia">Modifiers</h1>

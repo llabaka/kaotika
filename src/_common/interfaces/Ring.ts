@@ -8,5 +8,7 @@ export interface Ring {
   image: string,
   value: number,
   modifiers: Modifier,
-  min_lvl: number
+  min_lvl: number,
+  isUnique: boolean,
+  isActive: boolean
 }

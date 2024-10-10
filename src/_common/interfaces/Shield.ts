@@ -9,5 +9,7 @@ export interface Shield {
   value: number,
   defense: number,
   modifiers: Modifier,
-  min_lvl: number
+  min_lvl: number,
+  isUnique: boolean,
+  isActive: boolean
 }
