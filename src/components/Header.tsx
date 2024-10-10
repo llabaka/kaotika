@@ -15,13 +15,13 @@ const Header: React.FC = () => {
   if (session?.user?.email?.endsWith(MENTOR_EMAIL)){
     navigation = (<nav className="flex-1 text-center">
       <Link href="/dashboard">
-        <span className={router.pathname == "/dashboard" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Dashboard</span>
+        <span className={router.pathname == "/dashboard" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Converter</span>
+      </Link>
+      <Link href="/acolytes">
+        <span className={router.pathname == "/acolytes" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Bonifications</span>
       </Link>
       <Link href="/player">
         <span className={router.pathname == "/player" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Player</span>
-      </Link>
-      <Link href="/acolytes">
-        <span className={router.pathname == "/acolytes" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Acolytes</span>
       </Link>
       <Link href="/hall">
         <span className={router.pathname == "/hall" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Hall of Fame</span>
