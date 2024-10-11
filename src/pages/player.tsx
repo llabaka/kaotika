@@ -614,7 +614,7 @@ const PlayerPage = () => {
                   <div className="col-start-2 col-span-1">
                     <User   
                       name="Next level"
-                      description={`${((player.level) - 1) * EXP_POINTS} xp`}
+                      description={`${((player.level)) * EXP_POINTS} xp`}
                       avatarProps={{
                         src: "/images/icons/up.png"
                       }}
