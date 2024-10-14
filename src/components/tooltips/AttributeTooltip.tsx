@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Armor } from '@/_common/interfaces/Armor';
+import React from 'react';
 import { Attribute } from '@/_common/interfaces/Attribute';
 
 interface Props {

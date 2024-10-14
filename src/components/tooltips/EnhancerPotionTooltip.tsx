@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { EnhancerPotion } from '@/_common/interfaces/EnhancerPotion';
 
 interface Props {

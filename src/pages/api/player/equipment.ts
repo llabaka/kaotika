@@ -19,10 +19,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		});
 		const data = await response.json();
 		if (response.status === 200) {
-		return res.status(200).json(data);
+			return res.status(200).json(data);
 		}
 		if (response.status === 404) {
-		return res.status(404).json(data);
+			return res.status(404).json(data);
 		}
 	} catch (error) {
 		console.error('Server error on patching player equipment:', error);

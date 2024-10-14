@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input, input} from "@nextui-org/react"
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Input} from "@nextui-org/react"
 import KaotikaButton from '@/components/KaotikaButton';
 import { useEffect, useRef, useState } from 'react';
 

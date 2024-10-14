@@ -5,7 +5,6 @@ import { Progress, Tooltip, User } from "@nextui-org/react";
 import {DndContext, DragEndEvent} from '@dnd-kit/core';
 import useSound from 'use-sound';
 import _ from 'lodash';
-import currentPlayer from '../data/player.json';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import KaotikaNextButton from '@/components/KaotikaNextButton';
@@ -82,9 +81,6 @@ const PlayerPage = () => {
             setCurrentEquipment(response.data.equipment);
             console.log(response.data)
             setPlayer(response.data);
-            //FAKE DATA 
-            //setCurrentEquipment(currentPlayer.equipment);
-            //setPlayer(currentPlayer);
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();

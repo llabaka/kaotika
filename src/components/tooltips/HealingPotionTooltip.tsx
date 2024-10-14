@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { HealingPotion } from '@/_common/interfaces/HealingPotion';
 
 interface Props {
