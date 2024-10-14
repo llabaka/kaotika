@@ -13,19 +13,16 @@ const HelmetTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode =
         <div className="w-full p-4">
           <h1 className={`text-3xl mb-2 ${element.isUnique ? "text-orange-500" : "text-darkSepia"}`}>{element.name}</h1>
           <p className="text-2xl mb-2">{element.description}</p>
-          <h1 className="text-3xl mb-2 text-darkSepia">Min Level</h1>
-          <p className="text-2xl mb-2 font-light">{element.min_lvl}</p>
-          <h1 className="text-3xl mb-2 text-darkSepia">Defense</h1>
-          <p className="text-2xl mb-2 font-light">{element.defense}</p>
-          <h1 className="text-3xl mb-2 text-darkSepia">Value</h1>
-          <p className="text-2xl mb-2 font-light">{element.value}</p>
-          <h1 className="text-3xl mb-2 text-darkSepia">Modifiers</h1>
-          {element.modifiers.constitution ? <p className="text-2xl mb-2">Constitution: {element.modifiers.constitution}</p> : <p className="text-2xl mb-2">Constitution: 0</p>}
-          {element.modifiers.charisma ? <p className="text-2xl mb-2">Charisma: {element.modifiers.charisma}</p> : <p className="text-2xl mb-2">Charisma: 0</p>}
-          {element.modifiers.dexterity ? <p className="text-2xl mb-2">Dexterity: {element.modifiers.dexterity}</p> : <p className="text-2xl mb-2">Dexterity: 0</p>}
-          {element.modifiers.insanity ? <p className="text-2xl mb-2">Insanity: {element.modifiers.insanity}</p> : <p className="text-2xl mb-2">Insanity: 0</p>}
-          {element.modifiers.intelligence ? <p className="text-2xl mb-2">Intelligence: {element.modifiers.intelligence}</p> : <p className="text-2xl mb-2">Intelligence: 0</p>}
-          {element.modifiers.strength ? <p className="text-2xl mb-2">Strength: {element.modifiers.strength}</p> : <p className="text-2xl mb-2">Strength: 0</p>} 
+          <h1 className="text-2xl mb-2 text-darkSepia">Min Level: <span className="text-2xl mb-2 text-yellow-200">{element.min_lvl}</span></h1>
+          <h1 className="text-2xl mb-2 text-darkSepia">Defense: <span className="text-2xl mb-2 text-yellow-200">{element.defense}</span></h1>
+          <h1 className="text-2xl mb-2 text-darkSepia">Value: <span className="text-2xl mb-2 text-yellow-200">{element.value}</span></h1>
+          {Object.values(element.modifiers).some(el => el!= 0)? <h1 className="text-2xl mb-2 text-medievalSepia">Modifiers</h1>: null}
+          {element.modifiers.constitution ? <p className="text-2xl mb-2 text-darkSepia">Constitution: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.constitution}</span></p> :null}
+          {element.modifiers.charisma ? <p className="text-2xl mb-2 text-darkSepia">Charisma: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.charisma}</span></p> : null}
+          {element.modifiers.dexterity ? <p className="text-2xl mb-2 text-darkSepia">Dexterity: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.dexterity}</span></p> : null}
+          {element.modifiers.insanity ? <p className="text-2xl mb-2 text-darkSepia">Insanity: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.insanity}</span></p> : null}
+          {element.modifiers.intelligence ? <p className="text-2xl mb-2 text-darkSepia">Intelligence: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.intelligence}</span></p> : null}
+          {element.modifiers.strength ? <p className="text-2xl mb-2 text-darkSepia">Strength: <span className="text-2xl mb-2 text-yellow-200">{element.modifiers.strength}</span></p> : null} 
         </div>
         {equiped 
         ?
