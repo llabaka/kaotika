@@ -241,7 +241,8 @@ const CoursePage: React.FC = () => {
         </div>
         <div className="flex">
           <div className="w-full p-4">
-          {selectedAssignment && (
+          {selectedAssignment &&  
+            studentsGrades.length > 0 ?
               <>
                 <h2 className="text-3xl mb-4">Student Grades</h2>
                 <Table 
@@ -277,8 +278,10 @@ const CoursePage: React.FC = () => {
                   </TableBody>
                 </Table>
                 <KaotikaButton  handleClick={() => handleClickAllGrades()} text="SEND ALL" />
+                 
               </>
-            )}
+              : <h2 className="text-3xl mb-4">All done.</h2> }
+            
             </div>
         </div>
       </div>
