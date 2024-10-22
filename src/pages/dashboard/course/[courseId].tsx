@@ -277,7 +277,8 @@ const CoursePage: React.FC = () => {
                     ))}
                   </TableBody>
                 </Table>
-                <KaotikaButton  handleClick={() => handleClickAllGrades()} text="SEND ALL" />
+                
+                {studentsGrades.some((obj) => obj.state === "RETURNED") ? <KaotikaButton  handleClick={() => handleClickAllGrades()} text="SEND ALL" /> :null}
                  
               </>
               : <h2 className="text-3xl mb-4">All done.</h2> }
