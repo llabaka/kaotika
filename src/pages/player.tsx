@@ -2,7 +2,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Progress, Tooltip, User } from "@nextui-org/react";
-import {DndContext, DragEndEvent} from '@dnd-kit/core';
+import {DndContext, DragEndEvent, DragStartEvent} from '@dnd-kit/core';
+import { toast, ToastContainer, Zoom } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import useSound from 'use-sound';
 import _ from 'lodash';
 import Loading from '@/components/Loading';
@@ -69,6 +71,8 @@ const PlayerPage = () => {
   const [playBoot] = useSound('/sounds/boot.mp3');
   const [playRing] = useSound('/sounds/ring.mp3');
   const [playPotion] = useSound('/sounds/potion.mp3');
+
+  const notify = () => toast("You don't have the minimum level.");
   
   useEffect(() => {
     if (session?.user?.email) {
@@ -246,6 +250,14 @@ const PlayerPage = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  const handleDragStart = (event:DragStartEvent) => {
+    if (event.active.data.current?.supports[0] === 'null') {
+      notify();
+      
+    };
+    
   }
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -465,7 +477,7 @@ const PlayerPage = () => {
     <Layout>
     <div className="mx-auto flex-col text-medievalSepia">
       {isRegistered && player ? (
-        <DndContext onDragEnd={handleDragEnd}>
+        <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <div className="flex flex-col text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
           <div className="flex justify-center">
             <div className="w-1/3 p-4">
@@ -822,8 +834,22 @@ const PlayerPage = () => {
         </div>
         </>
         ) }
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          progressClassName="text-medievalDarkSepia"
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="dark" 
+        />
     </div>
     </Layout>
+    
     );
 }
 export default PlayerPage;

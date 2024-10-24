@@ -1,6 +1,6 @@
 {
   "name": "kaotika",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -20,6 +20,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
+    "react-toastify": "^10.0.6",
     "use-sound": "^4.0.3"
   },
   "devDependencies": {
