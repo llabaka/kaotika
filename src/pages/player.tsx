@@ -3,8 +3,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Progress, Tooltip, User } from "@nextui-org/react";
 import {DndContext, DragEndEvent, DragStartEvent} from '@dnd-kit/core';
-import { toast, ToastContainer, Zoom } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { Toaster, toast } from 'sonner'
 import useSound from 'use-sound';
 import _ from 'lodash';
 import Loading from '@/components/Loading';
@@ -71,8 +70,7 @@ const PlayerPage = () => {
   const [playBoot] = useSound('/sounds/boot.mp3');
   const [playRing] = useSound('/sounds/ring.mp3');
   const [playPotion] = useSound('/sounds/potion.mp3');
-
-  const notify = () => toast("You don't have the minimum level.");
+  const [playInsufficientLevel] = useSound('sounds/level.mp3');
   
   useEffect(() => {
     if (session?.user?.email) {
@@ -254,8 +252,8 @@ const PlayerPage = () => {
 
   const handleDragStart = (event:DragStartEvent) => {
     if (event.active.data.current?.supports[0] === 'null') {
-      notify();
-      
+      playInsufficientLevel();
+      toast('Insufficient level little acolyte !!');
     };
     
   }
@@ -834,18 +832,19 @@ const PlayerPage = () => {
         </div>
         </>
         ) }
-        <ToastContainer
+        <Toaster
           position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          progressClassName="text-medievalDarkSepia"
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="dark" 
+          toastOptions={{
+            unstyled: true,
+            classNames: {
+              toast: 'w-96 text-4xl p-2 text-center mb-4 border-1 rounded-lg border-sepia bg-black/90',
+              title: 'text-4xl text-red-800',
+              
+            },
+            style: {
+              fontFamily: 'kaotika'
+            }
+          }}
         />
     </div>
     </Layout>
