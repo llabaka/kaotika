@@ -657,7 +657,7 @@ const PlayerPage = () => {
                     player.inventory.helmets.map(helmet => {
                       return (
                         <div key={helmet._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={10}  type='inventory' children={<Draggable id={helmet._id} tooltip={<HelmetTooltip element={helmet} equiped={player.equipment.helmet}/>} position='bottom' type={[`${helmet.min_lvl < player.level ? helmet.type : null}`, 'inventory']} element={helmet} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={10}  type='inventory' children={<Draggable id={helmet._id} tooltip={<HelmetTooltip element={helmet} equiped={player.equipment.helmet}/>} position='bottom' type={[`${helmet.min_lvl <= player.level ? helmet.type : null}`, 'inventory']} element={helmet} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
@@ -666,7 +666,7 @@ const PlayerPage = () => {
                     player.inventory.weapons.map(weapon => {
                       return (
                         <div key={weapon._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon} equiped={player.equipment.weapon}/>} position='bottom' type={[`${weapon.min_lvl < player.level ? weapon.type : null}`, 'inventory']} element={weapon} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={20}  type='inventory' children={<Draggable id={weapon._id} tooltip={<WeaponTooltip element={weapon} equiped={player.equipment.weapon}/>} position='bottom' type={[`${weapon.min_lvl <= player.level ? weapon.type : null}`, 'inventory']} element={weapon} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
@@ -675,7 +675,7 @@ const PlayerPage = () => {
                     player.inventory.armors.map(armor => {
                       return (
                         <div key={armor._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>    
-                            <Droppable id={30}  type='inventory' children={<Draggable id={armor._id} tooltip={<ArmorTooltip element={armor} equiped={player.equipment.armor}/>} position='bottom' type={[`${armor.min_lvl < player.level ? armor.type : null}`, 'inventory']} element={armor} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>                      
+                            <Droppable id={30}  type='inventory' children={<Draggable id={armor._id} tooltip={<ArmorTooltip element={armor} equiped={player.equipment.armor}/>} position='bottom' type={[`${armor.min_lvl <= player.level ? armor.type : null}`, 'inventory']} element={armor} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>                      
                         </div>
                       )
                     })
@@ -684,7 +684,7 @@ const PlayerPage = () => {
                     player.inventory.shields.map(shield => {
                       return (
                         <div key={shield._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={40}  type='inventory' children={<Draggable id={shield._id} tooltip={<ShieldTooltip element={shield} equiped={player.equipment.shield}/>} position='bottom' type={[`${shield.min_lvl < player.level ? shield.type : null}`, 'inventory']} element={shield} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={40}  type='inventory' children={<Draggable id={shield._id} tooltip={<ShieldTooltip element={shield} equiped={player.equipment.shield}/>} position='bottom' type={[`${shield.min_lvl <= player.level ? shield.type : null}`, 'inventory']} element={shield} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
@@ -693,7 +693,7 @@ const PlayerPage = () => {
                     player.inventory.artifacts.map(artifact => {
                       return (
                         <div key={artifact._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={50}  type='inventory' children={<Draggable id={artifact._id} tooltip={<ArtifactTooltip element={artifact} equiped={player.equipment.artifact}/>} position='bottom' type={[`${artifact.min_lvl < player.level ? artifact.type : null}`, 'inventory']} element={artifact} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={50}  type='inventory' children={<Draggable id={artifact._id} tooltip={<ArtifactTooltip element={artifact} equiped={player.equipment.artifact}/>} position='bottom' type={[`${artifact.min_lvl <= player.level ? artifact.type : null}`, 'inventory']} element={artifact} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
@@ -702,7 +702,7 @@ const PlayerPage = () => {
                     player.inventory.boots.map(boot => {
                       return (
                         <div key={boot._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={1}  type='inventory' children={<Draggable id={boot._id} tooltip={<BootTooltip element={boot} equiped={player.equipment.boot}/>} position='bottom' type={[`${boot.min_lvl < player.level ? boot.type : null}`, 'inventory']} element={boot} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={1}  type='inventory' children={<Draggable id={boot._id} tooltip={<BootTooltip element={boot} equiped={player.equipment.boot}/>} position='bottom' type={[`${boot.min_lvl <= player.level ? boot.type : null}`, 'inventory']} element={boot} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
@@ -711,7 +711,7 @@ const PlayerPage = () => {
                     player.inventory.rings.map(ring => {
                       return (
                         <div key={ring._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <Droppable id={1}  type='inventory' children={<Draggable id={ring._id} tooltip={<RingTooltip element={ring} equiped={player.equipment.ring}/>} position='bottom' type={[`${ring.min_lvl < player.level ? ring.type : null}`, 'inventory']} element={ring} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
+                          <Droppable id={1}  type='inventory' children={<Draggable id={ring._id} tooltip={<RingTooltip element={ring} equiped={player.equipment.ring}/>} position='bottom' type={[`${ring.min_lvl <= player.level ? ring.type : null}`, 'inventory']} element={ring} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />}/>
                         </div>
                       )
                     })
