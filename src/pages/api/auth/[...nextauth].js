@@ -58,7 +58,7 @@ export default NextAuth({
       if (account.provider === "google") {
         return profile.email_verified && profile.email.endsWith("@aeg.eus") || profile.email.endsWith("@ikasle.aeg.eus")
       }
-      return '/auth/signin?errorCode=403'
+      return '/forbidden'
     },
     async jwt({ token, account, user, profile}) {
       if (account) {
