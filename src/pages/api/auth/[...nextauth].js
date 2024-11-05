@@ -54,7 +54,12 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    
+    async signIn({ account, profile }) {
+      if (account.provider === "google") {
+        return profile.email_verified && profile.email.endsWith("@aeg.eus") || profile.email.endsWith("@ikasle.aeg.eus")
+      }
+      return '/forbidden'
+    },
     async jwt({ token, account, user, profile}) {
       if (account) {
         token.accessToken = account.access_token;

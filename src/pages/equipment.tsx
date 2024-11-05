@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Loading from '@/components/Loading';
 import { Profile } from '@/_common/interfaces/Profile';
-import ArmorTooltip from '@/components/tooltips/ArmorTooltip';
+import DefenseTooltip from '@/components/tooltips/DefenseTooltip';
 import WeaponTooltip from '@/components/tooltips/WeaponTooltip';
 import ArtifactTooltip from '@/components/tooltips/ArtifactTooltip';
 import HealingPotionTooltip from '@/components/tooltips/HealingPotionTooltip';
@@ -252,7 +252,7 @@ const Equipment = () => {
             <h2 className="text-4xl mb-4">Armor</h2>
             <div className="w-full p-5 grid grid-cols-3 gap-4 border-1 rounded-lg border-sepia bg-black/70">
               {currentProfile?.equipment.armors.map((armor) => (
-                <Tooltip key={armor._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' closeDelay={0} size='sm' showArrow={true} content={<ArmorTooltip element={armor} equiped={null}/>}>
+                <Tooltip key={armor._id} className="w-96 text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" placement='top' closeDelay={0} size='sm' showArrow={true} content={<DefenseTooltip element={armor} equiped={null}/>}>
                 <img
                   key={armor._id}
                   src={armor.image}
