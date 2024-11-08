@@ -10,7 +10,7 @@ import Loading from '@/components/Loading';
 import { Profile } from '@/_common/interfaces/Profile';
 import DefenseTooltip from '@/components/tooltips/DefenseTooltip';
 import WeaponTooltip from '@/components/tooltips/WeaponTooltip';
-import ArtifactTooltip from '@/components/tooltips/ArtifactTooltip';
+import ArtifactTooltip from '@/components/tooltips/CommonTooltip';
 import HealingPotionTooltip from '@/components/tooltips/HealingPotionTooltip';
 import AntidotePotionTooltip from '@/components/tooltips/AntidotePotionTooltip';
 import EnhancerPotionTooltip from '@/components/tooltips/EnhancerPotionTooltip';
