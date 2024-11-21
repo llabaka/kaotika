@@ -34,6 +34,7 @@ import { Modifier } from '@/_common/interfaces/Modifier';
 import KaotikaButton from '@/components/KaotikaButton';
 import {GRID_NUMBER, EXP_POINTS, PROGRESS_LABEL, PROGRESS_VALUE} from '../constants/constants';
 import ProgressBar from '@/components/ProgressBar';
+import { calculateAllAttributes } from '@/helpers/PlayerAttributes';
 
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
@@ -99,7 +100,7 @@ const PlayerPage = () => {
   }, [session]);
 
   useEffect(() => {
-    if(player) calculateAllAttributes();
+    if(player) calculateAllAttributes(player, setCurrentAttributes);
   }, [player]);
 
   useEffect(() => {
@@ -115,67 +116,6 @@ const PlayerPage = () => {
       setWarningVisible(false);
     }
   }, [currentAttributes])
-  
-  
-  const calculateAllAttributes = () => {
-    if(player) {
-      const charisma =  
-        player.attributes?.charisma + 
-        player.equipment.helmet?.modifiers.charisma! + 
-        player.equipment.weapon.modifiers.charisma + 
-        player.equipment.armor.modifiers.charisma + 
-        player.equipment.shield?.modifiers.charisma! + 
-        player.equipment.artifact.modifiers.charisma + 
-        player.equipment.boot?.modifiers.charisma! + 
-        player.equipment.ring?.modifiers.charisma!;
-      const constitution =  
-        player.attributes?.constitution + 
-        player.equipment.helmet?.modifiers.constitution! + 
-        player.equipment.weapon.modifiers.constitution + 
-        player.equipment.armor.modifiers.constitution + 
-        player.equipment.shield?.modifiers.constitution! + 
-        player.equipment.artifact.modifiers.constitution + 
-        player.equipment.boot?.modifiers.constitution! + 
-        player.equipment.ring?.modifiers.constitution!;
-      const dexterity =  
-        player.attributes?.dexterity + 
-        player.equipment.helmet?.modifiers.dexterity! + 
-        player.equipment.weapon.modifiers.dexterity + 
-        player.equipment.armor.modifiers.dexterity + 
-        player.equipment.shield?.modifiers.dexterity! + 
-        player.equipment.artifact.modifiers.dexterity + 
-        player.equipment.boot?.modifiers.dexterity! + 
-        player.equipment.ring?.modifiers.dexterity!;
-      const insanity =  
-        player.attributes?.insanity + 
-        player.equipment.helmet?.modifiers.insanity! + 
-        player.equipment.weapon.modifiers.insanity + 
-        player.equipment.armor.modifiers.insanity + 
-        player.equipment.shield?.modifiers.insanity! + 
-        player.equipment.artifact.modifiers.insanity + 
-        player.equipment.boot?.modifiers.insanity! + 
-        player.equipment.ring?.modifiers.insanity!;
-      const intelligence =  
-        player.attributes?.intelligence + 
-        player.equipment.helmet?.modifiers.intelligence! + 
-        player.equipment.weapon.modifiers.intelligence + 
-        player.equipment.armor.modifiers.intelligence + 
-        player.equipment.shield?.modifiers.intelligence! + 
-        player.equipment.artifact.modifiers.intelligence + 
-        player.equipment.boot?.modifiers.intelligence! + 
-        player.equipment.ring?.modifiers.intelligence!;
-      const strength =  
-        player.attributes?.strength + 
-        player.equipment.helmet?.modifiers.strength! + 
-        player.equipment.weapon.modifiers.strength + 
-        player.equipment.armor.modifiers.strength + 
-        player.equipment.shield?.modifiers.strength! + 
-        player.equipment.artifact.modifiers.strength + 
-        player.equipment.boot?.modifiers.strength! + 
-        player.equipment.ring?.modifiers.strength!;
-      setCurrentAttributes({constitution, charisma, dexterity, intelligence, strength, insanity })
-    }
-  }
 
   const calculateHitPoints = (): void => {
     if (!currentAttributes) return ;

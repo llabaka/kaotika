@@ -17,6 +17,9 @@
         "name": "next"
       }
     ],
+    "types": ["jest", "node"],
+    "typeRoots": ["./node_modules/@types"],
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"],
       "use-sound": ["./node_modules/use-sound/"]
