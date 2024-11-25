@@ -35,6 +35,12 @@ import KaotikaButton from '@/components/KaotikaButton';
 import {GRID_NUMBER, EXP_POINTS, PROGRESS_LABEL, PROGRESS_VALUE} from '../constants/constants';
 import ProgressBar from '@/components/ProgressBar';
 import { calculateAllAttributes } from '@/helpers/PlayerAttributes';
+import { calculateHitPoints } from '@/helpers/calculateHitPoints';
+import { calculateAttack } from '@/helpers/calculateAttack';
+import { calculateDefense } from '@/helpers/calculateDefense';
+import { calculateMagicResistance } from '@/helpers/calculateMagicResistance';
+import { calculateCFP } from '@/helpers/calculateCFP';
+import { calculateBCFA } from '@/helpers/calculateBCFA';
 
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
@@ -104,47 +110,60 @@ const PlayerPage = () => {
   }, [player]);
 
   useEffect(() => {
-    calculateHitPoints();
-    calculateAttack();
-    calculateDefense();
-    calculateMagicResistance();
-    calculateCFP();
-    calculateBCFA();
+    recalculateStats();
+    handleEquipmentWarning();
+  }, [currentAttributes, currentEquipment, player?.equipment])
+
+  const handleEquipmentWarning = () => {
     if(!_.isEqual(currentEquipment, player?.equipment)) {
       setWarningVisible(true);
     } else {
       setWarningVisible(false);
     }
-  }, [currentAttributes])
-
-  const calculateHitPoints = (): void => {
-    if (!currentAttributes) return ;
-    setHitPoints( currentAttributes.constitution + currentAttributes.dexterity - currentAttributes.insanity/2); 
-  };
-
-  const calculateAttack = (): void => {
-    if(!currentAttributes) return;
-    setAttack(currentAttributes.strength - currentAttributes.insanity/2);
   }
 
-  const calculateDefense = (): void => {
-    if(!currentAttributes) return;
-    setDefense(currentAttributes.dexterity + currentAttributes.constitution + currentAttributes.intelligence/2);
+  const recalculateStats = () => {
+    handleHitPointsCalculation();
+    handleAttackCalculation();
+    handleDefenseCalculation();
+    handleMagicResistanceCalculation();
+    handleCFPCalculation();
+    handleBCFACalculation();
   }
 
-  const calculateMagicResistance = (): void => {
+  const handleHitPointsCalculation = (): void => {
     if(!currentAttributes) return;
-    setmagicResistance(currentAttributes.intelligence + currentAttributes.charisma);
+    const newHitPoints =  calculateHitPoints(currentAttributes);
+    setHitPoints(newHitPoints);
+  }
+  const handleAttackCalculation = (): void => {
+    if(!currentAttributes) return;
+    const newAttack =  calculateAttack(currentAttributes);
+    setAttack(newAttack);
   }
 
-  const calculateCFP = (): void => {
+  const handleDefenseCalculation = (): void => {
     if(!currentAttributes) return;
-    setCFP(currentAttributes.insanity);
+    const newDefense = calculateDefense(currentAttributes);
+    setDefense(newDefense);
   }
 
-  const calculateBCFA =(): void => {
+  const handleMagicResistanceCalculation = (): void => {
     if(!currentAttributes) return;
-    setBCFA(currentAttributes.strength + currentAttributes.insanity);
+    const newMagicResistance = calculateMagicResistance(currentAttributes);
+    setmagicResistance(newMagicResistance);
+  }
+
+  const handleCFPCalculation = (): void => {
+    if(!currentAttributes) return;
+    const CFP = calculateCFP(currentAttributes);
+    setCFP(CFP);
+  }
+
+  const handleBCFACalculation = (): void => {
+    if(!currentAttributes) return;
+    const BCFA = calculateBCFA(currentAttributes);
+    setBCFA(BCFA);
   }
 
   const handleSelectedOption = (selectedOption: string) => {
