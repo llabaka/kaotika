@@ -1,17 +1,19 @@
+import 'boxicons/css/boxicons.min.css';
+
 const LeftMainContainer = () => {
 	return (
 		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md ml-1">
 
 			<div className="flex flex-col justify-center items-center w-6/12 border-2 border-white rounded-md text-white">
 				<div className="flex justify-around w-full">
-					<button className="w-10 h-10 bg-gray-300 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
-						<img src="https://via.placeholder.com/32" alt="Icon 1" className="w-8 h-8" />
+					<button className="w-10 h-10 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
+						<i className='bx bxs-purchase-tag-alt text-2xl'></i>
 					</button>
-					<button className="w-10 h-10 bg-gray-300 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
-						<img src="https://via.placeholder.com/32" alt="Icon 2" className="w-8 h-8" />
+					<button className="w-10 h-10 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
+						<i className='bx bx-dollar-circle text-2xl'></i>
 					</button>
-					<button className="w-10 h-10 bg-gray-300 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
-						<img src="https://via.placeholder.com/32" alt="Icon 3" className="w-8 h-8" />
+					<button className="w-10 h-10 rounded-full flex justify-center items-center hover:bg-gray-400 transition">
+						<i className="bx bxs-cart text-2xl"></i>
 					</button>
 				</div>
 			</div>
