@@ -4,16 +4,28 @@ import "../styles/globals.css";
 import {NextUIProvider} from "@nextui-org/react";
 import Head from "next/head";
 
+const mockSession = {
+  user: {
+    name: 'Asier',
+    email: 'asier.arguinchona@ikasle.aeg.eus',
+    image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
+  },
+  accessToken: 'fake-acces-token',
+  refreshToken: 'fake-refresh-token',
+  expires: '',
+  email: 'asier.arguinchona@ikasle.aeg.eus'
+}
+
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={mockSession}>
       <NextUIProvider>
           <Head>
             <link rel='icon' href='/favicon.ico' />
           </Head>
-          <Component {...pageProps} />
+          <Component {...mockSession} />
       </NextUIProvider>
     </SessionProvider>
   );
