@@ -1,6 +1,8 @@
 import Card from "./Card/Card";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
+import MainNavigator from "./MainNavigator";
+
 const RightMainContainer = () => {
 	const cardMock : CardProps = {
 		minLevel: 12,
@@ -20,9 +22,9 @@ const RightMainContainer = () => {
 	};
 
 	return (
-        <div className="flex flex-col justify-between items-center w-9/12 bg-black/85 p-4 rounded-md mr-2">
+        <div className="flex flex-col justify-start items-center w-9/12 bg-black/85 p-4 rounded-md mr-2">
 			<Card {...cardMock}/>
-		    Right Container
+			<MainNavigator/>
 	    </div>
 	);
 };
