@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
-import Welcome from './welcome';
+import Welcome from '@/pages/welcome';
 import '@testing-library/jest-dom';
 import mockRouter from 'next-router-mock';
 
