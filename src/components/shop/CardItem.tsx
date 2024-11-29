@@ -21,7 +21,7 @@ const cardMock : CardProps = {
 
 const CardItem = () => {
     return(
-        <div className="flex w-[32%] h-full bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
+        <div className="flex w-[31.5%] h-full bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
             <Card {...cardMock}/>
         </div>
     )
