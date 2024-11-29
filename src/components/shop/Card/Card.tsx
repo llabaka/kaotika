@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
-import ProgessBar from "./ProgressBar";
+import CardProgessBar from "./CardProgressBar";
 
 const Card = (props: CardProps) => {
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
@@ -61,11 +61,10 @@ const Card = (props: CardProps) => {
                     <p>{props.modifiers.insanity}</p>
                     <p>Intelligence :</p>
                     <p>{props.modifiers.intelligence}</p>
-                    <p>Strength :</p>
-                    <p>{props.modifiers.strength}</p>
-                    <p>Defense :</p>
-                    <p>{props.defense}</p>
-                    <ProgessBar/>
+                    <p>Strength : {props.modifiers.strength}</p>
+                    <CardProgessBar value={props.modifiers.strength}/>
+                    <p>Defense :  {props.defense}</p>
+                    <CardProgessBar value={props.defense}/>
                 </div>         
         </div>
     )
