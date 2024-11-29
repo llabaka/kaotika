@@ -39,16 +39,15 @@ const LeftMainContainer = () => {
 						<span className="z-10 text-orange-400 text-2xl">LVL 17</span>
 					</div>
 				</div>
-
-					{/* Third Image */}
-					<div className="w-60 h-16 flex relative items-center justify-center">
+					{/* Third Imagen Button */}
+					<button className="w-60 h-16 flex relative items-center justify-center ">
 						<Image
 							src="/images/shop/ManagePlayerButton.png"
 							alt="Imagen 1"
 							layout="fill"
 						/>
-						<span className="z-10 text-orange-400 text-2xl">MANAGE PLAYER</span>
-					</div>
+						<span className="z-10 text-orange-400 text-2xl hover:text-orange-200 transition">MANAGE PLAYER</span>
+					</button>
 			</div>
 
 			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white">
