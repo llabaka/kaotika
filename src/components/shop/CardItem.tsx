@@ -1,6 +1,10 @@
 import Card from "./Card/Card"
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
+interface CardItemProps {
+    card: CardProps;
+  }
+
 const cardMock : CardProps = {
     minLevel: 12,
     image: '/images/equipment/armors/jacket_1.png',
@@ -19,10 +23,12 @@ const cardMock : CardProps = {
     defense: 32
 };
 
-const CardItem = () => {
+const cards=[Card(cardMock), Card(cardMock), Card(cardMock)]
+
+const CardItem: React.FC<CardItemProps> = ({ card }) => {
     return(
-        <div className="flex w-[31.5%] h-full bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
-            <Card {...cardMock}/>
+        <div className="flex w-[31.5%] bg-blue-500 text-center items-center justify-center text-white hover:scale-105 transition">
+            <Card {...card} />
         </div>
     )
 }

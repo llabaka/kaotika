@@ -7,7 +7,7 @@ const Card = (props: CardProps) => {
     const GoldIcon = '/images/icons/gold.png';
 
     return(
-            <div className="w-[26rem] relative h-[26rem] flex flex-row">
+            <div className="w-[25rem] relative h-[23rem] flex flex-row">
                 <Image
                     src={CardImageRoute}
                     alt="MainNavigator"

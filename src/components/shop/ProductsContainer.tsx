@@ -1,37 +1,40 @@
 import { useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
+import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
 const ProductsContainer = () => {
-    const [products, setProducts] = useState(
-		Array.from({ length: 26 }, (_, i) => ({
-			id: i + 1,
-			name: `Product ${i + 1}`,
-		}))
-    );
 
-    const itemsPerRow = 3; // Número de productos por fila
+  const cardMock: CardProps = {
+    minLevel: 12,
+    image: '/images/equipment/armors/jacket_1.png',
+    modifiers: {
+      intelligence: 12,
+      dexterity: 12,
+      constitution: 20,
+      insanity: 43,
+      charisma: 23,
+      strength: 34
+    },
+    name: 'cardMock',
+    description: 'Descripción prueba de carta lkasndjoasbdiuasd',
+    icon: '/images/icons/up.png',
+    value: 340,
+    defense: 32
+  };
 
-    // Función para dividir los productos en filas de `itemsPerRow` productos
-    const chunkProducts = (products: any, rowSize: number) => {
-      const result = [];
-      for (let i = 0; i < products.length; i += rowSize) {
-        result.push(products.slice(i, i + rowSize));
-      }
-      return result;
-    };
-  
-    // Generamos las filas de productos
-    const productRows = chunkProducts(products, itemsPerRow);
+  const cards = [cardMock, cardMock, cardMock];
+
+  const cards2 = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
 
     return (
     <div className="w-full h-full overflow-y-auto bg-white bg-scroll mt-2">
 
-        <ProductRowContainer/>
+        <ProductRowContainer cards={cards}/>
 
         <ProductHorizontalSeparator/>
 
-        <ProductRowContainer/>
+        <ProductRowContainer cards={cards}/>
 
         <ProductHorizontalSeparator/>
 
@@ -41,6 +44,27 @@ const ProductsContainer = () => {
 }
 
 export default ProductsContainer;
+
+// const [products, setProducts] = useState(
+//   Array.from({ length: 26 }, (_, i) => ({
+//     id: i + 1,
+//     name: `Product ${i + 1}`,
+//   }))
+//   );
+
+//   const itemsPerRow = 3; // Número de productos por fila
+
+//   // Función para dividir los productos en filas de `itemsPerRow` productos
+//   const chunkProducts = (products: any, rowSize: number) => {
+//     const result = [];
+//     for (let i = 0; i < products.length; i += rowSize) {
+//       result.push(products.slice(i, i + rowSize));
+//     }
+//     return result;
+//   };
+
+//   // Generamos las filas de productos
+//   const productRows = chunkProducts(products, itemsPerRow);
 
 // return (
 //         <div className="w-full h-full overflow-y-auto bg-white bg-scroll mt-2">
