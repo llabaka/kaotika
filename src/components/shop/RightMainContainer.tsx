@@ -3,6 +3,7 @@ import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
 import MainNavigator from "./MainNavigator";
 
+
 const RightMainContainer = () => {
 	const cardMock : CardProps = {
 		minLevel: 12,
@@ -18,14 +19,15 @@ const RightMainContainer = () => {
 		name: 'cardMock',
 		description: 'Description prubea de carta lkasndjoasbdiuasd',
 		icon: '/images/icons/up.png',
-		value: 340
+		value: 340, 
+		defense: 32
 	};
 
 	return (
         <div className="flex flex-col justify-start items-center w-9/12 bg-black/85 p-4 rounded-md mr-2">
-			<Card {...cardMock}/>
 			<MainNavigator/>
-	    </div>
+			<Card {...cardMock}/>
+		</div>
 	);
 };
 

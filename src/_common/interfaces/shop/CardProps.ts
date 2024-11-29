@@ -8,4 +8,5 @@ export interface CardProps {
     description: string;
     icon: string;
     value: number;
+    defense: number;
 }
