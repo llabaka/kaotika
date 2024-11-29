@@ -1,4 +1,6 @@
 import { useState } from "react"
+import ProductRowContainer from "./ProductRowContainer";
+import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 
 const ProductsContainer = () => {
     const [products, setProducts] = useState(
@@ -25,23 +27,12 @@ const ProductsContainer = () => {
     return (
     <div className="w-full h-full overflow-y-auto bg-white bg-scroll mt-2">
 
-        <div className="flex w-full h-[49%] bg-gray-500 justify-center items-center text-center">
-            <div className="flex w-[32%] h-full bg-yellow-500 text-center items-center justify-center text-white">PRODUCT</div>
-            <div className="flex w-[2%] h-full bg-orange-500 text-white"></div>
-            <div className="flex w-[32%] h-full bg-yellow-500 text-white text-center items-center justify-center">PRODUCT</div>
-            <div className="flex w-[2%] h-full bg-orange-500 text-white" ></div>
-            <div className="flex w-[32%] h-full bg-yellow-500 text-white text-center items-center justify-center">PRODUCT</div>
-        </div>
+        <ProductRowContainer/>
 
-        <div className="flex flex-col w-full h-[2%] bg-white"></div>
+        <ProductHorizontalSeparator/>
 
-        <div className="flex w-full h-[49%] bg-gray-500">
-            <div className="flex w-[32%] h-full bg-yellow-500 text-white text-center items-center justify-center">PRODUCT</div>
-            <div className="flex w-[2%] h-full bg-orange-500"></div>
-            <div className="flex w-[32%] h-full bg-yellow-500 text-white text-center items-center justify-center">PRODUCT</div>
-            <div className="flex w-[2%] h-full bg-orange-500"></div>
-            <div className="flex w-[32%] h-full bg-yellow-500 text-white text-center items-center justify-center">PRODUCT</div>
-        </div>
+        <ProductRowContainer/>
+
 
     </div>
 ); 
