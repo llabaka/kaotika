@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
-import CardProgessBar from "./CardProgressBar";
+import CardRigthContainer from "./Components/CardRigthContainer";
+
 
 const Card = (props: CardProps) => {
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
 
     return(
-            <div className="w-[26rem] relative h-[26rem] flex flex-row">
+            <div className="w-[25rem] relative h-[23rem] flex flex-row">
                 <Image
                     src={CardImageRoute}
                     alt="MainNavigator"
@@ -49,23 +50,7 @@ const Card = (props: CardProps) => {
                     </div>
                 </div>
                 {/* CARD RIGHT CONTAINER */}
-                <div className="z-10 relative flex flex-col p-2 w-3/12">
-                    {/* Sección derecha */}
-                    <p>Charisma :</p>
-                    <p>{props.modifiers.charisma}</p>
-                    <p>Constitution :</p>
-                    <p>{props.modifiers.constitution}</p>
-                    <p>Dexterity :</p>
-                    <p>{props.modifiers.dexterity}</p>
-                    <p>Insanity :</p>
-                    <p>{props.modifiers.insanity}</p>
-                    <p>Intelligence :</p>
-                    <p>{props.modifiers.intelligence}</p>
-                    <p>Strength : {props.modifiers.strength}</p>
-                    <CardProgessBar value={props.modifiers.strength}/>
-                    <p>Defense :  {props.defense}</p>
-                    <CardProgessBar value={props.defense}/>
-                </div>         
+                <CardRigthContainer attributes={props.modifiers} extra_attribute={props.defense}/>
         </div>
     )
 };
