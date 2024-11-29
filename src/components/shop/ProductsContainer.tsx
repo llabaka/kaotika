@@ -33,6 +33,8 @@ const ProductsContainer = () => {
 
         <ProductRowContainer/>
 
+        <ProductHorizontalSeparator/>
+
 
     </div>
 ); 
