@@ -3,7 +3,7 @@ import Image from 'next/image';
 const PlayerStatsButtons = () => {
     return (
 
-    <div className="flex flex-col justify-center items-center w-10/12 border-2 border-white rounded-md text-white h-32">
+    <div className="flex flex-col justify-center items-center w-10/12 h-32">
         <div className="flex justify-around">
             {/* First Image */}	
             <div className="w-40 h-12 flex relative items-center justify-center">
