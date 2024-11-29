@@ -3,6 +3,7 @@ import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
 import MainNavigator from "./MainNavigator";
 
+import ProductsContainer from "./ProductsContainer";
 
 const RightMainContainer = () => {
 	const cardMock : CardProps = {
@@ -24,9 +25,10 @@ const RightMainContainer = () => {
 	};
 
 	return (
-        <div className="flex flex-col justify-start items-center w-9/12 bg-black/85 p-4 rounded-md mr-2">
+        <div className="flex flex-col justify-start items-center w-9/12 bg-black/85 p-1 rounded-md mr-2">
 			<MainNavigator/>
-			<Card {...cardMock}/>
+			<ProductsContainer/>
+			{/* <Card {...cardMock}/> */}
 		</div>
 	);
 };
