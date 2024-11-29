@@ -3,6 +3,8 @@ import ShopIcons from './ShopIcons';
 import Image from 'next/image';
 import PlayerStatsButtons from './PlayerStatsButtons';
 import ButtonsSeparator from './ButtonsSeparator';
+import EquipmentButtons from './EquipmentButtons';
+import SellerSeparator from './SellerSeparator';
 
 const LeftMainContainer = () => {
 	return (
@@ -15,9 +17,8 @@ const LeftMainContainer = () => {
 				Seller Image
 			</div>
 
-			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white m-1">
-				Separator Image
-			</div>
+			{/* Seller Separator */}
+			<SellerSeparator></SellerSeparator>
 
 			{/* Player Stats Buttons */}
 			<PlayerStatsButtons></PlayerStatsButtons>
@@ -25,10 +26,8 @@ const LeftMainContainer = () => {
 			{/* Buttons Separator */}
 			<ButtonsSeparator></ButtonsSeparator>
 
-			<div className="flex flex-col justify-center items-center w-10/12 border-2 border-white rounded-md text-white h-96">
-				Object Type Buttons
-			</div>
-
+			{/* Equipment Buttons */}
+			<EquipmentButtons></EquipmentButtons>
 		</div>
 	);
 };
