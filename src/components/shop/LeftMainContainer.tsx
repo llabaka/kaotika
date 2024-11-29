@@ -14,15 +14,21 @@ const LeftMainContainer = () => {
 				Seller Image
 			</div>
 
-			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white">
+			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white m-1">
 				Separator Image
 			</div>
 
 			{/* Player Stats Buttons */}
 			<PlayerStatsButtons></PlayerStatsButtons>
 
-			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white">
-				Separator Image2
+			<div className="flex flex-col justify-center items-center w-11/12 m-1">
+				<div className="w-11/12 h-5 flex relative items-center justify-center">
+					<Image
+						src="/images/shop/ButtonsSeparator.png"
+						alt="Imagen 1"
+						layout="fill"
+					/>
+				</div>
 			</div>
 
 			<div className="flex flex-col justify-center items-center w-10/12 border-2 border-white rounded-md text-white h-96">
