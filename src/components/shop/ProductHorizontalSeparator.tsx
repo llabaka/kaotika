@@ -1,8 +1,6 @@
 const ProductHorizontalSeparator = () => {
 
-    return(
-        <div className="flex flex-col w-full h-[2%] bg-white"></div>
-    )
+    return(<div className="text-gray-400 text-sm text-center">Row</div>    )
 }
 
 export default ProductHorizontalSeparator;
