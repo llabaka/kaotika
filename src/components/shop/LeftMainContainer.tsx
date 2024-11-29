@@ -29,10 +29,23 @@ const LeftMainContainer = () => {
 						/>
 					</div>
 					{/* Second Image */}
-					<img src="https://via.placeholder.com/50" alt="Imagen 2" className="w-12 h-12 rounded-md"/>
+					<div className="w-40 h-12 flex relative">
+						<Image
+							src="/images/shop/ManagePlayerButton.png"
+							alt="Imagen 1"
+							layout="fill"
+						/>
+					</div>
 				</div>
 
-				<img src="https://via.placeholder.com/50" alt="Imagen 3" className="w-12 h-12 rounded-md"/>
+					{/* Third Image */}
+					<div className="w-60 h-16 flex relative">
+						<Image
+							src="/images/shop/ManagePlayerButton.png"
+							alt="Imagen 1"
+							layout="fill"
+						/>
+					</div>
 			</div>
 
 			<div className="flex flex-col justify-center items-center w-11/12 border-2 border-white rounded-md text-white">
