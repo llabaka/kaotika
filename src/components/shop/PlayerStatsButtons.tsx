@@ -5,7 +5,6 @@ interface PlayerStatsButtonsProps {
     player: Player;
 }
 
-
 const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
     return (
 
@@ -18,7 +17,16 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                     alt="Imagen 1"
                     layout="fill"
                 />
-                <span className="z-10 text-orange-400 text-3xl">{player.gold}</span>
+                    <div className="flex items-center justify-center z-10 text-orange-400 text-3xl">
+                        {player.gold}
+                            <Image
+                            src="/images/CoinsIcon.png"
+                            alt="Gold"
+                            width={24}
+                            height={24}
+                            className="ml-2"
+                        />
+                    </div>
             </div>
             {/* Second Image */}
             <div className="w-40 h-12 flex relative items-center justify-center">
