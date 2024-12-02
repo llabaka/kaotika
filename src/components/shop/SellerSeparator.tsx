@@ -7,7 +7,8 @@ const SellerSeparator = () => {
                 <Image
                     src="/images/shop/SellerSeparator.png"
                     alt="Imagen 1"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 374px) 100vw'
                 />
             </div>
         </div>

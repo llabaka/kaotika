@@ -29,7 +29,8 @@ const EquipmentButtons = () => {
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt={label}
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 426px) 100vw'
                     className={`transform transition ${activeButton === id ? 'scale-100' : 'scale-90'}`}
                 />
                 <span

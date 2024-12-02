@@ -15,16 +15,18 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Imagen 1"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 426px) 100vw'
                 />
                     <div className="flex items-center justify-center z-10 text-orange-400 text-3xl">
                         {player.gold}
                             <Image
-                            src="/images/CoinsIcon.png"
+                            src="/images/shop/CoinsIcon.png"
                             alt="Gold"
                             width={24}
                             height={24}
                             className="ml-2"
+                            style={{height: 'auto', width:'auto'}}
                         />
                     </div>
             </div>
@@ -33,7 +35,8 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Imagen 1"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 426px) 100vw'
                 />
                 <span className="z-10 text-orange-400 text-3xl">{player.level} LVL</span>
             </div>
@@ -44,7 +47,8 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Imagen 1"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 426px) 100vw'
                 />
                 <span className="z-10 text-orange-400 text-2xl hover:text-orange-200 transition">MANAGE PLAYER</span>
             </button>

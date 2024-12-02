@@ -7,7 +7,8 @@ const ButtonsSeparator = () => {
                 <Image
                     src="/images/shop/ButtonsSeparator.png"
                     alt="Imagen 1"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 570px) 100vw'
                 />
             </div>
         </div>
