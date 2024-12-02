@@ -24,6 +24,24 @@ const ProductsContainer = () => {
     defense: 32
   };
 
+  const emptyCardMock: CardProps = {
+    minLevel: 0,
+    image: '',
+    modifiers: {
+      intelligence: 0,
+      dexterity: 0,
+      constitution: 0,
+      insanity: 0,
+      charisma: 0,
+      strength: 0,
+    },
+    name: '',
+    description: '',
+    icon: '',
+    value: 0,
+    defense: 0,
+  };
+
   const cards2 = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
 
   const partitionArray = (array: CardProps[], size: number) => {
@@ -31,9 +49,11 @@ const ProductsContainer = () => {
     for (let i = 0; i < array.length; i += size) {
       let partition = array.slice(i, i + size);
 
-      // Rellenar con cardMock si es necesario
-      while (partition.length < size) {
-        partition.push(cardMock);
+      // Si es el último grupo y no tiene el tamaño completo, rellena con mocks vacíos
+      if (partition.length < size && i + size >= array.length) {
+        while (partition.length < size) {
+          partition.push(emptyCardMock);
+        }
       }
 
       result.push(partition);
