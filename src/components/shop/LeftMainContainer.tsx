@@ -5,6 +5,7 @@ import PlayerStatsButtons from './PlayerStatsButtons';
 import ButtonsSeparator from './ButtonsSeparator';
 import EquipmentButtons from './EquipmentButtons';
 import SellerSeparator from './SellerSeparator';
+import Seller from './Seller';
 
 const LeftMainContainer = () => {
 	return (
@@ -14,16 +15,7 @@ const LeftMainContainer = () => {
 			<ShopIcons></ShopIcons>
 
 			{/* Seller Frame and Image */}
-			<div className="flex-col w-10/12 mt-4 h-96">
-
-				<div className="flex w-full h-full relative">
-					<Image
-						src="/images/shop/SellerFrame.png"
-						alt="Imagen 1"
-						layout="fill"
-					/>
-				</div>
-			</div>
+			<Seller></Seller>
 
 			{/* Seller Separator */}
 			<SellerSeparator></SellerSeparator>
