@@ -5,17 +5,17 @@ import PlayerStatsButtons from './PlayerStatsButtons';
 import ButtonsSeparator from './ButtonsSeparator';
 import EquipmentButtons from './EquipmentButtons';
 import SellerSeparator from './SellerSeparator';
+import Seller from './Seller';
 
 const LeftMainContainer = () => {
 	return (
-		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md ml-1">
+		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md">
 
 			{/* Shopping Icons */}
 			<ShopIcons></ShopIcons>
 
-			<div className="flex flex-col justify-center items-center w-8/12 border-2 border-white rounded-md text-white mt-4 h-80">
-				Seller Image
-			</div>
+			{/* Seller Frame and Image */}
+			<Seller></Seller>
 
 			{/* Seller Separator */}
 			<SellerSeparator></SellerSeparator>
