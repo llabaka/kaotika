@@ -9,7 +9,8 @@ const modifiersSchema = new mongoose.Schema({
   strength: { type: Number, required: true },
 }, { _id: false }); // `false` para no crear un `_id` separado para los subdocumentos
 
-const bootsSchema = new mongoose.Schema({
+
+const ringsSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   type: { type: String, required: true },
@@ -22,4 +23,4 @@ const bootsSchema = new mongoose.Schema({
   isActive: { type: Boolean, required: true },
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
 
-export default mongoose.models.Helmet || mongoose.model("Helmet", bootsSchema);
+export default mongoose.models.Rings || mongoose.model("Rings", ringsSchema);
