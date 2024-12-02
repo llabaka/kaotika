@@ -8,7 +8,10 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
-  const [data, setData] = useState<any>(null);
+  const [equipment, setEquipment] = useState([]);
+  const [armors, setArmors] = useState([]);
+  const [boots, setBoots] = useState([]);
+  const [helmets, setHelmets] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
@@ -18,9 +21,13 @@ const Shop = () => {
         throw new Error(`Error: ${res.status}`);
       }
       const result = await res.json();
-      console.log(result);
+      setEquipment(result);
+
+      //Set all equipment types
+      setArmors(result.armors);
+      setBoots(result.boots);
+      setHelmets(result.helmets)
       
-      setData(result.helmets);
     } catch (err: any) {
       setError(err.message);
     } finally {
