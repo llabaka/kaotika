@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../db/connection";
-import Helmets from "./models/helmetModel";
-import Armors from "./models/armorModel";
-import Boots from "./models/bootsModel";
-import Shields from "./models/shieldsModel";
-import Weapons from "./models/weaponsModel";
-import Rings from "./models/ringsModel";
-import Artifacts from "./models/artifactsModel";
-import Ingredients from "./models/ingredientsModel";
+import Helmets from "./models/HelmetModel";
+import Armors from "./models/ArmorModel";
+import Boots from "./models/BootsModel";
+import Shields from "./models/ShieldsModel";
+import Weapons from "./models/WeaponsModel";
+import Rings from "./models/RingsModel";
+import Artifacts from "./models/ArtifactsModel";
+import Ingredients from "./models/IngredientsModel";
 
 export default async function handler(req: any, res: any) {
   try {
