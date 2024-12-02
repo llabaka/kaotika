@@ -1,4 +1,4 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import MainShopContainer from '@/components/shop/MainShopContainer';
@@ -8,6 +8,17 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
+
+  const fetchConnect = async () => {
+    const res = await fetch('/api/data')
+    console.log(res);
+    
+  }
+
+  useEffect(()=>{
+    fetchConnect();
+  })
+
 	if (loading) {
     return <Loading />;
 	}
