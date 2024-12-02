@@ -7,7 +7,7 @@ interface CardItemProps {
 
 const CardItem: React.FC<CardItemProps> = ({ card }) => {
     return(
-        <div className="flex w-[31%] bg-blue-500 text-center items-center justify-center text-white hover:scale-105 transition">
+        <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
             <Card {...card} />
         </div>
     )
