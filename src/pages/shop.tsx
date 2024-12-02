@@ -14,6 +14,7 @@ const Shop = () => {
   const [helmets, setHelmets] = useState([]);
   const [shields, setShields] = useState([]);
   const [weapons, setWeapons] = useState([]);
+  const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState<string | null>(null);
@@ -35,6 +36,7 @@ const Shop = () => {
       setHelmets(result.helmets);
       setWeapons(result.weapons);
       setShields(result.shields);
+      setRings(result.rings);
       setArtifacts(result.artifacts);
 
       //Set magic stuff types
