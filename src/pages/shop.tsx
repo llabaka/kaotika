@@ -34,8 +34,6 @@ const Shop = () => {
       setHelmets(result.helmets);
       setWeapons(result.weapons);
       setShields(result.shields);
-
-      //Set all magic stuff types
       setArtifacts(result.artifacts);
       
     } catch (err: any) {
