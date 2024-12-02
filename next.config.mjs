@@ -5,6 +5,7 @@ const require = createRequire(import.meta.url);
 const json = require("./package.json");
 
 const nextConfig = {
+    
     images: {
         domains: ['lh3.googleusercontent.com'],
     },

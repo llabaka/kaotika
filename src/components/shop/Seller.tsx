@@ -8,7 +8,8 @@ const Seller = () => {
             <Image
             src="/images/shop/SellerFrame.png"
             alt="Imagen 1"
-            layout="fill"
+            fill
+            sizes='(max-width: 450px) 100vw'
             />
         </div>
     </div>

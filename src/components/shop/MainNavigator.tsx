@@ -23,7 +23,7 @@ const MainNavigator = () => {
         <Image
           src="/images/shop/MainNavigator.png"
           alt="MainNavigator"
-          layout="fill"
+          fill
           className="rounded-lg z-0"
         />
 

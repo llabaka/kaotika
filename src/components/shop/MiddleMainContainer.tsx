@@ -7,7 +7,8 @@ const MiddleMainContainer = () => {
 				<Image
 				src="/images/shop/MainSeparator.png"
 				alt="MainSeparator"
-				layout="fill"
+				fill
+				sizes='(max-width: 78px) 100vw'
 				className="rounded-lg z-1"
 				/>
 

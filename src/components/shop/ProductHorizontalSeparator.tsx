@@ -8,7 +8,7 @@ const ProductHorizontalSeparator = () => {
          <Image
           src="/images/shop/HorizontalSeparator3.png"
           alt="HorizontalSeparator"
-          layout="fill"
+          fill
           className="z-0"
         />
         </div>

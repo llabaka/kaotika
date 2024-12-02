@@ -12,7 +12,8 @@ const Card = (props: CardProps) => {
                 <Image
                     src={CardImageRoute}
                     alt="MainNavigator"
-                    layout="fill"
+                    fill
+                    sizes='(max-width: 435px) 100vw'
                     className="z-0"
                 />
                 {/* LEFT CONTAINER */}
