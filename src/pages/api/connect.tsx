@@ -1,30 +1,23 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../db/connection";
-import Helmet from "./models/helmetModel";
+import Helmets from "./models/helmetModel";
 import { error } from "console";
 
 export default async function handler(req: any, res: any) {
+  try {
+    // Conectar a la base de datos
+    await connectDB();
 
-    const connected = await connectDB()
+    console.log("CONNECTED TO MONGO");
 
-    //console.log(connected);
-    
-    if (connected){
-      console.log("CONNECTED TO MONGO");
+    // Obtener datos del modelo
+    const helmets = await Helmets.find();
 
-      try {
-        const helmets = await Helmet.find({});
-  
-        NextResponse.json({helmets});
-      } catch (err: any) {
-        NextResponse.json({error: err.message})
-      }
-    }
-    else {
-      console.log("NO SE HA CONECTADO");
-      
-      console.log(error);
-    }
+    console.log(helmets);
 
-    res.status(200).json({done: true})
+    return res.status(200).json({ helmets });
+  } catch (err: any) {
+    console.error("Error fetching helmets:", err.message);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
+}

@@ -1,34 +1,23 @@
-import mongoose, {Document, Schema} from "mongoose";
-import { Modifier } from "@/_common/interfaces/Modifier";
+import mongoose from "mongoose";
 
-export interface HelmetProduct extends Document{
-    _id: String,
-    name: string,
-    description: string,
-    type: string,
-    value: number,
-    defense: number,
-    image: string,
-    modifiers: Modifier,
-    min_lvl: number,
-    isUnique: boolean,
-    isActive: boolean
-}
+const modifiersSchema = new mongoose.Schema({
+  intelligence: { type: Number, required: true },
+  dexterity: { type: Number, required: true },
+  constitution: { type: Number, required: true },
+  insanity: { type: Number, required: true },
+  charisma: { type: Number, required: true },
+  strength: { type: Number, required: true },
+}, { _id: false }); // `false` para no crear un `_id` separado para los subdocumentos
 
-const helmetSchema: Schema = new mongoose.Schema({
-    _id: String,
-    name: String,
-    description: String,
-    type: String,
-    value: Number,
-    defense: Number,
-    image: String,
-    modifiers: Object,
-    min_lvl: Number,
-    isUnique: Boolean,
-    isActive: Boolean
-})
+const helmetSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  type: { type: String, required: true },
+  image: { type: String, required: true },
+  value: { type: Number, required: true },
+  defense: { type: Number, required: true },
+  modifiers: { type: modifiersSchema, required: true },
+  min_lvl: { type: Number, required: true },
+}, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
 
-const Helmet = mongoose.model<HelmetProduct>("Helmet", helmetSchema);
-
-export default Helmet;
+export default mongoose.models.Helmet || mongoose.model("Helmet", helmetSchema);

@@ -8,16 +8,37 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
+  const [data, setData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
-    const res = await fetch('/api/connect')
-    console.log(res.json());
-    
+    try {
+      const res = await fetch('/api/connect');
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status}`);
+      }
+      const result = await res.json();
+      console.log(result);
+      
+      setData(result.helmets);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
   }
 
-  useEffect(()=>{
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  useEffect(() => {
     fetchConnect();
-  })
+  }, []);
 
 	if (loading) {
     return <Loading />;

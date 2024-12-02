@@ -6,7 +6,8 @@ declare global {
   }
 
 
-  const DATABASE_URL = 'mongodb+srv://PinkiWinki:1fe46a07b13A1c1_*@polymorphs.fuwvu.mongodb.net/';
+  const DATABASE_URL= 'mongodb+srv://PinkiWinki:1fe46a07b13A1c1_*@polymorphs.fuwvu.mongodb.net/ER6_DB?retryWrites=true&w=majority'
+
   
   if (!DATABASE_URL) {
     throw new Error("Please define the DATABASE_URL environment variable inside .env.local");
