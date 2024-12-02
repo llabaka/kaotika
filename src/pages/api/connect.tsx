@@ -6,6 +6,7 @@ import Boots from "./models/bootsModel";
 import Shields from "./models/shieldsModel";
 import Weapons from "./models/weaponsModel";
 import Artifacts from "./models/artifactsModel";
+import Ingredients from "./models/ingredientsModel";
 
 export default async function handler(req: any, res: any) {
   try {
@@ -21,8 +22,9 @@ export default async function handler(req: any, res: any) {
     const shields = await Shields.find();
     const weapons = await Weapons.find();
     const artifacts = await Artifacts.find();
+    const ingredients = await Ingredients.find();
 
-    return res.status(200).json({ helmets, armors, boots, shields, weapons, artifacts });
+    return res.status(200).json({ helmets, armors, boots, shields, weapons, artifacts, ingredients });
   } catch (err: any) {
     console.error("Error fetching helmets:", err.message);
     return res.status(500).json({ error: "Internal Server Error" });

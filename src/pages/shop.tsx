@@ -15,6 +15,7 @@ const Shop = () => {
   const [shields, setShields] = useState([]);
   const [weapons, setWeapons] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
@@ -35,6 +36,9 @@ const Shop = () => {
       setWeapons(result.weapons);
       setShields(result.shields);
       setArtifacts(result.artifacts);
+
+      //Set magic stuff types
+      setIngredients(result.ingredients);
       
     } catch (err: any) {
       setError(err.message);
