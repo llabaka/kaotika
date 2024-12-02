@@ -69,7 +69,7 @@ const ProductsContainer = () => {
   console.log("Partitioned Cards:", partitionedCards.length);
 
     return (
-      <div className="w-full h-full overflow-y-auto bg-white bg-scroll mt-2">
+      <div className="w-full h-full overflow-y-auto bg-transparent bg-scroll mt-2">
         <BlankHorizontalSeparator />
       {partitionedCards.map((group, index) => (
         <div key={index}>
