@@ -22,4 +22,4 @@ const armorSchema = new mongoose.Schema({
   isActive: { type: Boolean, required: true },
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
 
-export default mongoose.models.Helmet || mongoose.model("Armor", armorSchema);
+export default mongoose.models.Armor || mongoose.model("Armor", armorSchema);
