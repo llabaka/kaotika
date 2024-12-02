@@ -13,7 +13,7 @@ const LeftMainContainer = () => {
 	const mockPlayer = player;
 
 	return (
-		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md">
+		<div className="flex flex-col justify-start items-center w-3/12 p-4 rounded-md">
 
 			{/* Shopping Icons */}
 			<ShopIcons></ShopIcons>

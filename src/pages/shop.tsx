@@ -13,11 +13,13 @@ const Shop = () => {
 	}
   return (
     <Layout>
+      <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <MainShopContainer>
         <LeftMainContainer />
         <MiddleMainContainer />
         <RightMainContainer />
       </MainShopContainer>
+      </div>
     </Layout>
   )
 }
