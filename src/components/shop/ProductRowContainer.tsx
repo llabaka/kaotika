@@ -11,11 +11,6 @@ interface ProductRowContainerProps {
 
 const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards }) => {
 
-    console.log("CARDS: ");
-    console.log(cards.length);
-    
-    
-
   return (
     <div className="flex w-full h-[49%] bg-transparent justify-center items-center text-center">
       {cards.map((card, index) => (

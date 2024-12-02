@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { use, useState } from 'react';
 import Loading from '@/components/Loading';
 import Layout from '@/components/Layout';
 import MainShopContainer from '@/components/shop/MainShopContainer';

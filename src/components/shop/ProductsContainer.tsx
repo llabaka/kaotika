@@ -66,8 +66,6 @@ const ProductsContainer = () => {
 
   const cards = [cardMock, cardMock, cardMock];
 
-  console.log("Partitioned Cards:", partitionedCards.length);
-
     return (
       <div className="w-full h-full overflow-y-auto bg-transparent bg-scroll mt-2">
         <BlankHorizontalSeparator />
