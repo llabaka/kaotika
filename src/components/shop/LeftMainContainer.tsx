@@ -8,13 +8,21 @@ import SellerSeparator from './SellerSeparator';
 
 const LeftMainContainer = () => {
 	return (
-		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md ml-1">
+		<div className="flex flex-col justify-start items-center w-3/12 bg-black/85 p-4 rounded-md">
 
 			{/* Shopping Icons */}
 			<ShopIcons></ShopIcons>
 
-			<div className="flex flex-col justify-center items-center w-8/12 border-2 border-white rounded-md text-white mt-4 h-80">
-				Seller Image
+			{/* Seller Frame and Image */}
+			<div className="flex-col w-10/12 mt-4 h-96">
+
+				<div className="flex w-full h-full relative">
+					<Image
+						src="/images/shop/SellerFrame.png"
+						alt="Imagen 1"
+						layout="fill"
+					/>
+				</div>
 			</div>
 
 			{/* Seller Separator */}
