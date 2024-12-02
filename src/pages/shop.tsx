@@ -11,7 +11,7 @@ const Shop = () => {
 
   const fetchConnect = async () => {
     const res = await fetch('/api/connect')
-    console.log(res);
+    console.log(res.json());
     
   }
 
