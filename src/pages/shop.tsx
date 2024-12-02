@@ -12,6 +12,8 @@ const Shop = () => {
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
+  const [shields, setShields] = useState([]);
+  const [weapons, setWeapons] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
@@ -21,12 +23,16 @@ const Shop = () => {
         throw new Error(`Error: ${res.status}`);
       }
       const result = await res.json();
+
+      //Set all equipments
       setEquipment(result);
 
       //Set all equipment types
       setArmors(result.armors);
       setBoots(result.boots);
-      setHelmets(result.helmets)
+      setHelmets(result.helmets);
+      setWeapons(result.weapons);
+      setShields(result.shields);
       
     } catch (err: any) {
       setError(err.message);
