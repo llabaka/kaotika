@@ -3,6 +3,7 @@ import CardItem from "./CardItem";
 import React from "react";
 import EmptyCard from "./Card/EmptyCard";
 import ProductVerticalSeparator from "./ProductVerticalSeparator";
+import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
 
 interface ProductRowContainerProps {
   cards: CardProps[]; // Espera un array de objetos con la interfaz CardProps
@@ -23,7 +24,9 @@ const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards }) => {
           {card.image ? <CardItem card={card} /> : <EmptyCard card={card}/>}
           {/* Show separator if it's NOT the last item */}
           {index < cards.length - 1 && (
-            <ProductVerticalSeparator/>
+            card.image 
+              ? <ProductVerticalSeparator /> 
+              : <ProductEmptyVerticalSeparator />
           )}
         </React.Fragment>
       ))}
