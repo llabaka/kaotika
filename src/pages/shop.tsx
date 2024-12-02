@@ -10,7 +10,7 @@ const Shop = () => {
 	const [loading, setLoading] = useState(false);
 
   const fetchConnect = async () => {
-    const res = await fetch('/api/data')
+    const res = await fetch('/api/connect')
     console.log(res);
     
   }
