@@ -1,11 +1,15 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { Armor } from "@/_common/interfaces/Armor";
 
-const ProductsContainer = () => {
+interface ProductsContainerInterface {
+	products: CardProps[];
+}
+
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
 
   const cardMock: Armor = {
     _id : "asdadw1219beu21as",

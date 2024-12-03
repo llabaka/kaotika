@@ -75,7 +75,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer />
         <MiddleMainContainer />
-        <RightMainContainer products={allProducts} />
+        <RightMainContainer products={allProducts} displayingScreen={displayingScreen}/>
       </MainShopContainer>
       </div>
     </Layout>
