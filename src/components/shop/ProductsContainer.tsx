@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
@@ -6,7 +6,11 @@ import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { Armor } from "@/_common/interfaces/Armor";
 import { Weapon } from "@/_common/interfaces/Weapon";
 
-const ProductsContainer = () => {
+interface ProductsContainerInterface {
+	products: CardProps[];
+}
+
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
 
   const cardMock: Weapon = {
     _id : "asdadw1219beu21as",
@@ -73,7 +77,7 @@ const ProductsContainer = () => {
   };
 
   // Particionar el array en grupos de 3
-  const partitionedCards = partitionArray(cards2, 3);
+  const partitionedCards = partitionArray(products, 3);
 
   const cards = [cardMock, cardMock, cardMock];
 
