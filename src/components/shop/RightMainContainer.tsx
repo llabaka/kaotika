@@ -7,6 +7,7 @@ import ProductsContainer from "./ProductsContainer";
 import React from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 import SellingHeaders from "./SellingHeaders";
+import SellingContainer from "./SellingContainer";
 
 interface RightContainerInterface {
 	products: CardProps[];
@@ -24,6 +25,8 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>
 					<SellingHeaders />
+					<SellingContainer/>
+
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
