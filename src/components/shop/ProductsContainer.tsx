@@ -73,7 +73,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
   };
 
   // Particionar el array en grupos de 3
-  const partitionedCards = partitionArray(cards2, 3);
+  const partitionedCards = partitionArray(products, 3);
 
   const cards = [cardMock, cardMock, cardMock];
 
