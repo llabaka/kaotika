@@ -35,6 +35,9 @@ const Shop = () => {
       //Set all equipments
       setEquipment(result);
 
+      console.log(result);
+      
+
       //Set all equipment types
       setArmors(result.armors);
       setBoots(result.boots);
@@ -43,7 +46,7 @@ const Shop = () => {
       setShields(result.shields);
       setRings(result.rings);
       setArtifacts(result.artifacts);
-
+      setShowingProducts(result.weapons);
       //Set magic stuff types
       setIngredients(result.ingredients);
       
@@ -75,7 +78,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer />
         <MiddleMainContainer />
-        <RightMainContainer products={weapons} displayingScreen={displayingScreen}/>
+        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen}/>
       </MainShopContainer>
       </div>
     </Layout>
