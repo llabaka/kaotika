@@ -10,6 +10,7 @@ const Card = (props: CardProps) => {
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
     const [baseDamage, setBaseDamage] = useState<number | null>(null);
 
+
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
 
@@ -18,25 +19,24 @@ const Card = (props: CardProps) => {
         icon = '/images/icons/up.png'    
     }
     
+    const renderDefense = 'defense' in props 
+        ? { name: 'Defense', value: props.defense }
+        : null;
+
+    const weaponDamageRender = 'base_percentage' in props 
+        ? `${props.die_faces}D${props.die_num} + ${props.die_modifier}`
+        : null;
+
+    const baseDamageRender = 'base_percentage' in props 
+        ? props.base_percentage
+        : null;
 
     useEffect(() => {
-        if('defense' in props){
-            const renderDefense : RenderObject = {
-                name: 'Defense',
-                value: props.defense
-            }
-            setExtraAtribute(renderDefense);
-        }
+        setExtraAtribute(renderDefense);
+        setWeaponDamage(weaponDamageRender);
+        setBaseDamage(baseDamageRender);
+    }, [props]);
     
-        if('base_percentage' in props){
-            const weaponDamage = `${props.die_faces}D${props.die_num} + ${props.die_modifier}`;
-            setWeaponDamage(weaponDamage);
-            setBaseDamage(props.base_percentage);
-        }
-
-    }, []);
-
-
     return(
             <div className="w-[100%] relative h-[23rem] flex flex-row">
                 <Image

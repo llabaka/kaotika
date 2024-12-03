@@ -110,7 +110,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
         <MiddleMainContainer />
-        <RightMainContainer products={weapons} displayingScreen={displayingScreen}/>
+        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen}/>
       </MainShopContainer>
       </div>
     </Layout>
