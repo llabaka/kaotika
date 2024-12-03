@@ -5,6 +5,7 @@ import MainShopContainer from '@/components/shop/MainShopContainer';
 import LeftMainContainer from '@/components/shop/LeftMainContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
+import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
@@ -18,6 +19,7 @@ const Shop = () => {
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState([]);
+  const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
