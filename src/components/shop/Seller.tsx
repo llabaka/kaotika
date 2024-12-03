@@ -12,14 +12,17 @@ const Seller = () => {
             sizes='(max-width: 450px) 100vw'
             className="z-10"
             />
+            <div className="flex w-[87%] h-[84%] relative mt-[8%] ml-[8%]">
             <Image
             src="/images/shop/SellerCrop.png"
             alt="Imagen 1"
             fill
-            sizes='(max-width: 450px) 100vw'
-            className="z-0"
+            sizes='(max-width: 780px) 100vw'
+            className="z-0 rounded-lg"
             />
         </div>
+        </div>
+
     </div>
     )
 }
