@@ -4,10 +4,10 @@ import AttributeAndProgressBar from "./AttributeAndProgressBar";
 
 interface CardRigthContainerProps {
     attributes: Modifier,
-    extra_attribute: number
 }
 
-const CardRigthContainer = ({attributes, extra_attribute} : CardRigthContainerProps) => {
+
+const CardRigthContainer = ({attributes} : CardRigthContainerProps) => {
     const renderArray : RenderObject[] = [{
         name: 'Charisma',
         value : attributes.charisma

@@ -1,11 +1,43 @@
 import Image from "next/image";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import CardRigthContainer from "./Components/CardRigthContainer";
+import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { useState } from "react";
 
+interface DefenseRender {
+    name: string;
+    value : number;
+}
 
 const Card = (props: CardProps) => {
+    // State for render Attributes based on type
+    const [defense, setDefense] = useState<DefenseRender | null>(null);
+    const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
+    
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
+
+    let icon = '';
+    if(props.type === 'armor'){
+        
+        icon = '/images/icons/up.png'    
+    }
+
+    if('defense' in props){
+        const renderDefense : DefenseRender = {
+            name: 'Defense',
+            value: props.defense
+        }
+        // setDefense(renderDefense);
+    }
+
+    if('base_percentage' in props){
+        const weaponDamage = `${props.die_faces}D${props.die_num} + ${props.die_modifier}`;
+        // setWeaponDamage(weaponDamage);
+    }
+
+
+
+
 
     return(
             <div className="w-[25rem] relative h-[23rem] flex flex-row">
@@ -20,17 +52,18 @@ const Card = (props: CardProps) => {
                 <div className="flex flex-col relative w-8/12">
                     {/* DIV LEVEL */}
                     <div className="z-10 relative flex flex-row p-2 justify-between">
-                        <p className="text-white text-xl font-bold mt-3 ml-3">{props.minLevel}</p>
+                        <p className="text-white text-xl font-bold mt-3 ml-3">{props.min_lvl}</p>
                         <div className="flex justify-around w-4/12 mt-5 ml-8">
                             <p className="text-white text-xl font-bold">{props.value}</p>
                             <Image src={GoldIcon} width={20} height={20} alt="gold icon" />
                         </div>
+
                         <Image
-                            src={props.icon}
-                            width={38}
+                            src={icon}
+                            width={128}
                             height={28}
                             alt="Equipment icon"
-                            className="rounded-full relative top-2 -left-2"
+                            className="rounded-full relative top-1 -left-0.5 w-[18%]"
                         />
                     </div>
 
@@ -51,7 +84,7 @@ const Card = (props: CardProps) => {
                     </div>
                 </div>
                 {/* CARD RIGHT CONTAINER */}
-                <CardRigthContainer attributes={props.modifiers} extra_attribute={props.defense}/>
+                <CardRigthContainer attributes={props.modifiers} />
         </div>
     )
 };

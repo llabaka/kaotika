@@ -3,7 +3,7 @@ import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
 interface CardItemProps {
     card: CardProps;
-  }
+}
 
 const CardItem: React.FC<CardItemProps> = ({ card }) => {
     return(

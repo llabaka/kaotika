@@ -3,11 +3,13 @@ import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
+import { Armor } from "@/_common/interfaces/Armor";
 
 const ProductsContainer = () => {
 
-  const cardMock: CardProps = {
-    minLevel: 12,
+  const cardMock: Armor = {
+    _id : "asdadw1219beu21as",
+    min_lvl: 12,
     image: '/images/equipment/armors/jacket_1.png',
     modifiers: {
       intelligence: 12,
@@ -19,13 +21,16 @@ const ProductsContainer = () => {
     },
     name: 'cardMock',
     description: 'Descripción prueba de carta lkasndjoasbdiuasd',
-    icon: '/images/icons/up.png',
     value: 340,
-    defense: 32
+    defense: 32,
+    type: "armor",
+    isUnique: false,
+    isActive: false
   };
 
-  const emptyCardMock: CardProps = {
-    minLevel: 0,
+  const emptyCardMock: Armor = {
+    _id: "asdadsasdasd",
+    min_lvl: 0,
     image: '',
     modifiers: {
       intelligence: 0,
@@ -37,9 +42,11 @@ const ProductsContainer = () => {
     },
     name: '',
     description: '',
-    icon: '',
     value: 0,
     defense: 0,
+    isUnique: false,
+    isActive: false,
+    type: "armor"
   };
 
   const cards2 = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
