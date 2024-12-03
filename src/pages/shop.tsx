@@ -7,6 +7,9 @@ import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { CardProps } from '@/_common/interfaces/shop/CardProps';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+
+
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
@@ -20,7 +23,7 @@ const Shop = () => {
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
-  const [allProducts, setAllProducts] = useState<CardProps[] | []>([]);
+  const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 

@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { CardProps } from '@/_common/interfaces/shop/CardProps';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 
 interface EquipmentButtonsInterface {
-    allProducts: CardProps[];
+    allProducts: AllProducts;
 	showingProducts: CardProps[];
 	setShowingProducts: (loaded: CardProps[]) => void;
 }
@@ -23,6 +24,30 @@ const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, show
 
     const handleButtonClick = (buttonId: number) => {
         setActiveButton((prev) => (prev === buttonId ? 0 : buttonId));
+
+        switch (buttonId) {
+            case 0:
+                setShowingProducts(allProducts!.weapons);
+                break;
+            case 1:
+                setShowingProducts(allProducts!.armors);
+                break;
+            case 2:
+                setShowingProducts(allProducts!.boots);
+                break;
+            case 3:
+                setShowingProducts(allProducts!.helmets);
+                break;
+            case 4:
+                setShowingProducts(allProducts!.rings);
+                break;
+            case 5:
+                setShowingProducts(allProducts!.shields);
+                break;
+            default:
+                setShowingProducts([]); // En caso de que no haya selección válida
+                break;
+        }
     };
 
     return (

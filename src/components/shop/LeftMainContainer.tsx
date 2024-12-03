@@ -8,10 +8,11 @@ import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
 import player from '../../data/player.json'
 import { CardProps } from '@/_common/interfaces/shop/CardProps';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 
 interface LeftMainContainerInterface {
     setDisplayingScreen: (loaded:number) => void;
-	allProducts: CardProps[];
+	allProducts: AllProducts;
 	showingProducts: CardProps[];
 	setShowingProducts: (loaded: CardProps[]) => void;
 }
