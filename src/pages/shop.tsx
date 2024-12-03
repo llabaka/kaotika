@@ -27,6 +27,9 @@ const Shop = () => {
       }
       const result = await res.json();
 
+      // Save all in localStorage
+      localStorage.setItem('shopProducts', JSON.stringify(result));
+
       //Set all equipments
       setEquipment(result);
 
@@ -41,7 +44,7 @@ const Shop = () => {
 
       //Set magic stuff types
       setIngredients(result.ingredients);
-      
+
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -58,7 +61,28 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    fetchConnect();
+    const localStorageProducts = localStorage.getItem('shopData');
+    console.log("LOCAL STORAGE DATA");
+    console.log(localStorageProducts);
+    
+    //If localStorage have products set states
+    if (localStorageProducts) {
+      const parsedProducts = JSON.parse(localStorageProducts);
+      setEquipment(parsedProducts);
+      setArmors(parsedProducts.armors);
+      setBoots(parsedProducts.boots);
+      setHelmets(parsedProducts.helmets);
+      setWeapons(parsedProducts.weapons);
+      setShields(parsedProducts.shields);
+      setRings(parsedProducts.rings);
+      setArtifacts(parsedProducts.artifacts);
+      setIngredients(parsedProducts.ingredients);
+
+      console.log();
+      
+    } else {
+      fetchConnect(); //Fetch if localstorage is empty
+    }
   }, []);
 
 	if (loading) {
