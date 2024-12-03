@@ -102,7 +102,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer />
         <MiddleMainContainer />
-        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen}/>
+        <RightMainContainer products={weapons} displayingScreen={displayingScreen}/>
       </MainShopContainer>
       </div>
     </Layout>
