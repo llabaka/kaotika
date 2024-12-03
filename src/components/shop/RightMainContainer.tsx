@@ -6,6 +6,7 @@ import MainNavigator from "./MainNavigator";
 import ProductsContainer from "./ProductsContainer";
 import React from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
+import SellingHeaders from "./SellingHeaders";
 
 interface RightContainerInterface {
 	products: CardProps[];
@@ -22,7 +23,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>
-					<h2>Selling Screen</h2>
+					<SellingHeaders />
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
