@@ -5,6 +5,8 @@ import MainShopContainer from '@/components/shop/MainShopContainer';
 import LeftMainContainer from '@/components/shop/LeftMainContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
+import { DISPLAY_SCREEN } from '@/constants/shopConstants';
+import { CardProps } from '@/_common/interfaces/shop/CardProps';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
@@ -17,6 +19,9 @@ const Shop = () => {
   const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [showingProducts, setShowingProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState<CardProps[] | []>([]);
+  const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
@@ -94,7 +99,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer />
         <MiddleMainContainer />
-        <RightMainContainer />
+        <RightMainContainer products={weapons} displayingScreen={displayingScreen}/>
       </MainShopContainer>
       </div>
     </Layout>
