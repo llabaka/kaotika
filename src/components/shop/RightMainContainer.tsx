@@ -17,7 +17,6 @@ interface RightContainerInterface {
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen }) => {
 	const mockPlayer = player;
-	console.log(mockPlayer.equipment);
 	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
