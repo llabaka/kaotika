@@ -23,7 +23,7 @@ const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
     console.log(playerInventory); 
     return (
         <div className="flex-col w-[47%]">
-            <div className="flex flex-col justify-start items-center h-[90%] mt-10">
+            <div className="flex flex-col justify-start items-center h-[80%] mt-10 overflow-y-auto max-h-[full]">
                 {playerInventory.map((item, index) => (
                     <div key={index} className="flex flex-start items-center bg-black bg-opacity-50 rounded-lg w-[95%] h-[23%] mb-4">
                         {/* Imagen del objeto */}

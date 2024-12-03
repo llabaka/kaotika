@@ -8,7 +8,7 @@ interface SellingContainerInterface {
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
     return(
-    <div className="justify-center flex w-full h-full border-2 border-white">
+    <div className="justify-center flex w-full h-[85%]">
         {/* Inventory Contaienr */}
         <InventoryContainer player={player}/>
 
