@@ -3,11 +3,13 @@ import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
+import { Armor } from "@/_common/interfaces/Armor";
 
 const ProductsContainer = () => {
 
-  const cardMock: CardProps = {
-    minLevel: 12,
+  const cardMock: Armor = {
+    _id : "asdadw1219beu21as",
+    min_lvl: 12,
     image: '/images/equipment/armors/jacket_1.png',
     modifiers: {
       intelligence: 12,
@@ -19,13 +21,16 @@ const ProductsContainer = () => {
     },
     name: 'cardMock',
     description: 'Descripción prueba de carta lkasndjoasbdiuasd',
-    icon: '/images/icons/up.png',
     value: 340,
-    defense: 32
+    defense: 32,
+    type: "armor",
+    isUnique: false,
+    isActive: false
   };
 
-  const emptyCardMock: CardProps = {
-    minLevel: 0,
+  const emptyCardMock: Armor = {
+    _id: "asdadsasdasd",
+    min_lvl: 0,
     image: '',
     modifiers: {
       intelligence: 0,
@@ -37,9 +42,11 @@ const ProductsContainer = () => {
     },
     name: '',
     description: '',
-    icon: '',
     value: 0,
     defense: 0,
+    isUnique: false,
+    isActive: false,
+    type: "armor"
   };
 
   const cards2 = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
@@ -67,7 +74,7 @@ const ProductsContainer = () => {
   const cards = [cardMock, cardMock, cardMock];
 
     return (
-      <div className="w-full h-full overflow-y-auto bg-transparent bg-scroll mt-2">
+      <div className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
         <BlankHorizontalSeparator />
       {partitionedCards.map((group, index) => (
         <div key={index}>

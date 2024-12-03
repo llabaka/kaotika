@@ -1,12 +1,9 @@
-import { Modifier } from "../Modifier";
+import { Armor } from "../Armor";
+import { Artifact } from "../Artifact";
+import { Boot } from "../Boot";
+import { Helmet } from "../Helmet";
+import { Ring } from "../Ring";
+import { Shield } from "../Shield";
+import { Weapon } from "../Weapon";
 
-export interface CardProps {
-    minLevel : number;
-    image: string;
-    modifiers: Modifier;
-    name: string;
-    description: string;
-    icon: string;
-    value: number;
-    defense: number;
-}
+export type CardProps = Armor | Weapon | Helmet | Artifact | Boot | Ring | Shield
