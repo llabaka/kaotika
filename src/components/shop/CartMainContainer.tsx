@@ -1,12 +1,13 @@
 import CartScreenMainTab from "../CartScreenMainTab";
+import CartContainer from "../CartContainer";
 
-const CartContainer = () => {
+const CartMainContainer = () => {
     return(
         <div className="h-full w-full text-xl">
             <CartScreenMainTab/>
-            <h2>Cart Screen</h2>
+            <CartContainer/>
         </div>
     )
 }
 
-export default CartContainer;
+export default CartMainContainer;
