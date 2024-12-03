@@ -10,6 +10,14 @@ const Seller = () => {
             alt="Imagen 1"
             fill
             sizes='(max-width: 450px) 100vw'
+            className="z-10"
+            />
+            <Image
+            src="/images/shop/SellerCrop.png"
+            alt="Imagen 1"
+            fill
+            sizes='(max-width: 450px) 100vw'
+            className="z-0"
             />
         </div>
     </div>
