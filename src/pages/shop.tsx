@@ -19,6 +19,7 @@ const Shop = () => {
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 

@@ -5,6 +5,10 @@ import MainNavigator from "./MainNavigator";
 
 import ProductsContainer from "./ProductsContainer";
 
+interface RightContainerInterface {
+	products: CardProps;
+}
+
 const RightMainContainer = () => {
 	const cardMock : CardProps = {
 		minLevel: 12,
