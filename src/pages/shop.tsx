@@ -8,16 +8,58 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
+  const [equipment, setEquipment] = useState([]);
+  const [armors, setArmors] = useState([]);
+  const [boots, setBoots] = useState([]);
+  const [helmets, setHelmets] = useState([]);
+  const [shields, setShields] = useState([]);
+  const [weapons, setWeapons] = useState([]);
+  const [rings, setRings] = useState([]);
+  const [artifacts, setArtifacts] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
-    const res = await fetch('/api/connect')
-    console.log(res);
-    
+    try {
+      const res = await fetch('/api/connect');
+      if (!res.ok) {
+        throw new Error(`Error: ${res.status}`);
+      }
+      const result = await res.json();
+
+      //Set all equipments
+      setEquipment(result);
+
+      //Set all equipment types
+      setArmors(result.armors);
+      setBoots(result.boots);
+      setHelmets(result.helmets);
+      setWeapons(result.weapons);
+      setShields(result.shields);
+      setRings(result.rings);
+      setArtifacts(result.artifacts);
+
+      //Set magic stuff types
+      setIngredients(result.ingredients);
+      
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
   }
 
-  useEffect(()=>{
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  useEffect(() => {
     fetchConnect();
-  })
+  }, []);
 
 	if (loading) {
     return <Loading />;
