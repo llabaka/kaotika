@@ -19,7 +19,7 @@ const Shop = () => {
   const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [showingProducts, setShowingProducts] = useState([]);
+  const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
   const [allProducts, setAllProducts] = useState<CardProps[] | []>([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
@@ -105,7 +105,7 @@ const Shop = () => {
     <Layout>
       <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <MainShopContainer>
-        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} />
+        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
         <MiddleMainContainer />
         <RightMainContainer products={showingProducts} displayingScreen={displayingScreen}/>
       </MainShopContainer>

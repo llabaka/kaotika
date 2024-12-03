@@ -7,12 +7,16 @@ import EquipmentButtons from './EquipmentButtons';
 import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
 import player from '../../data/player.json'
+import { CardProps } from '@/_common/interfaces/shop/CardProps';
 
 interface LeftMainContainerInterface {
     setDisplayingScreen: (loaded:number) => void;
+	allProducts: CardProps[];
+	showingProducts: CardProps[];
+	setShowingProducts: (loaded: CardProps[]) => void;
 }
 
-const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen})=> {
+const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen, allProducts, showingProducts, setShowingProducts})=> {
 
 	const mockPlayer = player;
 
@@ -35,7 +39,7 @@ const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingSc
 			<ButtonsSeparator></ButtonsSeparator>
 
 			{/* Equipment Buttons */}
-			<EquipmentButtons></EquipmentButtons>
+			<EquipmentButtons allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}></EquipmentButtons>
 		</div>
 	);
 };

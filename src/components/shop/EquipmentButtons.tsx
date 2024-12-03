@@ -1,7 +1,14 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { CardProps } from '@/_common/interfaces/shop/CardProps';
 
-const EquipmentButtons = () => {
+interface EquipmentButtonsInterface {
+    allProducts: CardProps[];
+	showingProducts: CardProps[];
+	setShowingProducts: (loaded: CardProps[]) => void;
+}
+
+const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, showingProducts, setShowingProducts}) => {
     
     const [activeButton, setActiveButton] = useState(0);
 
