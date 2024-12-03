@@ -90,6 +90,11 @@ const Shop = () => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log(displayingScreen);
+    
+  }, [displayingScreen])
+
 	if (loading) {
     return <Loading />;
 	}
@@ -97,7 +102,7 @@ const Shop = () => {
     <Layout>
       <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <MainShopContainer>
-        <LeftMainContainer />
+        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} />
         <MiddleMainContainer />
         <RightMainContainer products={weapons} displayingScreen={displayingScreen}/>
       </MainShopContainer>

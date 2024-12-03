@@ -1,6 +1,11 @@
+import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 import { useState } from "react";
 
-const ShopIcons = () =>{
+interface ShopIconsInterface {
+    setDisplayingScreen: (loaded:number) => void;
+}
+
+const ShopIcons:React.FC<ShopIconsInterface> = ({setDisplayingScreen}) =>{
 
     const [isTicketPressed, setIsTicketPressed] = useState(true);
     const [isDollarPressed, setIsDollarPressed] = useState(false);
@@ -10,18 +15,21 @@ const ShopIcons = () =>{
         setIsTicketPressed(prev => !prev);
         setIsDollarPressed(false);
         setIsCartPressed(false);
+        setDisplayingScreen(DISPLAY_SCREEN.BUY);
 	}
 
     const handleOnPressDollar = () =>  {
         setIsDollarPressed(prev => !prev);
         setIsTicketPressed(false);
         setIsCartPressed(false);
+        setDisplayingScreen(DISPLAY_SCREEN.SELL);
 	}
 
     const handleOnPressCart = () =>  {
         setIsCartPressed(prev => !prev);
         setIsTicketPressed(false);
         setIsDollarPressed(false);
+        setDisplayingScreen(DISPLAY_SCREEN.CART);
 	}
 
     return (
