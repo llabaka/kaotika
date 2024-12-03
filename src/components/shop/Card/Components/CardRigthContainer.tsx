@@ -1,13 +1,18 @@
 import { Modifier } from "@/_common/interfaces/Modifier";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import AttributeAndProgressBar from "./AttributeAndProgressBar";
+import { useEffect, useState } from "react";
 
 interface CardRigthContainerProps {
-    attributes: Modifier,
+    attributes: Modifier;
+    extra_attribute : RenderObject |null;
+    weaponDie: string | null;
+    baseDamage: number | null;
 }
 
 
-const CardRigthContainer = ({attributes} : CardRigthContainerProps) => {
+const CardRigthContainer = ({attributes, extra_attribute, weaponDie, baseDamage} : CardRigthContainerProps) => {
+    
     const renderArray : RenderObject[] = [{
         name: 'Charisma',
         value : attributes.charisma
@@ -29,11 +34,21 @@ const CardRigthContainer = ({attributes} : CardRigthContainerProps) => {
     }];
 
     return (
-        <div className="z-10 relative flex flex-col p-2 w-3/12">
+        <div className="z-10 relative flex flex-col p-2 w-[30%]">
         {/* Sección derecha */}
         {renderArray.map(attribute => (
             <AttributeAndProgressBar value={attribute.value} name={attribute.name}/>
         ))}
+        {extra_attribute !== null ? (
+            <AttributeAndProgressBar value={extra_attribute.value} name={extra_attribute.name}/>
+            ) 
+        : null}
+        {weaponDie !== null ? (
+            <div className="w-[100%]">
+                <p className="text-lg text-justify">Base Damage : {baseDamage}</p>
+                <p className="text-lg text-justify">Die : {weaponDie}</p>
+            </div>
+        ) : null}
     </div> 
     )
 }

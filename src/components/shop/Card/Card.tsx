@@ -1,42 +1,40 @@
 import Image from "next/image";
 import CardRigthContainer from "./Components/CardRigthContainer";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
-import { useState } from "react";
-
-interface DefenseRender {
-    name: string;
-    value : number;
-}
+import { useState, useEffect } from "react";
+import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 
 const Card = (props: CardProps) => {
     // State for render Attributes based on type
-    const [defense, setDefense] = useState<DefenseRender | null>(null);
+    const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
-    
+    const [baseDamage, setBaseDamage] = useState<number | null>(null);
+
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
 
     let icon = '';
-    if(props.type === 'armor'){
-        
+    if(props.type === 'armor'){   
         icon = '/images/icons/up.png'    
     }
+    
 
-    if('defense' in props){
-        const renderDefense : DefenseRender = {
-            name: 'Defense',
-            value: props.defense
+    useEffect(() => {
+        if('defense' in props){
+            const renderDefense : RenderObject = {
+                name: 'Defense',
+                value: props.defense
+            }
+            setExtraAtribute(renderDefense);
         }
-        // setDefense(renderDefense);
-    }
+    
+        if('base_percentage' in props){
+            const weaponDamage = `${props.die_faces}D${props.die_num} + ${props.die_modifier}`;
+            setWeaponDamage(weaponDamage);
+            setBaseDamage(props.base_percentage);
+        }
 
-    if('base_percentage' in props){
-        const weaponDamage = `${props.die_faces}D${props.die_num} + ${props.die_modifier}`;
-        // setWeaponDamage(weaponDamage);
-    }
-
-
-
+    }, []);
 
 
     return(
@@ -84,7 +82,7 @@ const Card = (props: CardProps) => {
                     </div>
                 </div>
                 {/* CARD RIGHT CONTAINER */}
-                <CardRigthContainer attributes={props.modifiers} />
+                <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
         </div>
     )
 };

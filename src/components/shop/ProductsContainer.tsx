@@ -4,10 +4,11 @@ import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { Armor } from "@/_common/interfaces/Armor";
+import { Weapon } from "@/_common/interfaces/Weapon";
 
 const ProductsContainer = () => {
 
-  const cardMock: Armor = {
+  const cardMock: Weapon = {
     _id : "asdadw1219beu21as",
     min_lvl: 12,
     image: '/images/equipment/armors/jacket_1.png',
@@ -22,10 +23,13 @@ const ProductsContainer = () => {
     name: 'cardMock',
     description: 'Descripción prueba de carta lkasndjoasbdiuasd',
     value: 340,
-    defense: 32,
-    type: "armor",
+    type: "weapon",
     isUnique: false,
-    isActive: false
+    isActive: false,
+    die_faces: 2,
+    die_modifier: 1,
+    die_num: 10,
+    base_percentage: 12
   };
 
   const emptyCardMock: Armor = {
