@@ -15,7 +15,7 @@ const RightMainContainer = () => {
 			constitution: 20,
 			insanity: 43,
 			charisma: 23,
-			strength: 34
+			strength: -34
 		},
 		name: 'cardMock',
 		description: 'Description prubea de carta lkasndjoasbdiuasd',
