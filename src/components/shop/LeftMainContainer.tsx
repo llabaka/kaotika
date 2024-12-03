@@ -8,7 +8,11 @@ import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
 import player from '../../data/player.json'
 
-const LeftMainContainer = () => {
+interface LeftMainContainerInterface {
+    setDisplayingScreen: (loaded:number) => void;
+}
+
+const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen})=> {
 
 	const mockPlayer = player;
 
@@ -16,7 +20,7 @@ const LeftMainContainer = () => {
 		<div className="flex flex-col justify-start items-center w-3/12 p-4 rounded-md">
 
 			{/* Shopping Icons */}
-			<ShopIcons></ShopIcons>
+			<ShopIcons setDisplayingScreen={setDisplayingScreen} />
 
 			{/* Seller Frame and Image */}
 			<Seller></Seller>
