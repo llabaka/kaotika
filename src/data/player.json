@@ -242,28 +242,235 @@
       "profiles": []
     }
   },
-  "inventory": {
+    "inventory": {
     "helmets": [
-      ],
+        {
+        "modifiers": {
+            "intelligence": 0,
+            "dexterity": 0,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 0,
+            "strength": 0
+        },
+        "_id": "66d99aac7518eb4990035363",
+        "name": "Eternal Guardian Helmet",
+        "description": "A helmet blessed by the spirits.",
+        "type": "helmet",
+        "image": "/images/equipment/helmets/helmet_initial.png",
+        "value": 5,
+        "defense": 3,
+        "min_lvl": 1,
+        "isUnique": false,
+        "isActive": false
+        },
+        {
+        "modifiers": {
+            "intelligence": 2,
+            "dexterity": 4,
+            "constitution": 7,
+            "insanity": 0,
+            "charisma": 1,
+            "strength": 6
+        },
+        "_id": "66f3b3ddc8cdd090db911d81",
+        "name": "Ironclad Helm",
+        "description": "Built to withstand the strongest blows.",
+        "type": "helmet",
+        "image": "/images/equipment/helmets/helmet_4.png",
+        "value": 180,
+        "defense": 26,
+        "min_lvl": 10,
+        "isUnique": false,
+        "isActive": true
+        }
+    ],
     "weapons": [
-      ],
+        {
+        "modifiers": {
+            "intelligence": 9,
+            "dexterity": 10,
+            "constitution": 0,
+            "insanity": 11,
+            "charisma": 8,
+            "strength": 0
+        },
+        "_id": "66f9cfb1d39859521ad20ff4",
+        "name": "Arcane Sabre",
+        "description": "A sword infused with pure arcane energy.",
+        "type": "weapon",
+        "image": "/images/equipment/weapons/sword_31.png",
+        "value": 6000,
+        "base_percentage": 15,
+        "min_lvl": 20,
+        "die_faces": 20,
+        "die_modifier": 5,
+        "die_num": 10,
+        "isUnique": true,
+        "isActive": false
+        }
+    ],
     "armors": [
-      ],
+        {
+        "modifiers": {
+            "strength": -5,
+            "constitution": 0,
+            "dexterity": 15,
+            "intelligence": 25,
+            "insanity": 0,
+            "charisma": 5
+        },
+        "_id": "66f3dfb5b32d7add9a087683",
+        "name": "Frost Armor",
+        "description": "An armor that grants resistance to icy blasts.",
+        "type": "armor",
+        "image": "/images/equipment/armors/heavy_armor_15.png",
+        "value": 650,
+        "defense": 80,
+        "isUnique": false,
+        "isActive": true,
+        "min_lvl": 12
+        },
+        {
+        "modifiers": {
+            "intelligence": 4,
+            "dexterity": 0,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 0,
+            "strength": -6
+        },
+        "_id": "668bca105319ea9afdff06fa",
+        "name": "Shabby Windbreaker",
+        "description": "Ragged and torn.",
+        "type": "armor",
+        "image": "/images/equipment/armors/jacket_3.png",
+        "value": 10,
+        "defense": 25,
+        "min_lvl": 1,
+        "isUnique": false,
+        "isActive": true
+        },
+        {
+        "modifiers": {
+            "intelligence": 15,
+            "dexterity": 20,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 15,
+            "strength": -9
+        },
+        "_id": "66f297cae5be15925dc0abed",
+        "name": "Dragonbane Plate",
+        "description": "Legends say it repels dragon fire.",
+        "type": "armor",
+        "image": "/images/equipment/armors/full_plate_11.png",
+        "value": 750,
+        "defense": 78,
+        "min_lvl": 13,
+        "isUnique": false,
+        "isActive": true
+        },
+        {
+        "modifiers": {
+            "intelligence": 23,
+            "charisma": 18,
+            "dexterity": 15,
+            "strength": -8,
+            "constitution": 0,
+            "insanity": 0
+        },
+        "_id": "66f3d2fab32d7add9a08764d",
+        "name": "Guardian's Plate",
+        "description": "Worn by protectors of ancient temples.",
+        "type": "armor",
+        "image": "/images/equipment/armors/armor_49.png",
+        "value": 780,
+        "defense": 90,
+        "min_lvl": 13,
+        "isUnique": false,
+        "isActive": true
+        },
+        {
+        "modifiers": {
+            "strength": -9,
+            "constitution": 0,
+            "dexterity": 30,
+            "intelligence": 20,
+            "insanity": 0,
+            "charisma": 15
+        },
+        "_id": "66f3e0f7b32d7add9a08768d",
+        "name": "Titanium Armor",
+        "description": "An incredibly tough armor that withstands the strongest blows.",
+        "type": "armor",
+        "image": "/images/equipment/armors/heavy_armor_24.png",
+        "value": 980,
+        "defense": 82,
+        "isUnique": false,
+        "isActive": true,
+        "min_lvl": 16
+        }
+    ],
     "shields": [
-      ],
+        
+    ],
     "artifacts": [
-      ],
+        {
+        "modifiers": {
+            "intelligence": 8,
+            "dexterity": 0,
+            "constitution": 0,
+            "insanity": 0,
+            "charisma": 0,
+            "strength": 0
+        },
+        "_id": "66a902e1b5831810990551d1",
+        "name": "Amulet of the Serpent's Eye",
+        "description": "This mystical amulet detect hidden truths.",
+        "type": "artifact",
+        "image": "/images/equipment/artifacts/artifact_1.png",
+        "value": 5,
+        "min_lvl": 1,
+        "isUnique": false,
+        "isActive": true
+        }
+    ],
     "boots": [
-      ],
+        {
+        "modifiers": {
+            "intelligence": 7,
+            "dexterity": 6,
+            "constitution": 4,
+            "insanity": 2,
+            "charisma": 4,
+            "strength": 2
+        },
+        "_id": "66f694d84a8f1157dab87bd2",
+        "name": "Voidwalker Boots",
+        "description": "Walk the line between worlds.",
+        "type": "boot",
+        "image": "/images/equipment/boots/boot_26.png",
+        "value": 500,
+        "defense": 45,
+        "min_lvl": 19,
+        "isActive": true,
+        "isUnique": false
+        }
+    ],
     "rings": [
-      ],
+        
+    ],
     "antidote_potions": [
-      ],
+        
+    ],
     "healing_potions": [
-     ],
+        
+    ],
     "enhancer_potions": [
-      ]
-  },
+        
+    ]
+    },
   "tasks": [],
   "gold": 72589,
   "created_date": "2024-07-27T12:24:33.993Z"
