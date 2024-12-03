@@ -36,11 +36,11 @@ const Shop = () => {
       localStorage.setItem('shopProducts', JSON.stringify(result));
 
       //Set all equipments
-      setEquipment(result);
+      setAllProducts(result);
 
       console.log(result);
       
-
+      
       //Set all equipment types
       setArmors(result.armors);
       setBoots(result.boots);
