@@ -17,6 +17,7 @@ const Shop = () => {
   const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
+  const [showingProducts, setShowingProducts] = useState([]);
   const [error, setError] = useState<string | null>(null);
 
   const fetchConnect = async () => {
