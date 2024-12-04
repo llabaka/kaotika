@@ -3,22 +3,28 @@ import CardRigthContainer from "./Components/CardRigthContainer";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import { useState, useEffect } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
+import EffectsContainer from "./Components/effectsContainer";
 
 const Card = (props: CardProps) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
     const [baseDamage, setBaseDamage] = useState<number | null>(null);
+    const [effects, setEffects] = useState<string[]>([]);
+    const [isEquipment, setIsEquipment] = useState<boolean>(false);
 
 
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
 
-    let icon = '';
+    let icon = '/images/icons/up.png';
     if(props.type === 'armor'){   
-        icon = '/images/icons/up.png'    
+        icon = '/images/icons/up.png';
     }
     
+
+
+
     const renderDefense = 'defense' in props 
         ? { name: 'Defense', value: props.defense }
         : null;
@@ -32,13 +38,34 @@ const Card = (props: CardProps) => {
         : null;
 
 
+
     useEffect(() => {
         setExtraAtribute(renderDefense);
         setWeaponDamage(weaponDamageRender);
         setBaseDamage(baseDamageRender);
+
+        switch(props.type){
+            case "armor":
+                setIsEquipment(true);
+                break;
+    
+            case "weapon":
+                console.log("entra cuando es weapon");
+                setIsEquipment(true);
+                break;
+    
+            case "ingredient":
+                setIsEquipment(false);
+                setEffects(props.effects);
+                break;
+        }
     }, [props]);
 
-    console.log("props modifiers  " + props.modifiers)
+
+    useEffect(() => {
+        console.log("IS EQUIPMENT" + isEquipment);
+    }, [isEquipment])
+
     return(
             <div className="w-[100%] relative h-[23rem] flex flex-row">
                 <Image
@@ -100,6 +127,10 @@ const Card = (props: CardProps) => {
                 { props.modifiers !== undefined ? ( 
                     <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
                 ) : null }
+                { !isEquipment ? (
+                    <EffectsContainer effects={effects}/> 
+                ): null
+                }
         </div>
     )
 };
