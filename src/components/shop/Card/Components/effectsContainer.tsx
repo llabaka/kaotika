@@ -30,9 +30,9 @@ const EffectsContainer: React.FC<EffectsContainerProps> = ({ effects }) => {
     return (
         <div className="z-10 relative flex flex-col p-2 w-[34%] px-2 ">
             <div className="w-[90%]">
-                <p className="text-[24px] font-bold text-center">Effects:</p>
+                <p className="text-[26px] font-bold text-center">Effects:</p>
                 {words.map((word, index) => (
-                    <p key={index} className="text-[20px] break-words">
+                    <p key={index} className="text-[24px] break-words">
                         {word}
                     </p>
                 ))}

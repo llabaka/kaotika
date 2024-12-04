@@ -1,15 +1,9 @@
-import { Armor } from "../Armor";
-import { Artifact } from "../Artifact";
-import { Boot } from "../Boot";
-import { Helmet } from "../Helmet";
 import { Modifier } from "../Modifier";
-import { Ring } from "../Ring";
-import { Shield } from "../Shield";
-import { Weapon } from "../Weapon";
 
-export type CardProps = ArmorShop | WeaponShop | Ingredient
+export type CardProps = ArmorShop | WeaponShop | Ingredient | RingShop | HelmetShop | ShieldShop | ArtifactShop | BootShop;
 
 interface Ingredient {
+    _id: string;
     name: string;
     description: string;
     value: number;
@@ -72,3 +66,70 @@ interface WeaponShop {
     isActive: boolean
 }
 
+interface HelmetShop {
+    _id: string,
+    name: string,
+    description: string,
+    type: "helmet",
+    value: number,
+    defense: number,
+    image: string,
+    modifiers: Modifier,
+    min_lvl: number,
+    isUnique: boolean,
+    isActive: boolean
+}
+
+interface RingShop {
+    _id: string,
+    name: string,
+    description: string,
+    type: "ring",
+    image: string,
+    value: number,
+    modifiers: Modifier,
+    min_lvl: number,
+    isUnique: boolean,
+    isActive: boolean
+}
+
+interface ShieldShop {
+    _id: string,
+    name: string,
+    description: string,
+    type: "shield",
+    image: string,
+    value: number,
+    defense: number,
+    modifiers: Modifier,
+    min_lvl: number,
+    isUnique: boolean,
+    isActive: boolean
+}
+
+interface ArtifactShop {
+    _id: string,
+    name: string, 
+    description: string,
+    type: "artifact",
+    image: string,
+    value: number,
+    modifiers: Modifier,
+    min_lvl: number,
+    isUnique: boolean,
+    isActive: boolean
+}
+
+interface BootShop {
+    _id: string,
+    name: string,
+    description: string,
+    type: "boot",
+    image: string,
+    value: number,
+    defense: number,
+    modifiers: Modifier,
+    min_lvl: number,
+    isUnique: boolean,
+    isActive: boolean
+}
