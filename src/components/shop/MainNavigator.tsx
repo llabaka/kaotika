@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
+import { CardProps } from "@/_common/interfaces/shop/CardProps";
 
 const navigatorImage = require('./../../assets/MainNavigator.png')
 
@@ -7,14 +9,33 @@ interface SelectedButton {
     index: 0 | 1 | null;
   }
 
-const MainNavigator = () => {
+interface MainNavigatorProps {
+  allProducts: AllProducts;
+	setShowingProducts: (loaded: CardProps[]) => void;
+}
+  
+const MainNavigator = ({allProducts, setShowingProducts} : MainNavigatorProps) => {
 
     const [selected, setSelected] = useState<SelectedButton['index']>(0);
 
-     // Función para manejar el clic en los botones
-     const handleButtonClick = (index: SelectedButton['index']) => {
+      // Función para manejar el clic en los botones
+      const handleButtonClick = (index: SelectedButton['index']) => {
+        
+        // 0 para Equipment y 1 para ingredients
+        switch(index){
+          case 0:
+            setShowingProducts(allProducts?.weapons!);
+            break;
+
+          case 1:
+            setShowingProducts(allProducts?.ingredients!);
+            break;
+        }
+
         setSelected(index); // Actualiza el estado con el índice del botón clickeado
       };
+
+
 
   return (
     <div className="flex flex-col items-center bg-transparent w-full mx-auto">

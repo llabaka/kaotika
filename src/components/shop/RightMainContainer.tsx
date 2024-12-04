@@ -8,21 +8,26 @@ import React from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 import SellingHeaders from "./SellingHeaders";
 import SellingContainer from "./SellingContainer";
-import player from '../../data/player.json'
+import player from '../../data/player.json';
+import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
 
 interface RightContainerInterface {
 	products: CardProps[];
 	displayingScreen: Number;
+	allProducts: AllProducts;
+	setShowingProducts: (loaded: CardProps[]) => void;
 }
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen }) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts}) => {
 	const mockPlayer = player;
 	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
 			{displayingScreen === DISPLAY_SCREEN.BUY ? (
 				<>
-					<MainNavigator />
+					<MainNavigator 
+						allProducts={allProducts}
+						setShowingProducts={setShowingProducts} />
 					<ProductsContainer products={products} />
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (

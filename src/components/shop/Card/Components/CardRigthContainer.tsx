@@ -4,7 +4,7 @@ import AttributeAndProgressBar from "./AttributeAndProgressBar";
 import { useEffect, useState } from "react";
 
 interface CardRigthContainerProps {
-    attributes: Modifier;
+    attributes: Modifier | null;
     extra_attribute : RenderObject |null;
     weaponDie: string | null;
     baseDamage: number | null;
@@ -15,22 +15,22 @@ const CardRigthContainer = ({attributes, extra_attribute, weaponDie, baseDamage}
     
     const renderArray : RenderObject[] = [{
         name: 'Charisma',
-        value : attributes.charisma
+        value : attributes!.charisma
     }, {
         name : 'Constitution',
-        value: attributes.constitution
+        value: attributes!.constitution
     },{
         name: 'Dexterity',
-        value: attributes.dexterity
+        value: attributes!.dexterity
     }, {
         name: 'Insanity',
-        value: attributes.insanity
+        value: attributes!.insanity
     }, {
         name: 'Intelligence',
-        value: attributes.intelligence
+        value: attributes!.intelligence
     }, {
         name: 'Strength',
-        value: attributes.strength
+        value: attributes!.strength
     }];
 
     return (

@@ -31,12 +31,14 @@ const Card = (props: CardProps) => {
         ? props.base_percentage
         : null;
 
+
     useEffect(() => {
         setExtraAtribute(renderDefense);
         setWeaponDamage(weaponDamageRender);
         setBaseDamage(baseDamageRender);
     }, [props]);
-    
+
+    console.log("props modifiers  " + props.modifiers)
     return(
             <div className="w-[100%] relative h-[23rem] flex flex-row">
                 <Image
@@ -94,7 +96,10 @@ const Card = (props: CardProps) => {
                     </div>
                 </div>
                 {/* CARD RIGHT CONTAINER */}
-                <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
+                
+                { props.modifiers !== undefined ? ( 
+                    <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
+                ) : null }
         </div>
     )
 };
