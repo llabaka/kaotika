@@ -1,4 +1,6 @@
+import { Helmet } from "@/_common/interfaces/Helmet";
 import { Player } from "@/_common/interfaces/Player";
+import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import Image from 'next/image';
 
 interface InventoryContainer {
@@ -14,19 +16,26 @@ const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
         ...player.inventory.armors,
         ...player.inventory.shields,
         ...player.inventory.artifacts,
-        ...player.inventory.antidote_potions,
+
+        // Potions has no interface at the moment
+        /*...player.inventory.antidote_potions,
         ...player.inventory.enhancer_potions,
-        ...player.inventory.healing_potions,
+        ...player.inventory.healing_potions, */
+
         ...player.inventory.rings,
         ...player.inventory.boots
     ];
 
     console.log(playerInventory); 
+
+    const handleOnPress = (item: CardProps) =>  {
+        console.log(item.image);
+	}
     return (
         <div className="flex-col w-[47%]">
             <div className="flex flex-col justify-start items-center h-[85%] mt-[10%] overflow-y-auto max-h-[full] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
                 {playerInventory.map((item, index) => (
-                    <div key={index} className="flex flex-start items-center bg-black bg-opacity-50 rounded-lg w-[95%] h-[23%] mb-[4%]">
+                    <button key={index} onClick={() => handleOnPress(item)} className="flex flex-start items-center bg-black bg-opacity-50 rounded-lg w-[95%] h-[23%] mb-[4%]">
                         
                         {/* Item image */}
                         <div className="w-[15%] h-[60%] m-[5%]">
@@ -50,7 +59,7 @@ const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
                             style={{height: 'auto', width:'auto'}}
                         />
                     </div>
-                    </div>
+                    </button>
                 ))}
             </div>
         </div>
