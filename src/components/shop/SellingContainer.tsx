@@ -11,10 +11,6 @@ const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
     const [sellingImage, setSellingImage] = useState(player.inventory.helmets[0].image);
     const [sellingItem, setSellingItem] = useState<Product>(player.inventory.helmets[0]);
 
-    useEffect(()=>{
-        console.log(sellingItem);
-    })
-
     return(
     <div className="justify-center flex w-full h-[85%]">
         {/* Inventory Contaienr */}

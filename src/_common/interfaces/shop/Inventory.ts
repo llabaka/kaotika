@@ -1,7 +1,8 @@
 import { Player } from "../Player";
+import { Product } from "./CardProps";
 
 export default interface InventoryContainerInterface {
     player: Player;
     setSellingImage: (loaded: string) => void;
-    setSellingItem: any;
+    setSellingItem: (loaded: Product) => void;
 }

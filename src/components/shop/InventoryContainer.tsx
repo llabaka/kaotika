@@ -1,5 +1,4 @@
-import { Player } from "@/_common/interfaces/Player";
-import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/CardProps";
 import InventoryContainerInterface from "@/_common/interfaces/shop/Inventory";
 import Image from 'next/image';
 import { useEffect } from "react";
@@ -21,6 +20,7 @@ const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, set
 
     const handleOnPress = (item: Product) => {
         setSellingItem(item)
+        setSellingImage(item.image!)
     };
 
     return (

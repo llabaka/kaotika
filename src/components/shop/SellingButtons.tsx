@@ -2,6 +2,12 @@ import { SellingButtonsInterface, SellingContainerInterface } from '@/_common/in
 import Image from 'next/image';
 
 const SellingButtons:React.FC<SellingButtonsInterface> = ({ player, sellingItem }) => {
+    console.log("PLAYER GOLD");
+    console.log(player.gold);
+    
+    console.log("SELLING ITEM");
+    console.log(sellingItem);
+    
     return (
     <div className="flex w-full h-[15%] mt-[10%]">
         <div className='w-[35%] h-[60%] mr-[15%] ml-[8%]'>
