@@ -1,8 +1,5 @@
+import SellingItemInterface from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
-
-interface SellingItemInterface{
-	sellingImage: String;
-}
 
 const SellingItem: React.FC<SellingItemInterface> = ({ sellingImage }) => {
     return (

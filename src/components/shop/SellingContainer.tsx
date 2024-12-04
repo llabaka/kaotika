@@ -2,10 +2,7 @@ import { Player } from "@/_common/interfaces/Player";
 import InventoryContainer from "./InventoryContainer";
 import SellingItemContainer from "./SellingItemContainer";
 import { useEffect, useState } from "react";
-
-interface SellingContainerInterface {
-	player: Player;
-}
+import { SellingContainerInterface } from "@/_common/interfaces/shop/Selling";
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
 
