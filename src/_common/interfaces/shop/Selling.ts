@@ -6,4 +6,5 @@ export interface SellingContainerInterface {
 
 export default interface SellingItemInterface {
 	sellingImage: String;
+	player: Player
 }
