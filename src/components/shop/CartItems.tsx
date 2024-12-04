@@ -24,6 +24,10 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
                         {/* Nombre del objeto */}
                         <div className="text-3xl text-orange-300 ml-4">{item.name}</div>
 
+                        <button
+                            className="text-4xl w-6 h-6 bg-orange-300 text-white rounded-full flex items-center justify-center hover:bg-orange-600 transition">
+                        +</button>
+
                         {/* Cantidad del objeto */}
                         <div className=" text-4xl text-orange-300 ml-auto mr-5">{item.quantity}</div>
 
