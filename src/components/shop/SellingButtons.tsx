@@ -14,15 +14,26 @@ const SellingButtons:React.FC<SellingButtonsInterface> = ({ player, sellingItem 
     return (
     <div className="flex w-full h-[15%] mt-[10%]">
         <div className='w-[35%] h-[60%] mr-[15%] ml-[8%]'>
-            <button className="flex relative w-full h-full items-center justify-center">
+            <div className="flex relative w-full h-full items-center justify-center">
                     <Image
                         src="/images/shop/ManagePlayerButton.png"
                         alt="Selling Item Frame"
                         fill
                         sizes='(max-width: 426px) 100vw'
                         />
-                <span className="z-10 text-orange-400 text-4xl hover:text-orange-200 transition">+ {sellingPrice}</span>
-            </button>
+                    <span className="z-10 text-orange-400 text-4xl hover:text-orange-200 transition flex items-center">
+                        + {sellingPrice}
+                        {/* Coin Image */}
+                        <Image
+                            src="/images/shop/CoinsIcon.png"
+                            alt="Gold"
+                            width={24}
+                            height={24}
+                            className="ml-2"
+                            style={{ height: 'auto', width: 'auto' }}
+                        />
+                    </span>
+            </div>
         </div>
 
         <div className='w-[35%] h-[60%]'>
