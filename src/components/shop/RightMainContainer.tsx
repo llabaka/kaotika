@@ -7,6 +7,9 @@ import ProductsContainer from "./ProductsContainer";
 import React from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 import CartMainContainer from "./CartMainContainer";
+import SellingHeaders from "./SellingHeaders";
+import SellingContainer from "./SellingContainer";
+import player from '../../data/player.json'
 
 interface RightContainerInterface {
 	products: CardProps[];
@@ -14,6 +17,8 @@ interface RightContainerInterface {
 }
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen }) => {
+	const mockPlayer = player;
+	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
 			{displayingScreen === DISPLAY_SCREEN.BUY ? (
@@ -23,7 +28,9 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>
-					<h2>Selling Screen</h2>
+					<SellingHeaders />
+					<SellingContainer player={mockPlayer}/>
+
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
