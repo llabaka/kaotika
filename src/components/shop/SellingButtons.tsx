@@ -1,11 +1,7 @@
-import { Player } from '@/_common/interfaces/Player';
+import { SellingContainerInterface } from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
 
-interface SellingButtonsInterface {
-    player: Player;
-}
-
-const SellingButtons:React.FC<SellingButtonsInterface> = ({ player }) => {
+const SellingButtons:React.FC<SellingContainerInterface> = ({ player }) => {
     return (
     <div className="flex w-full h-[15%] mt-[10%]">
         <div className='w-[35%] h-[60%] mr-[15%] ml-[8%]'>

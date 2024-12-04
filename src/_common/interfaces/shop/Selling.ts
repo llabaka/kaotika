@@ -1,10 +1,13 @@
 import { Player } from "../Player";
 
+export default interface SellingItemInterface {
+	sellingImage: String;
+	player: Player
+}
 export interface SellingContainerInterface {
 	player: Player;
 }
 
-export default interface SellingItemInterface {
+export interface SellingItemImageInterface {
 	sellingImage: String;
-	player: Player
 }
