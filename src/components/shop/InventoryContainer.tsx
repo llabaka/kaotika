@@ -29,7 +29,7 @@ const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
                     <div key={index} className="flex flex-start items-center bg-black bg-opacity-50 rounded-lg w-[95%] h-[23%] mb-[4%]">
                         
                         {/* Item image */}
-                        <div className="w-[15%] h-[60%] object-cover m-[5%]">
+                        <div className="w-[15%] h-[60%] m-[5%]">
                             <img src={item.image} alt={item.name} className="w-[full] h-[full]"></img>
                         </div>
 
