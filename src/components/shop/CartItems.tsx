@@ -30,7 +30,7 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
                          {/* Botón para eliminar elemento */}
                         <button
                             onClick={() => handleRemoveItem(item._id!)}
-                            className="ml-4 px-3 py-1 bg-red-600 text-white text-xl rounded hover:bg-red-700"
+                            className="w-[15%] h-[50%] mt-1 ml-4 px-3 py-1 bg-orange-400 text-white text-xl rounded hover:bg-red-700"
                         >
                             Remove Item
                         </button>
