@@ -1,5 +1,5 @@
 import Card from "./Card/Card";
-import { CardProps, CartItem } from "@/_common/interfaces/shop/CardProps";
+import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
 
 import MainNavigator from "./MainNavigator";
 
@@ -19,8 +19,8 @@ interface RightContainerInterface {
 	displayingScreen: Number;
 	allProducts: AllProducts;
 	setShowingProducts: (loaded: CardProps[]) => void;
-	cartProducts: CartItem[];
-	setCartProducts: (loaded: CartItem[]) => void;
+	cartProducts: Product[];
+	setCartProducts: (loaded: Product[]) => void;
 }
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts}) => {
