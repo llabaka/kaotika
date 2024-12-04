@@ -91,7 +91,7 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    const localStorageProducts = localStorage.getItem('shopData');
+    const localStorageProducts = localStorage.getItem('shopProducts');
     console.log("LOCAL STORAGE DATA");
     console.log(localStorageProducts);
     
