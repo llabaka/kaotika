@@ -1,6 +1,3 @@
-import Card from "./Card/Card";
-import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
-
 import MainNavigator from "./MainNavigator";
 
 import ProductsContainer from "./ProductsContainer";
@@ -10,18 +7,9 @@ import CartMainContainer from "./CartMainContainer";
 import SellingHeaders from "./SellingHeaders";
 import SellingContainer from "./SellingContainer";
 import player from '../../data/player.json';
-import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
 import CartScreenMainTab from "../CartScreenMainTab";
 import { Weapon } from "@/_common/interfaces/Weapon";
-
-interface RightContainerInterface {
-	products: CardProps[];
-	displayingScreen: Number;
-	allProducts: AllProducts;
-	setShowingProducts: (loaded: CardProps[]) => void;
-	cartProducts: Product[];
-	setCartProducts: (loaded: Product[]) => void;
-}
+import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts}) => {
 	const mockPlayer = player;
