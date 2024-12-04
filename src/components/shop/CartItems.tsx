@@ -1,8 +1,14 @@
 import CartInterface from "@/_common/interfaces/shop/CartInterface";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import { CardProps } from "@nextui-org/react";
 
 const CartItems:React.FC<CartInterface> = ({cartProducts}) => {
+
+    // const [products, setProducts] = useState<CardProps[] | []>(cartProducts);
+
+
+
     return(
         <div className="h-[85%] w-[90%] text-xl border-white border-2 overflow-y-scroll">
            {cartProducts.map((item, index) => (
