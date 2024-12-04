@@ -32,8 +32,11 @@ export interface CartItem {
     value: number,
     isUnique?: boolean,
     isActive?: boolean,
-    base_percentage?: number,
     modifiers?: Modifier,
     min_lvl?: number,
     quantity?: number
+    die_faces: 2,
+    die_modifier: 1,
+    die_num: 10,
+    base_percentage: 12
 }

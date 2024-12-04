@@ -8,6 +8,7 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { CardProps, CartItem } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import cartMock from '@/components/shop/helpers/mocks';
 
 
 
@@ -24,7 +25,7 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
-  const [cartProducts, setCartProducts] = useState<CartItem[] | []>([]);
+  const [cartProducts, setCartProducts] = useState<CartItem[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 
@@ -36,7 +37,14 @@ const Shop = () => {
           : product
       )
     );
-  }, [cartProducts]);
+  }, []);
+
+  useEffect(() => {
+    console.log("CART PRODUCTS NOW:");
+    console.log(cartProducts);
+    
+    
+  }, [cartProducts])
 
   const fetchConnect = async () => {
     try {
