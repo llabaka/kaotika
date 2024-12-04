@@ -36,9 +36,9 @@ const CardRigthContainer = ({attributes, extra_attribute, weaponDie, baseDamage}
     return (
         <div className="z-10 relative flex flex-col justify-center p-2 w-[34%] px-2">
         {/* Sección derecha */}
-        {renderArray.map(attribute => (
+        {renderArray.map((attribute, index) => (
             attribute.value !== 0 ? 
-            <AttributeAndProgressBar value={attribute.value} name={attribute.name}/> : null
+            <AttributeAndProgressBar key={index} value={attribute.value} name={attribute.name}/> : null
         ))}
         {extra_attribute !== null ? (
             <AttributeAndProgressBar value={extra_attribute.value} name={extra_attribute.name}/>

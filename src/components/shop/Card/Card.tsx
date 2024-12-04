@@ -14,7 +14,7 @@ const Card = (props: CardProps) => {
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
     const GoldIcon = '/images/icons/gold.png';
 
-    let icon = '';
+    let icon = '/images/icons/up.png';
     if(props.type === 'armor'){   
         icon = '/images/icons/up.png'    
     }
@@ -74,6 +74,7 @@ const Card = (props: CardProps) => {
                                 src={props.image} 
                                 alt="Equipment Image"
                                 fill
+                                sizes='(max-width: 570px) 100vw'
                             />
                         </div>
                     </div>
