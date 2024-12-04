@@ -14,7 +14,6 @@ import cartMock from '@/components/shop/helpers/mocks';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
-  const [equipment, setEquipment] = useState([]);
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
@@ -91,14 +90,14 @@ const Shop = () => {
   }
 
   useEffect(() => {
-    const localStorageProducts = localStorage.getItem('shopData');
+    const localStorageProducts = localStorage.getItem('shopProducts');
     console.log("LOCAL STORAGE DATA");
     console.log(localStorageProducts);
     
     //If localStorage have products set states
     if (localStorageProducts) {
       const parsedProducts = JSON.parse(localStorageProducts);
-      setEquipment(parsedProducts);
+      setAllProducts(parsedProducts);
       setArmors(parsedProducts.armors);
       setBoots(parsedProducts.boots);
       setHelmets(parsedProducts.helmets);
@@ -107,6 +106,7 @@ const Shop = () => {
       setRings(parsedProducts.rings);
       setArtifacts(parsedProducts.artifacts);
       setIngredients(parsedProducts.ingredients);
+      setShowingProducts(parsedProducts.weapons);
 
       console.log();
       

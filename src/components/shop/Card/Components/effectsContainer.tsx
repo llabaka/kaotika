@@ -12,22 +12,19 @@ const EffectsContainer: React.FC<EffectsContainerProps> = ({ effects }) => {
             const changedWords: string[] = effect.split('_');
             const updatedWords: string[] = [];
             
-            changedWords.map((word, i) => {
+            for (let i = 0; i < changedWords.length; i++) {
+                const word = changedWords[i];
                 if (word === 'hit' && i + 1 < changedWords.length) {
 
                     const concatenated = `${word}${changedWords[++i]}`;
                     updatedWords.push(concatenated.charAt(0).toUpperCase() + concatenated.slice(1));
                 } else {
-                    
+
                     updatedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
                 }
-            });
-
-            console.log(updatedWords);
-
+            }
             setWords([...updatedWords]);
         });
-
     } , []);
 
     return (

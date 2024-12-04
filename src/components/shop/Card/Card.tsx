@@ -101,6 +101,7 @@ const Card = (props: CardProps) => {
                                 src={props.image} 
                                 alt="Equipment Image"
                                 fill
+                                sizes='(max-width: 570px) 100vw'
                             />
                         </div>
                     </div>
