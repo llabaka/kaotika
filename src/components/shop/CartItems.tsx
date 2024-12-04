@@ -66,9 +66,9 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
 
 
                         {/* Valor del objeto */}
-                        <div className=" text-5xl text-orange-300 ml-auto mr-5">{item.value * item.quantity!}</div>
+                        <div className="w-[5%] text-5xl text-orange-300 mr-5">{item.value * item.quantity!}</div>
 
-                        <div className="flex items-center justify-center z-1 text-orange-400 text-3xl mr-3 mt-">
+                        <div className="flex items-center justify-center z-1 text-orange-400 text-3xl mr-3">
                             <Image
                             src="/images/shop/CoinsIcon.png"
                             alt="Gold"
