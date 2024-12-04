@@ -1,17 +1,9 @@
 import CartInterface from "@/_common/interfaces/shop/CartInterface";
 import React, { useEffect, useState } from "react";
 import calculateTotalPrice from "./helpers/CalculatePrice";
+import CartPriceInterface from "@/_common/interfaces/shop/CartPriceInterface";
 
-const CartTotal:React.FC<CartInterface> = ({cartProducts}) => {
-
-    const [totalPrice, setTotalPrice] = useState<number>(0);
-
-    useEffect(() => {
-        let newTotalPrice = calculateTotalPrice(cartProducts);
-        setTotalPrice(newTotalPrice);
-      }, [cartProducts]);
-
-    useEffect
+const CartTotal:React.FC<CartPriceInterface> = ({totalPrice}) => {
 
     return(
         <div className="h-[13%] w-[90%] text-xl border-white border-2">
