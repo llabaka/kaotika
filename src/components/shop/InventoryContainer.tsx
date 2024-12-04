@@ -1,10 +1,10 @@
-import { Helmet } from "@/_common/interfaces/Helmet";
 import { Player } from "@/_common/interfaces/Player";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import Image from 'next/image';
 
 interface InventoryContainer {
     player: Player;
+    setSellingImage: (loaded:string) => void;
 }
 
 const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {

@@ -1,6 +1,10 @@
 import Image from 'next/image';
 
-const SellingItemContainer = () =>  {
+interface SellingItemContainer {
+	sellingImage: String;
+}
+
+const SellingItemContainer: React.FC<SellingItemContainer> = ({ sellingImage }) =>{
     return (
         <div className="flex-col w-[47%]">
             <div className="flex flex-col justify-start items-center h-[97%] mt-[5%]">
