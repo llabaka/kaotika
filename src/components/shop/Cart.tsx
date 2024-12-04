@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import CartItems from "./shop/CartItems";
-import CartSeparator from "./shop/CartSeparator";
-import CartTotal from "./shop/CartTotal";
+import CartItems from "./CartItems";
+import CartSeparator from "./CartSeparator";
+import CartTotal from "./CartTotal";
 import CartInterface from "@/_common/interfaces/shop/CartInterface";
-import calculateTotalPrice from "./shop/helpers/CalculatePrice";
+import calculateTotalPrice from "./helpers/CalculatePrice";
 
 const Cart:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
 
