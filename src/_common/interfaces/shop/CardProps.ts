@@ -21,7 +21,7 @@ interface Ingredient {
     quantity?: number; // Añadimos quantity como opcional
 }
 
-export interface CartItem {
+export interface Product {
     _id?: string,
     name?: string,
     description?: string,
@@ -35,8 +35,8 @@ export interface CartItem {
     modifiers?: Modifier,
     min_lvl?: number,
     quantity?: number
-    die_faces: 2,
-    die_modifier: 1,
-    die_num: 10,
-    base_percentage: 12
+    die_faces: number,
+    die_modifier: number,
+    die_num: number,
+    base_percentage: number
 }

@@ -6,7 +6,7 @@ import LeftMainContainer from '@/components/shop/LeftMainContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { CardProps, CartItem } from '@/_common/interfaces/shop/CardProps';
+import { CardProps, Product } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import cartMock from '@/components/shop/helpers/mocks';
 
@@ -25,7 +25,7 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
-  const [cartProducts, setCartProducts] = useState<CartItem[] | []>(cartMock);
+  const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 

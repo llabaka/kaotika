@@ -1,6 +1,6 @@
-import { CardProps, CartItem } from "./CardProps";
+import { CardProps, Product } from "./CardProps";
 
 export default interface CartInterface {
-    cartProducts: CartItem[];
-	setCartProducts: (loaded: CartItem[]) => void;
+    cartProducts: Product[];
+	setCartProducts: (loaded: Product[]) => void;
 }
