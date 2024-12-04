@@ -9,7 +9,7 @@ interface SellingContainerInterface {
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
 
-    const [sellingImage, setSellingImage] = useState("");
+    const [sellingImage, setSellingImage] = useState(player.inventory.helmets[0].image);
 
     useEffect(() => {
         console.log(sellingImage);
