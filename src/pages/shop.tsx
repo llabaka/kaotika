@@ -24,6 +24,7 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
+  const [cartProducts, setCartProducts] = useState<CardProps[] | []>([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
 
@@ -110,7 +111,7 @@ const Shop = () => {
       <MainShopContainer>
         <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
         <MiddleMainContainer />
-        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen}/>
+        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
       </MainShopContainer>
       </div>
     </Layout>
