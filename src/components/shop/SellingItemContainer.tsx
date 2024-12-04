@@ -9,10 +9,10 @@ const SellingItemContainer: React.FC<SellingItemInterface> = ({ sellingImage, pl
             <div className="flex flex-col justify-start items-center h-[97%] mt-[5%]">
 
                 {/* Selling Item */}
-                <SellingItem sellingImage={sellingImage} player={player}/>
+                <SellingItem sellingImage={sellingImage}/>
 
                 {/* Selling Buttons */}
-                <SellingButtons/>
+                <SellingButtons player={player}/>
             </div>
         </div>
     )

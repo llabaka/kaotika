@@ -1,7 +1,10 @@
-import SellingItemInterface from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
 
-const SellingItem: React.FC<SellingItemInterface> = ({ sellingImage, player }) => {
+interface SellingItemInterface{
+    sellingImage: String
+}
+
+const SellingItem: React.FC<SellingItemInterface> = ({ sellingImage }) => {
     return (
         <div className="w-full h-[75%] items-center justify-center">
             <div className="flex relative w-full h-full items-center justify-center">
