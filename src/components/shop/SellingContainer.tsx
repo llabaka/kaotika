@@ -1,7 +1,7 @@
 import { Player } from "@/_common/interfaces/Player";
 import InventoryContainer from "./InventoryContainer";
 import SellingItemContainer from "./SellingItemContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface SellingContainerInterface {
 	player: Player;
@@ -10,6 +10,10 @@ interface SellingContainerInterface {
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
 
     const [sellingImage, setSellingImage] = useState("");
+
+    useEffect(() => {
+        console.log(sellingImage);
+    })
 
     return(
     <div className="justify-center flex w-full h-[85%]">

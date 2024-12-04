@@ -7,7 +7,7 @@ interface InventoryContainer {
     setSellingImage: (loaded:string) => void;
 }
 
-const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
+const InventoryContainer: React.FC<InventoryContainer> = ({ player, setSellingImage }) => {
 
     // Combina todas las propiedades de arrays en un solo array
     const playerInventory = [
@@ -29,7 +29,7 @@ const InventoryContainer: React.FC<InventoryContainer> = ({ player }) => {
     console.log(playerInventory); 
 
     const handleOnPress = (item: CardProps) =>  {
-        console.log(item.image);
+        setSellingImage(item.image)
 	}
     return (
         <div className="flex-col w-[47%]">
