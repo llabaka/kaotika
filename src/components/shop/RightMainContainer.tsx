@@ -45,7 +45,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 		base_percentage: 12
 	  };
 
-	const cartProducts = [cardMock];
+	const cartProducts = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
 	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
