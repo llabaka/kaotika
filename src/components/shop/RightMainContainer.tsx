@@ -10,6 +10,7 @@ import CartMainContainer from "./CartMainContainer";
 import SellingHeaders from "./SellingHeaders";
 import SellingContainer from "./SellingContainer";
 import player from '../../data/player.json'
+import CartScreenMainTab from "../CartScreenMainTab";
 
 interface RightContainerInterface {
 	products: CardProps[];
@@ -34,6 +35,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
+					<CartScreenMainTab/>
 					<CartMainContainer/>
 				</>
 			) : null}
