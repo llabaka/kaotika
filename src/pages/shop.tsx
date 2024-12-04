@@ -107,6 +107,7 @@ const Shop = () => {
       setRings(parsedProducts.rings);
       setArtifacts(parsedProducts.artifacts);
       setIngredients(parsedProducts.ingredients);
+      setShowingProducts(parsedProducts.weapons);
 
       console.log();
       
