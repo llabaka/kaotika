@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { CardProps } from "@nextui-org/react";
 
-const CartItems:React.FC<CartInterface> = ({cartProducts}) => {
+const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
 
     // const [products, setProducts] = useState<CardProps[] | []>(cartProducts);
 

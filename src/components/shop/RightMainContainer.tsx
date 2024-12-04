@@ -19,9 +19,11 @@ interface RightContainerInterface {
 	displayingScreen: Number;
 	allProducts: AllProducts;
 	setShowingProducts: (loaded: CardProps[]) => void;
+	cartProducts: CardProps[];
+	setCartProducts: (loaded: CardProps[]) => void;
 }
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts}) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts}) => {
 	const mockPlayer = player;
 
 	const cardMock: Weapon = {
@@ -48,7 +50,6 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 		base_percentage: 12
 	  };
 
-	const cartProducts = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
 	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
@@ -68,7 +69,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
 					<CartScreenMainTab/>
-					<CartMainContainer cartProducts={cartProducts}/>
+					<CartMainContainer cartProducts={cartProducts} setCartProducts={setCartProducts}/>
 				</>
 			) : null}
 		</div>
