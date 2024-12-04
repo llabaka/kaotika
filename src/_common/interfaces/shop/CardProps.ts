@@ -35,8 +35,8 @@ export interface Product {
     modifiers?: Modifier,
     min_lvl?: number,
     quantity?: number
-    die_faces: number,
-    die_modifier: number,
-    die_num: number,
-    base_percentage: number
+    die_faces?: number,
+    die_modifier?: number,
+    die_num?: number,
+    base_percentage?: number
 }
