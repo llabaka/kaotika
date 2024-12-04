@@ -6,7 +6,7 @@ import LeftMainContainer from '@/components/shop/LeftMainContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { CardProps } from '@/_common/interfaces/shop/CardProps';
+import { CardProps, CartItem } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 
 
@@ -24,9 +24,19 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
-  const [cartProducts, setCartProducts] = useState<CardProps[] | []>([]);
+  const [cartProducts, setCartProducts] = useState<CartItem[] | []>([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setCartProducts((prevCartProducts) =>
+      prevCartProducts.map((product) =>
+        product.quantity === undefined
+          ? { ...product, quantity: 1 }
+          : product
+      )
+    );
+  }, [cartProducts]);
 
   const fetchConnect = async () => {
     try {

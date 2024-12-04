@@ -18,4 +18,22 @@ interface Ingredient {
     type: string;
     modifiers: Modifier | null;
     min_lvl: null
+    quantity?: number; // Añadimos quantity como opcional
+}
+
+export interface CartItem {
+    _id?: string,
+    name?: string,
+    description?: string,
+    type?: string,
+    image?: string,
+    effects?: string[];
+    defense?: number,
+    value: number,
+    isUnique?: boolean,
+    isActive?: boolean,
+    base_percentage?: number,
+    modifiers?: Modifier,
+    min_lvl?: number,
+    quantity?: number
 }

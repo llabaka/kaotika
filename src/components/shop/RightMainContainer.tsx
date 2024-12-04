@@ -1,10 +1,10 @@
 import Card from "./Card/Card";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { CardProps, CartItem } from "@/_common/interfaces/shop/CardProps";
 
 import MainNavigator from "./MainNavigator";
 
 import ProductsContainer from "./ProductsContainer";
-import React from "react";
+import React, { useEffect } from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 import CartMainContainer from "./CartMainContainer";
 import SellingHeaders from "./SellingHeaders";
@@ -19,8 +19,8 @@ interface RightContainerInterface {
 	displayingScreen: Number;
 	allProducts: AllProducts;
 	setShowingProducts: (loaded: CardProps[]) => void;
-	cartProducts: CardProps[];
-	setCartProducts: (loaded: CardProps[]) => void;
+	cartProducts: CartItem[];
+	setCartProducts: (loaded: CartItem[]) => void;
 }
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts}) => {
@@ -49,6 +49,10 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 		die_num: 10,
 		base_percentage: 12
 	  };
+
+	  const cartMock = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
+
+
 
 	
 	return (
