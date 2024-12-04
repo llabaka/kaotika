@@ -1,9 +1,9 @@
 import { Player } from "@/_common/interfaces/Player";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
 import InventoryContainerInterface from "@/_common/interfaces/shop/Inventory";
 import Image from 'next/image';
 
-const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, setSellingImage }) => {
+const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, setSellingImage, setSellingItem }) => {
     // Combina todas las propiedades de arrays en un solo array
     const playerInventory = [
         ...player.inventory.helmets,
@@ -20,8 +20,8 @@ const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, set
 
     console.log(playerInventory);
 
-    const handleOnPress = (item: CardProps) => {
-        setSellingImage(item.image);
+    const handleOnPress = (item: Product) => {
+        setSellingItem(item)
     };
 
     return (
