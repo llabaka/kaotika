@@ -1,10 +1,12 @@
 import CartScreenMainTab from "../CartScreenMainTab";
 import CartContainer from "../CartContainer";
+import React from "react";
+import CartInterface from "@/_common/interfaces/shop/CartInterface";
 
-const CartMainContainer = () => {
+const CartMainContainer:React.FC<CartInterface> = ({cartProducts}) => {
     return(
         <div className="h-full w-full text-xl justify-center items-center content-center">
-            <CartContainer/>
+            <CartContainer cartProducts={cartProducts}/>
         </div>
     )
 }

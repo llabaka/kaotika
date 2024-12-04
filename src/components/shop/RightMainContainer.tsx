@@ -11,6 +11,7 @@ import SellingHeaders from "./SellingHeaders";
 import SellingContainer from "./SellingContainer";
 import player from '../../data/player.json'
 import CartScreenMainTab from "../CartScreenMainTab";
+import { Weapon } from "@/_common/interfaces/Weapon";
 
 interface RightContainerInterface {
 	products: CardProps[];
@@ -19,6 +20,32 @@ interface RightContainerInterface {
 
 const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen }) => {
 	const mockPlayer = player;
+
+	const cardMock: Weapon = {
+		_id : "asdadw1219beu21as",
+		min_lvl: 12,
+		image: '/images/equipment/armors/jacket_1.png',
+		modifiers: {
+		  intelligence: 12,
+		  dexterity: 12,
+		  constitution: 20,
+		  insanity: 43,
+		  charisma: 23,
+		  strength: 34
+		},
+		name: 'cardMock',
+		description: 'Descripción prueba de carta lkasndjoasbdiuasd',
+		value: 340,
+		type: "weapon",
+		isUnique: false,
+		isActive: false,
+		die_faces: 2,
+		die_modifier: 1,
+		die_num: 10,
+		base_percentage: 12
+	  };
+
+	const cartProducts = [cardMock];
 	
 	return (
 		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
@@ -36,7 +63,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
 					<CartScreenMainTab/>
-					<CartMainContainer/>
+					<CartMainContainer cartProducts={cartProducts}/>
 				</>
 			) : null}
 		</div>
