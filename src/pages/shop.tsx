@@ -9,11 +9,12 @@ import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { CardProps, Product } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import cartMock from '@/components/shop/helpers/mocks';
-
-
+import { Player } from '@/_common/interfaces/Player';
+import { json } from 'stream/consumers';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
+  const [player, setPlayer] = useState<Player | {}>({});
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
@@ -48,9 +49,17 @@ const Shop = () => {
   const fetchConnect = async () => {
     try {
       const res = await fetch('/api/connect');
+      const res2 = await fetch('/api/playerFetch')
+
+      if (!res2.ok) {
+        throw new Error(`Error: ${res2.status}`);
+      }
+
       if (!res.ok) {
         throw new Error(`Error: ${res.status}`);
       }
+
+      const player = await res2.json();
       const result = await res.json();
 
       // Save all in localStorage
@@ -58,9 +67,9 @@ const Shop = () => {
 
       //Set all equipments
       setAllProducts(result);
-
-      console.log(result);
       
+      //Set player
+      setPlayer(result.player);
       
       //Set all equipment types
       setArmors(result.armors);
@@ -91,8 +100,8 @@ const Shop = () => {
 
   useEffect(() => {
     const localStorageProducts = localStorage.getItem('shopProducts');
-    console.log("LOCAL STORAGE DATA");
-    console.log(localStorageProducts);
+    // console.log("LOCAL STORAGE DATA");
+    // console.log(localStorageProducts);
     fetchConnect(); //Fetch if localstorage is empty
     
     //If localStorage have products set states
@@ -107,19 +116,13 @@ const Shop = () => {
       setRings(parsedProducts.rings);
       setArtifacts(parsedProducts.artifacts);
       setIngredients(parsedProducts.ingredients);
+      setPlayer(parsedProducts.player);
       setShowingProducts(parsedProducts.weapons);
-
-      console.log();
       
     } else {
       fetchConnect(); //Fetch if localstorage is empty
     }
   }, []);
-
-  useEffect(() => {
-    console.log(displayingScreen);
-    
-  }, [displayingScreen])
 
 	if (loading) {
     return <Loading />;
