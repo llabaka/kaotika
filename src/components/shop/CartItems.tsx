@@ -35,14 +35,14 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
                         <div className="flex w-[35%] h-[80%] text-3xl text-orange-300 ml-2 justify-start items-center">{item.name}</div>
 
                         {item.type === "ingredient" ? (
-                        <div className="flex w-[13%] items-center space-x-5 ">
+                        <div className="flex w-[13%] items-center space-x-2">
                             <button
                                 className="w-9 h-9 bg-orange-300 text-white text-5xl rounded-full flex items-center justify-center hover:bg-orange-600 transition"
                                 onClick={() => updateQuantity(item._id!, -1)}
                             >
                                 <div className="mb-4">-</div>
                             </button>
-                            <span className="text-white font-medium text-5xl mb-3">
+                            <span className="w-9 h-full text-white font-medium text-5xl mb-3 text-center">
                                 {item.quantity}
                             </span>
                             <button
@@ -67,7 +67,7 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
 
                         {/* Valor del objeto */}
                         <div className="flex w-[14%] h-[50%] items-center mr-2 text-right">
-                            <div className="w-[100%] text-right text-5xl text-orange-300 border-2">{item.value * item.quantity!}</div>
+                            <div className="w-[100%] text-right text-5xl text-orange-300 mr-1">{item.value * item.quantity!}</div>
 
                             <div className="flex w-[40%] relative h-[50%] z-1 text-orange-400 text-3xl mt-3 ml-1">
                                 <Image
