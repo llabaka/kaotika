@@ -1,5 +1,7 @@
-import { Product } from "@/_common/interfaces/shop/CardProps";
+
+import { Product } from "@/_common/interfaces/shop/Product";
 import { Weapon } from "@/_common/interfaces/Weapon";
+
 
 const cardMock: Product = {
     _id : "asdadw1219beu21as",

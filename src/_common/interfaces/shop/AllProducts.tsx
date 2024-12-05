@@ -1,14 +1,14 @@
-import { CardProps } from "./CardProps";
+import { Product } from "./Product";
 
 export interface AllProductsStructure {
-    armors: CardProps[];
-    boots: CardProps[];
-    helmets: CardProps[];
-    weapons: CardProps[];
-    shields: CardProps[];
-    rings: CardProps[];
-    artifacts: CardProps[];
-    ingredients: CardProps[];
+    armors: Product[];
+    boots: Product[];
+    helmets: Product[];
+    weapons: Product[];
+    shields: Product[];
+    rings: Product[];
+    artifacts: Product[];
+    ingredients: Product[];
     // Agrega más categorías si existen
 }
 

@@ -1,7 +1,7 @@
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 
 interface CardItemProps {
-    card: CardProps;
+    card: Product;
   }
 
 

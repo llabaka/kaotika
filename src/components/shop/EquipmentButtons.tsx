@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { CardProps } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Product } from '@/_common/interfaces/shop/Product';
 
 interface EquipmentButtonsInterface {
     allProducts: AllProducts;
-	showingProducts: CardProps[];
-	setShowingProducts: (loaded: CardProps[]) => void;
+	showingProducts: Product[];
+	setShowingProducts: (loaded: Product[]) => void;
 }
 
 const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, showingProducts, setShowingProducts}) => {

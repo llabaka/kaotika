@@ -1,4 +1,4 @@
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 import CardItem from "./CardItem";
 import React from "react";
 import EmptyCard from "./Card/EmptyCard";
@@ -6,7 +6,7 @@ import ProductVerticalSeparator from "./ProductVerticalSeparator";
 import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
 
 interface ProductRowContainerProps {
-  cards: CardProps[]; // Espera un array de objetos con la interfaz CardProps
+  cards: Product[]; // Espera un array de objetos con la interfaz Product
   onClickBuy: () => void;
   setProduct: any;
 }

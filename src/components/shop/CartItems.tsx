@@ -1,12 +1,11 @@
 import CartInterface from "@/_common/interfaces/shop/CartInterface";
 import React, { useState } from "react";
 import Image from "next/image";
-import { CardProps } from "@nextui-org/react";
-import { Product } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 
 const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
 
-    // const [products, setProducts] = useState<CardProps[] | []>(cartProducts);
+    // const [products, setProducts] = useState<Product[] | []>(cartProducts);
 
     const handleRemoveItem = (id: string) => {
         setCartProducts((prevItems:Product[]) => prevItems.filter((item:Product) => item._id !== id));

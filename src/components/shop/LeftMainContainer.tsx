@@ -7,14 +7,14 @@ import EquipmentButtons from './EquipmentButtons';
 import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
 import player from '../../data/player.json'
-import { CardProps } from '@/_common/interfaces/shop/CardProps';
+import { Product } from '@/_common/interfaces/shop/Product';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 
 interface LeftMainContainerInterface {
     setDisplayingScreen: (loaded:number) => void;
 	allProducts: AllProducts;
-	showingProducts: CardProps[];
-	setShowingProducts: (loaded: CardProps[]) => void;
+	showingProducts: Product[];
+	setShowingProducts: (loaded: Product[]) => void;
 }
 
 const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen, allProducts, showingProducts, setShowingProducts})=> {

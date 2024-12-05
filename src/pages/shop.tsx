@@ -6,15 +6,17 @@ import LeftMainContainer from '@/components/shop/LeftMainContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { CardProps, Product } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import cartMock from '@/components/shop/helpers/mocks';
 import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
+import { Player } from '@/_common/interfaces/Player';
+import { Product } from '@/_common/interfaces/shop/Product';
 
 
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
+  const [player, setPlayer] = useState<Player>();
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
@@ -23,13 +25,13 @@ const Shop = () => {
   const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
+  const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
   const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
-  const [product, setProduct] = useState<CardProps | null>(null);
+  const [product, setProduct] = useState<Product | null>(null);
   
 
   useEffect(() => {
@@ -138,28 +140,32 @@ const Shop = () => {
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
-  } else if (!loading && player && allProducts && showingProducts) 
-  return (
-    <Layout>
-      <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
-      <MainShopContainer>
-        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
-        <MiddleMainContainer />
-        <RightMainContainer 
-          products={showingProducts} 
-          displayingScreen={displayingScreen} 
-          allProducts={allProducts} 
-          setShowingProducts={setShowingProducts} 
-          cartProducts={cartProducts} 
-          setCartProducts={setCartProducts}
-          onClickBuy={buyButton}
-          setProduct={setProduct}
-          />
-      </MainShopContainer>
-      { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
-      </div>
-    </Layout>
-  )
+  } else if (!loading && player && allProducts && showingProducts) {
+    return (
+      <Layout>
+        <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
+        <MainShopContainer>
+          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
+          <MiddleMainContainer />
+          <RightMainContainer 
+            products={showingProducts} 
+            displayingScreen={displayingScreen} 
+            allProducts={allProducts} 
+            setShowingProducts={setShowingProducts} 
+            cartProducts={cartProducts} 
+            setCartProducts={setCartProducts}
+            onClickBuy={buyButton}
+            setProduct={setProduct}
+            />
+        </MainShopContainer>
+        { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
+        </div>
+      </Layout>
+    )
+  } else {
+    console.log("ESTA EN ELSE");
+    
+  }
 }
 
 

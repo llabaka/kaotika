@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 
 // Open Modal boolean 
 // product
 interface  BuyingModalProps {
-    product: CardProps | null;
+    product: Product | null;
     onclick: () => void;
 }
 

@@ -1,4 +1,4 @@
-import { Product } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 import InventoryContainerInterface from "@/_common/interfaces/shop/Inventory";
 import Image from 'next/image';
 import { useEffect } from "react";

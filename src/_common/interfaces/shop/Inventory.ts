@@ -1,5 +1,5 @@
 import { Player } from "../Player";
-import { Product } from "./CardProps";
+import { Product } from "./Product";
 
 export default interface InventoryContainerInterface {
     player: Player;

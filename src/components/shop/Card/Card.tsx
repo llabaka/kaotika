@@ -1,17 +1,17 @@
 import Image from "next/image";
 import CardRigthContainer from "./Components/CardRigthContainer";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 import { useState, useEffect } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import EffectsContainer from "./Components/effectsContainer";
 import CardLeftContainer from "./Components/CardLeftContainet";
 
-interface CardPropsInterface {
-    props: CardProps,
+interface ProductInterface {
+    props: Product,
     onClickBuy: () => void;
 }
 
-const Card = ({props, onClickBuy} : CardPropsInterface) => {
+const Card = ({props, onClickBuy} : ProductInterface) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);

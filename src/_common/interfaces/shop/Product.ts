@@ -1,6 +1,6 @@
 import { Modifier } from "../Modifier";
 
-export type CardProps = ArmorShop | WeaponShop | Ingredient | RingShop | HelmetShop | ShieldShop | ArtifactShop | BootShop;
+export type CardProp = ArmorShop | WeaponShop | Ingredient | RingShop | HelmetShop | ShieldShop | ArtifactShop | BootShop;
 
 interface Ingredient {
     _id: string;

@@ -4,7 +4,7 @@ import SellingItemContainer from "./SellingItemContainer";
 import { useEffect, useState } from "react";
 import { SellingContainerInterface } from "@/_common/interfaces/shop/Selling";
 import SellingItem from "./SellingItem";
-import { Product } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
 

@@ -1,12 +1,12 @@
 import React, { useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { Product } from "@/_common/interfaces/shop/Product";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
-import { ArmorShop } from "@/_common/interfaces/shop/CardProps";
+import { ArmorShop } from "@/_common/interfaces/shop/Product";
 
 interface ProductsContainerInterface {
-	products: CardProps[];
+	products: Product[];
   onClickBuy : () => void;
   setProduct: any;
 }
@@ -34,8 +34,8 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
     type: "armor"
   };
 
-  const partitionArray = (array: CardProps[], size: number) => {
-    const result: CardProps[][] = [];
+  const partitionArray = (array: Product[], size: number) => {
+    const result: Product[][] = [];
     for (let i = 0; i < array.length; i += size) {
       let partition = array.slice(i, i + size);
 

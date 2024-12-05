@@ -1,11 +1,11 @@
 import { AllProducts } from "./AllProducts";
-import { CardProps, Product } from "./CardProps";
+import { Product, Product } from "./Product";
 
 export default interface RightContainerInterface {
-	products: CardProps[];
+	products: Product[];
 	displayingScreen: Number;
 	allProducts: AllProducts;
-	setShowingProducts: (loaded: CardProps[]) => void;
+	setShowingProducts: (loaded: Product[]) => void;
 	cartProducts: Product[];
 	setCartProducts: (loaded: Product[]) => void;
 	onClickBuy: () => void;
