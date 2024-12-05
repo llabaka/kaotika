@@ -7,7 +7,7 @@ import CartMainContainer from "./CartMainContainer";
 import SellingHeaders from "./SellingHeaders";
 import SellingContainer from "./SellingContainer";
 import player from '../../data/player.json';
-import CartScreenMainTab from "../CartScreenMainTab";
+import CartScreenMainTab from "./CartScreenMainTab";
 import { Weapon } from "@/_common/interfaces/Weapon";
 import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
