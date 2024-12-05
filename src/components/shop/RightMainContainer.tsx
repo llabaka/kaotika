@@ -1,6 +1,3 @@
-import Card from "./Card/Card";
-import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
-
 import MainNavigator from "./MainNavigator";
 
 import ProductsContainer from "./ProductsContainer";
@@ -14,7 +11,7 @@ import CartScreenMainTab from "../CartScreenMainTab";
 import { Weapon } from "@/_common/interfaces/Weapon";
 import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts}) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct}) => {
 	const mockPlayer = player;
 
 	const cardMock: Weapon = {
@@ -41,8 +38,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 		base_percentage: 12
 	  };
 
-	  const cartMock = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
-
+	
 
 
 	
@@ -53,7 +49,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 					<MainNavigator 
 						allProducts={allProducts}
 						setShowingProducts={setShowingProducts} />
-					<ProductsContainer products={products} />
+					<ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct}/>
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>

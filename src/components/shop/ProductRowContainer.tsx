@@ -7,16 +7,18 @@ import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
 
 interface ProductRowContainerProps {
   cards: CardProps[]; // Espera un array de objetos con la interfaz CardProps
+  onClickBuy: () => void;
+  setProduct: any;
 }
 
-const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards }) => {
+const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct}) => {
 
   return (
     <div className="flex w-full h-[49%] bg-transparent justify-center items-center text-center">
       {cards.map((card, index) => (
         <React.Fragment key={index}>
           {/* Render EmptyCard if card.image is empty, otherwise render CardItem */}
-          {card.image ? <CardItem card={card} /> : <EmptyCard card={card}/>}
+          {card.image ? <CardItem card={card} onClickBuy={onClickBuy} setProduct={setProduct}/> : <EmptyCard card={card}/>}
           {/* Show separator if it's NOT the last item */}
           {index < cards.length - 1 && (
             card.image 

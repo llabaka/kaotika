@@ -28,6 +28,9 @@ const Shop = () => {
   const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
+  const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
+  const [product, setProduct] = useState<CardProps | null>(null);
+  
 
   useEffect(() => {
     setCartProducts((prevCartProducts) =>
@@ -124,16 +127,33 @@ const Shop = () => {
 	if (loading) {
     return <Loading />;
 	}
+
+  const buyButton = () => {
+    setIsVisibleBuyModal(true);
+  }
+
+  const declineButton = () => {
+    setIsVisibleBuyModal(false);
+  }
+
   return (
     <Layout>
       <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <MainShopContainer>
         <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
         <MiddleMainContainer />
-        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
+        <RightMainContainer 
+          products={showingProducts} 
+          displayingScreen={displayingScreen} 
+          allProducts={allProducts} 
+          setShowingProducts={setShowingProducts} 
+          cartProducts={cartProducts} 
+          setCartProducts={setCartProducts}
+          onClickBuy={buyButton}
+          setProduct={setProduct}
+          />
       </MainShopContainer>
-      <BuyingModal/>
-
+      { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
       </div>
     </Layout>
   )

@@ -7,10 +7,11 @@ interface CardLeftContainerProps {
     image: string;
     name: string;
     description: string;
-    _id: string
+    _id: string;
+    onClickBuy: () => void;
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);
@@ -28,12 +29,6 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : Car
         
     }, [isAddToBasket]);
     
-
-
-    const handleBuyButton = () => {
-        setIsBought(prevState => !prevState);
-    }   
-
     const handleAddToBasket = () => {
         setIsAddToBasket(prevState => !prevState);
     }
@@ -98,7 +93,8 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : Car
                         Add Basket
                     </button>
                 <button className="text-white text-xl mr-6 w-[36%] h-[90%] rounded-full flex items-center justify-center " 
-                    onClick={handleBuyButton}
+                    onClick={onClickBuy}
+                    id={`buy_button_${_id}`}
                     >
                         Buy
                 </button>

@@ -8,4 +8,6 @@ export default interface RightContainerInterface {
 	setShowingProducts: (loaded: CardProps[]) => void;
 	cartProducts: Product[];
 	setCartProducts: (loaded: Product[]) => void;
+	onClickBuy: () => void;
+	setProduct: any;
 }

@@ -3,39 +3,15 @@ import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
-import { Armor } from "@/_common/interfaces/Armor";
-import { Weapon } from "@/_common/interfaces/Weapon";
 import { ArmorShop } from "@/_common/interfaces/shop/CardProps";
 
 interface ProductsContainerInterface {
 	products: CardProps[];
+  onClickBuy : () => void;
+  setProduct: any;
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
-
-  const cardMock: Weapon = {
-    _id : "asdadw1219beu21as",
-    min_lvl: 12,
-    image: '/images/equipment/armors/jacket_1.png',
-    modifiers: {
-      intelligence: 12,
-      dexterity: 12,
-      constitution: 20,
-      insanity: 43,
-      charisma: 23,
-      strength: 34
-    },
-    name: 'cardMock',
-    description: 'Descripción prueba de carta lkasndjoasbdiuasd',
-    value: 340,
-    type: "weapon",
-    isUnique: false,
-    isActive: false,
-    die_faces: 2,
-    die_modifier: 1,
-    die_num: 10,
-    base_percentage: 12
-  };
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct}) => {
 
   const emptyCardMock: ArmorShop = {
     _id: "asdadsasdasd",
@@ -58,8 +34,6 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
     type: "armor"
   };
 
-  const cards2 = [cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock, cardMock];
-
   const partitionArray = (array: CardProps[], size: number) => {
     const result: CardProps[][] = [];
     for (let i = 0; i < array.length; i += size) {
@@ -80,14 +54,13 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
   // Particionar el array en grupos de 3
   const partitionedCards = partitionArray(products, 3);
 
-  const cards = [cardMock, cardMock, cardMock];
-
     return (
       <div className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
         <BlankHorizontalSeparator />
       {partitionedCards.map((group, index) => (
         <div key={index}>
-          <ProductRowContainer cards={group} />
+          <ProductRowContainer cards={group} onClickBuy={onClickBuy} 
+            setProduct={setProduct}/>
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />
           ) : (
