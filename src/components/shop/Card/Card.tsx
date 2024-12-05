@@ -6,7 +6,12 @@ import CardLeftContainer from "./Components/CardLeftContainet";
 import CardRigthContainer from "./Components/CardRigthContainer";
 import EffectsContainer from "./Components/effectsContainer";
 
-const Card = (props: Product) => {
+interface CardPropsInterface {
+    props: Product,
+    onClickBuy: () => void;
+}
+
+const Card = ({props, onClickBuy} : CardPropsInterface) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
@@ -60,6 +65,7 @@ const Card = (props: Product) => {
         }
     }, [props]);
 
+
     return(
             <div className="w-[100%] relative h-[23rem] flex flex-row">
                 <Image
@@ -70,7 +76,7 @@ const Card = (props: Product) => {
                     className="z-0"
                 />
                 {/* LEFT CONTAINER */}
-                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!}/>
+                <CardLeftContainer min_lvl={props.min_lvl} value={props.value} image={props.image} name={props.name} description={props.description} _id={props._id}/>
 
                 {/* CARD RIGHT CONTAINER */}
                 { props.modifiers !== undefined ? ( 
@@ -80,7 +86,8 @@ const Card = (props: Product) => {
                     <EffectsContainer effects={effects}/> 
                 ): null
                 }
-        </div>
+                
+            </div>
     )
 };
 

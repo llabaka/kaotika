@@ -7,10 +7,11 @@ interface CardLeftContainerProps {
     image: string;
     name: string;
     description: string;
-    _id: string
+    _id: string;
+    onClickBuy: () => void;
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);
@@ -28,12 +29,6 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : Car
         
     }, [isAddToBasket]);
     
-
-
-    const handleBuyButton = () => {
-        setIsBought(prevState => !prevState);
-    }   
-
     const handleAddToBasket = () => {
         setIsAddToBasket(prevState => !prevState);
     }
@@ -43,8 +38,8 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : Car
             {/* DIV LEVEL */}
             <div className="z-10 relative flex flex-row justify-around items-center w-[100%] h-[16%] ">
                 <p className="text-white text-[25px] font-bold mt-1  w-[20%]">{min_lvl}</p>
-                <div className="flex justify-around w-[38%] h-[75%] mt-5 items-center ml-4">
-                    <p className="text-white text-[25px] font-bold">{value} g</p>
+                <div className="flex justify-around w-[42%] h-[75%] mt-5 items-center ml-4">
+                    <p className="text-white text-[22px] font-bold">{value} g</p>
                     <div className="flex items-center justify-center z-10 text-orange-400 text-3xl mr-3.5">
                         <Image
                             src="/images/shop/CoinsIcon.png"
@@ -98,7 +93,8 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id} : Car
                         Add Basket
                     </button>
                 <button className="text-white text-xl mr-6 w-[36%] h-[90%] rounded-full flex items-center justify-center " 
-                    onClick={handleBuyButton}
+                    onClick={onClickBuy}
+                    id={`buy_button_${_id}`}
                     >
                         Buy
                 </button>
