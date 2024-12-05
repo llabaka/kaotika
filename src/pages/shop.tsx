@@ -134,7 +134,7 @@ const Shop = () => {
 
   const declineButton = () => {
     setIsVisibleBuyModal(false);
-  }
+  } 
 
   return (
     <Layout>
