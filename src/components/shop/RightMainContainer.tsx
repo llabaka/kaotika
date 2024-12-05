@@ -1,3 +1,6 @@
+import Card from "./Card/Card";
+import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
+
 import MainNavigator from "./MainNavigator";
 
 import ProductsContainer from "./ProductsContainer";

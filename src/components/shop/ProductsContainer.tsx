@@ -5,6 +5,7 @@ import { CardProps } from "@/_common/interfaces/shop/CardProps";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { Armor } from "@/_common/interfaces/Armor";
 import { Weapon } from "@/_common/interfaces/Weapon";
+import { ArmorShop } from "@/_common/interfaces/shop/CardProps";
 
 interface ProductsContainerInterface {
 	products: CardProps[];
@@ -36,7 +37,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products}) => {
     base_percentage: 12
   };
 
-  const emptyCardMock: Armor = {
+  const emptyCardMock: ArmorShop = {
     _id: "asdadsasdasd",
     min_lvl: 0,
     image: '',
