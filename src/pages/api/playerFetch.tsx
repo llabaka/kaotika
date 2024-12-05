@@ -9,11 +9,9 @@ export default async function handlerPlayer(req: any, res: any) {
         // Connect to DB
         console.log("CONNECTED TO MONGO");
         await connectDB();
-        
+
         // Obtain player
         const player = await Player.findOne({email: mockSession.email});
-
-        console.log(player);
         
         return res.status(200).json( player );
         } catch (err: any) {

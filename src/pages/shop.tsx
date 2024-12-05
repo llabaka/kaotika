@@ -55,13 +55,10 @@ const Shop = () => {
       const result = await res.json();
 
       // Save all in localStorage
-      localStorage.setItem('shopProducts', JSON.stringify(result));
+      localStorage.setItem('Products', JSON.stringify(result));
 
       //Set all equipments
       setAllProducts(result);
-      
-      //Set player
-      setPlayer(result.player);
       
       //Set all equipment types
       setArmors(result.armors);
@@ -91,9 +88,7 @@ const Shop = () => {
       }
 
       const player = await playerFetch.json();
-
-      // Save all in localStorage
-      localStorage.setItem('player', JSON.stringify(player));
+      setPlayer(player);
 
     } catch (err: any) {
       setError(err.message);
@@ -102,7 +97,7 @@ const Shop = () => {
 
   useEffect(() => {
     fetchPlayer();
-    fetchProducts();
+    checkProducts();
   },[]);
 
   if (loading) {
@@ -113,31 +108,33 @@ const Shop = () => {
     return <div>Error: {error}</div>;
   }
 
-  useEffect(() => {
-    const localStorageProducts = localStorage.getItem('shopProducts');
-    // console.log("LOCAL STORAGE DATA");
-    // console.log(localStorageProducts);
-    //fetchProducts(); //Fetch if localstorage is empty
-    
-    //If localStorage have products set states
-    if (localStorageProducts) {
-      const parsedProducts = JSON.parse(localStorageProducts);
-      setAllProducts(parsedProducts);
-      setArmors(parsedProducts.armors);
-      setBoots(parsedProducts.boots);
-      setHelmets(parsedProducts.helmets);
-      setWeapons(parsedProducts.weapons);
-      setShields(parsedProducts.shields);
-      setRings(parsedProducts.rings);
-      setArtifacts(parsedProducts.artifacts);
-      setIngredients(parsedProducts.ingredients);
-      setPlayer(parsedProducts.player);
-      setShowingProducts(parsedProducts.weapons);
-      
-    } else {
-      //fetchProducts(); //Fetch if localstorage is empty
+  const checkProducts = async () => {
+    const products = await localStorage.getItem('Products');
+    if (products !== null) {
+
+      // El item existe en LocalStorage
+      console.log('El item existe:', products);
+      localStorageProductsHandler(products);
+
+  } else {
+      // El item no existe en LocalStorage
+      fetchProducts();
+      console.log('El item no existe');
     }
-  }, []);
+  }
+
+  const localStorageProductsHandler = (products:any) => {
+    setAllProducts(products);
+    setArmors(products.armors);
+    setBoots(products.boots);
+    setHelmets(products.helmets);
+    setWeapons(products.weapons);
+    setShields(products.shields);
+    setRings(products.rings);
+    setArtifacts(products.artifacts);
+    setIngredients(products.ingredients);
+    setShowingProducts(products.weapons);
+  }
 
 	if (loading) {
     return <Loading />;
