@@ -38,8 +38,8 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
             {/* DIV LEVEL */}
             <div className="z-10 relative flex flex-row justify-around items-center w-[100%] h-[16%] ">
                 <p className="text-white text-[25px] font-bold mt-1  w-[20%]">{min_lvl}</p>
-                <div className="flex justify-around w-[38%] h-[75%] mt-5 items-center ml-4">
-                    <p className="text-white text-[25px] font-bold">{value} g</p>
+                <div className="flex justify-around w-[42%] h-[75%] mt-5 items-center ml-4">
+                    <p className="text-white text-[22px] font-bold">{value} g</p>
                     <div className="flex items-center justify-center z-10 text-orange-400 text-3xl mr-3.5">
                         <Image
                             src="/images/shop/CoinsIcon.png"
