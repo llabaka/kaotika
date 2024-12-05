@@ -12,7 +12,7 @@ export default async function handler(req: any, res: any) {
   try {
     // Connect to DB
     console.log("CONNECTED TO MONGO");
-    const mongoconnection = await connectDB();
+    await connectDB();
 
     // Obtain products
     const helmets = await Helmets.find();

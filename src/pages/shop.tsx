@@ -46,20 +46,12 @@ const Shop = () => {
     
   }, [cartProducts])
 
-  const fetchConnect = async () => {
+  const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/connect');
-      const res2 = await fetch('/api/playerFetch')
-
-      if (!res2.ok) {
-        throw new Error(`Error: ${res2.status}`);
-      }
-
+      const res = await fetch('/api/products');
       if (!res.ok) {
         throw new Error(`Error: ${res.status}`);
       }
-
-      const player = await res2.json();
       const result = await res.json();
 
       // Save all in localStorage
@@ -90,6 +82,29 @@ const Shop = () => {
     }
   };
 
+  const fetchPlayer = async () => {
+    try {
+      const playerFetch = await fetch('/api/playerFetch')
+
+      if (!playerFetch.ok) {
+        throw new Error(`Error: ${playerFetch.status}`);
+      }
+
+      const player = await playerFetch.json();
+
+      // Save all in localStorage
+      localStorage.setItem('player', JSON.stringify(player));
+
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlayer();
+    fetchProducts();
+  },[]);
+
   if (loading) {
     return <Loading />;
   }
@@ -102,7 +117,7 @@ const Shop = () => {
     const localStorageProducts = localStorage.getItem('shopProducts');
     // console.log("LOCAL STORAGE DATA");
     // console.log(localStorageProducts);
-    fetchConnect(); //Fetch if localstorage is empty
+    //fetchProducts(); //Fetch if localstorage is empty
     
     //If localStorage have products set states
     if (localStorageProducts) {
@@ -120,7 +135,7 @@ const Shop = () => {
       setShowingProducts(parsedProducts.weapons);
       
     } else {
-      fetchConnect(); //Fetch if localstorage is empty
+      //fetchProducts(); //Fetch if localstorage is empty
     }
   }, []);
 
