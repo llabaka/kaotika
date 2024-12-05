@@ -4,7 +4,7 @@ import "../styles/globals.css";
 import {NextUIProvider} from "@nextui-org/react";
 import Head from "next/head";
 
-const mockSession = {
+export const mockSession = {
   user: {
     name: 'Asier',
     email: 'asier.arguinchona@ikasle.aeg.eus',

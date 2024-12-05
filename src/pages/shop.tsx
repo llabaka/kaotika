@@ -93,6 +93,7 @@ const Shop = () => {
     const localStorageProducts = localStorage.getItem('shopProducts');
     console.log("LOCAL STORAGE DATA");
     console.log(localStorageProducts);
+    fetchConnect(); //Fetch if localstorage is empty
     
     //If localStorage have products set states
     if (localStorageProducts) {
