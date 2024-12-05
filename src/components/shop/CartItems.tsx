@@ -23,12 +23,12 @@ const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
     };
 
     return(
-        <div className="h-[85%] w-[90%] text-xl border-white border-2 overflow-y-scroll">
+        <div className="h-[85%] w-[90%] text-xl overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
            {cartProducts.map((item, index) => (
                     <div key={index} className="flex w-[100%] h-[23%] items-center justify-between bg-black bg-opacity-50 rounded-lg mt-2">
                         {/* Imagen del objeto */}
                         <div className="w-[12%] h-[100%] ml-3">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-fill border-white border-2" />
+                            <img src={item.image} alt={item.name} className="w-full h-full object-fill" />
                         </div>
                        
                         {/* Nombre del objeto */}

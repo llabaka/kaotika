@@ -9,7 +9,7 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts}) => {
       };
 
     return(
-        <div className="flex h-[15%] w-[90%] border-2 justify-center items-center">
+        <div className="flex h-[15%] w-[90%] justify-center items-center">
             <div className=" flex h-[65%] w-[25%] items-center justify-center " >
                 <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
                     onClick={handleBuyAllButton}>

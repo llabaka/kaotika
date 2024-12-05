@@ -7,7 +7,7 @@ import Image from "next/image";
 const CartTotal:React.FC<CartPriceInterface> = ({totalPrice}) => {
 
     return(
-        <div className="h-[13%] w-[90%] text-xl border-2">
+        <div className="h-[13%] w-[90%] text-xl">
             <div className="flex h-[100%] w-[100%] text-xl justify-between items-center">
                 <p className="h-[80%] ml-3 text-3xl">TOTAL<span className="text-5xl"> :</span></p>
                 <div className="flex w-[25%] h-[80%] justify-center">
