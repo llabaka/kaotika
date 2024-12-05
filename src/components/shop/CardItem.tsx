@@ -3,20 +3,12 @@ import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
 
 interface CardItemProps {
     card: Product;
-    onClickBuy : () => void;
-    setProduct: any;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct } ) => {
-
-    const handleOnClickBuy = () => {
-        onClickBuy();
-        setProduct(card);
-    }
-
+const CardItem: React.FC<CardItemProps> = ({ card }) => {
     return(
         <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
-            <Card props={card} onClickBuy={handleOnClickBuy} />
+            <Card {...card} />
         </div>
     )
 }

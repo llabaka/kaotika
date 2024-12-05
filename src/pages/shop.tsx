@@ -9,10 +9,6 @@ import MainShopContainer from '@/components/shop/MainShopContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { CardProps } from '@/_common/interfaces/shop/CardProps';
-import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
-
-
 import { useEffect, useState } from 'react';
 
 const Shop = () => {
@@ -31,9 +27,6 @@ const Shop = () => {
   const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
-  const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
-  const [product, setProduct] = useState<CardProps | null>(null);
-  
 
   useEffect(() => {
     setCartProducts((prevCartProducts) =>
@@ -152,18 +145,23 @@ const Shop = () => {
 
 	if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
-	}
-  return (
-    <Layout>
-      <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
-      <MainShopContainer>
-        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
-        <MiddleMainContainer />
-        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
-      </MainShopContainer>
-      </div>
-    </Layout>
-  )
+	} else if (!loading && player && allProducts && showingProducts) {
+    return (
+      <Layout>
+        <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
+        <MainShopContainer>
+          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player!}/>
+          <MiddleMainContainer />
+          <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
+        </MainShopContainer>
+        </div>
+      </Layout>
+    )
+  } else{
+    console.log("ESTA EN ELSE");
+    
+  }
+
 }
 
 
