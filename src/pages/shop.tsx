@@ -1,20 +1,19 @@
-import React, { use, useEffect, useState } from 'react';
-import Loading from '@/components/Loading';
+import { Player } from '@/_common/interfaces/Player';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Product } from '@/_common/interfaces/shop/CardProps';
 import Layout from '@/components/Layout';
-import MainShopContainer from '@/components/shop/MainShopContainer';
+import Loading from '@/components/Loading';
+import cartMock from '@/components/shop/helpers/mocks';
 import LeftMainContainer from '@/components/shop/LeftMainContainer';
+import MainShopContainer from '@/components/shop/MainShopContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { CardProps, Product } from '@/_common/interfaces/shop/CardProps';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import cartMock from '@/components/shop/helpers/mocks';
-import { Player } from '@/_common/interfaces/Player';
-import { json } from 'stream/consumers';
+import { useEffect, useState } from 'react';
 
 const Shop = () => {
-	const [loading, setLoading] = useState(false);
-  const [player, setPlayer] = useState<Player>(null);
+	const [loading, setLoading] = useState(true);
+  const [player, setPlayer] = useState<Player>();
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
@@ -23,7 +22,7 @@ const Shop = () => {
   const [rings, setRings] = useState([]);
   const [artifacts, setArtifacts] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [showingProducts, setShowingProducts] = useState<CardProps[] | []>([]);
+  const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
   const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
@@ -92,36 +91,10 @@ const Shop = () => {
 
     } catch (err: any) {
       setError(err.message);
+    } finally {
+      setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchPlayer();
-    //checkProducts();
-  },[]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
-  const checkProducts = async () => {
-    const products = await localStorage.getItem('Products');
-    if (products !== null) {
-
-      // El item existe en LocalStorage
-      console.log('El item existe:', products);
-      localStorageProductsHandler(products);
-
-  } else {
-      // El item no existe en LocalStorage
-      fetchProducts();
-      console.log('El item no existe');
-    }
-  }
 
   const localStorageProductsHandler = (products:any) => {
     setAllProducts(products);
@@ -136,20 +109,59 @@ const Shop = () => {
     setShowingProducts(products.weapons);
   }
 
-	if (loading) {
+
+  const checkProducts = async () => {
+    const products: any = await localStorage.getItem('Products');
+    const parsedProducts = JSON.parse(products);
+    
+    if (products !== null) {
+
+      // El item existe en LocalStorage
+      console.log('El item existe:', parsedProducts);
+      localStorageProductsHandler(parsedProducts);
+      setAllProducts(parsedProducts);
+      setShowingProducts(parsedProducts.weapons)
+
+  } else {
+      // El item no existe en LocalStorage
+      fetchProducts();
+      console.log('El item no existe');
+    }
+  }
+
+
+  useEffect(()=> {
+    fetchPlayer();
+    checkProducts();
+  },[]);
+
+  if (loading) {
     return <Loading />;
-	}
-  return (
-    <Layout>
-      <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
-      <MainShopContainer>
-        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player}/>
-        <MiddleMainContainer />
-        <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
-      </MainShopContainer>
-      </div>
-    </Layout>
-  )
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+	if (loading && !player && !allProducts && !showingProducts) {
+    return <Loading />;
+	} else if (!loading && player && allProducts && showingProducts) {
+    return (
+      <Layout>
+        <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
+        <MainShopContainer>
+          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player!}/>
+          <MiddleMainContainer />
+          <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
+        </MainShopContainer>
+        </div>
+      </Layout>
+    )
+  } else{
+    console.log("ESTA EN ELSE");
+    
+  }
+
 }
 
 

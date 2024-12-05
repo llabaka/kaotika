@@ -19,7 +19,7 @@ export interface Product {
     _id?: string,
     name?: string,
     description?: string,
-    type?: string,
+    type?: "ingredient" | "armor" | "weapon" | "helmet" | "ring" | "shield" | "artifact" | "boot" 
     image?: string,
     effects?: string[];
     defense?: number,

@@ -1,12 +1,12 @@
-import Image from "next/image";
-import CardRigthContainer from "./Components/CardRigthContainer";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
-import { useState, useEffect } from "react";
+import { Product } from "@/_common/interfaces/shop/CardProps";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
-import EffectsContainer from "./Components/effectsContainer";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 import CardLeftContainer from "./Components/CardLeftContainet";
+import CardRigthContainer from "./Components/CardRigthContainer";
+import EffectsContainer from "./Components/effectsContainer";
 
-const Card = (props: CardProps) => {
+const Card = (props: Product) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
@@ -37,7 +37,7 @@ const Card = (props: CardProps) => {
     useEffect(() => {
         setExtraAtribute(renderDefense);
         setWeaponDamage(weaponDamageRender);
-        setBaseDamage(baseDamageRender);
+        setBaseDamage(baseDamageRender!);
 
         switch(props.type){
             case "armor":
@@ -55,7 +55,7 @@ const Card = (props: CardProps) => {
     
             case "ingredient":
                 setIsEquipment(false);
-                setEffects(props.effects);
+                setEffects(props.effects!);
                 break;
         }
     }, [props]);
@@ -70,9 +70,9 @@ const Card = (props: CardProps) => {
                     className="z-0"
                 />
                 {/* LEFT CONTAINER */}
-                <CardLeftContainer min_lvl={props.min_lvl} value={props.value} image={props.image} name={props.name} description={props.description} _id={props._id}/>
+                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!}/>
 
-                {/* CARD RIGHT CONTAINER */}                
+                {/* CARD RIGHT CONTAINER */}
                 { props.modifiers !== undefined ? ( 
                     <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
                 ) : null }

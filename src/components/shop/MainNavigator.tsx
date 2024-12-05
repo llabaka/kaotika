@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
 
 const navigatorImage = require('./../../assets/MainNavigator.png')
 
@@ -11,7 +11,7 @@ interface SelectedButton {
 
 interface MainNavigatorProps {
   allProducts: AllProducts;
-	setShowingProducts: (loaded: CardProps[]) => void;
+	setShowingProducts: (loaded: Product[]) => void;
 }
   
 const MainNavigator = ({allProducts, setShowingProducts} : MainNavigatorProps) => {

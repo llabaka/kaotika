@@ -1,8 +1,8 @@
 import Card from "./Card/Card"
-import { CardProps } from "@/_common/interfaces/shop/CardProps";
+import { CardProps, Product } from "@/_common/interfaces/shop/CardProps";
 
 interface CardItemProps {
-    card: CardProps;
+    card: Product;
 }
 
 const CardItem: React.FC<CardItemProps> = ({ card }) => {

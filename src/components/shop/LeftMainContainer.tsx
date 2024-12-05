@@ -1,21 +1,19 @@
+import { Player } from '@/_common/interfaces/Player';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Product } from '@/_common/interfaces/shop/CardProps';
 import 'boxicons/css/boxicons.min.css';
-import ShopIcons from './ShopIcons';
-import Image from 'next/image';
-import PlayerStatsButtons from './PlayerStatsButtons';
 import ButtonsSeparator from './ButtonsSeparator';
 import EquipmentButtons from './EquipmentButtons';
-import SellerSeparator from './SellerSeparator';
+import PlayerStatsButtons from './PlayerStatsButtons';
 import Seller from './Seller';
-import player from '../../data/player.json'
-import { CardProps } from '@/_common/interfaces/shop/CardProps';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import { Player } from '@/_common/interfaces/Player';
+import SellerSeparator from './SellerSeparator';
+import ShopIcons from './ShopIcons';
 
 interface LeftMainContainerInterface {
     setDisplayingScreen: (loaded:number) => void;
 	allProducts: AllProducts;
-	showingProducts: CardProps[];
-	setShowingProducts: (loaded: CardProps[]) => void;
+	showingProducts: Product[];
+	setShowingProducts: (loaded: Product[]) => void;
 	player: Player
 }
 
