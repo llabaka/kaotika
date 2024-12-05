@@ -9,6 +9,7 @@ import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { CardProps, Product } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import cartMock from '@/components/shop/helpers/mocks';
+import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
 
 
 
@@ -131,6 +132,8 @@ const Shop = () => {
         <MiddleMainContainer />
         <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
       </MainShopContainer>
+      <BuyingModal/>
+
       </div>
     </Layout>
   )
