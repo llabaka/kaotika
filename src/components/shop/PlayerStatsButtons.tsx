@@ -2,7 +2,7 @@ import { Player } from '@/_common/interfaces/Player';
 import Image from 'next/image';
 
 interface PlayerStatsButtonsProps {
-    player: Player;
+    player: Player
 }
 
 const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {

@@ -9,17 +9,19 @@ import Seller from './Seller';
 import player from '../../data/player.json'
 import { CardProps } from '@/_common/interfaces/shop/CardProps';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Player } from '@/_common/interfaces/Player';
 
 interface LeftMainContainerInterface {
     setDisplayingScreen: (loaded:number) => void;
 	allProducts: AllProducts;
 	showingProducts: CardProps[];
 	setShowingProducts: (loaded: CardProps[]) => void;
+	player: Player
 }
 
-const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen, allProducts, showingProducts, setShowingProducts})=> {
+const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingScreen, allProducts, showingProducts, setShowingProducts, player})=> {
 
-	const mockPlayer = player;
+	console.log(player);
 
 	return (
 		<div className="flex flex-col justify-start items-center w-3/12 p-4 rounded-md">
@@ -34,7 +36,7 @@ const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingSc
 			<SellerSeparator></SellerSeparator>
 
 			{/* Player Stats Buttons */}
-			<PlayerStatsButtons player={mockPlayer} />
+			<PlayerStatsButtons player={player} />
 
 			{/* Buttons Separator */}
 			<ButtonsSeparator></ButtonsSeparator>

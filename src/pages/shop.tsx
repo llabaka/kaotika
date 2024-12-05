@@ -14,7 +14,7 @@ import { json } from 'stream/consumers';
 
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
-  const [player, setPlayer] = useState<Player | {}>({});
+  const [player, setPlayer] = useState<Player>(null);
   const [armors, setArmors] = useState([]);
   const [boots, setBoots] = useState([]);
   const [helmets, setHelmets] = useState([]);
@@ -97,7 +97,7 @@ const Shop = () => {
 
   useEffect(() => {
     fetchPlayer();
-    checkProducts();
+    //checkProducts();
   },[]);
 
   if (loading) {
@@ -143,7 +143,7 @@ const Shop = () => {
     <Layout>
       <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
       <MainShopContainer>
-        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
+        <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player}/>
         <MiddleMainContainer />
         <RightMainContainer products={showingProducts} displayingScreen={displayingScreen} allProducts={allProducts} setShowingProducts={setShowingProducts} cartProducts={cartProducts} setCartProducts={setCartProducts}/>
       </MainShopContainer>
