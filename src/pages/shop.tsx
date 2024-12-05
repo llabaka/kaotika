@@ -136,6 +136,9 @@ const Shop = () => {
     setIsVisibleBuyModal(false);
   }
 
+  if (loading && !player && !allProducts && !showingProducts) {
+    return <Loading />;
+  } else if (!loading && player && allProducts && showingProducts) 
   return (
     <Layout>
       <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
