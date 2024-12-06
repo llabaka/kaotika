@@ -150,7 +150,7 @@ const Shop = () => {
 
   const declineButton = () => {
     setIsVisibleBuyModal(false);
-  }
+  } 
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
