@@ -27,12 +27,15 @@ const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, show
 
         switch (buttonId) {
             case 0:
+                setShowingProducts([]);
                 setShowingProducts(allProducts!.weapons);
                 break;
             case 1:
+                setShowingProducts([]);
                 setShowingProducts(allProducts!.armors);
                 break;
             case 2:
+                setShowingProducts([]);
                 setShowingProducts(allProducts!.boots);
                 break;
             case 3:
