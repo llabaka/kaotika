@@ -148,7 +148,7 @@ const Shop = () => {
     setIsVisibleBuyModal(true);
   }
 
-  const declineButton = () => {
+  const closeModal = () => {
     setIsVisibleBuyModal(false);
   } 
 
@@ -172,7 +172,7 @@ const Shop = () => {
             setProduct={setProduct}
             />
         </MainShopContainer>
-        { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
+        { isVisibleBuyModal ? ( <BuyingModal onclick={closeModal} product={product} player={player}/> ) : null }  
         </div>
       </Layout>
     )

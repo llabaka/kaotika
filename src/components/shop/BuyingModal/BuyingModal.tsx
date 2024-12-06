@@ -1,15 +1,18 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Product } from "@/_common/interfaces/shop/Product";
+import { Player } from "@/_common/interfaces/Player";
+import { buyProductClient } from "./buyProductClient";
 
 // Open Modal boolean 
 // product
 interface  BuyingModalProps {
-    product: Product | null;
+    product: Product;
     onclick: () => void;
+    player: Player;
 }
 
-const BuyingModal = ({product, onclick} : BuyingModalProps) => {
+const BuyingModal = ({product, onclick, player} : BuyingModalProps) => {
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
     const imageFake = "/images/equipment/armors/armor_20.png"
     const buttonImage = "/images/shop/ManagePlayerButton.png";
@@ -23,6 +26,21 @@ const BuyingModal = ({product, onclick} : BuyingModalProps) => {
 
     }, []);
 
+    const buyButtonHandler = async() => {
+        // check gold
+        const productValue = product?.value!;
+        const playerGold = player.gold;
+        
+        if(playerGold > productValue){
+
+            buyProductClient(player._id, product._id!, product.type!);
+            console.log("Procede a comprar");
+        }
+
+        onclick(); // Cierra el modal
+    }
+
+    
     return (
         <div className="w-[100%] h-full absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
             
@@ -48,7 +66,8 @@ const BuyingModal = ({product, onclick} : BuyingModalProps) => {
                             
                     </div>
                     <div className="w-[50%] h-[90%] flex flex-col items-center justify-center">
-                        <div className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer">
+                        <div className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer"
+                            onClick={buyButtonHandler}>
                             <Image
                                 src={buttonImage}
                                 fill
