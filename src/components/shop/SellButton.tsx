@@ -6,10 +6,10 @@ const handleSellPress = (onClickBuy: () => void) =>{
     onClickBuy();
 }
 
-const SellButton:React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickBuy }) =>  {
+const SellButton:React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickSell }) =>  {
     return (
         <div className='w-[35%] h-full'>
-            <button onClick={() => handleSellPress(onClickBuy)} className="flex relative w-full h-full items-center justify-center">
+            <button onClick={() => handleSellPress(onClickSell)} className="flex relative w-full h-full items-center justify-center">
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Selling Item Frame"

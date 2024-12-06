@@ -11,6 +11,7 @@ import cartMock from '@/components/shop/helpers/mocks';
 import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
 import { Player } from '@/_common/interfaces/Player';
 import { Product } from '@/_common/interfaces/shop/Product';
+import SellingModal from '@/components/shop/BuyingModal/SellingModal';
 
 
 
@@ -31,6 +32,7 @@ const Shop = () => {
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
+  const [isVisibleSellModal, setIsVisibleSellModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
   
 
@@ -152,6 +154,14 @@ const Shop = () => {
     setIsVisibleBuyModal(false);
   } 
 
+  const sellButton = () => {
+    setIsVisibleSellModal(true);
+  }
+
+  const declineSellButton = () => {
+    setIsVisibleSellModal(false);
+  } 
+
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
   } else if (!loading && player && allProducts && showingProducts) {
@@ -169,11 +179,13 @@ const Shop = () => {
             cartProducts={cartProducts} 
             setCartProducts={setCartProducts}
             onClickBuy={buyButton}
+            onClickSell={sellButton}
             setProduct={setProduct}
             player={player}
             />
         </MainShopContainer>
         { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
+        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} product={product}/> ) : null }  
         </div>
       </Layout>
     )

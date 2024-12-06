@@ -2,7 +2,7 @@ import { SellingButtonsInterface } from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
 import SellButton from './SellButton';
 
-const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickBuy }) => {
+const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickSell }) => {
     
     // Selling Price 1/3 value
     const sellingPrice = Math.floor(sellingItem.value / 3);
@@ -44,7 +44,7 @@ const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem, player
                 </div>
 
                 {/* Sell Button */}
-                <SellButton sellingItem={sellingItem} player={player} onClickBuy={onClickBuy}/>
+                <SellButton sellingItem={sellingItem} player={player} onClickSell={onClickSell}/>
             </div>
         </div>
     )
