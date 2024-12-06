@@ -15,7 +15,8 @@ export const buyProductClient = async(playerId: string, productId: string, type:
 
         if(!response.ok){
             const errorData = await response.json();
-            throw new Error(errorData.error || `Uknown Error`);
+            console.log(errorData.error || `Uknown error`);
+            return;
         }
 
         const data = await response.json();
