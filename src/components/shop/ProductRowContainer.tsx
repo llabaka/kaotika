@@ -14,7 +14,7 @@ interface ProductRowContainerProps {
 const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct}) => {
 
   return (
-    <div className="flex w-full h-[49%] bg-transparent justify-center items-center text-center">
+    <div className="flex w-full h-[49%] bg-transparent justify-center items-center text-center z-20">
       {cards.map((card, index) => (
         <React.Fragment key={index}>
           {/* Render EmptyCard if card.image is empty, otherwise render CardItem */}

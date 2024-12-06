@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { Product } from "@/_common/interfaces/shop/Product";
@@ -13,7 +13,31 @@ interface ProductsContainerInterface {
 
 const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct}) => {
 
-  const emptyCardMock: ArmorShop = {
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useEffect(() => {
+    console.log("ENTRA AL USEFFECT DE COUNT");
+    
+    if (products.length > 0) {
+      let interval = setInterval(() => {
+        setVisibleCount((prevCount) => {
+          if (prevCount < products.length) {
+            return prevCount + 3;
+          } else {
+            clearInterval(interval);
+            return prevCount;
+          }
+        });
+      }, 1000);
+  
+      return () => clearInterval(interval); 
+    }
+  }, [products]);
+
+
+    const visibleProducts = products.slice(0, visibleCount);
+
+  const emptyCardMock: Product = {
     _id: "asdadsasdasd",
     min_lvl: 0,
     image: '',
@@ -52,7 +76,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
   };
 
   // Particionar el array en grupos de 3
-  const partitionedCards = partitionArray(products, 3);
+  const partitionedCards = partitionArray(visibleProducts, 3);
 
     return (
       <div className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">

@@ -15,7 +15,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct } ) =>
     }
 
     return(
-        <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition">
+        <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition z-20 mt-1 mb-1">
             <Card props={card} onClickBuy={handleOnClickBuy} />
         </div>
     )

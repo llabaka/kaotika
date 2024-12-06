@@ -32,24 +32,7 @@ const Shop = () => {
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
-  const [visibleProductsCount, setVisibleProductsCount] = useState(0);
-
-  useEffect(() => {
-    if (showingProducts.length > 0) {
-      let interval = setInterval(() => {
-        setVisibleProductsCount((prevCount) => {
-          if (prevCount < showingProducts.length) {
-            return prevCount + 1;
-          } else {
-            clearInterval(interval);
-            return prevCount;
-          }
-        });
-      }, 200); // Ajusta el intervalo (200ms por producto) según prefieras
-  
-      return () => clearInterval(interval); // Limpia el temporizador al desmontar
-    }
-  }, [showingProducts]);
+ 
   
 
   useEffect(() => {
