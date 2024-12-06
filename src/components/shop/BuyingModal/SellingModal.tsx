@@ -11,7 +11,6 @@ interface  SellingModalProps {
 
 const SellingModal = ({product, onClickSell} : SellingModalProps) => {
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
-    const imageFake = "/images/equipment/armors/armor_20.png"
     const buttonImage = "/images/shop/ManagePlayerButton.png";
 
     useEffect(() => {
@@ -34,7 +33,7 @@ const SellingModal = ({product, onClickSell} : SellingModalProps) => {
                     sizes='(max-width: 953px) 100vw'
                     />
                     
-                <p className="text-[34px] text-center z-10 text-white">Are you sure you want to buy the
+                <p className="text-[34px] text-center z-10 text-white">Are you sure you want to sell the
                     <span className="text-orange-400"> {product?.name}</span> for <span className="text-orange-400">{product?.value} g</span></p>
                 <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
                     {/* DIV PARA IMAGEN Y BOTONES */}
