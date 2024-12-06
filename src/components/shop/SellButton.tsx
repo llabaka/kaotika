@@ -2,14 +2,14 @@ import { Product } from '@/_common/interfaces/shop/Product';
 import { SellingButtonsInterface } from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
 
-const handleSellPress = (sellingItem: Product) =>{
-    console.log(sellingItem.name);
+const handleSellPress = (onClickBuy: () => void) =>{
+    onClickBuy();
 }
 
-const SellButton:React.FC<SellingButtonsInterface> = ({ sellingItem, player }) =>  {
+const SellButton:React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickBuy }) =>  {
     return (
         <div className='w-[35%] h-full'>
-            <button onClick={() => handleSellPress(sellingItem)} className="flex relative w-full h-full items-center justify-center">
+            <button onClick={() => handleSellPress(onClickBuy)} className="flex relative w-full h-full items-center justify-center">
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Selling Item Frame"

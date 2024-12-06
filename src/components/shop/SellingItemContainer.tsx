@@ -3,7 +3,7 @@ import SellingButtons from './SellingButtons';
 import SellingItem from './SellingItem';
 
 
-const SellingItemContainer: React.FC<SellingItemInterface> = ({ sellingImage, sellingItem, player }) =>{
+const SellingItemContainer: React.FC<SellingItemInterface> = ({ sellingImage, sellingItem, player, onClickBuy }) =>{
     return (
         <div className="flex-col w-[47%]">
             <div className="flex flex-col justify-start items-center h-[97%] mt-[5%]">
@@ -12,7 +12,7 @@ const SellingItemContainer: React.FC<SellingItemInterface> = ({ sellingImage, se
                 <SellingItem sellingImage={sellingImage}/>
 
                 {/* Selling Buttons */}
-                <SellingButtons sellingItem={sellingItem} player={player}/>
+                <SellingButtons sellingItem={sellingItem} player={player} onClickBuy={onClickBuy}/>
             </div>
         </div>
     )

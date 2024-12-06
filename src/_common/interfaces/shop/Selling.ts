@@ -4,10 +4,12 @@ import { Product } from "./Product";
 export default interface SellingItemInterface {
 	sellingImage: String;
 	sellingItem: Product;
-	player: Player
+	player: Player;
+	onClickBuy : () => void;
 }
 export interface SellingContainerInterface {
 	player: Player;
+	onClickBuy : () => void;
 }
 
 export interface SellingItemImageInterface {
@@ -17,4 +19,5 @@ export interface SellingItemImageInterface {
 export interface SellingButtonsInterface {
 	sellingItem: Product;
 	player: Player
+	onClickBuy : () => void;
 }
