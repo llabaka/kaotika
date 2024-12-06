@@ -1,7 +1,7 @@
 import { SellingButtonsInterface } from '@/_common/interfaces/shop/Selling';
 import Image from 'next/image';
 
-const SellingButtons: React.FC<SellingButtonsInterface> = ({ player, sellingItem }) => {
+const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem }) => {
 
     // Selling Price 1/3 value
     const sellingPrice = Math.floor(sellingItem.value / 3);

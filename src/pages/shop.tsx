@@ -170,6 +170,7 @@ const Shop = () => {
             setCartProducts={setCartProducts}
             onClickBuy={buyButton}
             setProduct={setProduct}
+            player={player}
             />
         </MainShopContainer>
         { isVisibleBuyModal ? ( <BuyingModal onclick={declineButton} product={product}/> ) : null }  
