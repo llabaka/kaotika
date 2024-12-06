@@ -7,12 +7,13 @@ import { buyProductClient } from "./buyProductClient";
 // Open Modal boolean 
 // product
 interface  BuyingModalProps {
-    product: Product;
+    product: Product | null;
     onclick: () => void;
     player: Player;
+    setPlayer: any;
 }
 
-const BuyingModal = ({product, onclick, player} : BuyingModalProps) => {
+const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) => {
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
     const imageFake = "/images/equipment/armors/armor_20.png"
     const buttonImage = "/images/shop/ManagePlayerButton.png";
@@ -33,8 +34,12 @@ const BuyingModal = ({product, onclick, player} : BuyingModalProps) => {
         
         if(playerGold > productValue){
 
-            buyProductClient(player._id, product._id!, product.type!);
-            console.log("Procede a comprar");
+            if(product !== null){
+                const response = await buyProductClient(player._id, product._id!, product.type!);
+                const updatePlayer = response.data;
+                setPlayer(updatePlayer);
+                console.log("Procede a comprar");
+            }
         }else{
             console.log("EL jugador no tiene suficiente oro CLIENT");
         }

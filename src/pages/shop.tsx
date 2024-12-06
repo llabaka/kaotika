@@ -160,7 +160,13 @@ const Shop = () => {
             player={player}
             />
         </MainShopContainer>
-        { isVisibleBuyModal ? ( <BuyingModal onclick={closeModal} product={product} player={player}/> ) : null }  
+        { isVisibleBuyModal ? ( 
+          <BuyingModal 
+            onclick={closeModal} 
+            product={product} 
+            player={player}
+            setPlayer={setPlayer}
+            /> ) : null }  
         </div>
       </Layout>
     )
