@@ -25,17 +25,17 @@ const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, show
     const handleButtonClick = (buttonId: number) => {
         setActiveButton((prev) => (prev === buttonId ? 0 : buttonId));
 
+            // Vaciar los productos antes de cargar los nuevos
+            setShowingProducts([]);
+
         switch (buttonId) {
             case 0:
-                setShowingProducts([]);
                 setShowingProducts(allProducts!.weapons);
                 break;
             case 1:
-                setShowingProducts([]);
                 setShowingProducts(allProducts!.armors);
                 break;
             case 2:
-                setShowingProducts([]);
                 setShowingProducts(allProducts!.boots);
                 break;
             case 3:

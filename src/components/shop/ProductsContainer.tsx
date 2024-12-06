@@ -18,19 +18,25 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
     const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    setVisibleCount(0); // Resetear visibleCount a 0
+    
     if (products.length > 0) {
       let interval = setInterval(() => {
         setVisibleCount((prevCount) => {
           if (prevCount < products.length) {
             return prevCount + 3;
           } else {
-            clearInterval(interval);
+            console.log("INTERVAL DETENIDO");
+            clearInterval(interval); // Detener el intervalo
+            setVisibleCount(0);
             return prevCount;
           }
         });
-      }, 500);
-  
-      return () => clearInterval(interval); 
+      }, 400);
+
+      return () => {
+        clearInterval(interval); // Limpiar el intervalo al desmontar
+      };
     }
   }, [products]);
 
