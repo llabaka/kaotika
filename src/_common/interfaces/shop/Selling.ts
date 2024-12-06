@@ -4,6 +4,7 @@ import { Product } from "./Product";
 export default interface SellingItemInterface {
 	sellingImage: String;
 	sellingItem: Product;
+	player: Player
 }
 export interface SellingContainerInterface {
 	player: Player;
@@ -15,4 +16,5 @@ export interface SellingItemImageInterface {
 
 export interface SellingButtonsInterface {
 	sellingItem: Product;
+	player: Player
 }
