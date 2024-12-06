@@ -40,7 +40,7 @@ const BuyingModal = ({product, onclick} : BuyingModalProps) => {
                     {/* DIV PARA IMAGEN Y BOTONES */}
                     <div className="w-[34%] h-[90%] relative">
                         <Image 
-                            src={product!.image}
+                            src={product?.image!}
                             fill
                             alt="item_image"
                             sizes="(max-width: 300px) 100vw"

@@ -17,5 +17,6 @@ export default async function handlerPlayer(req: any, res: any) {
         } catch (err: any) {
         console.error("Error fetching player:", err.message);
         return res.status(500).json({ error: "Internal Server Error" });
-    }
+
+        }
 }

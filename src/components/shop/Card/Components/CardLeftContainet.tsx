@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface CardLeftContainerProps {
-    min_lvl: number | null;
+    min_lvl: number | null ;
     value: number;
     image: string;
     name: string;

@@ -1,13 +1,13 @@
 import Image from "next/image";
 import CardRigthContainer from "./Components/CardRigthContainer";
-import { Product } from "@/_common/interfaces/shop/Product";
+import { CardProp, Product } from "@/_common/interfaces/shop/Product";
 import { useState, useEffect } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import EffectsContainer from "./Components/effectsContainer";
 import CardLeftContainer from "./Components/CardLeftContainet";
 
 interface ProductInterface {
-    props: Product,
+    props: CardProp,
     onClickBuy: () => void;
 }
 
