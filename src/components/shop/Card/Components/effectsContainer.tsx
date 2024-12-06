@@ -25,7 +25,7 @@ const EffectsContainer: React.FC<EffectsContainerProps> = ({ effects }) => {
             }
             setWords([...updatedWords]);
         });
-    } , []);
+    } , [effects]);
 
     return (
         <div className="z-10 relative flex flex-col p-2 w-[34%] px-2 ">

@@ -1,0 +1,16 @@
+.row-container-animation {
+    animation: scaleUpAndDown 1s ease-out forwards;
+  }
+  
+  @keyframes scaleUpAndDown {
+    0% {
+      transform: scale(1.05);
+    }
+    50% {
+      transform: scale(1.10);
+    }
+    100% {
+      transform: scale(1.00);
+    }
+  }
+  

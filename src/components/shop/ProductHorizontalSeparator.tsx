@@ -4,9 +4,9 @@ const ProductHorizontalSeparator = () => {
 
     return(
     <div className="text-gray-400 bg-transparent h-6 w-full text-sm text-center justify-center items-center">
-         <div className="relative w-full h-2 top-[50%]">
+         <div className="relative w-full h-full top-[10%]">
          <Image
-          src="/images/shop/HorizontalSeparator3.png"
+          src="/images/shop/CartSeparator2.png"
           alt="HorizontalSeparator"
           fill
           className="z-0"

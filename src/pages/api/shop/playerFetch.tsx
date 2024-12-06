@@ -1,6 +1,5 @@
-
-import Player from "./models/PlayerModel";
-import { mockSession } from "../_app";
+import Player from "../models/PlayerModel";
+import { mockSession } from "@/pages/_app";
 import connectDB from "../../../../db/connection";
 
 
@@ -13,7 +12,6 @@ export default async function handlerPlayer(req: any, res: any) {
 
         // Obtain player
         const player = await Player.findOne({email: mockSession.email});
-        
         return res.status(200).json( player );
         } catch (err: any) {
         console.error("Error fetching player:", err.message);
