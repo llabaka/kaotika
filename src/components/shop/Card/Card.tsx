@@ -9,9 +9,10 @@ import CardLeftContainer from "./Components/CardLeftContainet";
 interface ProductInterface {
     props: Product,
     onClickBuy: () => void;
+    onClickAddToCart: () => void;
 }
 
-const Card = ({props, onClickBuy} : ProductInterface) => {
+const Card = ({props, onClickBuy, onClickAddToCart} : ProductInterface) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
@@ -76,7 +77,7 @@ const Card = ({props, onClickBuy} : ProductInterface) => {
                     className="z-0"
                 />
                 {/* LEFT CONTAINER */}
-                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!} onClickBuy={onClickBuy}/>
+                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!} onClickBuy={onClickBuy} onClickAddToCart={onClickAddToCart}/>
 
                 {/* CARD RIGHT CONTAINER */}                
                 { props.modifiers !== undefined ? ( 

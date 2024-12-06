@@ -1,3 +1,4 @@
+import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,9 +10,10 @@ interface CardLeftContainerProps {
     description: string;
     _id: string;
     onClickBuy: () => void;
+    onClickAddToCart: () => void;
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);
@@ -87,7 +89,7 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
             </div>
             <div className="h-[12%] w-[100%] flex justify-around">
                 <button className="text-white text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center " 
-                    onClick={handleAddToBasket}
+                    onClick={onClickAddToCart}
                     id={_id}
                     >
                         Add Basket

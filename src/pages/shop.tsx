@@ -27,29 +27,15 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
-  const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
+  const [cartProducts, setCartProducts] = useState<Product[] | []>([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
- 
-  
-
-  useEffect(() => {
-    setCartProducts((prevCartProducts) =>
-      prevCartProducts.map((product) =>
-        product.quantity === undefined
-          ? { ...product, quantity: 1 }
-          : product
-      )
-    );
-  }, []);
 
   useEffect(() => {
     console.log("CART PRODUCTS NOW:");
     console.log(cartProducts);
-    
-    
   }, [cartProducts])
 
   const fetchProducts = async () => {

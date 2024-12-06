@@ -10,9 +10,10 @@ interface ProductsContainerInterface {
   onClickBuy : () => void;
   setProduct: any;
   setCartProducts: (loaded: Product[]) => void
+  cartProducts: Product[];
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct}) => {
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts}) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
     // Referencia para el contenedor del ProductsContainer
@@ -100,7 +101,9 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
       {partitionedCards.map((group, index) => (
         <div key={index}>
           <ProductRowContainer cards={group} onClickBuy={onClickBuy} 
-            setProduct={setProduct}/>
+            setProduct={setProduct}
+            cartProducts={cartProducts}
+            setCartProducts={setCartProducts}/>
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />
           ) : (
