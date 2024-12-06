@@ -1,15 +1,18 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Product } from "@/_common/interfaces/shop/Product";
+import { Player } from "@/_common/interfaces/Player";
 
 // Open Modal boolean 
 // product
 interface  SellingModalProps {
-    product: Product | null;
+    sellingItem: Product | null;
 	onClickSell : () => void;
+    player: Player,
+    setPlayer: (loaded: Player) => void;
 }
 
-const SellingModal = ({product, onClickSell} : SellingModalProps) => {
+const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingModalProps) => {
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
     const buttonImage = "/images/shop/ManagePlayerButton.png";
 
@@ -22,12 +25,37 @@ const SellingModal = ({product, onClickSell} : SellingModalProps) => {
 
     }, []);
 
+    // Check if player has the item
+    const checkItemInInventory = (): Boolean => {
+        
+        if (!sellingItem) return false;
+
+        const inventoryCategories = Object.values(player.inventory);
+
+        // Find Item in all categories of the inventory
+        for (const type of inventoryCategories) {
+            if (Array.isArray(type) && type.some(playerInventoryItem => playerInventoryItem._id === sellingItem._id)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
     const sellButtonHandler = () => {
         console.log("PULSADO VENDER");
-        
-        //Close modal
+
+        const playerHaveItem = checkItemInInventory();
+
+        if (playerHaveItem) {
+            console.log("SELL ITEM");
+        } else {
+            console.log("PLAYER DON'T HAVE THIS ITEM");
+        }
+
+        // Cerrar el modal
         onClickSell(); 
-    }
+    };
+
 
     return (
         <div className="w-[100%] h-full absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
@@ -41,12 +69,12 @@ const SellingModal = ({product, onClickSell} : SellingModalProps) => {
                     />
                     
                 <p className="text-[34px] text-center z-10 text-white">Are you sure you want to sell the
-                    <span className="text-orange-400"> {product?.name}</span> for <span className="text-orange-400">{product?.value} g</span></p>
+                    <span className="text-orange-400"> {sellingItem?.name}</span> for <span className="text-orange-400">{sellingItem?.value} g</span></p>
                 <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
                     {/* DIV PARA IMAGEN Y BOTONES */}
                     <div className="w-[34%] h-[90%] relative">
                         <Image 
-                            src={product?.image!}
+                            src={sellingItem?.image!}
                             fill
                             alt="item_image"
                             sizes="(max-width: 300px) 100vw"

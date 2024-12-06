@@ -178,7 +178,7 @@ const Shop = () => {
             player={player}
             setPlayer={setPlayer}
             /> ) : null }  
-        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} product={product}/> ) : null }  
+        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer}/> ) : null }  
         </div>
       </Layout>
     )
