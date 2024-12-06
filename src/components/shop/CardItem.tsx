@@ -28,13 +28,16 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
             ]);
         } else {
             // Si el producto ya existe, actualizar su cantidad (si no tiene el atributo quantity, añadirlo)
-            setCartProducts((prevCartProducts : Product[] | []) =>
-                prevCartProducts.map((product) =>
-                    product._id === card._id
-                        ? { ...product, quantity: product.quantity ? product.quantity + 1 : 1 }
-                        : product
-                )
-            );
+            if(card.type === "ingredient") {
+                setCartProducts((prevCartProducts : Product[] | []) =>
+                    prevCartProducts.map((product) =>
+                        product._id === card._id
+                            ? { ...product, quantity: product.quantity ? product.quantity + 1 : 1 }
+                            : product
+                    )
+                );
+            }
+          
         }
     }
 
