@@ -1,5 +1,6 @@
+import { Player } from "../Player";
 import { AllProducts } from "./AllProducts";
-import { Product, Product } from "./Product";
+import { Product } from "./Product";
 
 export default interface RightContainerInterface {
 	products: Product[];
@@ -10,4 +11,5 @@ export default interface RightContainerInterface {
 	setCartProducts: (loaded: Product[]) => void;
 	onClickBuy: () => void;
 	setProduct: any;
+	player: Player;
 }

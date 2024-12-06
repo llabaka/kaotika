@@ -3,7 +3,6 @@ import { Product } from "./Product";
 
 export default interface SellingItemInterface {
 	sellingImage: String;
-	player: Player
 	sellingItem: Product;
 }
 export interface SellingContainerInterface {
@@ -15,6 +14,5 @@ export interface SellingItemImageInterface {
 }
 
 export interface SellingButtonsInterface {
-	player: Player;
 	sellingItem: Product;
 }
