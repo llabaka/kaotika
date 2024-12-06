@@ -22,6 +22,13 @@ const SellingModal = ({product, onClickSell} : SellingModalProps) => {
 
     }, []);
 
+    const sellButtonHandler = () => {
+        console.log("PULSADO VENDER");
+        
+        //Close modal
+        onClickSell(); 
+    }
+
     return (
         <div className="w-[100%] h-full absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
             
@@ -47,7 +54,7 @@ const SellingModal = ({product, onClickSell} : SellingModalProps) => {
                             
                     </div>
                     <div className="w-[50%] h-[90%] flex flex-col items-center justify-center">
-                        <div className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer">
+                        <div onClick={sellButtonHandler} className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer">
                             <Image
                                 src={buttonImage}
                                 fill
