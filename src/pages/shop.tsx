@@ -178,6 +178,7 @@ const Shop = () => {
     )
   } else {
     console.log("ESTA EN ELSE");
+    return <Loading />;
   }
 }
 
