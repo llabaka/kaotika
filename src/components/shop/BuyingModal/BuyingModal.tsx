@@ -35,6 +35,8 @@ const BuyingModal = ({product, onclick, player} : BuyingModalProps) => {
 
             buyProductClient(player._id, product._id!, product.type!);
             console.log("Procede a comprar");
+        }else{
+            console.log("EL jugador no tiene suficiente oro CLIENT");
         }
 
         onclick(); // Cierra el modal
