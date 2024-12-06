@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { Product } from "@/_common/interfaces/shop/Product";
@@ -14,10 +14,10 @@ interface ProductsContainerInterface {
 const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct}) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
+    // Referencia para el contenedor del ProductsContainer
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    console.log("ENTRA AL USEFFECT DE COUNT");
-    
     if (products.length > 0) {
       let interval = setInterval(() => {
         setVisibleCount((prevCount) => {
@@ -28,7 +28,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
             return prevCount;
           }
         });
-      }, 1000);
+      }, 500);
   
       return () => clearInterval(interval); 
     }
@@ -78,8 +78,17 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
   // Particionar el array en grupos de 3
   const partitionedCards = partitionArray(visibleProducts, 3);
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0; // Mueve el scroll hacia arriba
+      window.scrollTo(0, 0); // Desplaza el scroll hacia arriba
+    }
+  }, [products]);
+
     return (
-      <div className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
+      <div 
+      ref={containerRef} // Asignamos la referencia aquí
+      className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
         <BlankHorizontalSeparator />
       {partitionedCards.map((group, index) => (
         <div key={index}>
