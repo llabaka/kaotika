@@ -1,7 +1,7 @@
 export const sellingProductClient = async(playerId: string, productId: string, type: string) => {
 
     try {
-        const response = await fetch('/api/shop/buyObject', {
+        const response = await fetch('/api/shop/sellObject', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json',
@@ -20,11 +20,11 @@ export const sellingProductClient = async(playerId: string, productId: string, t
         }
 
         const data = await response.json();
-        console.log('Buy succesfull: ', data);
+        console.log('Sell succesfull: ', data);
         return data;
     }
     catch (error : any){
-        console.error('Error in buying process: ', error);
+        console.error('Error in selling process: ', error);
         throw error;
     }
 }

@@ -50,6 +50,7 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
             console.log("SELL ITEM");
             const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
             const updatePlayer = response.data;
+            console.log(updatePlayer);
             setPlayer(updatePlayer);
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
