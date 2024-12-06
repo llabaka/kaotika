@@ -9,6 +9,7 @@ interface ProductsContainerInterface {
 	products: Product[];
   onClickBuy : () => void;
   setProduct: any;
+  setCartProducts: (loaded: Product[]) => void
 }
 
 const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct}) => {
