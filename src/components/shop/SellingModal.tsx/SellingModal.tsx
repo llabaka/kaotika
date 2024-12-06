@@ -2,7 +2,7 @@ import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import { useEffect } from "react";
-import { buyProductClient } from "../BuyingModal/buyProductClient";
+import { sellingProductClient } from "./sellingProductClient";
 
 // Open Modal boolean 
 // product
@@ -48,7 +48,7 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
 
         if (playerHaveItem) {
             console.log("SELL ITEM");
-            const response = await buyProductClient(player._id, sellingItem._id!, sellingItem.type!);
+            const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
             const updatePlayer = response.data;
             setPlayer(updatePlayer);
         } else {
