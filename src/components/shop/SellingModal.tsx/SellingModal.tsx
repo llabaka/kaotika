@@ -1,7 +1,8 @@
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Product } from "@/_common/interfaces/shop/Product";
 import { Player } from "@/_common/interfaces/Player";
+import { Product } from "@/_common/interfaces/shop/Product";
+import Image from "next/image";
+import { useEffect } from "react";
+import { buyProductClient } from "../BuyingModal/buyProductClient";
 
 // Open Modal boolean 
 // product
@@ -27,7 +28,6 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
 
     // Check if player has the item
     const checkItemInInventory = (): Boolean => {
-        
         if (!sellingItem) return false;
 
         const inventoryCategories = Object.values(player.inventory);
@@ -41,13 +41,16 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
         return false;
     };
 
-    const sellButtonHandler = () => {
-        console.log("PULSADO VENDER");
+    const sellButtonHandler = async() => {
+        if (!sellingItem) return false;
 
         const playerHaveItem = checkItemInInventory();
 
         if (playerHaveItem) {
             console.log("SELL ITEM");
+            const response = await buyProductClient(player._id, sellingItem._id!, sellingItem.type!);
+            const updatePlayer = response.data;
+            setPlayer(updatePlayer);
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
         }

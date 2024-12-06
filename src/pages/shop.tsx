@@ -1,17 +1,16 @@
-import React, { use, useEffect, useState } from 'react';
-import Loading from '@/components/Loading';
+import { Player } from '@/_common/interfaces/Player';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Product } from '@/_common/interfaces/shop/Product';
 import Layout from '@/components/Layout';
-import MainShopContainer from '@/components/shop/MainShopContainer';
+import Loading from '@/components/Loading';
+import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
 import LeftMainContainer from '@/components/shop/LeftMainContainer';
+import MainShopContainer from '@/components/shop/MainShopContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
+import SellingModal from '@/components/shop/SellingModal.tsx/SellingModal';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import cartMock from '@/components/shop/helpers/mocks';
-import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
-import { Player } from '@/_common/interfaces/Player';
-import { Product } from '@/_common/interfaces/shop/Product';
-import SellingModal from '@/components/shop/BuyingModal/SellingModal';
+import { useEffect, useState } from 'react';
 
 
 
