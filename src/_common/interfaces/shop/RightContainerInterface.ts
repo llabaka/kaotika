@@ -11,6 +11,6 @@ export default interface RightContainerInterface {
 	setCartProducts: (loaded: Product[]) => void;
 	onClickBuy: () => void;
 	onClickSell: () => void;
-	setProduct: any;
+    setProduct: (loaded: Product) => void;
 	player: Player;
 }

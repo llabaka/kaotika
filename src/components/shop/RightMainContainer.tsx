@@ -53,7 +53,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>
 					<SellingHeaders />
-					<SellingContainer player={player} onClickSell={onClickSell}/>
+					<SellingContainer player={player} onClickSell={onClickSell} setProduct={setProduct}/>
 
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (

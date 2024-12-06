@@ -10,6 +10,7 @@ export default interface SellingItemInterface {
 export interface SellingContainerInterface {
 	player: Player;
 	onClickSell : () => void;
+    setProduct: (loaded: Product) => void;
 }
 
 export interface SellingItemImageInterface {
