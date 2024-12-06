@@ -1,3 +1,4 @@
+import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -9,9 +10,10 @@ interface CardLeftContainerProps {
     description: string;
     _id: string;
     onClickBuy: () => void;
+    onClickAddToCart: () => void;
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);
@@ -36,19 +38,19 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
     return (
             <div className="flex flex-col relative w-[65%] h-[100%] items-center">
             {/* DIV LEVEL */}
-            <div className="z-10 relative flex flex-row justify-around items-center w-[100%] h-[16%] ">
+            <div className="z-10 relative flex flex-row justify-around items-center w-[100%] h-[16%]">
                 <p className="text-white text-[25px] font-bold mt-1  w-[20%]">{min_lvl}</p>
-                <div className="flex justify-around w-[42%] h-[75%] mt-5 items-center ml-4">
-                    <p className="text-white text-[22px] font-bold">{value} g</p>
-                    <div className="flex items-center justify-center z-10 text-orange-400 text-3xl mr-3.5">
-                        <Image
-                            src="/images/shop/CoinsIcon.png"
-                            alt="Gold"
-                            width={24}
-                            height={24}
-                            className="ml-2"
-                            style={{height: 'auto', width:'auto'}}
-                        />
+                <div className="flex justify-around w-[36%] h-[75%] mt-5 items-center text-right">
+                    <p className="text-white w-[65%] text-[25px] font-bold mr-1">{value}</p>
+                    <div className="w-[35%] h-[55%] mt-1 mr-1">
+                        <div className="relative w-full h-full">
+                                <Image
+                                src="/images/shop/CoinsIcon.png"
+                                alt="Gold"
+                                fill
+                                sizes='(max-width: 50px) 100vw'
+                                />
+                        </div>
                     </div>
                 </div>
 
@@ -87,7 +89,7 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
             </div>
             <div className="h-[12%] w-[100%] flex justify-around">
                 <button className="text-white text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center " 
-                    onClick={handleAddToBasket}
+                    onClick={onClickAddToCart}
                     id={_id}
                     >
                         Add Basket

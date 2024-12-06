@@ -20,7 +20,7 @@ const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
         <div className="flex-col w-[3%]"></div>
 
         {/* Selling Item Container */}
-        <SellingItemContainer sellingImage={sellingImage} player={player} sellingItem={sellingItem}/>
+        <SellingItemContainer sellingImage={sellingImage} sellingItem={sellingItem}/>
     </div>
     )
 }

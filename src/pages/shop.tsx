@@ -27,28 +27,15 @@ const Shop = () => {
   const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
-  const [cartProducts, setCartProducts] = useState<Product[] | []>(cartMock);
+  const [cartProducts, setCartProducts] = useState<Product[] | []>([]);
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
-  
-
-  useEffect(() => {
-    setCartProducts((prevCartProducts) =>
-      prevCartProducts.map((product) =>
-        product.quantity === undefined
-          ? { ...product, quantity: 1 }
-          : product
-      )
-    );
-  }, []);
 
   useEffect(() => {
     console.log("CART PRODUCTS NOW:");
     console.log(cartProducts);
-    
-    
   }, [cartProducts])
 
   const fetchProducts = async () => {
@@ -159,7 +146,7 @@ const Shop = () => {
       <Layout>
         <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
         <MainShopContainer>
-          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts}/>
+          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player}/>
           <MiddleMainContainer />
           <RightMainContainer 
             products={showingProducts} 
@@ -170,6 +157,7 @@ const Shop = () => {
             setCartProducts={setCartProducts}
             onClickBuy={buyButton}
             setProduct={setProduct}
+            player={player}
             />
         </MainShopContainer>
         { isVisibleBuyModal ? ( <BuyingModal onclick={closeModal} product={product} player={player}/> ) : null }  
@@ -178,6 +166,7 @@ const Shop = () => {
     )
   } else {
     console.log("ESTA EN ELSE");
+    return <Loading />;
   }
 }
 

@@ -14,15 +14,23 @@ export default async function handler(req: any, res: any) {
     console.log("CONNECTED TO MONGO");
     await connectDB();
 
+    const filter = {
+      $and: [
+        { isUnique: { $ne: true } },        // Exclude if isUnique is true
+        { value: { $ne: 0 } },              // Exclude if value is 0
+        { value: { $exists: true } },       // Exclude if value does not exist
+      ]
+    };
+
     // Obtain products
-    const helmets = await Helmets.find();
-    const armors = await Armors.find();
-    const boots = await Boots.find();
-    const shields = await Shields.find();
-    const weapons = await Weapons.find();
-    const rings = await Rings.find();
-    const artifacts = await Artifacts.find();
-    const ingredients = await Ingredients.find();
+    const helmets = await Helmets.find(filter);
+    const armors = await Armors.find(filter);
+    const boots = await Boots.find(filter);
+    const shields = await Shields.find(filter);
+    const weapons = await Weapons.find(filter);
+    const rings = await Rings.find(filter);
+    const artifacts = await Artifacts.find(filter);
+    const ingredients = await Ingredients.find(filter);
 
 
     return res.status(200).json({ helmets, armors, boots, shields, weapons, artifacts, ingredients, rings });
