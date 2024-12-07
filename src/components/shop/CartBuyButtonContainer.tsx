@@ -1,12 +1,50 @@
 import CartInterface from "@/_common/interfaces/shop/CartInterface";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { buyProductClient } from "./BuyingModal/buyProductClient";
+interface Product {
+    productId: string;
+    type: string;
+}
 
-const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts}) => {
+const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer}) => {
+    const [buyProducts, setBuyProducts] = useState<Product[]>([]);
 
-    const handleBuyAllButton = () => {
-        setCartProducts([]); 
-      };
+    useEffect(() => {
+
+        const updatedBuyProducts = cartProducts.map(cartProduct => ({
+            productId: cartProduct._id!,
+            type: cartProduct.type!
+        }));
+
+        setBuyProducts(updatedBuyProducts);
+
+    }, [cartProducts]);
+
+    useEffect(() => {
+        console.log(buyProducts);
+    }, [buyProducts]);
+
+    const handleBuyAllButton = async() => {
+        let productsValue = 0;
+        cartProducts.map(product => {
+            productsValue += product.value;
+        });
+
+        if(player.gold > productsValue){
+            console.log("have enough gold");
+            const response = await buyProductClient(player._id, buyProducts);
+            const updatePlayer = response.data;
+            setPlayer(updatePlayer);
+            console.log("Realiza compra desde carrito y lo vacia");
+            setCartProducts([]);
+                
+            
+        }else{
+            console.log("not enough gold");
+        }
+        
+    };
 
     return(
         <div className="flex h-[15%] w-[90%] justify-center items-center">

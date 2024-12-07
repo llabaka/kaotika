@@ -12,4 +12,5 @@ export default interface RightContainerInterface {
 	onClickBuy: () => void;
 	setProduct: any;
 	player: Player;
+	setPlayer: any
 }

@@ -1,4 +1,9 @@
-export const buyProductClient = async(playerId: string, productId: string, type: string) => {
+interface Product {
+    type: string,
+    productId: string;
+}
+
+export const buyProductClient = async(playerId: string, products: Product[]) => {
 
     try {
         const response = await fetch('/api/shop/buyObject', {
@@ -8,8 +13,7 @@ export const buyProductClient = async(playerId: string, productId: string, type:
             },
             body: JSON.stringify({
                 playerId,
-                productId,
-                type
+                products
             })
         });
 

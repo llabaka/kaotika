@@ -158,6 +158,7 @@ const Shop = () => {
             onClickBuy={buyButton}
             setProduct={setProduct}
             player={player}
+            setPlayer={setPlayer}
             />
         </MainShopContainer>
         { isVisibleBuyModal ? ( 
