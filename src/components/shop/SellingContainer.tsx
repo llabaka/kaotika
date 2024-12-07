@@ -6,7 +6,7 @@ import { SellingContainerInterface } from "@/_common/interfaces/shop/Selling";
 import SellingItem from "./SellingItem";
 import { Product } from "@/_common/interfaces/shop/Product";
 
-const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
+const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClickSell, setProduct }) => {
 
     const [sellingImage, setSellingImage] = useState(player.inventory.helmets[0].image);
     const [sellingItem, setSellingItem] = useState<Product>(player.inventory.helmets[0]);
@@ -14,13 +14,13 @@ const SellingContainer: React.FC<SellingContainerInterface> = ({ player }) => {
     return(
     <div className="justify-center flex w-full h-[85%]">
         {/* Inventory Contaienr */}
-        <InventoryContainer player={player} setSellingImage={setSellingImage} setSellingItem={setSellingItem}/>
+        <InventoryContainer player={player} setSellingImage={setSellingImage} setSellingItem={setSellingItem} setProduct={setProduct}/>
 
         {/* Empty Space */}
         <div className="flex-col w-[3%]"></div>
 
         {/* Selling Item Container */}
-        <SellingItemContainer sellingImage={sellingImage} sellingItem={sellingItem}/>
+        <SellingItemContainer sellingImage={sellingImage} sellingItem={sellingItem} player={player} onClickSell={onClickSell}/>
     </div>
     )
 }

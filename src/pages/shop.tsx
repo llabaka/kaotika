@@ -1,16 +1,16 @@
-import React, { use, useEffect, useState } from 'react';
-import Loading from '@/components/Loading';
+import { Player } from '@/_common/interfaces/Player';
+import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
+import { Product } from '@/_common/interfaces/shop/Product';
 import Layout from '@/components/Layout';
-import MainShopContainer from '@/components/shop/MainShopContainer';
+import Loading from '@/components/Loading';
+import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
 import LeftMainContainer from '@/components/shop/LeftMainContainer';
+import MainShopContainer from '@/components/shop/MainShopContainer';
 import MiddleMainContainer from '@/components/shop/MiddleMainContainer';
 import RightMainContainer from '@/components/shop/RightMainContainer';
+import SellingModal from '@/components/shop/SellingModal.tsx/SellingModal';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import cartMock from '@/components/shop/helpers/mocks';
-import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
-import { Player } from '@/_common/interfaces/Player';
-import { Product } from '@/_common/interfaces/shop/Product';
+import { useEffect, useState } from 'react';
 
 
 
@@ -31,6 +31,7 @@ const Shop = () => {
   const [displayingScreen, setDisplayingScreen] = useState(DISPLAY_SCREEN.BUY);
   const [error, setError] = useState<string | null>(null);
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
+  const [isVisibleSellModal, setIsVisibleSellModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -139,6 +140,14 @@ const Shop = () => {
     setIsVisibleBuyModal(false);
   } 
 
+  const sellButton = () => {
+    setIsVisibleSellModal(true);
+  }
+
+  const declineSellButton = () => {
+    setIsVisibleSellModal(false);
+  } 
+
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
   } else if (!loading && player && allProducts && showingProducts) {
@@ -156,6 +165,7 @@ const Shop = () => {
             cartProducts={cartProducts} 
             setCartProducts={setCartProducts}
             onClickBuy={buyButton}
+            onClickSell={sellButton}
             setProduct={setProduct}
             player={player}
             setPlayer={setPlayer}
@@ -168,6 +178,7 @@ const Shop = () => {
             player={player}
             setPlayer={setPlayer}
             /> ) : null }  
+        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer}/> ) : null }  
         </div>
       </Layout>
     )

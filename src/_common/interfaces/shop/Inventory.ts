@@ -5,4 +5,5 @@ export default interface InventoryContainerInterface {
     player: Player;
     setSellingImage: (loaded: string) => void;
     setSellingItem: (loaded: Product) => void;
+    setProduct: (loaded: Product) => void;
 }
