@@ -4,13 +4,15 @@ interface Product {
 }
 
 export const buyProductClient = async(playerId: string, products: Product[]) => {
+    console.log(playerId);
+    console.log(products);
 
     try {
         const response = await fetch('/api/shop/buyObject', {
             method: 'POST',
             headers: {
-                'Content-Type' : 'application/json',
-            },
+                'Content-Type': 'application/json',
+            },            
             body: JSON.stringify({
                 playerId,
                 products

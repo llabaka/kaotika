@@ -37,6 +37,7 @@ const PlayerSchema = new mongoose.Schema({
     healing_potions: [{ type: Object }],
     antidote_potions: [{ type: Object }],
     enhancer_potions: [{ type: Object }],
+    ingredients: [{type: Object}],
   },
   tasks: [{ type: Object }],
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
