@@ -19,7 +19,7 @@ const Cart:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) =
     }, [cartProducts]);
 
     return (
-        <div className="flex flex-col h-[75%] w-[90%] text-xl items-center justify-center">
+        <div className="flex flex-col h-[75%] w-[90%] text-xl items-center justify-center" data-testid={'Cart'}>
             <CartItems cartProducts={cartProducts} setCartProducts={setCartProducts}/>
             <CartSeparator/>
             <CartTotal totalPrice={totalPrice}/>
