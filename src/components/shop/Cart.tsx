@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import CartItems from "./CartItems";
 import CartSeparator from "./CartSeparator";
 import CartTotal from "./CartTotal";
-import CartInterface from "@/_common/interfaces/shop/CartInterface";
+import CartProductsInterface from "@/_common/interfaces/shop/CartProductsInterface";
 import calculateTotalPrice from "./helpers/CalculatePrice";
 
-const Cart:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
+const Cart:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) => {
 
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
