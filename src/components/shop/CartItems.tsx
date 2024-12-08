@@ -1,9 +1,10 @@
-import CartInterface from "@/_common/interfaces/shop/CartInterface";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/_common/interfaces/shop/Product";
+import CartProductsInterface from "@/_common/interfaces/shop/CartProductsInterface";
 
-const CartItems:React.FC<CartInterface> = ({cartProducts, setCartProducts}) => {
+const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) => {
 
     // const [products, setProducts] = useState<Product[] | []>(cartProducts);
 
