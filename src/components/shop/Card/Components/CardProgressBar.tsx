@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ProgressBarProps {
-    value: number; // Valor entre -100 y 100
+    value?: number; // Valor entre -100 y 100
 }
 
 const CardProgressBar = ({value} : ProgressBarProps)  => {
@@ -9,8 +9,8 @@ const CardProgressBar = ({value} : ProgressBarProps)  => {
     const MIN_VALUE = -50;
 
     // Cálculo de ancho positivo y negativo
-    let positiveWidth = value > 0 ? (value / MAX_VALUE) * MAX_VALUE : 0;
-    let negativeWidth = value < 0 ? (Math.abs(value) / MAX_VALUE) * MAX_VALUE : 0;
+    let positiveWidth = value! > 0 ? (value! / MAX_VALUE) * MAX_VALUE : 0;
+    let negativeWidth = value! < 0 ? (Math.abs(value!) / MAX_VALUE) * MAX_VALUE : 0;
 
     if(positiveWidth > MAX_VALUE){
         positiveWidth = MAX_VALUE;
