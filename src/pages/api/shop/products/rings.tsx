@@ -1,12 +1,10 @@
 import connectDB from "../../../../../db/connection";
-import Helmets from "../../models/HelmetModel";
+import Rings from "../../models/RingsModel";
 
 export default async function handler(req: any, res: any) {
   try {
-    // Conectar a la base de datos
     await connectDB();
 
-    // Filtro para excluir productos no deseados
     const filter = {
       $and: [
         { isUnique: { $ne: true } },
@@ -15,10 +13,10 @@ export default async function handler(req: any, res: any) {
       ],
     };
 
-    const helmets = await Helmets.find(filter);
-    return res.status(200).json({ helmets });
+    const rings = await Rings.find(filter);
+    return res.status(200).json({ rings });
   } catch (err: any) {
-    console.error("Error fetching helmets:", err.message);
+    console.error("Error fetching rings:", err.message);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 }
