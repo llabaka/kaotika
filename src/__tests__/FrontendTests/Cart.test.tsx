@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import React from 'react';
 import Cart from '@/components/shop/Cart';
 import { Product } from '@/_common/interfaces/shop/Product';
 
