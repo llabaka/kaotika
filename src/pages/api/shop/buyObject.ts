@@ -26,7 +26,7 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
     const { playerId, products} = req.body;
 
     if(!playerId || !products || products.length === 0){
-        return res.status(400).json({
+        return res.status(400).send({
             error: `Faltan parametros requeridos playerId: ${playerId} products: ${products}`
         });
     }

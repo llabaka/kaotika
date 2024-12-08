@@ -28,8 +28,6 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
 
     }, []);
 
-
-
     const buyButtonHandler = async() => {
         // check gold
         const productValue = product?.value!;
@@ -39,6 +37,8 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
 
             if(product !== null){
                 const response = await buyProductClient(player._id, [{type: product.type!, productId: product._id!}]);
+
+                console.log(JSON.stringify(response));
                 const updatePlayer = response.data;
                 setPlayer(updatePlayer);
                 console.log("Procede a comprar");
