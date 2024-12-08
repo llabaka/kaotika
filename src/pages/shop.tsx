@@ -74,7 +74,7 @@ const Shop = () => {
 
   const fetchPlayer = async () => {
     try {
-      const playerFetch = await fetch('/api/playerFetch')
+      const playerFetch = await fetch('/api/player')
 
       if (!playerFetch.ok) {
         throw new Error(`Error: ${playerFetch.status}`);
