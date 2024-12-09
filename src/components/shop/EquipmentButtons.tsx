@@ -5,11 +5,10 @@ import { Product } from '@/_common/interfaces/shop/Product';
 
 interface EquipmentButtonsInterface {
     allProducts: AllProducts;
-	showingProducts: Product[];
 	setShowingProducts: (loaded: Product[]) => void;
 }
 
-const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, showingProducts, setShowingProducts}) => {
+const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, setShowingProducts}) => {
 
     const [activeButton, setActiveButton] = useState(0);
 

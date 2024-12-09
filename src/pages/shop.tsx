@@ -178,7 +178,6 @@ const Shop = () => {
           <LeftMainContainer 
           setDisplayingScreen={setDisplayingScreen} 
           allProducts={allProducts} 
-          showingProducts={showingProducts} 
           setShowingProducts={setShowingProducts} 
           player={player}/>
           
