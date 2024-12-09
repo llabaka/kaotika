@@ -7,6 +7,12 @@ const handleSellPress = (onClickBuy: () => void) =>{
 }
 
 const SellButton:React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickSell }) =>  {
+    
+    //Null if no item selected
+    if (Object.keys(sellingItem).length === 0) {
+        return null;
+    }
+
     return (
         <div className='w-[35%] h-full'>
             <button onClick={() => handleSellPress(onClickSell)} className="flex relative w-full h-full items-center justify-center">
