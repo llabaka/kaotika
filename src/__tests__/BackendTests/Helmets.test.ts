@@ -7,6 +7,7 @@ import handler from '@/pages/api/shop/products/helmets';
 import Helmets from '@/pages/api/models/HelmetModel';
 import { mockHelmets } from '../__mocks__/mockHelmets';
 import mongoose from 'mongoose';
+import { Product } from '@/_common/interfaces/shop/Product';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -24,10 +25,10 @@ describe('GET /api/shop/products/helmets', () => {
     ////////////////////////// ARRANGE //////////////////////////
 
     // Simulate data from MongoDB Helmet collection
-    const mockData = [{ _id: '66d99aac7518eb4990035363', name: 'Helmet 1', image: '/images/equipment/helmets/helmet_initial.png', min_lvl: 1, value: 20, modifiers: {intelligence: 0, dexterity: 0, constitution: 0, insanity: 0, charisma: 0, strength: 0}, type: 'helmet', }, { name: 'Helmet 2', price: 150 }];
+    const mockData = mockHelmets;
     
     // Mock the FIND function
-    jest.spyOn(Helmets, 'find').mockResolvedValue(mockHelmets);
+    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
 
     const { req, res } = createMocks({
       method: 'GET',
@@ -53,7 +54,42 @@ describe('GET /api/shop/products/helmets', () => {
 
     //Verify that IN THIS CASE helmets has a length of 4
     expect(responseData.helmets.length).toBe(4);
+
   });
+
+  it('should have _id, name, image, min_lvl, value and modifiers properties on each object', async () => {
+
+    ////////////////////////// ARRANGE //////////////////////////
+
+    // Simulate data from MongoDB Helmet collection
+    const mockData = mockHelmets;
+    
+    // Mock the FIND function
+    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
+
+    const { req, res } = createMocks({
+      method: 'GET',
+    });
+
+    ////////////////////////// ACT //////////////////////////
+
+    await handler(req, res); 
+
+    ////////////////////////// ASSERT //////////////////////////
+
+    // Parse the string to a JSON
+    const responseData = JSON.parse(res._getData());
+
+    // Verify that each helmet has the required attributes
+    responseData.helmets.forEach((helmet: Product) => {
+      expect(helmet).toHaveProperty('_id');
+      expect(helmet).toHaveProperty('name');
+      expect(helmet).toHaveProperty('image');
+      expect(helmet).toHaveProperty('min_lvl');
+      expect(helmet).toHaveProperty('value');
+      expect(helmet).toHaveProperty('modifiers');
+    });
+  })
 
   it('should handle errors correctly with a 500 status code', async () => {
 
