@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { sellingProductClient } from "./sellingProductClient";
 import Loading from "@/components/Loading";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 // Open Modal boolean 
 // product
@@ -12,9 +13,11 @@ interface  SellingModalProps {
 	onClickSell : () => void;
     player: Player,
     setPlayer: (loaded: Player) => void;
+    setHaveSell: any;
+    setShopTooltips: any
 }
 
-const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingModalProps) => {
+const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setHaveSell, setShopTooltips} : SellingModalProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
  
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -44,6 +47,11 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
         return false;
     };
 
+    const addToopltip = (image: string, itemName: string, action: string) => {
+        setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
+    }
+
+
     const sellButtonHandler = async() => {
         setIsLoading(true);
 
@@ -63,12 +71,14 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
 
             const updatePlayer = json.data;
             setPlayer(updatePlayer);
+            addToopltip(sellingItem.image!, sellingItem.name!, "sold");
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
         }
 
         // Cerrar el modal
         setIsLoading(false);
+        setHaveSell(true);
         onClickSell(); 
     };
 

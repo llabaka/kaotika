@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@/_common/interfaces/shop/Product";
 import { Player } from "@/_common/interfaces/Player";
 import { buyProductClient } from "./buyProductClient";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 import Loading from "@/components/Loading";
 
 // Open Modal boolean 
@@ -12,9 +13,11 @@ interface  BuyingModalProps {
     onclick: () => void;
     player: Player;
     setPlayer: any;
+    setHaveBuy: any;
+    setShopTooltips: any;
 }
 
-const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) => {
+const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTooltips} : BuyingModalProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -29,6 +32,10 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
         });
 
     }, []);
+
+    const addToopltip = (image: string, itemName: string, action: string) => {
+        setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
+    }
 
 
 
@@ -52,6 +59,7 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
 
                 const updatePlayer = json.data;
                 setPlayer(updatePlayer);
+                addToopltip(product.image!, product.name!, "bought");
                 console.log("Procede a comprar");
             }
         }else{
@@ -59,6 +67,7 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
         }
 
         setIsLoading(false);
+        setHaveBuy(true);
         onclick(); // Cierra el modal
     }
 

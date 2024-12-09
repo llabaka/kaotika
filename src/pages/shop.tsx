@@ -11,6 +11,9 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 import SellingModal from '@/components/shop/SellingModal.tsx/SellingModal';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { useEffect, useState } from 'react';
+import BuyTooltip from '@/components/tooltips/ShopTooltip';
+import ShopTooltip from '@/components/tooltips/ShopTooltip';
+import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
 
 
 
@@ -33,11 +36,13 @@ const Shop = () => {
   const [isVisibleBuyModal, setIsVisibleBuyModal] = useState<boolean>(false);
   const [isVisibleSellModal, setIsVisibleSellModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
+  const [haveBuy, setHaveBuy] = useState(false);
+  const [haveSell, setHaveSell] = useState(false);
+  const [shopTooltips, setShopTooltips] = useState<ShopTooltipProps[]>([]);
 
   useEffect(() => {
-    console.log("CART PRODUCTS NOW:");
-    console.log(cartProducts);
-  }, [cartProducts])
+    console.log(allProducts);
+  }, [allProducts])
 
   const fetchProducts = async () => {
     try {
@@ -106,13 +111,24 @@ const Shop = () => {
     setIngredients(products.ingredients);
     setShowingProducts(products.weapons);
   }
+  
+  useEffect(() => {
+    if (shopTooltips.length > 0) {
+        const timeout = setTimeout(() => {
+            const newTooltips = shopTooltips.slice(1);
+            setShopTooltips(newTooltips);
+        }, 1500);
+
+        return () => clearTimeout(timeout);
+    }
+}, [shopTooltips]);
 
 
   const checkProducts = async () => {
     const products: any = await localStorage.getItem('Products');
     const parsedProducts = JSON.parse(products);
     
-    if (products === null) {
+    if (products !== null) {
 
       // El item existe en LocalStorage
       console.log('El item existe:', parsedProducts);
@@ -149,7 +165,7 @@ const Shop = () => {
 
   const declineSellButton = () => {
     setIsVisibleSellModal(false);
-  } 
+  }
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
@@ -180,8 +196,26 @@ const Shop = () => {
             product={product} 
             player={player}
             setPlayer={setPlayer}
+            setHaveBuy={setHaveBuy}
+            setShopTooltips={setShopTooltips}
+            
             /> ) : null }  
-        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer}/> ) : null }  
+        { isVisibleSellModal ? ( 
+          <SellingModal 
+            onClickSell={declineSellButton} 
+            sellingItem={product} 
+            player={player} 
+            setPlayer={setPlayer}
+            setHaveSell={setHaveSell}
+            setShopTooltips={setShopTooltips}
+            /> 
+          ) : null }
+          <div className='w-[24%] fixed top-[30%] right-[2%] z-20'>
+            { shopTooltips.map((shopTooltip, index) => (
+                
+                <ShopTooltip image={shopTooltip.image} itemName={shopTooltip.itemName} key={index} action={shopTooltip.action}/>
+            ))}
+          </div>
         </div>
       </Layout>
     )
