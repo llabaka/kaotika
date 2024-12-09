@@ -1,3 +1,4 @@
+import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -11,9 +12,10 @@ interface CardLeftContainerProps {
     _id: string;
     onClickBuy: () => void;
     onClickAddToCart: () => void;
+    player: Player
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart, player} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);

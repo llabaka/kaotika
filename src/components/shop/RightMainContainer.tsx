@@ -48,7 +48,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 					<MainNavigator 
 						allProducts={allProducts}
 						setShowingProducts={setShowingProducts} />
-					<ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts}/>
+					<ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player}/>
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>

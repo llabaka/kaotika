@@ -4,6 +4,7 @@ import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { Product } from "@/_common/interfaces/shop/Product";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { ArmorShop } from "@/_common/interfaces/shop/Product";
+import { Player } from "@/_common/interfaces/Player";
 
 interface ProductsContainerInterface {
 	products: Product[];
@@ -11,9 +12,10 @@ interface ProductsContainerInterface {
   setProduct: any;
   setCartProducts: (loaded: Product[]) => void
   cartProducts: Product[];
+  player: Player;
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts}) => {
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player}) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
     // Referencia para el contenedor del ProductsContainer
@@ -103,7 +105,8 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
           <ProductRowContainer cards={group} onClickBuy={onClickBuy} 
             setProduct={setProduct}
             cartProducts={cartProducts}
-            setCartProducts={setCartProducts}/>
+            setCartProducts={setCartProducts}
+            player={player}/>
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />
           ) : (
