@@ -16,11 +16,11 @@ const SellingHeaders = () => {
 
         <div className="justify-center flex items-center text-center h-full relative z-1">
           <div
-            className="flex-1 justify-center items-center font-semibold text-center text-orange-400 text-5xl cursor-pointer">INVENTORY
+            className="flex-1 justify-center items-center font-semibold text-center text-orange-400 text-5xl">INVENTORY
           </div>
 
           <div
-            className="flex-1 ustify-center items-center font-semibold text-center text-orange-400 text-5xl cursor-pointer">SELLING ITEM
+            className="flex-1 ustify-center items-center font-semibold text-center text-orange-400 text-5xl">SELLING ITEM
           </div>
         </div>
       </div>
