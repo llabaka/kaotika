@@ -3,12 +3,12 @@
  */
 
 import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
-import handler from '@/pages/api/shop/products/helmets'; 
-import Helmets from '@/pages/api/models/HelmetModel';
-import { mockHelmets } from '../__mocks__/mockHelmets';
+import handler from '@/pages/api/shop/products/shields'; 
+import Shields from '@/pages/api/models/ShieldsModel';
+import { mockShields } from '../__mocks__/mockShields';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
-import { Helmet } from '@/_common/interfaces/Helmet';
+import { Shield } from '@/_common/interfaces/Shield';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -20,16 +20,16 @@ afterAll(async () => {
   jest.restoreAllMocks(); // Restaurar todos los mocks
 });
 
-describe('GET /api/shop/products/helmets', () => {
-  it('should return an array of HELMET products', async () => {
+describe('GET /api/shop/products/shields', () => {
+  it('should return an array of SHIELD products', async () => {
 
     ////////////////////////// ARRANGE //////////////////////////
 
-    // Simulate data from MongoDB Helmet collection
-    const mockData = mockHelmets;
+    // Simulate data from MongoDB Shield collection
+    const mockData = mockShields;
     
     // Mock the FIND function
-    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
+    jest.spyOn(Shields, 'find').mockResolvedValue(mockData);
 
     const { req, res } = createMocks({
       method: 'GET',
@@ -44,29 +44,29 @@ describe('GET /api/shop/products/helmets', () => {
      // Verify status code to be 200
     expect(res.statusCode).toBe(200);
 
-    // Parse the string to a JSON
+    // Parse the stshield to a JSON
     const responseData = JSON.parse(res._getData());
 
-    // Verify that helmets are the ones retrieved
-    expect(responseData).toHaveProperty('helmets');
+    // Verify that shields are the ones retrieved
+    expect(responseData).toHaveProperty('shields');
 
-    // Verify that helmets is an array
-    expect(Array.isArray(responseData.helmets)).toBe(true); 
+    // Verify that shields is an array
+    expect(Array.isArray(responseData.shields)).toBe(true); 
 
-    //Verify that IN THIS CASE helmets has a length of 4
-    expect(responseData.helmets.length).toBe(4);
+    //Verify that IN THIS CASE shields has a length of 4
+    expect(responseData.shields.length).toBe(4);
 
   });
 
-  it('should have _id, name, image, min_lvl, value and modifiers properties on each helmet', async () => {
+  it('should have _id, name, image, min_lvl, value and modifiers properties on each shield', async () => {
 
     ////////////////////////// ARRANGE //////////////////////////
 
-    // Simulate data from MongoDB Helmet collection
-    const mockData = mockHelmets;
+    // Simulate data from MongoDB Shield collection
+    const mockData = mockShields;
     
     // Mock the FIND function
-    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
+    jest.spyOn(Shields, 'find').mockResolvedValue(mockData);
 
     const { req, res } = createMocks({
       method: 'GET',
@@ -78,17 +78,17 @@ describe('GET /api/shop/products/helmets', () => {
 
     ////////////////////////// ASSERT //////////////////////////
 
-    // Parse the string to a JSON
+    // Parse the stshield to a JSON
     const responseData = JSON.parse(res._getData());
 
-    // Verify that each helmet has the required attributes
-    responseData.helmets.forEach((helmet: Helmet) => {
-      expect(helmet).toHaveProperty('_id');
-      expect(helmet).toHaveProperty('name');
-      expect(helmet).toHaveProperty('image');
-      expect(helmet).toHaveProperty('min_lvl');
-      expect(helmet).toHaveProperty('value');
-      expect(helmet).toHaveProperty('modifiers');
+    // Verify that each shield has the required attributes
+    responseData.shields.forEach((shield: Shield) => {
+      expect(shield).toHaveProperty('_id');
+      expect(shield).toHaveProperty('name');
+      expect(shield).toHaveProperty('image');
+      expect(shield).toHaveProperty('min_lvl');
+      expect(shield).toHaveProperty('value');
+      expect(shield).toHaveProperty('modifiers');
     });
   })
 
@@ -97,7 +97,7 @@ describe('GET /api/shop/products/helmets', () => {
     ////////////////////////// ARRANGE //////////////////////////
 
     // Simulate receiving an error
-    jest.spyOn(Helmets, 'find').mockRejectedValue(new Error('Database connection error'));
+    jest.spyOn(Shields, 'find').mockRejectedValue(new Error('Database connection error'));
 
     const { req, res } = createMocks({
       method: 'GET',
@@ -113,7 +113,7 @@ describe('GET /api/shop/products/helmets', () => {
     expect(res.statusCode).toBe(500);
     const responseData = JSON.parse(res._getData());
 
-    //Verify that the error is in fact the error that our Helmets handler has on his 500 status code response
+    //Verify that the error is in fact the error that our Shields handler has on his 500 status code response
     expect(responseData).toHaveProperty('error');
     expect(responseData.error).toBe('Internal Server Error'); // O el mensaje de error adecuado
   });

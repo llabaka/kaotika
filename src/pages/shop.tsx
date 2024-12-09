@@ -39,9 +39,25 @@ const Shop = () => {
   const [haveBuy, setHaveBuy] = useState(false);
   const [haveSell, setHaveSell] = useState(false);
   const [shopTooltips, setShopTooltips] = useState<ShopTooltipProps[]>([]);
+  const [sellingItem, setSellingItem] = useState<Product>({} as Product);
+  const [sellingImage, setSellingImage] = useState('');
 
+  //Set products from local storage
+  useEffect(() => {
+    const localStorageProducts = localStorage.getItem('cartProducts');
+    
+    if (localStorageProducts) {
+        const parsedLocalStorageProducts = JSON.parse(localStorageProducts);
+        console.log("Productos cargados desde localStorage", parsedLocalStorageProducts);
+        setCartProducts(parsedLocalStorageProducts);
+    }
+}, []);
+
+//Save products in local storage
   useEffect(() => {
     console.log(allProducts);
+
+    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
   }, [allProducts])
 
   const fetchProducts = async () => {
@@ -174,8 +190,15 @@ const Shop = () => {
       <Layout>
         <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
         <MainShopContainer>
-          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player}/>
+
+          <LeftMainContainer 
+          setDisplayingScreen={setDisplayingScreen} 
+          allProducts={allProducts} 
+          setShowingProducts={setShowingProducts} 
+          player={player}/>
+          
           <MiddleMainContainer />
+
           <RightMainContainer 
             products={showingProducts} 
             displayingScreen={displayingScreen} 
@@ -188,12 +211,18 @@ const Shop = () => {
             setProduct={setProduct}
             player={player}
             setPlayer={setPlayer}
+            setSellingItem={setSellingItem}
+            sellingItem={sellingItem}
+            setSellingImage={setSellingImage}
+            sellingImage={sellingImage}
             />
+
         </MainShopContainer>
-        { isVisibleBuyModal ? ( 
-          <BuyingModal 
-            onclick={closeModal} 
-            product={product} 
+        { isVisibleBuyModal ? (
+
+          <BuyingModal
+            onclick={closeModal}
+            product={product}
             player={player}
             setPlayer={setPlayer}
             setHaveBuy={setHaveBuy}

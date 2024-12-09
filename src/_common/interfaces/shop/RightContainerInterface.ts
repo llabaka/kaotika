@@ -14,4 +14,8 @@ export default interface RightContainerInterface {
     setProduct: (loaded: Product) => void;
 	player: Player;
 	setPlayer: any
+    setSellingItem: (loaded: Product) => void;
+	sellingItem: Product;
+    setSellingImage: (loaded: string) => void;
+	sellingImage: String;
 }

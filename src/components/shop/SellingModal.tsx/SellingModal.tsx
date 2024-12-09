@@ -13,11 +13,13 @@ interface  SellingModalProps {
 	onClickSell : () => void;
     player: Player,
     setPlayer: (loaded: Player) => void;
+    setSellingItem: (loaded: Product) => void;
+    setSellingImage: (loaded: string) => void;
     setHaveSell: any;
     setShopTooltips: any
 }
 
-const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setHaveSell, setShopTooltips} : SellingModalProps) => {
+const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips} : SellingModalProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
  
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -71,6 +73,10 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setHaveSell,
 
             const updatePlayer = json.data;
             setPlayer(updatePlayer);
+
+            //Unselect selling item
+            setSellingItem({} as Product);
+            setSellingImage('');
             addToopltip(sellingItem.image!, sellingItem.name!, "sold");
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");

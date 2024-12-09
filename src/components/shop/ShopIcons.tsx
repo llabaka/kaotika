@@ -12,21 +12,21 @@ const ShopIcons:React.FC<ShopIconsInterface> = ({setDisplayingScreen}) =>{
     const [isCartPressed, setIsCartPressed] = useState(false);
 
     const handleOnPressTicket = () =>  {
-        setIsTicketPressed(prev => !prev);
+        setIsTicketPressed(true);
         setIsDollarPressed(false);
         setIsCartPressed(false);
         setDisplayingScreen(DISPLAY_SCREEN.BUY);
 	}
 
     const handleOnPressDollar = () =>  {
-        setIsDollarPressed(prev => !prev);
+        setIsDollarPressed(true);
         setIsTicketPressed(false);
         setIsCartPressed(false);
         setDisplayingScreen(DISPLAY_SCREEN.SELL);
 	}
 
     const handleOnPressCart = () =>  {
-        setIsCartPressed(prev => !prev);
+        setIsCartPressed(true);
         setIsTicketPressed(false);
         setIsDollarPressed(false);
         setDisplayingScreen(DISPLAY_SCREEN.CART);

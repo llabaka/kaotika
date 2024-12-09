@@ -6,10 +6,7 @@ import { SellingContainerInterface } from "@/_common/interfaces/shop/Selling";
 import SellingItem from "./SellingItem";
 import { Product } from "@/_common/interfaces/shop/Product";
 
-const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClickSell, setProduct }) => {
-
-    const [sellingImage, setSellingImage] = useState('');
-    const [sellingItem, setSellingItem] = useState<Product>({} as Product);
+const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClickSell, setProduct, setSellingItem, sellingItem, setSellingImage, sellingImage }) => {
 
     return(
     <div className="justify-center flex w-full h-[85%]">
