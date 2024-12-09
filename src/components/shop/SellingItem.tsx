@@ -13,7 +13,7 @@ const SellingItem: React.FC<SellingItemImageInterface> = ({ sellingImage }) => {
                     />
 
                 <div className="flex w-[95%] h-[95%] items-center justify-center">
-                    <img src={`${sellingImage}`} alt="Selling Image" sizes='(max-width: 780px) 100vw' className="z-10 rounded-lg"/>
+                    <img src={`${sellingImage}`} alt="" sizes='(max-width: 780px) 100vw' className="z-10 rounded-lg"/>
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ import { Product } from "@/_common/interfaces/shop/Product";
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClickSell, setProduct }) => {
 
-    const [sellingImage, setSellingImage] = useState(player.inventory.helmets[0].image);
+    const [sellingImage, setSellingImage] = useState('');
     const [sellingItem, setSellingItem] = useState<Product>(player.inventory.helmets[0]);
 
     return(
