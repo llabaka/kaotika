@@ -2,6 +2,7 @@ import CartInterface from "@/_common/interfaces/shop/CartInterface";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { buyProductClient } from "./BuyingModal/buyProductClient";
+import Loading from "../Loading";
 interface Product {
     productId: string;
     type: string;
@@ -9,6 +10,7 @@ interface Product {
 
 const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer}) => {
     const [buyProducts, setBuyProducts] = useState<Product[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
 
@@ -26,16 +28,26 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
     }, [buyProducts]);
 
     const handleBuyAllButton = async() => {
+        setIsLoading(false);
+
         let productsValue = 0;
         cartProducts.map(product => {
             productsValue += product.value;
         });
 
         if(player.gold > productsValue){
-            console.log("have enough gold");
+
             const response = await buyProductClient(player._id, buyProducts);
-            const updatePlayer = response.data;
+            const json = await response.json();
+
+            if(!response.ok){
+                console.log(JSON.stringify(json));
+                return;
+            }
+
+            const updatePlayer = json.data;
             setPlayer(updatePlayer);
+
             console.log("Realiza compra desde carrito y lo vacia");
             setCartProducts([]);
                 
@@ -44,9 +56,12 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
             console.log("not enough gold");
         }
         
+        setIsLoading(true);
     };
 
     return(
+        isLoading ? <Loading/> : 
+
         <div className="flex h-[15%] w-[90%] justify-center items-center">
             <div className=" flex h-[65%] w-[25%] items-center justify-center " >
                 <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
