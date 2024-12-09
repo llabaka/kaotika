@@ -5,6 +5,8 @@
 import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
 import handler from '@/pages/api/shop/products/helmets'; 
 import Helmets from '@/pages/api/models/HelmetModel';
+import { mockHelmets } from '../__mocks__/mockHelmets';
+import mongoose from 'mongoose';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -12,6 +14,7 @@ beforeAll(() => {
 });
 
 afterAll(async () => {
+  mongoose.disconnect();
   jest.restoreAllMocks(); // Restaurar todos los mocks
 });
 
@@ -21,10 +24,10 @@ describe('GET /api/shop/products/helmets', () => {
     ////////////////////////// ARRANGE //////////////////////////
 
     // Simulate data from MongoDB Helmet collection
-    const mockData = [{ name: 'Helmet 1', price: 100 }, { name: 'Helmet 2', price: 150 }];
+    const mockData = [{ _id: '66d99aac7518eb4990035363', name: 'Helmet 1', image: '/images/equipment/helmets/helmet_initial.png', min_lvl: 1, value: 20, modifiers: {intelligence: 0, dexterity: 0, constitution: 0, insanity: 0, charisma: 0, strength: 0}, type: 'helmet', }, { name: 'Helmet 2', price: 150 }];
     
     // Mock the FIND function
-    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
+    jest.spyOn(Helmets, 'find').mockResolvedValue(mockHelmets);
 
     const { req, res } = createMocks({
       method: 'GET',
@@ -48,8 +51,8 @@ describe('GET /api/shop/products/helmets', () => {
     // Verify that helmets is an array
     expect(Array.isArray(responseData.helmets)).toBe(true); 
 
-    //Verify that IN THIS CASE helmets has a length of 2
-    expect(responseData.helmets.length).toBe(2);
+    //Verify that IN THIS CASE helmets has a length of 4
+    expect(responseData.helmets.length).toBe(4);
   });
 
   it('should handle errors correctly with a 500 status code', async () => {
