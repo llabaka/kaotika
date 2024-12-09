@@ -10,7 +10,7 @@ import CartScreenMainTab from "./CartScreenMainTab";
 import { Weapon } from "@/_common/interfaces/Weapon";
 import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem}) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem, setSellingImage, sellingImage}) => {
 
 	const cardMock: Weapon = {
 		_id : "asdadw1219beu21as",
@@ -52,7 +52,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
 				<>
 					<SellingHeaders />
-					<SellingContainer player={player} onClickSell={onClickSell} setProduct={setProduct} setSellingItem={setSellingItem} sellingItem={sellingItem}/>
+					<SellingContainer player={player} onClickSell={onClickSell} setProduct={setProduct} setSellingItem={setSellingItem} sellingItem={sellingItem} setSellingImage={setSellingImage} sellingImage={sellingImage}/>
 
 				</>
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (

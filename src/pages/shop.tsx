@@ -34,6 +34,7 @@ const Shop = () => {
   const [isVisibleSellModal, setIsVisibleSellModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
   const [sellingItem, setSellingItem] = useState<Product>({} as Product);
+  const [sellingImage, setSellingImage] = useState('');
 
   //Set products from local storage
   useEffect(() => {
@@ -189,6 +190,8 @@ const Shop = () => {
             setPlayer={setPlayer}
             setSellingItem={setSellingItem}
             sellingItem={sellingItem}
+            setSellingImage={setSellingImage}
+            sellingImage={sellingImage}
             />
         </MainShopContainer>
         { isVisibleBuyModal ? ( 

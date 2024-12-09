@@ -13,6 +13,8 @@ export interface SellingContainerInterface {
     setProduct: (loaded: Product) => void;
 	setSellingItem: (loaded: Product) => void;
 	sellingItem: Product;
+	setSellingImage: (loaded: string) => void;
+	sellingImage: String;
 }
 
 export interface SellingItemImageInterface {
