@@ -1,7 +1,6 @@
 import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
 import handler from '@/pages/api/shop/products/helmets'; 
 import Helmets from '@/pages/api/models/HelmetModel';
-import mongoose from "mongoose";
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -10,7 +9,6 @@ beforeAll(() => {
 
 afterAll(async () => {
   //Disconnect from MongoDB after finishing the test
-  await mongoose.disconnect();
   jest.restoreAllMocks(); // Restaurar todos los mocks
 });
 
