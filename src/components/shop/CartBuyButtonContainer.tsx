@@ -28,7 +28,7 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
     }, [buyProducts]);
 
     const handleBuyAllButton = async() => {
-        setIsLoading(false);
+        setIsLoading(true);
 
         let productsValue = 0;
         cartProducts.map(product => {
@@ -56,7 +56,7 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
             console.log("not enough gold");
         }
         
-        setIsLoading(true);
+        setIsLoading(false);
     };
 
     return(
