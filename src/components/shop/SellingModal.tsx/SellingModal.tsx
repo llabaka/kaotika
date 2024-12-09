@@ -13,9 +13,10 @@ interface  SellingModalProps {
     player: Player,
     setPlayer: (loaded: Player) => void;
     setSellingItem: (loaded: Product) => void;
+    setSellingImage: (loaded: string) => void;
 }
 
-const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem} : SellingModalProps) => {
+const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage} : SellingModalProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
  
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -67,6 +68,7 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingIt
 
             //Unselect selling item
             setSellingItem({} as Product);
+            setSellingImage('');
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
         }

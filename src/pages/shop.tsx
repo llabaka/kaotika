@@ -201,7 +201,7 @@ const Shop = () => {
             player={player}
             setPlayer={setPlayer}
             /> ) : null }  
-        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer} setSellingItem={setSellingItem}/> ) : null }  
+        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer} setSellingItem={setSellingItem} setSellingImage={setSellingImage}/> ) : null }  
         </div>
       </Layout>
     )
