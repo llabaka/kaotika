@@ -1,8 +1,9 @@
 import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { sellingProductClient } from "./sellingProductClient";
+import Loading from "@/components/Loading";
 
 // Open Modal boolean 
 // product
@@ -14,6 +15,8 @@ interface  SellingModalProps {
 }
 
 const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingModalProps) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+ 
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
     const buttonImage = "/images/shop/ManagePlayerButton.png";
 
@@ -42,6 +45,8 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
     };
 
     const sellButtonHandler = async() => {
+        setIsLoading(true);
+
         if (!sellingItem) return false;
 
         const playerHaveItem = checkItemInInventory();
@@ -49,19 +54,28 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
         if (playerHaveItem) {
             console.log("SELL ITEM");
             const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
-            const updatePlayer = response.data;
-            console.log(updatePlayer);
+            const json = await response.json();
+
+            if(!response.ok){
+                console.log(json);
+                return;
+            }
+
+            const updatePlayer = json.data;
             setPlayer(updatePlayer);
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
         }
 
         // Cerrar el modal
+        setIsLoading(false);
         onClickSell(); 
     };
 
 
     return (
+
+        isLoading ? <Loading/> : 
         <div className="w-[100%] h-full absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
             
             <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">

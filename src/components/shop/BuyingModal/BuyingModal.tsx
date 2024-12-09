@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Product } from "@/_common/interfaces/shop/Product";
 import { Player } from "@/_common/interfaces/Player";
 import { buyProductClient } from "./buyProductClient";
+import Loading from "@/components/Loading";
 
 // Open Modal boolean 
 // product
@@ -14,6 +15,7 @@ interface  BuyingModalProps {
 }
 
 const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
     const imageFake = "/images/equipment/armors/armor_20.png"
@@ -28,8 +30,12 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
 
     }, []);
 
+
+
     const buyButtonHandler = async() => {
         // check gold
+        setIsLoading(true);
+
         const productValue = product?.value!;
         const playerGold = player.gold;
         
@@ -37,9 +43,14 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
 
             if(product !== null){
                 const response = await buyProductClient(player._id, [{type: product.type!, productId: product._id!}]);
+                const json = await response.json();
 
-                console.log(JSON.stringify(response));
-                const updatePlayer = response.data;
+                if(!response.ok){   
+                    console.log(JSON.stringify(json));
+                    return;
+                }
+
+                const updatePlayer = json.data;
                 setPlayer(updatePlayer);
                 console.log("Procede a comprar");
             }
@@ -47,11 +58,14 @@ const BuyingModal = ({product, onclick, player, setPlayer} : BuyingModalProps) =
             console.log("EL jugador no tiene suficiente oro CLIENT");
         }
 
+        setIsLoading(false);
         onclick(); // Cierra el modal
     }
 
     
     return (
+        isLoading ? <Loading/> : 
+
         <div className="w-[100%] h-full absolute top-0 z-20 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
             
             <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">
