@@ -8,6 +8,7 @@ import Armors from '@/pages/api/models/ArmorModel';
 import { mockArmors } from '../__mocks__/mockArmors';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Armor } from '@/_common/interfaces/Armor';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/armors', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each armor has the required attributes
-    responseData.armors.forEach((armor: Product) => {
+    responseData.armors.forEach((armor: Armor) => {
       expect(armor).toHaveProperty('_id');
       expect(armor).toHaveProperty('name');
       expect(armor).toHaveProperty('image');

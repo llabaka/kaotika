@@ -8,6 +8,7 @@ import Weapons from '@/pages/api/models/WeaponsModel';
 import { mockWeapons } from '../__mocks__/mockWeapons';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Weapon } from '@/_common/interfaces/Weapon';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/weapons', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each weapon has the required attributes
-    responseData.weapons.forEach((weapon: Product) => {
+    responseData.weapons.forEach((weapon: Weapon) => {
       expect(weapon).toHaveProperty('_id');
       expect(weapon).toHaveProperty('name');
       expect(weapon).toHaveProperty('image');

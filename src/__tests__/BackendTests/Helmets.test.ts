@@ -8,6 +8,7 @@ import Helmets from '@/pages/api/models/HelmetModel';
 import { mockHelmets } from '../__mocks__/mockHelmets';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Helmet } from '@/_common/interfaces/Helmet';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/helmets', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each helmet has the required attributes
-    responseData.helmets.forEach((helmet: Product) => {
+    responseData.helmets.forEach((helmet: Helmet) => {
       expect(helmet).toHaveProperty('_id');
       expect(helmet).toHaveProperty('name');
       expect(helmet).toHaveProperty('image');

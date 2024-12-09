@@ -8,6 +8,7 @@ import Rings from '@/pages/api/models/RingsModel';
 import { mockRings } from '../__mocks__/mockRings';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Ring } from '@/_common/interfaces/Ring';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/rings', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each ring has the required attributes
-    responseData.rings.forEach((ring: Product) => {
+    responseData.rings.forEach((ring: Ring) => {
       expect(ring).toHaveProperty('_id');
       expect(ring).toHaveProperty('name');
       expect(ring).toHaveProperty('image');

@@ -8,6 +8,7 @@ import Artifacts from '@/pages/api/models/ArtifactsModel';
 import { mockArtifacts } from '../__mocks__/mockArtifacts';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Artifact } from '@/_common/interfaces/Artifact';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/artifacts', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each artifact has the required attributes
-    responseData.artifacts.forEach((artifact: Product) => {
+    responseData.artifacts.forEach((artifact: Artifact) => {
       expect(artifact).toHaveProperty('_id');
       expect(artifact).toHaveProperty('name');
       expect(artifact).toHaveProperty('image');

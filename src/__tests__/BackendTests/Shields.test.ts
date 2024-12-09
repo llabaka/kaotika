@@ -8,6 +8,7 @@ import Shields from '@/pages/api/models/ShieldsModel';
 import { mockShields } from '../__mocks__/mockShields';
 import mongoose from 'mongoose';
 import { Product } from '@/_common/interfaces/shop/Product';
+import { Shield } from '@/_common/interfaces/Shield';
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
@@ -81,7 +82,7 @@ describe('GET /api/shop/products/shields', () => {
     const responseData = JSON.parse(res._getData());
 
     // Verify that each shield has the required attributes
-    responseData.shields.forEach((shield: Product) => {
+    responseData.shields.forEach((shield: Shield) => {
       expect(shield).toHaveProperty('_id');
       expect(shield).toHaveProperty('name');
       expect(shield).toHaveProperty('image');
