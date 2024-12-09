@@ -59,6 +59,13 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
         setIsLoading(false);
     };
 
+    // Check if cart is empty and hide button
+    const emptyCart = buyProducts.length === 0;
+
+    if (emptyCart){
+        return null;
+    }
+
     return(
         isLoading ? <Loading/> : 
 
