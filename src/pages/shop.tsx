@@ -112,14 +112,13 @@ const Shop = () => {
     const products: any = await localStorage.getItem('Products');
     const parsedProducts = JSON.parse(products);
     
-    if (products !== null) {
+    if (products != null) {
 
       // El item existe en LocalStorage
       console.log('El item existe:', parsedProducts);
       localStorageProductsHandler(parsedProducts);
       setAllProducts(parsedProducts);
       setShowingProducts(parsedProducts.weapons)
-      fetchProducts();
   } else {
       // El item no existe en LocalStorage
       fetchProducts();
