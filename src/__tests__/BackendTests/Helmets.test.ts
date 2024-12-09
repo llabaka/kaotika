@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
 import handler from '@/pages/api/shop/products/helmets'; 
 import Helmets from '@/pages/api/models/HelmetModel';
@@ -8,7 +12,6 @@ beforeAll(() => {
 });
 
 afterAll(async () => {
-  //Disconnect from MongoDB after finishing the test
   jest.restoreAllMocks(); // Restaurar todos los mocks
 });
 

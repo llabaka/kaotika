@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const modifiersSchema = new mongoose.Schema({
   intelligence: { type: Number, required: true },
