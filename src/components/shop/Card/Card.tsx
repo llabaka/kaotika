@@ -77,6 +77,9 @@ const Card = ({props, onClickBuy, onClickAddToCart, player} : ProductInterface) 
                     fill
                     sizes='(max-width: 435px) 100vw'
                     className="z-0"
+                    style={{
+                        filter: player.gold < props.value ? 'grayscale(100%) brightness(0.5)' : '',
+                    }}
                 />
                 {/* LEFT CONTAINER */}
                 <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!} onClickBuy={onClickBuy} onClickAddToCart={onClickAddToCart} player={player}/>

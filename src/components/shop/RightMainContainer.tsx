@@ -1,5 +1,4 @@
 import MainNavigator from "./MainNavigator";
-
 import ProductsContainer from "./ProductsContainer";
 import React from "react";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";

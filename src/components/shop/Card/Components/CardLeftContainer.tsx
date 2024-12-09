@@ -92,7 +92,7 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
                 {description}</p>
             </div>
             <div className="h-[12%] w-[100%] flex justify-around">
-                <button className="text-white text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center " 
+                <button className="text-white text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center border-1" 
                     onClick={onClickAddToCart}
                     id={_id}
                     >
