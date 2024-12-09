@@ -2,7 +2,7 @@ import { Modifier } from "../Modifier";
 
 export type CardProp = ArmorShop | WeaponShop | Ingredient | RingShop | HelmetShop | ShieldShop | ArtifactShop | BootShop;
 
-interface Ingredient {
+export interface Ingredient {
     _id: string;
     name: string;
     description: string;
