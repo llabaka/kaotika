@@ -112,7 +112,7 @@ const Shop = () => {
     const products: any = await localStorage.getItem('Products');
     const parsedProducts = JSON.parse(products);
     
-    if (products != null) {
+    if (products !== null) {
 
       // El item existe en LocalStorage
       console.log('El item existe:', parsedProducts);
