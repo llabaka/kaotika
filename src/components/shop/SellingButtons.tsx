@@ -3,9 +3,21 @@ import Image from 'next/image';
 import SellButton from './SellButton';
 
 const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickSell }) => {
-    
+
+    // Check if there is no sellingItem
+    const noSellingItem = !sellingItem || Object.keys(sellingItem).length === 0;
+
     // Selling Price 1/3 value
     const sellingPrice = Math.floor(sellingItem.value / 3);
+
+    // Choose an item text if no items selected
+    if (noSellingItem) {
+        return (
+            <div className="flex flex-col w-full h-[20%] mt-[5%] items-center justify-center">
+                <span className="text-orange-300 text-3xl font-bold">CHOOSE AN ITEM TO SELL</span>
+            </div>
+        );
+    }
 
     return (
         <div className="flex flex-col w-full h-[20%] mt-[5%] items-center">
