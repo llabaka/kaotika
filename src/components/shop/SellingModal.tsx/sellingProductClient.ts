@@ -13,15 +13,7 @@ export const sellingProductClient = async(playerId: string, productId: string, t
             })
         });
 
-        if(!response.ok){
-            const errorData = await response.json();
-            console.log(errorData.error || `Uknown error`);
-            return;
-        }
-
-        const data = await response.json();
-        console.log('Sell succesfull: ', data);
-        return data;
+        return response;
     }
     catch (error : any){
         console.error('Error in selling process: ', error);

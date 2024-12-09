@@ -4,15 +4,17 @@ import { CardProp, Product } from "@/_common/interfaces/shop/Product";
 import { useState, useEffect } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import EffectsContainer from "./Components/effectsContainer";
-import CardLeftContainer from "./Components/CardLeftContainet";
+import CardLeftContainer from "./Components/CardLeftContainer";
+import { Player } from "@/_common/interfaces/Player";
 
 interface ProductInterface {
     props: Product,
     onClickBuy: () => void;
     onClickAddToCart: () => void;
+    player: Player
 }
 
-const Card = ({props, onClickBuy, onClickAddToCart} : ProductInterface) => {
+const Card = ({props, onClickBuy, onClickAddToCart, player} : ProductInterface) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
@@ -77,7 +79,7 @@ const Card = ({props, onClickBuy, onClickAddToCart} : ProductInterface) => {
                     className="z-0"
                 />
                 {/* LEFT CONTAINER */}
-                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!} onClickBuy={onClickBuy} onClickAddToCart={onClickAddToCart}/>
+                <CardLeftContainer min_lvl={props.min_lvl!} value={props.value} image={props.image!} name={props.name!} description={props.description!} _id={props._id!} onClickBuy={onClickBuy} onClickAddToCart={onClickAddToCart} player={player}/>
 
                 {/* CARD RIGHT CONTAINER */}                
                 { props.modifiers !== undefined ? ( 

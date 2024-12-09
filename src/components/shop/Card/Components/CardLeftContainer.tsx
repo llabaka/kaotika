@@ -1,3 +1,4 @@
+import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -11,9 +12,10 @@ interface CardLeftContainerProps {
     _id: string;
     onClickBuy: () => void;
     onClickAddToCart: () => void;
+    player: Player
 }
 
-const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart} : CardLeftContainerProps) => {
+const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart, player} : CardLeftContainerProps) => {
 
     const [isBought, setIsBought] = useState<boolean>(false);
     const [isAddToBasket, setIsAddToBasket] = useState<boolean>(false);
@@ -35,25 +37,27 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
         setIsAddToBasket(prevState => !prevState);
     }
 
+    // Change color depending on player's level
+    const minLevelClass = player.level >= (min_lvl || 0) ? 'text-green-400' : 'text-red-600';
+
     return (
             <div className="flex flex-col relative w-[65%] h-[100%] items-center">
             {/* DIV LEVEL */}
             <div className="z-10 relative flex flex-row justify-around items-center w-[100%] h-[16%]">
-                <p className="text-white text-[25px] font-bold mt-1  w-[20%]">{min_lvl}</p>
-                <div className="flex justify-around w-[36%] h-[75%] mt-5 items-center text-right">
-                    <p className="text-white w-[65%] text-[25px] font-bold mr-1">{value}</p>
-                    <div className="w-[35%] h-[55%] mt-1 mr-1">
-                        <div className="relative w-full h-full">
-                                <Image
-                                src="/images/shop/CoinsIcon.png"
-                                alt="Gold"
-                                fill
-                                sizes='(max-width: 50px) 100vw'
-                                />
+                <div className={` text-[35px] font-bold w-[20%] pr-[6%] ${minLevelClass}`}>{min_lvl}</div>
+                    <div className="flex justify-around w-[36%] h-[75%] mt-5 items-center text-right">
+                        <p className="text-white w-[65%] text-[25px] font-bold mr-1">{value}</p>
+                        <div className="w-[35%] h-[55%] mt-1 mr-1">
+                            <div className="relative w-full h-full">
+                                    <Image
+                                    src="/images/shop/CoinsIcon.png"
+                                    alt="Gold"
+                                    fill
+                                    sizes='(max-width: 50px) 100vw'
+                                    />
+                            </div>
                         </div>
                     </div>
-                </div>
-
                 <Image
                     src={icon}
                     width={128}

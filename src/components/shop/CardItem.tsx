@@ -1,3 +1,4 @@
+import { Player } from "@/_common/interfaces/Player";
 import Card from "./Card/Card"
 import { Product } from "@/_common/interfaces/shop/Product";
 
@@ -7,9 +8,10 @@ interface CardItemProps {
     setProduct: any;
     setCartProducts: any;
     cartProducts: Product[];
+    player: Player;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts } ) => {
+const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player } ) => {
 
     const handleOnClickBuy = () => {
         onClickBuy();
@@ -43,7 +45,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
 
     return(
         <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition z-20 mt-1 mb-1">
-            <Card props={card} onClickBuy={handleOnClickBuy} onClickAddToCart={handleAddToCart}/>
+            <Card props={card} onClickBuy={handleOnClickBuy} onClickAddToCart={handleAddToCart} player={player}/>
         </div>
     )
 }
