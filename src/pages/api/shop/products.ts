@@ -1,19 +1,20 @@
 import { Product } from "@/_common/interfaces/shop/Product";
 
-const endpoints = [
-    "/api/shop/products/helmets",
-    "/api/shop/products/armors",
-    "/api/shop/products/boots",
-    "/api/shop/products/shields",
-    "/api/shop/products/weapons",
-    "/api/shop/products/rings",
-    "/api/shop/products/artifacts",
-    "/api/shop/products/ingredients",
-  ];
-
-  const URL = "http://localhost:3000";
-  
   export default async function handler(req: any, res: any) {
+
+    const endpoints = [
+      "/api/shop/products/helmets",
+      "/api/shop/products/armors",
+      "/api/shop/products/boots",
+      "/api/shop/products/shields",
+      "/api/shop/products/weapons",
+      "/api/shop/products/rings",
+      "/api/shop/products/artifacts",
+      "/api/shop/products/ingredients",
+    ];
+  
+    const URL = "http://localhost:3000";
+
     try {
       // Realiza todas las solicitudes de forma paralela
       const responses = await Promise.all(
