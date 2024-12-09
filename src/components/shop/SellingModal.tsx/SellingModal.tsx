@@ -15,7 +15,7 @@ interface  SellingModalProps {
     setSellingItem: (loaded: Product) => void;
 }
 
-const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingModalProps) => {
+const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem} : SellingModalProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
  
     const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -64,6 +64,9 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingMod
 
             const updatePlayer = json.data;
             setPlayer(updatePlayer);
+
+            //Unselect selling item
+            setSellingItem({} as Product);
         } else {
             console.log("PLAYER DON'T HAVE THIS ITEM");
         }
