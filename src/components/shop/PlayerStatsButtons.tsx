@@ -1,13 +1,21 @@
 import { Player } from '@/_common/interfaces/Player';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface PlayerStatsButtonsProps {
     player: Player;
 }
 
 const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
-    return (
 
+    const router = useRouter();
+
+    //Change to player screen
+    const handleManagePlayerClick = () => {
+        router.push('/player');
+    };
+
+    return (
     <div className="flex flex-col justify-center items-center w-10/12 h-32">
         <div className="flex justify-around">
             {/* First Image */}	
@@ -43,7 +51,7 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
         </div>
 
             {/* Third Imagen Button */}
-            <button className="w-60 h-16 flex relative items-center justify-center ">
+            <button onClick={handleManagePlayerClick} className="w-60 h-16 flex relative items-center justify-center ">
                 <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt="Imagen 1"
