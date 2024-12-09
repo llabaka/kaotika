@@ -34,9 +34,23 @@ const Shop = () => {
   const [isVisibleSellModal, setIsVisibleSellModal] = useState<boolean>(false);
   const [product, setProduct] = useState<Product | null>(null);
 
+  //Set products from local storage
+  useEffect(() => {
+    const localStorageProducts = localStorage.getItem('cartProducts');
+    
+    if (localStorageProducts) {
+        const parsedLocalStorageProducts = JSON.parse(localStorageProducts);
+        console.log("Productos cargados desde localStorage", parsedLocalStorageProducts);
+        setCartProducts(parsedLocalStorageProducts);
+    }
+}, []);
+
+//Save products in local storage
   useEffect(() => {
     console.log("CART PRODUCTS NOW:");
     console.log(cartProducts);
+
+    localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
   }, [cartProducts])
 
   const fetchProducts = async () => {
