@@ -10,7 +10,7 @@ interface EquipmentButtonsInterface {
 }
 
 const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, showingProducts, setShowingProducts}) => {
-    
+
     const [activeButton, setActiveButton] = useState(0);
 
     const buttons = [
@@ -19,7 +19,8 @@ const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, show
         { id: 2, label: 'BOOTS' },
         { id: 3, label: 'HELMETS' },
         { id: 4, label: 'RINGS' },
-        { id: 5, label: 'SHIELDS' }
+        { id: 5, label: 'SHIELDS' },
+        { id: 6, label: 'ARTIFACTS' }
     ];
 
     const handleButtonClick = (buttonId: number) => {
@@ -46,6 +47,9 @@ const EquipmentButtons:React.FC<EquipmentButtonsInterface> = ({allProducts, show
                 break;
             case 5:
                 setShowingProducts(allProducts!.shields);
+                break;
+            case 6:
+                setShowingProducts(allProducts!.artifacts);
                 break;
             default:
                 setShowingProducts([]); // En caso de que no haya selección válida
