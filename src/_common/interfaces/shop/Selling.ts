@@ -11,6 +11,8 @@ export interface SellingContainerInterface {
 	player: Player;
 	onClickSell : () => void;
     setProduct: (loaded: Product) => void;
+	setSellingItem: (loaded: Product) => void;
+	sellingItem: Product;
 }
 
 export interface SellingItemImageInterface {

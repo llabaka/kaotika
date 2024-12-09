@@ -12,6 +12,7 @@ interface  SellingModalProps {
 	onClickSell : () => void;
     player: Player,
     setPlayer: (loaded: Player) => void;
+    setSellingItem: (loaded: Product) => void;
 }
 
 const SellingModal = ({sellingItem, onClickSell, player, setPlayer} : SellingModalProps) => {
