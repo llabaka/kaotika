@@ -1,7 +1,7 @@
 import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
 import handler from '@/pages/api/shop/products/helmets'; 
 import Helmets from '@/pages/api/models/HelmetModel';
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 beforeAll(() => {
   //Delete console logs when running test or hide them
