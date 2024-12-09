@@ -174,8 +174,16 @@ const Shop = () => {
       <Layout>
         <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
         <MainShopContainer>
-          <LeftMainContainer setDisplayingScreen={setDisplayingScreen} allProducts={allProducts} showingProducts={showingProducts} setShowingProducts={setShowingProducts} player={player}/>
+
+          <LeftMainContainer 
+          setDisplayingScreen={setDisplayingScreen} 
+          allProducts={allProducts} 
+          showingProducts={showingProducts} 
+          setShowingProducts={setShowingProducts} 
+          player={player}/>
+          
           <MiddleMainContainer />
+
           <RightMainContainer 
             products={showingProducts} 
             displayingScreen={displayingScreen} 
@@ -193,8 +201,10 @@ const Shop = () => {
             setSellingImage={setSellingImage}
             sellingImage={sellingImage}
             />
+
         </MainShopContainer>
         { isVisibleBuyModal ? (
+
           <BuyingModal
             onclick={closeModal}
             product={product}
@@ -202,6 +212,7 @@ const Shop = () => {
             setPlayer={setPlayer}
             /> ) : null }
         { isVisibleSellModal ? (
+
           <SellingModal
             onClickSell={declineSellButton}
             sellingItem={product}
