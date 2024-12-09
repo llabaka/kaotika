@@ -1,7 +1,7 @@
 import connectDB from "../../../../../db/connection";
 import Helmets from "../../models/HelmetModel";
 
-export default async function handler(req: any, res: any) {
+export default async function helmetsHandler(req: any, res: any) {
   try {
     // Conectar a la base de datos
     await connectDB();
