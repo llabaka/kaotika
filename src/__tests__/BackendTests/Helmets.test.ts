@@ -57,7 +57,7 @@ describe('GET /api/shop/products/helmets', () => {
 
   });
 
-  it('should have _id, name, image, min_lvl, value and modifiers properties on each object', async () => {
+  it('should have _id, name, image, min_lvl, value and modifiers properties on each helmet', async () => {
 
     ////////////////////////// ARRANGE //////////////////////////
 
