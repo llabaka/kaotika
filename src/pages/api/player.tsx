@@ -7,7 +7,7 @@ export default async function handlerPlayer(req: any, res: any) {
     try {
 
         // Connect to DB
-        console.log("CONNECTED TO MONGO");
+        console.log("CONNECTED TO MONGO TO FETCH PLAYER");
         await connectDB();
 
         // Obtain player

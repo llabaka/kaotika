@@ -41,11 +41,15 @@ const Shop = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch('/api/product');
+      const res = await fetch('/api/shop/products');
       if (!res.ok) {
         throw new Error(`Error: ${res.status}`);
       }
       const result = await res.json();
+
+      console.log("RESULT PRODUCTS");
+      console.log(result);
+      
 
       // Save all in localStorage
       localStorage.setItem('Products', JSON.stringify(result));
@@ -115,7 +119,7 @@ const Shop = () => {
       localStorageProductsHandler(parsedProducts);
       setAllProducts(parsedProducts);
       setShowingProducts(parsedProducts.weapons)
-
+      fetchProducts();
   } else {
       // El item no existe en LocalStorage
       fetchProducts();

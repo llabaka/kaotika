@@ -11,7 +11,7 @@ import Weapons from "./models/WeaponsModel";
 export default async function handler(req: any, res: any) {
   try {
     // Connect to DB
-    console.log("CONNECTED TO MONGO");
+    console.log("CONNECTED TO MONGO TO FETCH ALL PRODUCTS");
     await connectDB();
 
     const filter = {
