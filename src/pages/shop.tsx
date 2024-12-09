@@ -194,14 +194,21 @@ const Shop = () => {
             sellingImage={sellingImage}
             />
         </MainShopContainer>
-        { isVisibleBuyModal ? ( 
-          <BuyingModal 
-            onclick={closeModal} 
-            product={product} 
+        { isVisibleBuyModal ? (
+          <BuyingModal
+            onclick={closeModal}
+            product={product}
             player={player}
             setPlayer={setPlayer}
-            /> ) : null }  
-        { isVisibleSellModal ? ( <SellingModal onClickSell={declineSellButton} sellingItem={product} player={player} setPlayer={setPlayer} setSellingItem={setSellingItem} setSellingImage={setSellingImage}/> ) : null }  
+            /> ) : null }
+        { isVisibleSellModal ? (
+          <SellingModal
+            onClickSell={declineSellButton}
+            sellingItem={product}
+            player={player}
+            setPlayer={setPlayer}
+            setSellingItem={setSellingItem}
+            setSellingImage={setSellingImage}/> ) : null }
         </div>
       </Layout>
     )
