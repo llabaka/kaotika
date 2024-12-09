@@ -1,58 +1,80 @@
-import Helmets from "@/pages/api/models/HelmetModel";
+import { createMocks } from 'node-mocks-http'; // Simulate HTTP request and HTTP response
+import handler from '@/pages/api/shop/products/helmets'; 
+import Helmets from '@/pages/api/models/HelmetModel';
+import mongoose from 'mongoose';
 
-// Mock MONGOOSE
-jest.mock("./../../pages/api/models/HelmetModel");
+beforeAll(() => {
+  //Delete console logs when running test or hide them
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+});
 
-// IMPORTANT!! DECLARE TYPES SINCE WE ARE WORKING IN TSX
-const mockedInsertMany = Helmets.insertMany as jest.Mock;
-const mockedFind = Helmets.find as jest.Mock;
+afterAll(async () => {
+  //Disconnect from MongoDB after finishing the test
+  await mongoose.disconnect();
+  jest.restoreAllMocks(); // Restaurar todos los mocks
+});
 
-describe("Helmets Model", () => {
-  it("should insert helmets", async () => {
+describe('GET /api/shop/products/helmets', () => {
+  it('should return an array of helmets products', async () => {
 
-    //ARRANGE//
+    ////////////////////////// ARRANGE //////////////////////////
 
-    const helmetData = [
-      { name: "Helmet 1", value: 100, isUnique: false },
-      { name: "Helmet 2", value: 200, isUnique: false },
-    ];
+    // Simulate data from MongoDB Helmet collection
+    const mockData = [{ name: 'Helmet 1', price: 100 }, { name: 'Helmet 2', price: 150 }];
+    
+    // Mock the FIND function
+    jest.spyOn(Helmets, 'find').mockResolvedValue(mockData);
 
-    // Mock the INSERTMANY operation of Mongoose
-    mockedInsertMany.mockResolvedValue(helmetData);
+    const { req, res } = createMocks({
+      method: 'GET',
+    });
 
-    //ACT//
+    ////////////////////////// ACT //////////////////////////
 
-    // Call the insertMany function
-    const insertedHelmets = await Helmets.insertMany(helmetData);
+    await handler(req, res); 
 
-    //ASSERT//
+    ////////////////////////// ASSERT //////////////////////////
 
-    // Verifying that the helmets were inserted correctly
-    expect(insertedHelmets).toHaveLength(2);
-    expect(insertedHelmets[0].name).toBe("Helmet 1");
-    expect(insertedHelmets[1].name).toBe("Helmet 2");
+     // Verify status code to be 200
+    expect(res.statusCode).toBe(200);
+
+    // Parse the string to a JSON
+    const responseData = JSON.parse(res._getData());
+
+    // Verify that helmets are the ones retrieved
+    expect(responseData).toHaveProperty('helmets');
+
+    // Verify that helmets is an array
+    expect(Array.isArray(responseData.helmets)).toBe(true); 
+
+    //Verify that IN THIS CASE helmets has a length of 2
+    expect(responseData.helmets.length).toBe(2);
   });
 
-  it("should retrieve helmets", async () => {
+  it('should handle errors correctly with a 500 status code', async () => {
 
-    //ARRANGE//
-    const helmetData = [
-      { name: "Helmet 1", value: 100, isUnique: false },
-      { name: "Helmet 2", value: 200, isUnique: false },
-    ];
+    ////////////////////////// ARRANGE //////////////////////////
 
-    // Mock the FIND operation of Mongoose
-    mockedFind.mockResolvedValue(helmetData);
+    // Simulate receiving an error
+    jest.spyOn(Helmets, 'find').mockRejectedValue(new Error('Database connection error'));
 
-    //ACT//
+    const { req, res } = createMocks({
+      method: 'GET',
+    });
 
-    const helmets = await Helmets.find();
+    ////////////////////////// ACT //////////////////////////
 
-    //ASSERT//
+    await handler(req, res);
 
-    // Verifying that the retrieved helmets are correct
-    expect(helmets).toHaveLength(2);
-    expect(helmets[0].name).toBe("Helmet 1");
-    expect(helmets[1].name).toBe("Helmet 2");
+    ////////////////////////// ASSERT //////////////////////////
+
+     //Verify status code to be 500
+    expect(res.statusCode).toBe(500);
+    const responseData = JSON.parse(res._getData());
+
+    //Verify that the error is in fact the error that our Helmets handler has on his 500 status code response
+    expect(responseData).toHaveProperty('error');
+    expect(responseData.error).toBe('Internal Server Error'); // O el mensaje de error adecuado
   });
+
 });
