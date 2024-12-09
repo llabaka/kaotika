@@ -10,7 +10,7 @@ import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 // product
 interface  SellingModalProps {
     sellingItem: Product | null;
-	onClickSell : () => void;
+	onClickSell : any;
     player: Player,
     setPlayer: (loaded: Player) => void;
     setSellingItem: (loaded: Product) => void;

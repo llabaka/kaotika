@@ -237,6 +237,8 @@ const Shop = () => {
             setPlayer={setPlayer}
             setHaveSell={setHaveSell}
             setShopTooltips={setShopTooltips}
+            setSellingImage={setSellingImage}
+            setSellingItem={setSellingItem}
             /> 
           ) : null }
           <div className='w-[24%] fixed top-[30%] right-[2%] z-20'>
