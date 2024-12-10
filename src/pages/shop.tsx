@@ -46,10 +46,9 @@ const Shop = () => {
 
 //Save products in local storage
   useEffect(() => {
-    console.log(allProducts);
 
     localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
-  }, [allProducts])
+  }, [cartProducts])
 
   const fetchProducts = async () => {
     try {
