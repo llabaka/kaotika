@@ -42,6 +42,7 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
 
             if(!response.ok){
                 console.log(JSON.stringify(json));
+                setIsLoading(false);
                 return;
             }
 
