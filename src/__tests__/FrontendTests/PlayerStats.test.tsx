@@ -1,26 +1,33 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Cart from '@/components/shop/Cart';
-import CardItem from '@/components/shop/CardItem';
-import { Product } from '@/_common/interfaces/shop/Product';
-import { Player } from '@/_common/interfaces/Player';
 import { mockPlayer } from '../__mocks__/mockPlayer';
 import { mockProduct, mockProduct2 } from '../__mocks__/mockProduct';
-import calculateTotalPrice from '@/components/shop/helpers/CalculatePrice';
 import PlayerStatsButtons from '@/components/shop/PlayerStatsButtons';
 import BuyingModal from '@/components/shop/BuyingModal/BuyingModal';
+
+global.fetch = jest.fn() as jest.Mock;
+
+beforeEach(() => {
+    (fetch as jest.Mock).mockClear(); // Clear previous mock data before each test
+  });
 
 afterAll(async () => {
     jest.restoreAllMocks(); // Restaurar todos los mocks
   });
 
-describe('Player Gold amount', () => {
-    it('shows the correct gold amount', async () => {
+  describe('should display the correct amount of gold', () => {
+    it('when first entering the shop', async () => {
 
-        const mockOnClick = jest.fn();
-        const mockSetPlayer = jest.fn();
-        const mockSetHaveBuy = jest.fn();
-        const mockSetShopTooltips = jest.fn();
+    ////////////////////////// ARRANGE //////////////////////////
+
+        (fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            json: async () => ({
+                data: { ...mockPlayer, gold: 3819 }, // Simulate updated player data
+            }),
+        });
+
+    ////////////////////////// ACT //////////////////////////
 
         // Render the component
         render(
@@ -28,11 +35,26 @@ describe('Player Gold amount', () => {
                 player={mockPlayer}
             />
         );
-    
-        // Verify that the Cart component renders correctly
+
+    ////////////////////////// ASSERT //////////////////////////
+
+        // Verify that the PlayerStatsButtons component renders correctly
         expect(screen.getByTestId('PlayerGold')).toBeInTheDocument();
         expect(screen.getByTestId('PlayerGold')).toHaveTextContent('3919');
+    });
 
+    it('when buying a product', async () => {
+
+         ////////////////////////// ARRANGE //////////////////////////
+
+        const mockOnClick = jest.fn();
+        const mockSetPlayer = jest.fn();
+        const mockSetHaveBuy = jest.fn();
+        const mockSetShopTooltips = jest.fn();
+
+        ////////////////////////// ACT //////////////////////////
+
+        // Render the BuyingModal component
         render(
             <BuyingModal
                 product={mockProduct}
@@ -42,11 +64,32 @@ describe('Player Gold amount', () => {
                 setHaveBuy={mockSetHaveBuy}
                 setShopTooltips={mockSetShopTooltips}
             />
-        )
+        );
 
         const buyButton = screen.getByTestId('BuyButton');
-        expect(buyButton).toBeInTheDocument();
+        fireEvent.click(buyButton);
 
+        ////////////////////////// ASSERT //////////////////////////
 
+        await waitFor(() => {
+            expect(mockSetPlayer).toHaveBeenCalledWith(expect.objectContaining({ gold: 3819 }));
+        });
+
+        // Extract the updated player from the first call to mockSetPlayer
+        const updatedPlayer = mockSetPlayer.mock.calls[0][0];
+
+        // Check that the updatedPlayer has the correct gold value
+        expect(updatedPlayer.gold).toBe(3819);
+
+        // Rerender the PlayerStatsButtons component with the updated player
+        render(
+            <PlayerStatsButtons
+                player={updatedPlayer}
+            />
+        );
+
+        // Verify that the PlayerStatsButtons component renders correctly
+        expect(screen.getByTestId('PlayerGold')).toBeInTheDocument();
+        expect(screen.getByTestId('PlayerGold')).toHaveTextContent('3819');
     });
 });
