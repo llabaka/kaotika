@@ -24,13 +24,12 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
     const imageFake = "/images/equipment/armors/armor_20.png"
     const buttonImage = "/images/shop/ManagePlayerButton.png";
 
-    const addToopltip = (image: string, itemName: string, action: string) => {
+    const addToolTip = (image: string, itemName: string, action: string) => {
         setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
     }
 
     // Block the scroll
     document.documentElement.style.overflow = "hidden";
-    window.scrollTo(0,0);
     
     const buyButtonHandler = async() => {
 
@@ -53,7 +52,7 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
 
                 const updatePlayer = json.data;
                 setPlayer(updatePlayer);
-                addToopltip(product.image!, product.name!, "bought");
+                addToolTip(product.image!, product.name!, "bought");
                 console.log("Procede a comprar");
             }
         }else{
@@ -70,7 +69,7 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
     return (
         isLoading ? <Loading/> : 
 
-        <div className="w-[100%] h-full absolute top-0 z-20 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
+        <div className="w-full h-[120%] absolute top-0 z-20 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
             
             <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">
                 <Image 
@@ -81,7 +80,7 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
                     />
                     
                 <p className="text-[34px] text-center z-10 text-white">Are you sure you want to buy the
-                    <span className="text-orange-400"> {product?.name}</span> for <span className="text-orange-400">{product?.value} g</span></p>
+                    <span className="text-orange-400"> {product?.name}</span> for <span className="text-orange-400">{product?.value} g</span> ?</p>
                 <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
                     {/* DIV PARA IMAGEN Y BOTONES */}
                     <div className="w-[34%] h-[90%] relative">
