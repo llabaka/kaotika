@@ -1,5 +1,13 @@
 
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
+import Armor from "./ArmorModel";
+import Weapon from "./WeaponsModel";
+import Helmet from "./HelmetModel";
+import Shield from "./ShieldsModel";
+import Artifact from "./ArtifactsModel";
+import Boot from "./BootsModel";
+import Ring from "./RingsModel";
+import Ingredient from "./IngredientsModel";
 
 const PlayerSchema = new mongoose.Schema({
   name: { type: String, required: true },
@@ -15,29 +23,29 @@ const PlayerSchema = new mongoose.Schema({
   attributes: { type: Object, required: true },
   classroom_id: { type: String, default: null },
   equipment: {
-    helmet: { type: Object, default: null },
-    weapon: { type: Object, required: true },
-    armor: { type: Object, required: true },
-    shield: { type: Object, default: null },
-    artifact: { type: Object, required: true },
-    boot: { type: Object, default: null },
-    ring: { type: Object, default: null },
-    healing_potion: { type: Object, required: true },
-    antidote_potion: { type: Object, required: true },
-    enhancer_potion: { type: Object, required: true },
+    helmet: { type: Schema.Types.ObjectId, ref: Helmet, default: "66d99aac7518eb4990035363" },
+    weapon: { type: Schema.Types.ObjectId, ref: Weapon },
+    armor: { type: Schema.Types.ObjectId, ref: Armor },
+    shield: { type: Schema.Types.ObjectId, ref: Shield, default: "66f27c81c114335cadf45d70" },
+    artifact: { type: Schema.Types.ObjectId, ref: Artifact },
+    boot: { type: Schema.Types.ObjectId, ref: Boot, default: "66d99a807518eb499003535f" },
+    ring: { type: Schema.Types.ObjectId, ref: Ring, default: "66a6d6c8dfbffe7e6503970f" },
+    // antidote_potion: { type: Schema.Types.ObjectId, ref: "PotionAntidote" },
+    // healing_potion: { type: Schema.Types.ObjectId, ref: "PotionHealing" },
+    // enhancer_potion: { type: Schema.Types.ObjectId, ref: "PotionEnhancer" }
   },
   inventory: {
-    helmets: [{ type: Object }],
-    weapons: [{ type: Object }],
-    armors: [{ type: Object }],
-    shields: [{ type: Object }],
-    artifacts: [{ type: Object }],
-    boots: [{ type: Object }],
-    rings: [{ type: Object }],
-    healing_potions: [{ type: Object }],
-    antidote_potions: [{ type: Object }],
-    enhancer_potions: [{ type: Object }],
-    ingredients: [{type: Object}],
+    helmets: [{ type: Schema.Types.ObjectId, ref: Helmet }],
+    weapons: [{ type: Schema.Types.ObjectId, ref: Weapon }],
+    armors: [{ type: Schema.Types.ObjectId, ref: Armor }],
+    shields: [{ type: Schema.Types.ObjectId, ref: Shield }],
+    artifacts: [{ type: Schema.Types.ObjectId, ref: Artifact }],
+    boots: [{ type: Schema.Types.ObjectId, ref: Boot }],
+    rings: [{ type: Schema.Types.ObjectId, ref: Ring }],
+    // antidote_potions: [{ type: Schema.Types.ObjectId, ref: "PotionAntidote" }],
+    // healing_potions: [{ type: Schema.Types.ObjectId, ref: "PotionHealing" }],
+    // enhancer_potions: [{ type: Schema.Types.ObjectId, ref: "PotionEnhancer" }],
+    ingredients: [{ type: Schema.Types.ObjectId, ref: Ingredient }]
   },
   tasks: [{ type: Object }],
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
