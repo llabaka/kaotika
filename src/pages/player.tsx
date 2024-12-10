@@ -20,6 +20,7 @@ import WeaponTooltip from '@/components/tooltips/WeaponTooltip';
 import CommonTooltip from '@/components/tooltips/CommonTooltip';
 import HealingPotionTooltip from '@/components/tooltips/HealingPotionTooltip';
 import AntidotePotionTooltip from '@/components/tooltips/AntidotePotionTooltip';
+import IngredientTooltip from '@/components/tooltips/IngredientTooltip';
 import { Helmet } from '@/_common/interfaces/Helmet';
 import { Weapon } from '@/_common/interfaces/Weapon';
 import { Armor } from '@/_common/interfaces/Armor';
@@ -41,6 +42,7 @@ import { calculateDefense } from '@/helpers/calculateDefense';
 import { calculateMagicResistance } from '@/helpers/calculateMagicResistance';
 import { calculateCFP } from '@/helpers/calculateCFP';
 import { calculateBCFA } from '@/helpers/calculateBCFA';
+import IngredientComponent from '@/components/Ingredient';
 
 const mountedStyle = { animation: "inAnimation 250ms ease-in" };
 const unmountedStyle = {animation: "outAnimation 270ms ease-out"};
@@ -698,6 +700,15 @@ const PlayerPage = () => {
                       )
                     })
                   }
+                  {
+                    player.inventory.ingredients.map(ingredient => {
+                      return (
+                        <div key={ingredient._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
+                          <IngredientComponent id={ingredient._id} tooltip={<IngredientTooltip element={ingredient} equiped={null}/>} position='bottom' type={[]} element={ingredient} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />
+                        </div>
+                      )
+                    })
+                  }
                   { 
                     Array.from({
                       length:
@@ -712,6 +723,7 @@ const PlayerPage = () => {
                       - player.inventory.healing_potions.length
                       - player.inventory.antidote_potions.length
                       - player.inventory.enhancer_potions.length
+                      - player.inventory.ingredients.length
                     }).map((element,index) => <div key={index} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}><Droppable id={23} type='inventory'  children={null}/></div> ) 
                   }                      
                 </div>
