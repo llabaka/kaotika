@@ -47,6 +47,9 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
 
                 if(!response.ok){   
                     console.log(JSON.stringify(json));
+                    setIsLoading(false);
+                    setHaveBuy(true);
+                    onclick(); // Cierra el modal
                     return;
                 }
 
