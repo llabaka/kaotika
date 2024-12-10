@@ -19,8 +19,8 @@ export default async function handlerPlayer(req: any, res: any) {
         
         const populatedPlayer = await populatePlayer();
 
-        console.log("PLAYER AFTER POPULATE");
-        console.log(populatedPlayer.equipment);
+        console.log("PLAYER ID AFTER POPULATE");
+        console.log(populatedPlayer._id);
         
         
 
