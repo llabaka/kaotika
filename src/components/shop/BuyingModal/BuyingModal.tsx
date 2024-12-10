@@ -72,7 +72,7 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
     return (
         isLoading ? <Loading/> : 
 
-        <div className="w-full h-[120%] absolute top-0 z-20 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
+        <div className="w-full h-[120%] absolute top-0 z-20 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal" data-testid="buying-modal">
             
             <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">
                 <Image 
