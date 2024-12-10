@@ -48,7 +48,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
             }
           
         }
-        addTooltip(card.image!, card.name!, "added to cart");
+        addTooltip(card.image!, card.name!, "added the next item to the cart:");
     }
 
     return(
