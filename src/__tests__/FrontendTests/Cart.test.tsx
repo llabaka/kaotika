@@ -25,6 +25,7 @@ describe('Add To Cart functionality', () => {
         const mockSetCartProducts = jest.fn(); // Mocked setter function
         const mockOnClickBuy = jest.fn();
         const mockSetProduct = jest.fn();
+        const mockSetShopTooltips = jest.fn;
     
         // Render the component
         render(
@@ -35,6 +36,7 @@ describe('Add To Cart functionality', () => {
                 setCartProducts={mockSetCartProducts}
                 cartProducts={mockCartProducts}
                 player={mockPlayer}
+                setShopTooltips={mockSetShopTooltips}
             />
         );
     

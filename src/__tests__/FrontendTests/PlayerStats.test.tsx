@@ -17,6 +17,11 @@ afterAll(async () => {
 describe('Player Gold amount', () => {
     it('shows the correct gold amount', async () => {
 
+        const mockOnClick = jest.fn();
+        const mockSetPlayer = jest.fn();
+        const mockSetHaveBuy = jest.fn();
+        const mockSetShopTooltips = jest.fn();
+
         // Render the component
         render(
             <PlayerStatsButtons
@@ -27,6 +32,21 @@ describe('Player Gold amount', () => {
         // Verify that the Cart component renders correctly
         expect(screen.getByTestId('PlayerGold')).toBeInTheDocument();
         expect(screen.getByTestId('PlayerGold')).toHaveTextContent('3919');
+
+        render(
+            <BuyingModal
+                product={mockProduct}
+                onclick={mockOnClick}
+                player={mockPlayer}
+                setPlayer={mockSetPlayer}
+                setHaveBuy={mockSetHaveBuy}
+                setShopTooltips={mockSetShopTooltips}
+            />
+        )
+
+        const buyButton = screen.getByTestId('BuyButton');
+        expect(buyButton).toBeInTheDocument();
+
 
     });
 });

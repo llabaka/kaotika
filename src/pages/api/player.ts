@@ -37,7 +37,8 @@ const populatePlayer = async () => {
 
     const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
 
-
+    console.log("PLAYER BEFORE POPULATED");
+    console.log(playerPopulated);
 
     // Poblamos el equipo
     await playerPopulated.equipment.populate('armor', { 'profiles': 0 });
