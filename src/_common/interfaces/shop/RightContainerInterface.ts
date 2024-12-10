@@ -1,6 +1,7 @@
 import { Player } from "../Player";
 import { AllProducts } from "./AllProducts";
 import { Product } from "./Product";
+import { ShopTooltipProps } from "./ShopTooltip";
 
 export default interface RightContainerInterface {
 	products: Product[];
@@ -18,4 +19,5 @@ export default interface RightContainerInterface {
 	sellingItem: Product;
     setSellingImage: (loaded: string) => void;
 	sellingImage: String;
+	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }

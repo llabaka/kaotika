@@ -5,6 +5,7 @@ import { Product } from "@/_common/interfaces/shop/Product";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { ArmorShop } from "@/_common/interfaces/shop/Product";
 import { Player } from "@/_common/interfaces/Player";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 interface ProductsContainerInterface {
 	products: Product[];
@@ -13,9 +14,10 @@ interface ProductsContainerInterface {
   setCartProducts: (loaded: Product[]) => void
   cartProducts: Product[];
   player: Player;
+  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player}) => {
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
     // Referencia para el contenedor del ProductsContainer
@@ -106,7 +108,9 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
             setProduct={setProduct}
             cartProducts={cartProducts}
             setCartProducts={setCartProducts}
-            player={player}/>
+            player={player}
+            setShopTooltips={setShopTooltips}
+            />
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />
           ) : (
