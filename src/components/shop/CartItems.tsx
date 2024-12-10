@@ -60,6 +60,7 @@ const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProduct
                         <button
                             onClick={() => handleRemoveItem(item._id!)}
                             className="w-[15%] h-[50%] mt-1 ml-4 mr-3 px-3 py-1 bg-orange-400 text-white text-3xl rounded hover:bg-red-700 transition-all"
+                            data-testid={"RemoveItem"}
                         >
                         Remove Item
                         </button>
