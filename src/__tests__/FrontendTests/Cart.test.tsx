@@ -8,6 +8,12 @@ import { mockPlayer } from '../__mocks__/mockPlayer';
 import { mockProduct, mockProduct2 } from '../__mocks__/mockProduct';
 import calculateTotalPrice from '@/components/shop/helpers/CalculatePrice';
 
+beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => {}); // Silence console logs
+    jest.spyOn(console, 'error').mockImplementation(() => {}); // Silence console errors
+    jest.spyOn(console, 'warn').mockImplementation(() => {}); // Silence console warnings
+  });
+
 afterAll(async () => {
     jest.restoreAllMocks(); // Restaurar todos los mocks
   });
@@ -19,6 +25,7 @@ describe('Add To Cart functionality', () => {
         const mockSetCartProducts = jest.fn(); // Mocked setter function
         const mockOnClickBuy = jest.fn();
         const mockSetProduct = jest.fn();
+        const mockSetShopTooltips = jest.fn;
     
         // Render the component
         render(
@@ -29,6 +36,7 @@ describe('Add To Cart functionality', () => {
                 setCartProducts={mockSetCartProducts}
                 cartProducts={mockCartProducts}
                 player={mockPlayer}
+                setShopTooltips={mockSetShopTooltips}
             />
         );
     

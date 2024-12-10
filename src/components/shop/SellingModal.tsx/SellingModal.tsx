@@ -66,8 +66,11 @@ const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingIt
             const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
             const json = await response.json();
 
-            if(!response.ok){
-                console.log(json);
+            if(!response.ok){   
+                console.log(JSON.stringify(json));
+                addToopltip("", json.error, "Error");
+                setIsLoading(false);
+                onClickSell(); // Cierra el modal
                 return;
             }
 

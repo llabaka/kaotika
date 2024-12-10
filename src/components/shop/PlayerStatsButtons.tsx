@@ -8,12 +8,6 @@ interface PlayerStatsButtonsProps {
 
 const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
 
-    const router = useRouter();
-
-    //Change to player screen
-    const handleManagePlayerClick = () => {
-        router.push('/player');
-    };
 
     return (
     <div className="flex flex-col justify-center items-center w-10/12 h-32">
@@ -26,7 +20,7 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                     fill
                     sizes='(max-width: 426px) 100vw'
                 />
-                    <div className="flex items-center justify-center z-10 text-orange-400 text-3xl">
+                    <div className="flex items-center justify-center z-10 text-orange-400 text-3xl" data-testid={"PlayerGold"}>
                         {player.gold}
                             <Image
                             src="/images/shop/CoinsIcon.png"
@@ -49,17 +43,7 @@ const PlayerStatsButtons:React.FC<PlayerStatsButtonsProps> = ({ player }) => {
                 <span className="z-10 text-orange-400 text-3xl">{player.level} LVL</span>
             </div>
         </div>
-
-            {/* Third Imagen Button */}
-            <button onClick={handleManagePlayerClick} className="w-60 h-16 flex relative items-center justify-center ">
-                <Image
-                    src="/images/shop/ManagePlayerButton.png"
-                    alt="Imagen 1"
-                    fill
-                    sizes='(max-width: 426px) 100vw'
-                />
-                <span className="z-10 text-orange-400 text-2xl hover:text-orange-200 transition">MANAGE PLAYER</span>
-            </button>
+            
     </div>
     );
 
