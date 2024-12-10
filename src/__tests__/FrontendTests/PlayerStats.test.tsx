@@ -47,6 +47,9 @@ describe('Player Gold amount', () => {
         const buyButton = screen.getByTestId('BuyButton');
         expect(buyButton).toBeInTheDocument();
 
+        fireEvent.click(buyButton);
+
+        
 
     });
 });
