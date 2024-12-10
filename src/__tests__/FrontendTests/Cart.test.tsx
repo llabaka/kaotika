@@ -1,11 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Cart from '@/components/shop/Cart';
 import CardItem from '@/components/shop/CardItem';
 import { Product } from '@/_common/interfaces/shop/Product';
 import { Player } from '@/_common/interfaces/Player';
 import { mockPlayer } from '../__mocks__/mockPlayer';
-import { mockProduct } from '../__mocks__/mockProduct';
+import { mockProduct, mockProduct2 } from '../__mocks__/mockProduct';
 import calculateTotalPrice from '@/components/shop/helpers/CalculatePrice';
 
 afterAll(async () => {
@@ -53,40 +53,37 @@ describe('Add To Cart functionality', () => {
     });
 
     it('updates the total price when a product is removed from the cart', async () => {
-           // Initial cart with one product
-    const mockCartProducts = [{ ...mockProduct, quantity: 1 }];
-    
-    // Mock function for setting cart products
-    const mockSetCartProducts = jest.fn();
+            const mockCartProducts = [mockProduct, mockProduct2];
+            const mockSetCartProducts = jest.fn();
+            
+            const { rerender } = render(
+                <Cart cartProducts={mockCartProducts} setCartProducts={mockSetCartProducts} />
+            );
 
-    // Render the Cart component
-    render(
-        <Cart cartProducts={mockCartProducts} setCartProducts={mockSetCartProducts} />
-    );
+            // Check initial total price
+            expect(screen.getByTestId('CartTotalPrice')).toHaveTextContent('250');
 
-    // Verify that the total price is initially correct
-    expect(screen.getByTestId('CartTotalPrice')).toHaveTextContent('100');
+            // Click remove button to remove the product
+            const removeButton = screen.getByTestId('RemoveItem1');
+            fireEvent.click(removeButton);
 
-    // Simulate the "Remove" button click
-    const removeButton = screen.getByTestId('RemoveItem');
-    fireEvent.click(removeButton);
+            expect(mockSetCartProducts).toHaveBeenCalled(); 
 
-    // Now check that `setCartProducts` was called with a function (React's functional update)
-    expect(mockSetCartProducts).toHaveBeenCalledWith(expect.any(Function));
+            // Wait for the cart to update and price to reflect the removal
+            await waitFor(() => {
 
-    // Get the function passed to setCartProducts
-    const updateCartFunction = mockSetCartProducts.mock.calls[0][0];
+            //expect(screen.getByText('Mock Product')).not.toBeInTheDocument();
+            // Ensure that setCartProducts was called with a function that removes the product (empty array)
+            const updateFunction = mockSetCartProducts.mock.calls[0][0];  // Get the update function
+            const updatedCart = updateFunction(mockCartProducts);  // Call it with the mockCartProducts
+            expect(updatedCart).toEqual([mockProduct2]);  // Ensure the result is an empty array after removal
+            // Ensure total price is now 0 after removal    
 
-    // Simulate calling this function with the current state (cart with 1 product)
-    const newState = updateCartFunction(mockCartProducts);
+            rerender(<Cart cartProducts={updatedCart} setCartProducts={mockSetCartProducts} />);
+            const newTotal = calculateTotalPrice(updatedCart);
 
-    // Now `newState` should be an empty array because we removed the product
-    expect(newState).toEqual([]);  // This confirms the cart is empty
 
-    // Use findByTestId to wait for the total price element to appear with the updated value
-    const totalPriceElement = await screen.findByTestId('CartTotalPrice');
-
-    // Check if the total price is now 0
-    expect(totalPriceElement).toHaveTextContent('1000');
+            expect(screen.getByTestId('CartTotalPrice')).toHaveTextContent(`${newTotal}`);
+        });
     });
 });
