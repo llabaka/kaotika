@@ -2,25 +2,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/_common/interfaces/shop/Product";
-import CartProductsInterface from "@/_common/interfaces/shop/CartProductsInterface";
+import CartProductsInterface, { CartItemsInterface } from "@/_common/interfaces/shop/CartProductsInterface";
 
-const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) => {
+const CartItems:React.FC<CartItemsInterface> = ({cartProducts, setCartProducts, handleRemoveItem, handleUpdateQuantity}) => {
 
     // const [products, setProducts] = useState<Product[] | []>(cartProducts);
 
-    const handleRemoveItem = (id: string) => {
-        setCartProducts((prevItems:Product[]) => prevItems.filter((item:Product) => item._id !== id));
-      };
 
-    const updateQuantity = (id: string, delta: number) => {
-    setCartProducts((prevItems:Product[]) =>
-        prevItems.map((item) =>
-        item._id === id && item.type === "ingredient"
-            ? { ...item, quantity: Math.max(item.quantity! + delta, 0) }
-            : item
-        )
-    );
-    };
 
     return(
         <div className="h-[85%] w-[90%] text-xl overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
@@ -38,7 +26,7 @@ const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProduct
                         <div className="flex w-[13%] items-center space-x-2">
                             <button
                                 className="w-9 h-9 bg-orange-300 text-white text-5xl rounded-full flex items-center justify-center hover:bg-orange-600 transition"
-                                onClick={() => updateQuantity(item._id!, -1)}
+                                onClick={() => handleUpdateQuantity(item._id!, -1)}
                             >
                                 <div className="mb-4">-</div>
                             </button>
@@ -47,7 +35,7 @@ const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProduct
                             </span>
                             <button
                                 className="w-9 h-9 bg-orange-300 text-white text-5xl rounded-full flex items-center justify-center hover:bg-orange-600 transition"
-                                onClick={() => updateQuantity(item._id!, 1)}
+                                onClick={() => handleUpdateQuantity(item._id!, 1)}
                             >
                                 <div className="mb-3">+</div>
                             </button>
@@ -60,6 +48,7 @@ const CartItems:React.FC<CartProductsInterface> = ({cartProducts, setCartProduct
                         <button
                             onClick={() => handleRemoveItem(item._id!)}
                             className="w-[15%] h-[50%] mt-1 ml-4 mr-3 px-3 py-1 bg-orange-400 text-white text-3xl rounded hover:bg-red-700 transition-all"
+                            data-testid={`RemoveItem${item._id}`}
                         >
                         Remove Item
                         </button>

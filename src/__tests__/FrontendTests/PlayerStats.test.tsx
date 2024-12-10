@@ -12,8 +12,8 @@ afterAll(async () => {
     jest.restoreAllMocks(); // Restaurar todos los mocks
   });
 
-describe('Add To Cart functionality', () => {
-    it('calls setCartProducts with correct data when "Add Basket" button is clicked', async () => {
+describe('Player Gold amount', () => {
+    it('shows the correct gold amount', async () => {
         // Mock props
         const mockCartProducts: Product[] = []; // Empty array for initial state
         const mockSetCartProducts = jest.fn(); // Mocked setter function

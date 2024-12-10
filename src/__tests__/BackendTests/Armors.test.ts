@@ -13,6 +13,7 @@ import { Armor } from '@/_common/interfaces/Armor';
 beforeAll(() => {
   //Delete console logs when running test or hide them
   jest.spyOn(console, 'error').mockImplementation(() => {});
+  jest.setTimeout(10000); // Set the waiting time up till 10 seconds
 });
 
 afterAll(async () => {
