@@ -215,6 +215,7 @@ const Shop = () => {
             sellingItem={sellingItem}
             setSellingImage={setSellingImage}
             sellingImage={sellingImage}
+            setShopTooltips={setShopTooltips}
             />
 
         </MainShopContainer>

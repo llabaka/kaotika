@@ -18,4 +18,5 @@ export default interface RightContainerInterface {
 	sellingItem: Product;
     setSellingImage: (loaded: string) => void;
 	sellingImage: String;
+	setShopTooltips: any;
 }

@@ -2,6 +2,7 @@ import { Player } from "@/_common/interfaces/Player";
 import Card from "./Card/Card"
 import { Product } from "@/_common/interfaces/shop/Product";
 import { handleAddToCart } from "./helpers/HandleAddToCart";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 interface CardItemProps {
     card: Product;
@@ -10,13 +11,18 @@ interface CardItemProps {
     setCartProducts: any;
     cartProducts: Product[];
     player: Player;
+    setShopTooltips: any
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player } ) => {
+const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips } ) => {
 
     const handleOnClickBuy = () => {
         onClickBuy();
         setProduct(card);
+    }
+
+    const addTooltip = (image: string, itemName: string, action: string) => {
+        setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
     }
 
     const handleAddToCart = () => {
@@ -42,6 +48,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
             }
           
         }
+        addTooltip(card.image!, card.name!, "added to cart");
     }
 
     return(
