@@ -7,7 +7,7 @@ interface Props {
   equiped: null;
 }
 
-const IngredientTooltip: React.FC<Props> = ({ element, equiped }): React.ReactNode => {
+const IngredientTooltip: React.FC<Props> = ({ element }): React.ReactNode => {
   return (
     <div key={element._id} className='w-full p-4 text-center'>
       <div className="flex flex-row justify-items-center items-center">
