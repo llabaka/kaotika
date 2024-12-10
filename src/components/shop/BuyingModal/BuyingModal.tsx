@@ -24,22 +24,16 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
     const imageFake = "/images/equipment/armors/armor_20.png"
     const buttonImage = "/images/shop/ManagePlayerButton.png";
 
-    useEffect(() => {
-        document.getElementsByTagName('html')[0].style.overflow = 'hidden';
-
-        return(() => {
-            document.getElementsByTagName('html')[0].style.overflow = 'auto';
-        });
-
-    }, []);
-
     const addToopltip = (image: string, itemName: string, action: string) => {
         setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
     }
 
-
-
+    // Block the scroll
+    document.documentElement.style.overflow = "hidden";
+    window.scrollTo(0,0);
+    
     const buyButtonHandler = async() => {
+
         // check gold
         setIsLoading(true);
 
@@ -69,6 +63,7 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
         setIsLoading(false);
         setHaveBuy(true);
         onclick(); // Cierra el modal
+        document.documentElement.style.overflow = "";
     }
 
     

@@ -145,6 +145,7 @@ const Shop = () => {
 
   const closeModal = () => {
     setIsVisibleBuyModal(false);
+    document.documentElement.style.overflow = "";
   } 
 
   const sellButton = () => {
@@ -153,7 +154,34 @@ const Shop = () => {
 
   const declineSellButton = () => {
     setIsVisibleSellModal(false);
+    document.documentElement.style.overflow = "";
   }
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+
+    // Hide scrollbar
+    htmlElement.style.overflow = 'scroll';
+    htmlElement.style.scrollbarWidth = 'none';
+    
+    const css = `
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    `;
+
+    // Use global styles
+    const styleSheet = document.createElement('style');
+    styleSheet.innerText = css;
+    document.head.appendChild(styleSheet);
+
+    return () => {
+        // Reset values
+        htmlElement.style.overflow = '';
+        htmlElement.style.scrollbarWidth = '';
+        document.head.removeChild(styleSheet);
+    };
+}, []);
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
