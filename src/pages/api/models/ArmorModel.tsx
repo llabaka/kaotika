@@ -18,8 +18,8 @@ const armorSchema = new mongoose.Schema({
   defense: { type: Number, required: true },
   modifiers: { type: modifiersSchema, required: true },
   min_lvl: { type: Number, required: true },
-  isUnique: { type: Boolean, required: true },
-  isActive: { type: Boolean, required: true },
+  isUnique: { type: Boolean },
+  isActive: { type: Boolean},
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
 
 export default mongoose.models.Armor || mongoose.model("Armor", armorSchema);
