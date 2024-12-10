@@ -19,6 +19,11 @@ export default async function handlerPlayer(req: any, res: any) {
         
         const populatedPlayer = await populatePlayer();
 
+        console.log("PLAYER AFTER POPULATE");
+        console.log(populatedPlayer.equipment);
+        
+        
+
         return res.status(200).json( populatedPlayer );
         } catch (err: any) {
         console.error("Error fetching player:", err.message);
@@ -32,8 +37,7 @@ const populatePlayer = async () => {
 
     const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
 
-    console.log("PLAYER POPULATED");
-    console.log(playerPopulated);
+
 
     // Poblamos el equipo
     await playerPopulated.equipment.populate('armor', { 'profiles': 0 });
@@ -62,6 +66,9 @@ const populatePlayer = async () => {
     // await playerPopulated.inventory.populate('antidote_potions.recovery_effect', { 'profiles': 0 });
     // await playerPopulated.inventory.populate('enhancer_potions', { 'profiles': 0 });
     await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+
+    console.log("PLAYER POPULATED");
+    console.log(playerPopulated);
 
     return playerPopulated;
 }
