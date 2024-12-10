@@ -13,9 +13,10 @@ interface ProductRowContainerProps {
   setCartProducts: (loaded: Product[]) => void;
   cartProducts: Product[];
   player: Player;
+  setShopTooltips: any;
 }
 
-const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player}) => {
+const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
 
   const [isAnimating, setIsAnimating] = useState(true);
 
@@ -35,7 +36,7 @@ const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClic
       {cards.map((card, index) => (
         <React.Fragment key={index}>
           {/* Render EmptyCard if card.image is empty, otherwise render CardItem */}
-          {card.image ? <CardItem card={card} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player}/> : <EmptyCard card={card}/>}
+          {card.image ? <CardItem card={card} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player} setShopTooltips={setShopTooltips}/> : <EmptyCard card={card}/>}
           {/* Show separator if it's NOT the last item */}
           {index < cards.length - 1 && (
             card.image 

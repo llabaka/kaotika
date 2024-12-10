@@ -11,7 +11,6 @@ import RightMainContainer from '@/components/shop/RightMainContainer';
 import SellingModal from '@/components/shop/SellingModal.tsx/SellingModal';
 import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { useEffect, useState } from 'react';
-import BuyTooltip from '@/components/tooltips/ShopTooltip';
 import ShopTooltip from '@/components/tooltips/ShopTooltip';
 import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
 
@@ -20,14 +19,6 @@ import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
 const Shop = () => {
 	const [loading, setLoading] = useState(false);
   const [player, setPlayer] = useState<Player>();
-  const [armors, setArmors] = useState([]);
-  const [boots, setBoots] = useState([]);
-  const [helmets, setHelmets] = useState([]);
-  const [shields, setShields] = useState([]);
-  const [weapons, setWeapons] = useState([]);
-  const [rings, setRings] = useState([]);
-  const [artifacts, setArtifacts] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
   const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
   const [cartProducts, setCartProducts] = useState<Product[] | []>([]);
@@ -77,18 +68,7 @@ const Shop = () => {
 
       //Set all equipments
       setAllProducts(result);
-      
-      //Set all equipment types
-      setArmors(result.armors);
-      setBoots(result.boots);
-      setHelmets(result.helmets);
-      setWeapons(result.weapons);
-      setShields(result.shields);
-      setRings(result.rings);
-      setArtifacts(result.artifacts);
-      setShowingProducts(result.weapons);
-      //Set magic stuff types
-      setIngredients(result.ingredients);
+
 
     } catch (err: any) {
       setError(err.message);
@@ -117,14 +97,6 @@ const Shop = () => {
 
   const localStorageProductsHandler = (products:any) => {
     setAllProducts(products);
-    setArmors(products.armors);
-    setBoots(products.boots);
-    setHelmets(products.helmets);
-    setWeapons(products.weapons);
-    setShields(products.shields);
-    setRings(products.rings);
-    setArtifacts(products.artifacts);
-    setIngredients(products.ingredients);
     setShowingProducts(products.weapons);
   }
   
@@ -173,6 +145,7 @@ const Shop = () => {
 
   const closeModal = () => {
     setIsVisibleBuyModal(false);
+    document.documentElement.style.overflow = "";
   } 
 
   const sellButton = () => {
@@ -181,7 +154,34 @@ const Shop = () => {
 
   const declineSellButton = () => {
     setIsVisibleSellModal(false);
+    document.documentElement.style.overflow = "";
   }
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+
+    // Hide scrollbar
+    htmlElement.style.overflow = 'scroll';
+    htmlElement.style.scrollbarWidth = 'none';
+    
+    const css = `
+        ::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    `;
+
+    // Use global styles
+    const styleSheet = document.createElement('style');
+    styleSheet.innerText = css;
+    document.head.appendChild(styleSheet);
+
+    return () => {
+        // Reset values
+        htmlElement.style.overflow = '';
+        htmlElement.style.scrollbarWidth = '';
+        document.head.removeChild(styleSheet);
+    };
+}, []);
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
@@ -215,6 +215,7 @@ const Shop = () => {
             sellingItem={sellingItem}
             setSellingImage={setSellingImage}
             sellingImage={sellingImage}
+            setShopTooltips={setShopTooltips}
             />
 
         </MainShopContainer>
