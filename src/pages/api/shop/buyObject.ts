@@ -21,6 +21,11 @@ const modelMap : Record<string, any> = {
     ingredient: IngredientsModel,
 }
 
+interface Ingredient {
+    qty: number;
+    productId: string
+}
+
 export default async function handlerBuy(req : NextApiRequest, res : NextApiResponse) {
     
     const { playerId, products} = req.body;
@@ -46,7 +51,7 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
         let totalCost = 0;
         const purchasedProducts = [];
         
-        for(const {type, productId} of products){
+        for(const {type, productId, qty} of products){
             // Search product in DB
             const product = await searchProductByType(type, productId);
             if(!product){
@@ -55,7 +60,16 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
                 });
             }
 
-            if(player.gold < totalCost + product.value){
+            if(type !== 'ingredient') {
+                if(player.level < product.min_lvl){
+                    return res.status(400).send({
+                        error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
+                    });
+                }
+            }
+
+            totalCost = type === 'ingredient' ? (qty * product.value) : product.value;
+            if(player.gold < totalCost){
                 return res.status(400).send({
                     error: `The player dont have gold to buy product`
                 });
@@ -68,19 +82,43 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
                 });
             }
 
-            purchasedProducts.push({
-                type,
-                product
-            });
+            if(type === 'ingredient'){
 
+                purchasedProducts.push({
+                    type,
+                    productId,
+                    qty
+                });
+            } else {
+                purchasedProducts.push({
+                    type,
+                    productId
+                });    
+            }
+
+        
             totalCost += product.value;
         }
 
         // Update Player
         player.gold -= totalCost;
-        purchasedProducts.forEach(({type, product}) => {
+        purchasedProducts.forEach(({type, productId, qty}) => {
             const inventoryCategory = type + "s";
-            player.inventory[inventoryCategory].push(product);
+
+            if(type === 'ingredient'){
+                const existingIngredient = player.inventory[inventoryCategory].find((item : Ingredient) => item.productId === productId);
+                console.log(JSON.stringify(existingIngredient));
+                if(!existingIngredient){
+                    player.inventory[inventoryCategory].push({productId, qty});
+                }else{
+                    existingIngredient.qty += qty;
+                    player.markModified(`inventory.${inventoryCategory}`);
+                }
+
+
+            }else {
+                player.inventory[inventoryCategory].push(productId);
+            }
         });
 
 
