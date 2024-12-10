@@ -4,7 +4,7 @@ import calculateTotalPrice from "./helpers/CalculatePrice";
 import CartPriceInterface from "@/_common/interfaces/shop/CartPriceInterface";
 import Image from "next/image";
 
-const CartTotal:React.FC<CartPriceInterface> = ({totalPrice}) => {
+const CartTotal:React.FC<CartPriceInterface> = ({cartProducts}) => {
 
     return(
         <div className="h-[13%] w-[90%] text-xl bg-black bg-opacity-50 rounded-md">
@@ -12,7 +12,7 @@ const CartTotal:React.FC<CartPriceInterface> = ({totalPrice}) => {
                 <p className="h-[80%] ml-3 text-3xl">TOTAL<span className="text-5xl"> :</span></p>
                 <div className="flex w-[25%] h-[80%] justify-center">
 
-                    <p className="w-[70%] h-full text-5xl text-right mr-2" >{totalPrice}</p>
+                    <p className="w-[70%] h-full text-5xl text-right mr-2" data-testid={"CartTotalPrice"}>{calculateTotalPrice(cartProducts)}</p>
 
                     <div className="w-[20%] h-[80%]">
                         <div className="relative w-full h-full">
