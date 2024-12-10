@@ -9,6 +9,8 @@ import IngredientsModel from "../models/IngredientsModel";
 import RingsModel from "../models/RingsModel";
 import ShieldsModel from "../models/ShieldsModel";
 import WeaponsModel from "../models/WeaponsModel";
+import { Product } from "@/_common/interfaces/shop/Product";
+import { ObjectId } from "mongoose";
 
 const modelMap : Record<string, any> = {
     armor: ArmorModel,
@@ -55,6 +57,24 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
                 });
             }
 
+            if(type !== 'ingredient') {
+                if(player.level < product.min_lvl){
+                    return res.status(400).send({
+                        error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
+                    });
+                }
+
+                const existingProduct = player.inventory[type+'s'].find((item : ObjectId) => item.toString() === productId) ;
+                
+
+                if(existingProduct){
+                    return res.status(400).send({
+                        error: `The player actually have the object with the id ${productId} in the inventory`
+                    })
+                }
+            }
+
+        
             if(player.gold < totalCost + product.value){
                 return res.status(400).send({
                     error: `The player dont have gold to buy product`
@@ -70,17 +90,18 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
 
             purchasedProducts.push({
                 type,
-                product
-            });
-
+                productId
+            });   
+        
             totalCost += product.value;
         }
 
         // Update Player
         player.gold -= totalCost;
-        purchasedProducts.forEach(({type, product}) => {
+        purchasedProducts.forEach(({type, productId}) => {
             const inventoryCategory = type + "s";
-            player.inventory[inventoryCategory].push(product);
+            player.inventory[inventoryCategory].push(productId);
+            
         });
 
 
