@@ -10,6 +10,7 @@ import RingsModel from "../models/RingsModel";
 import ShieldsModel from "../models/ShieldsModel";
 import WeaponsModel from "../models/WeaponsModel";
 import { Product } from "@/_common/interfaces/shop/Product";
+import { populatePlayer } from "../player";
 
 const modelMap : Record<string, any> = {
     armor: ArmorModel,
@@ -61,7 +62,7 @@ export default async function handlerSell(req : NextApiRequest, res : NextApiRes
         }
         
         // Check if product is in inventory
-        const index = player.inventory[inventoryCategory].findIndex((item: any) => item._id.toString() === productId);
+        const index = player.inventory[inventoryCategory].findIndex((item: any) => item.toString() === productId);
         
         if (index === -1) {
             return res.status(400).send({
@@ -80,9 +81,11 @@ export default async function handlerSell(req : NextApiRequest, res : NextApiRes
         // Save player changes
         await player.save();
 
+        const playerPopulated = await populatePlayer();
+
         return res.status(200).send({
             status: "OK",
-            data: player
+            data: playerPopulated
         })
     }
     catch (error){

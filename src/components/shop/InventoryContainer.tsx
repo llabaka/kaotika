@@ -5,6 +5,11 @@ import { useEffect } from "react";
 
 const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, setSellingImage, setSellingItem, setProduct }) => {
     // Combina todas las propiedades de arrays en un solo array
+
+    console.log("PLAYER INVENTORY");
+    
+    console.log(player.inventory)
+    
     const playerInventory = [
         ...player.inventory.helmets,
         ...player.inventory.weapons,

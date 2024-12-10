@@ -9,8 +9,8 @@ import IngredientsModel from "../models/IngredientsModel";
 import RingsModel from "../models/RingsModel";
 import ShieldsModel from "../models/ShieldsModel";
 import WeaponsModel from "../models/WeaponsModel";
-import { Product } from "@/_common/interfaces/shop/Product";
 import { ObjectId } from "mongoose";
+import { populatePlayer } from "../player";
 
 const modelMap : Record<string, any> = {
     armor: ArmorModel,
@@ -107,9 +107,11 @@ export default async function handlerBuy(req : NextApiRequest, res : NextApiResp
 
         await player.save();
 
+        const playerPopulated = await populatePlayer();
+
         return res.status(200).send({
             status: "OK",
-            data: player
+            data: playerPopulated
         })
     }
     catch (error){
