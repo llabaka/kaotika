@@ -16,7 +16,7 @@ interface  SellingModalProps {
     setSellingItem: (loaded: Product) => void;
     setSellingImage: (loaded: string) => void;
     setHaveSell: any;
-    setShopTooltips: any
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
 const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips} : SellingModalProps) => {

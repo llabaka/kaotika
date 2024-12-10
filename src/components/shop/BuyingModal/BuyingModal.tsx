@@ -14,7 +14,7 @@ interface  BuyingModalProps {
     player: Player;
     setPlayer: any;
     setHaveBuy: any;
-    setShopTooltips: any;
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
 const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTooltips} : BuyingModalProps) => {

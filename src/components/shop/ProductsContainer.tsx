@@ -5,6 +5,7 @@ import { Product } from "@/_common/interfaces/shop/Product";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
 import { ArmorShop } from "@/_common/interfaces/shop/Product";
 import { Player } from "@/_common/interfaces/Player";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 interface ProductsContainerInterface {
 	products: Product[];
@@ -13,7 +14,7 @@ interface ProductsContainerInterface {
   setCartProducts: (loaded: Product[]) => void
   cartProducts: Product[];
   player: Player;
-  setShopTooltips: any;
+  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
 const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
