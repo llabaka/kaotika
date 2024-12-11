@@ -3,98 +3,105 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { buyProductClient } from "./BuyingModal/buyProductClient";
 import Loading from "../Loading";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 interface Product {
-    productId: string;
-    type: string;
+  productId: string;
+  type: string;
 }
 
-const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer, setShopTooltips}) => {
-    const [buyProducts, setBuyProducts] = useState<Product[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cartProducts, player, setPlayer, setShopTooltips }) => {
+  const [buyProducts, setBuyProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    useEffect(() => {
+  const alertImage = "/images/shop/AlertIcon.png";
 
-        const updatedBuyProducts = cartProducts.map(cartProduct => ({
-            productId: cartProduct._id!,
-            type: cartProduct.type!
-        }));
+  useEffect(() => {
 
-        setBuyProducts(updatedBuyProducts);
+    const updatedBuyProducts = cartProducts.map(cartProduct => ({
+      productId: cartProduct._id!,
+      type: cartProduct.type!
+    }));
 
-    }, [cartProducts]);
+    setBuyProducts(updatedBuyProducts);
 
-    useEffect(() => {
-        console.log(buyProducts);
-    }, [buyProducts]);
+  }, [cartProducts]);
 
-    const handleBuyAllButton = async() => {
+  useEffect(() => {
+    console.log(buyProducts);
+  }, [buyProducts]);
 
+  const addTooltip = (image: string, itemName: string, action: string) => {
+    setShopTooltips((prevTooltips: ShopTooltipProps[]) => [...prevTooltips, { image, action, itemName }]);
+  }
 
-        let productsValue = cartProducts.reduce((total, product) => total + product.value, 0);
+  const handleBuyAllButton = async () => {
 
-        console.log(`Player gold: ${player.gold}, Products value: ${productsValue}`);
+    let productsValue = cartProducts.reduce((total, product) => total + product.value, 0);
 
-        setIsLoading(true);
+    console.log(`Player gold: ${player.gold}, Products value: ${productsValue}`);
 
-        if(player.gold > productsValue){
+    setIsLoading(true);
 
-            const response = await buyProductClient(player._id, buyProducts);
-            const json = await response.json();
+    if (player.gold > productsValue) {
 
-            if(!response.ok){
-                console.log(JSON.stringify(json));
-                setIsLoading(false);
-                return;
-            }
+      const response = await buyProductClient(player._id, buyProducts);
+      const json = await response.json();
 
-            const updatePlayer = json.data;
-            setPlayer(updatePlayer);
+      if (!response.ok) {
+        console.log(JSON.stringify(json));
+        setIsLoading(false);
+        return;
+      }
 
-            console.log("Realiza compra desde carrito y lo vacia");
-            setCartProducts([]);
-                
-            setIsLoading(false);
-        }else{
-            console.log("not enough gold");
-            setIsLoading(false);
-            return;
-        }
-        
+      const updatePlayer = json.data;
+      setPlayer(updatePlayer);
 
-    };
+      console.log("Realiza compra desde carrito y lo vacia");
+      setCartProducts([]);
 
-    // Check if cart is empty and hide button
-    const emptyCart = buyProducts.length === 0;
+      setIsLoading(false);
+    } else {
+      console.log("not enough gold");
+      setIsLoading(false);
 
-    if (emptyCart){
-        return null;
+      //Not enough gold to buy in cart
+      addTooltip(alertImage, "", "not enough gold to buy");
+      return;
     }
+  };
 
-    return(
-        isLoading ? <Loading/> : 
+  // Check if cart is empty and hide button
+  const emptyCart = buyProducts.length === 0;
 
-        <div className="flex h-[15%] w-[90%] justify-center items-center">
-            <div className=" flex h-[65%] w-[25%] items-center justify-center " >
-                <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
-                    onClick={handleBuyAllButton}
-                    data-testid={"CartBuyButton"}>
-                    <Image
-                    src="/images/shop/ManagePlayerButton.png"
-                    alt={'Buy All'}
-                    fill
-                    sizes='(max-width: 426px) 100vw'
-                    />
-                    <span className={`z-10 text-orange-400 transition-all 'text-4xl text-orange-300'`}>
-                        BUY ALL
-                    </span>
-                </button>
+  if (emptyCart) {
+    return null;
+  }
+
+  return (
+    isLoading ? <Loading /> :
+
+      <div className="flex h-[15%] w-[90%] justify-center items-center">
+        <div className=" flex h-[65%] w-[25%] items-center justify-center " >
+          <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
+            onClick={handleBuyAllButton}
+            data-testid={"CartBuyButton"}>
+            <Image
+              src="/images/shop/ManagePlayerButton.png"
+              alt={'Buy All'}
+              fill
+              sizes='(max-width: 426px) 100vw'
+            />
+            <span className={`z-10 text-orange-400 transition-all 'text-4xl text-orange-300'`}>
+              BUY ALL
+            </span>
+          </button>
 
 
-               
 
-            </div>
+
         </div>
-    )
+      </div>
+  )
 
 }
 
