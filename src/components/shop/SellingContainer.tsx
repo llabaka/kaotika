@@ -1,10 +1,6 @@
-import { Player } from "@/_common/interfaces/Player";
 import InventoryContainer from "./InventoryContainer";
 import SellingItemContainer from "./SellingItemContainer";
-import { useEffect, useState } from "react";
 import { SellingContainerInterface } from "@/_common/interfaces/shop/Selling";
-import SellingItem from "./SellingItem";
-import { Product } from "@/_common/interfaces/shop/Product";
 
 const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClickSell, setProduct, setSellingItem, sellingItem, setSellingImage, sellingImage }) => {
 
