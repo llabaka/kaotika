@@ -3,7 +3,7 @@ import Player from "./models/PlayerModel";
 // import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../db/connection";
 
-const mockSession2: any = {
+const mockSession: any = {
     user: {
         name: 'Asier',
         email: 'asier.arguinchona@ikasle.aeg.eus',
