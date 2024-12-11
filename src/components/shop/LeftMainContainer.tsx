@@ -38,7 +38,7 @@ const LeftMainContainer:React.FC<LeftMainContainerInterface> = ({setDisplayingSc
 			<ButtonsSeparator/>
 
 			{/* Equipment Buttons */}
-			<EquipmentButtons allProducts={allProducts} setShowingProducts={setShowingProducts}/>
+			<EquipmentButtons allProducts={allProducts} setShowingProducts={setShowingProducts} setDisplayingScreen={setDisplayingScreen}/>
 		</div>
 	);
 };
