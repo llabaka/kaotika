@@ -10,6 +10,7 @@ import { Product } from '@/_common/interfaces/shop/Product';
 import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import { Player } from '@/_common/interfaces/Player';
 import { useState } from 'react';
+import MagicStuffButtons from './MagicStuffButtons';
 
 interface LeftMainContainerInterface {
   setDisplayingScreen: (loaded: number) => void;
@@ -17,9 +18,11 @@ interface LeftMainContainerInterface {
   player: Player
   setShowingProducts: (loaded: Product[]) => void;
   displayingScreen: Number;
+	selectedMainTab: number;
+  setSelectedMainTab: (loaded: number) => void;
 }
 
-const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplayingScreen, allProducts, setShowingProducts, player, displayingScreen }) => {
+const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplayingScreen, allProducts, setShowingProducts, player, selectedMainTab, setSelectedMainTab }) => {
 
   const [isTicketPressed, setIsTicketPressed] = useState(true);
   const [isDollarPressed, setIsDollarPressed] = useState(false);
@@ -52,14 +55,28 @@ const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplaying
       <ButtonsSeparator />
 
       {/* Equipment Buttons */}
-      <EquipmentButtons
-        allProducts={allProducts}
-        setShowingProducts={setShowingProducts}
-        setDisplayingScreen={setDisplayingScreen}
-        setIsTicketPressed={setIsTicketPressed}
-        setIsDollarPressed={setIsDollarPressed}
-        setIsCartPressed={setIsCartPressed}
-      />
+      {selectedMainTab === 0 ? (
+        <EquipmentButtons
+          allProducts={allProducts}
+          setShowingProducts={setShowingProducts}
+          setDisplayingScreen={setDisplayingScreen}
+          setIsTicketPressed={setIsTicketPressed}
+          setIsDollarPressed={setIsDollarPressed}
+          setIsCartPressed={setIsCartPressed}
+        />
+      ) : (
+        <>
+          {/* Replace this with your other component */}
+          <MagicStuffButtons
+          allProducts={allProducts}
+          setShowingProducts={setShowingProducts}
+          setDisplayingScreen={setDisplayingScreen}
+          setIsTicketPressed={setIsTicketPressed}
+          setIsDollarPressed={setIsDollarPressed}
+          setIsCartPressed={setIsCartPressed}
+        />
+        </>
+      )}
     </div>
   );
 };

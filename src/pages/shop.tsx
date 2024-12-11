@@ -198,6 +198,8 @@ const Shop = () => {
               setShowingProducts={setShowingProducts}
               player={player}
               displayingScreen={displayingScreen}
+              selectedMainTab={selectedMainTab}
+              setSelectedMainTab={setSelectedMainTab}
             />
 
             <MiddleMainContainer />
