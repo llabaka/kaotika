@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 describe('Buy button functionality', () => {
-    it('should open buying modal when clicking buy button', () => {
+  it('should open buying modal when clicking buy button', () => {
 
     ////////////////////////// ARRANGE //////////////////////////
     
@@ -52,18 +52,18 @@ describe('Buy button functionality', () => {
         setShopTooltips={mockSetShopTooltips}
       />
     );
-
-    // Render the BuyingModal component
-    render(
-      <BuyingModal
-        product={mockProduct}
-        onclick={mockOnClick}
-        player={mockPlayer}
-        setPlayer={mockSetPlayer}
-        setHaveBuy={mockSetHaveBuy}
-        setShopTooltips={mockSetShopTooltips}
-      />
-    );
+    
+      // Render the BuyingModal component
+      render(
+        <BuyingModal
+          product={mockProduct}
+          onclick={mockOnClick}
+          player={mockPlayer}
+          setPlayer={mockSetPlayer}
+          setHaveBuy={mockSetHaveBuy}
+          setShopTooltips={mockSetShopTooltips}
+        />
+      );
 
       ////////////////////////// ACT //////////////////////////
   
@@ -86,29 +86,29 @@ describe('Buy button functionality', () => {
 
       // Render the BuyingModal component
       render(
-          <BuyingModal
-              product={mockProduct}
-              onclick={mockOnClick}
-              player={mockPlayer}
-              setPlayer={mockSetPlayer}
-              setHaveBuy={mockSetHaveBuy}
-              setShopTooltips={mockSetShopTooltips}
-          />
-      );
+      <BuyingModal
+        product={mockProduct}
+        onclick={mockOnClick}
+        player={mockPlayer}
+        setPlayer={mockSetPlayer}
+        setHaveBuy={mockSetHaveBuy}
+        setShopTooltips={mockSetShopTooltips}
+      />
+    );
 
       //Render tooltip
       render(
-          <ShopTooltip
-          image={mockShopTooltip.image}
-          itemName={mockShopTooltip.itemName} 
-          key={mockIndex}
-          action={mockShopTooltip.action}/>
-      );
+      <ShopTooltip
+        image={mockShopTooltip.image}
+        itemName={mockShopTooltip.itemName} 
+        key={mockIndex}
+        action={mockShopTooltip.action}
+      />
+    );
+    
+    const confirmButton = screen.getByTestId('ConfirmButton');
+    fireEvent.click(confirmButton);
 
-      const confirmButton = screen.getByTestId('ConfirmButton');
-      fireEvent.click(confirmButton);
-
-      expect(screen.getByTestId('ShopTooltip')).toBeInTheDocument();
-    })
-
+    expect(screen.getByTestId('ShopTooltip')).toBeInTheDocument();
+  })
 });
