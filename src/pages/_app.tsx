@@ -3,7 +3,8 @@ import { AppProps } from 'next/app';
 import "../styles/globals.css";
 import {NextUIProvider} from "@nextui-org/react";
 import Head from "next/head";
-import { mockSession } from "@/__tests__/__mocks__/mockSession";
+import { mockSession } from "./../__tests__/__mocks__/mockSession";
+
 
 
 function MyApp({ Component, pageProps }: AppProps) {
