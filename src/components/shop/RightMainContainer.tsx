@@ -27,7 +27,7 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
 			) : displayingScreen === DISPLAY_SCREEN.CART ? (
 				<>
 					<CartScreenMainTab/>
-					<CartMainContainer cartProducts={cartProducts} setCartProducts={setCartProducts} player={player} setPlayer={setPlayer}/>
+					<CartMainContainer cartProducts={cartProducts} setCartProducts={setCartProducts} player={player} setPlayer={setPlayer} setShopTooltips={setShopTooltips}/>
 				</>
 			) : null}
 		</div>

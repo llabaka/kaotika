@@ -8,7 +8,7 @@ interface Product {
     type: string;
 }
 
-const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer}) => {
+const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer, setShopTooltips}) => {
     const [buyProducts, setBuyProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
