@@ -20,7 +20,8 @@ const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, set
         ...player.inventory.enhancer_potions,
         ...player.inventory.healing_potions, */
         ...player.inventory.rings,
-        ...player.inventory.boots
+        ...player.inventory.boots,
+        ...player.inventory.ingredients
     ];
 
     const handleOnPress = (item: Product) => {
@@ -42,7 +43,7 @@ const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, set
                         className="flex flex-start items-center bg-black bg-opacity-50 rounded-lg w-[95%] h-[23%] mb-[4%] transition-transform duration-200 ease-in-out"
                     >
                         {/* Item image */}
-                        <div className="w-[15%] h-[60%] m-[5%]">
+                        <div className="w-[15%] h-[60%] m-[5%] ">
                             <img src={item.image} alt={item.name} className="w-[full] h-[full]" />
                         </div>
 
