@@ -68,6 +68,13 @@ describe('Buy button functionality', () => {
 
     ////////////////////////// ACT //////////////////////////
 
+    //  Control button display
+    if (mockPlayer.gold >= mockProduct.value) {
+      expect(screen.getByTestId('buy_1')).toBeInTheDocument();
+    } else {
+      expect(screen.getByTestId('buy_1')).not.toBeInTheDocument();
+    }
+
     const buyingButton = screen.getByText('Buy');
     fireEvent.click(buyingButton);
 

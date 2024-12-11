@@ -1,5 +1,4 @@
 import { Product } from "@/_common/interfaces/shop/Product";
-
 export const mockProduct: Product = {
     _id: '1',
     name: 'Mock Product',
