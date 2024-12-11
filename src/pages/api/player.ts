@@ -1,6 +1,6 @@
 
 import Player from "./models/PlayerModel";
-import { mockSession } from "../_app";
+import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../db/connection";
 
 
@@ -8,8 +8,9 @@ export default async function handlerPlayer(req: any, res: any) {
     try {
 
         // Connect to DB
-        console.log("CONNECTED TO MONGO TO FETCH PLAYER");
+        console.log("Conectando to mongo...");
         await connectDB();
+        console.log("Connected to mongo.");
 
         const populatedPlayer = await populatePlayer();
 
@@ -25,7 +26,13 @@ export default async function handlerPlayer(req: any, res: any) {
 
 export const populatePlayer = async () => {
     
+    console.log("ABOUT TO POPULATE PLAYER");
+    
     const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
+
+    if (!playerPopulated) {
+        throw new Error('Player not found');
+      }
 
     console.log("PLAYER BEFORE POPULATED");
     console.log(playerPopulated);
