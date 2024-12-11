@@ -704,7 +704,7 @@ const PlayerPage = () => {
                     player.inventory.ingredients.map(ingredient => {
                       return (
                         <div key={ingredient._id} className="flex justify-center items-center bg-black/30 aspect-square" style={{'border': '3px ridge #000000'}}>
-                          <IngredientComponent id={ingredient._id} tooltip={<IngredientTooltip element={ingredient} equiped={null}/>} position='bottom' type={[]} element={ingredient} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />
+                          <IngredientComponent id={ingredient._id} qty={ingredient.qty} tooltip={<IngredientTooltip element={ingredient} />} position='bottom' type={[]} element={ingredient} tooltipClassName="w-full text-4xl mb-4 border-1 rounded-lg border-sepia bg-black/90" className={undefined} width="150px" border="" />
                         </div>
                       )
                     })

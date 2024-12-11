@@ -4,7 +4,6 @@ import { transformString } from '@/helpers/transformString';
 
 interface Props {
   element: Ingredient;
-  equiped: null;
 }
 
 const IngredientTooltip: React.FC<Props> = ({ element }): React.ReactNode => {
@@ -16,6 +15,7 @@ const IngredientTooltip: React.FC<Props> = ({ element }): React.ReactNode => {
           <p className="text-2xl mb-2">{element.description}</p>
 					<p className="text-2xl mb-2">{element.type}</p>
           <h1 className="text-2xl mb-2 text-darkSepia">Value: <span className="text-2xl mb-2 text-yellow-500">{element.value}</span></h1>
+					<h1 className="text-2xl mb-2 text-darkSepia">Quantity: <span className="text-2xl mb-2 text-yellow-500">{element.qty}</span></h1>
           <h1 className="text-3xl mb-2 text-darkSepia">Effects:</h1>
 					{
 						element.effects.map(effect => (

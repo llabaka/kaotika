@@ -5,5 +5,6 @@ export interface Ingredient {
 	type: string,
 	value: number,
 	image: string,
-	effects: string[]
+	effects: string[],
+	qty: number
 }
