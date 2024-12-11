@@ -94,7 +94,7 @@ const CardLeftContainer = ({ min_lvl, value, image, name, description, _id, onCl
                     id={_id}
                     data-testid={`add_basket_${_id}`}
                 >
-                    Add Basket
+                    Add to Cart
                 </button>
                 <button className="text-white text-xl mr-6 w-[36%] h-[90%] rounded-full flex items-center justify-center "
                     onClick={onClickBuy}
