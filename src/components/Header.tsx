@@ -4,8 +4,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+const mockSession: any = {
+  user: {
+      name: 'Asier',
+      email: 'asier.arguinchona@ikasle.aeg.eus',
+      image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
+  },
+  accessToken: 'fake-acces-token',
+  refreshToken: 'fake-refresh-token',
+  expires: '',
+  email: 'asier.arguinchona@ikasle.aeg.eus'
+}
+
 const Header: React.FC = () => {
-  const { data: session } = useSession();
+  const { data: session } = mockSession;
   const router = useRouter();
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/' });
@@ -57,7 +69,7 @@ const Header: React.FC = () => {
           navigation
         }
         <div className="flex items-center">
-          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={48} height={48} className="sepia rounded-full" />
+          <Image src={'https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c'|| '/default-avatar.png'} alt="User Avatar" width={48} height={48} className="sepia rounded-full" />
           <button onClick={handleSignOut} className="text-4xl px-3 py-6 ml-2 text-medievalSepia hover:text-darkSepia">
             Logout
           </button>
