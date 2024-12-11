@@ -11,7 +11,7 @@ interface CardItemProps {
     setCartProducts: any;
     cartProducts: Product[];
     player: Player;
-    setShopTooltips: any
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
 const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips } ) => {
