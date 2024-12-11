@@ -34,7 +34,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
                 // Verificar si la categoría es un array
                 if (Array.isArray(inventory[category])) {
                     // Buscar si algún objeto en la categoría tiene el mismo product_id
-                    const productExists = inventory[category].some(item => item._id === productId);
+                    const productExists = inventory[category].some((item:any) => item._id === productId);
                     if (productExists) {
                         return true; // El producto ya está en el inventario
                     }
