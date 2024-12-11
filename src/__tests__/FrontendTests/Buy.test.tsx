@@ -53,6 +53,7 @@ describe('Buy button functionality', () => {
 
         ////////////////////////// ASSERT //////////////////////////
         expect(screen.getByTestId('buying-modal')).toBeInTheDocument();
+        expect(screen.getByTestId('ConfirmButton')).toBeInTheDocument();
     });
 
 });

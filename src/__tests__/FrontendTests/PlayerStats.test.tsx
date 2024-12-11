@@ -66,7 +66,7 @@ afterAll(async () => {
             />
         );
 
-        const buyButton = screen.getByTestId('BuyButton');
+        const buyButton = screen.getByTestId('ConfirmButton');
         fireEvent.click(buyButton);
 
         ////////////////////////// ASSERT //////////////////////////
