@@ -1,3 +1,4 @@
+import { SelectedButton } from "@/components/shop/MainNavigator";
 import { Player } from "../Player";
 import { AllProducts } from "./AllProducts";
 import { Product } from "./Product";
@@ -20,4 +21,6 @@ export default interface RightContainerInterface {
     setSellingImage: (loaded: string) => void;
 	sellingImage: String;
 	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+	selectedMainTab: number;
+    setSelectedMainTab: (loaded: number) => void;
 }

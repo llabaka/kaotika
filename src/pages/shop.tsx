@@ -13,6 +13,7 @@ import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { useEffect, useState } from 'react';
 import ShopTooltip from '@/components/tooltips/ShopTooltip';
 import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
+import { SelectedButton } from '@/components/shop/MainNavigator';
 
 
 
@@ -32,6 +33,7 @@ const Shop = () => {
   const [shopTooltips, setShopTooltips] = useState<ShopTooltipProps[]>([]);
   const [sellingItem, setSellingItem] = useState<Product>({} as Product);
   const [sellingImage, setSellingImage] = useState('');
+  const [selectedMainTab, setSelectedMainTab] = useState<number>(0);
 
   //Set products from local storage
   useEffect(() => {
@@ -217,6 +219,8 @@ const Shop = () => {
               setSellingImage={setSellingImage}
               sellingImage={sellingImage}
               setShopTooltips={setShopTooltips}
+              selectedMainTab={selectedMainTab}
+              setSelectedMainTab={setSelectedMainTab}
             />
 
           </MainShopContainer>
