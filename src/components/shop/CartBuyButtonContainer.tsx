@@ -28,12 +28,13 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
     }, [buyProducts]);
 
     const handleBuyAllButton = async() => {
-        setIsLoading(true);
 
-        let productsValue = 0;
-        cartProducts.map(product => {
-            productsValue += product.value;
-        });
+
+        let productsValue = cartProducts.reduce((total, product) => total + product.value, 0);
+
+        console.log(`Player gold: ${player.gold}, Products value: ${productsValue}`);
+
+        setIsLoading(true);
 
         if(player.gold > productsValue){
 
@@ -52,12 +53,14 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
             console.log("Realiza compra desde carrito y lo vacia");
             setCartProducts([]);
                 
-            
+            setIsLoading(false);
         }else{
             console.log("not enough gold");
+            setIsLoading(false);
+            return;
         }
         
-        setIsLoading(false);
+
     };
 
     // Check if cart is empty and hide button
@@ -73,7 +76,8 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
         <div className="flex h-[15%] w-[90%] justify-center items-center">
             <div className=" flex h-[65%] w-[25%] items-center justify-center " >
                 <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
-                    onClick={handleBuyAllButton}>
+                    onClick={handleBuyAllButton}
+                    data-testid={"CartBuyButton"}>
                     <Image
                     src="/images/shop/ManagePlayerButton.png"
                     alt={'Buy All'}
