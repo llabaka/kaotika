@@ -1,5 +1,5 @@
 
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import Armor from "./ArmorModel";
 import Weapon from "./WeaponsModel";
 import Helmet from "./HelmetModel";
