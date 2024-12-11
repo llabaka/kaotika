@@ -110,5 +110,6 @@ describe('Buy button functionality', () => {
     fireEvent.click(confirmButton);
 
     expect(screen.getByTestId('ShopTooltip')).toBeInTheDocument();
+    expect(screen.getByTestId('ShopTooltip')).toHaveTextContent('You have bought Knife !!');
   })
 });
