@@ -4,8 +4,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const Header: React.FC = () => {
-  const { data: session } = useSession();
+const mockSession: any = {
+  user: {
+      name: 'Asier',
+      email: 'asier.arguinchona@ikasle.aeg.eus',
+      image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
+  },
+  accessToken: 'fake-acces-token',
+  refreshToken: 'fake-refresh-token',
+  expires: '',
+  email: 'asier.arguinchona@ikasle.aeg.eus'
+}
+
+const HeaderFake: React.FC = () => {
+  const { data: session } = mockSession;
   const router = useRouter();
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/' });
@@ -20,8 +32,8 @@ const Header: React.FC = () => {
       <Link href="/acolytes">
         <span className={router.pathname == "/acolytes" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Bonifications</span>
       </Link>
-      <Link href="/player">
-        <span className={router.pathname == "/player" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Player</span>
+      <Link href="/playerFake">
+        <span className={router.pathname == "/playerFake" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Player</span>
       </Link>
       <Link href="/hall">
         <span className={router.pathname == "/hall" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Hall of Fame</span>
@@ -32,8 +44,8 @@ const Header: React.FC = () => {
     </nav>);
   } else {
     navigation = (<nav className="flex-1 text-center">     
-      <Link href="/player">
-        <span className={router.pathname == "/player" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Player</span>
+      <Link href="/playerFake">
+        <span className={router.pathname == "/playerFake" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Player</span>
       </Link>
       <Link href="/results">
         <span className={router.pathname == "/results" ? "text-4xl mx-6 underline" :"text-4xl mx-6 hover:underline"}>Results</span>
@@ -57,7 +69,7 @@ const Header: React.FC = () => {
           navigation
         }
         <div className="flex items-center">
-          <Image src={session?.user?.image || '/default-avatar.png'} alt="User Avatar" width={48} height={48} className="sepia rounded-full" />
+          <Image src={'https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c'|| '/default-avatar.png'} alt="User Avatar" width={48} height={48} className="sepia rounded-full" />
           <button onClick={handleSignOut} className="text-4xl px-3 py-6 ml-2 text-medievalSepia hover:text-darkSepia">
             Logout
           </button>
@@ -67,4 +79,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default HeaderFake;
