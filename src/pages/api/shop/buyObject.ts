@@ -60,7 +60,7 @@ try {
         if(type !== 'ingredient') {
             if(player.level < product.min_lvl){
                 return res.status(400).send({
-                    error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
+                    error: `not enough level to buy:`
                 });
             }
 

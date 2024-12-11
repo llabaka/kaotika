@@ -48,7 +48,7 @@ const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopT
 
         if (!response.ok) {
           console.log(JSON.stringify(json));
-          addToolTip("", json.error, "Error");
+          addToolTip(alertImage, product.name!, json.error);
           setIsLoading(false);
           onclick(); // Cierra el modal
           return;
