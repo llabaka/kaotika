@@ -8,9 +8,12 @@ interface EquipmentButtonsInterface {
     allProducts: AllProducts;
     setShowingProducts: (loaded: Product[]) => void;
     setDisplayingScreen: (loaded: number) => void;
+    setIsTicketPressed: (loaded:boolean) => void;
+    setIsDollarPressed: (loaded:boolean) => void;
+    setIsCartPressed: (loaded:boolean) => void;
 }
 
-const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen }) => {
+const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
     const [activeButton, setActiveButton] = useState(0);
 
@@ -28,7 +31,10 @@ const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, se
         setActiveButton((prev) => (prev === buttonId ? -1 : buttonId));
 
         if (!DISPLAY_SCREEN.BUY) {
-            setDisplayingScreen(DISPLAY_SCREEN.BUY)
+            setDisplayingScreen(DISPLAY_SCREEN.BUY);
+            setIsTicketPressed(true);
+            setIsCartPressed(false);
+            setIsDollarPressed(false);
         }
 
         // Vaciar los productos antes de cargar los nuevos

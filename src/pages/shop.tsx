@@ -195,6 +195,7 @@ const Shop = () => {
               allProducts={allProducts}
               setShowingProducts={setShowingProducts}
               player={player}
+              displayingScreen={displayingScreen}
             />
 
             <MiddleMainContainer />
