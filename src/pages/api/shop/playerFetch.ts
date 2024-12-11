@@ -1,5 +1,5 @@
 import Player from "../models/PlayerModel";
-import { mockSession } from "@/pages/_app";
+import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../../db/connection";
 
 
