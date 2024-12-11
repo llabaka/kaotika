@@ -11,6 +11,7 @@ import { Boot } from "./Boot";
 import { Ring } from "./Ring";
 import { Modifier } from "./Modifier";
 import { Task } from "./Task";
+import { Ingredient } from "./Ingredient";
 
 export interface Player {
   _id: string;
@@ -49,6 +50,7 @@ export interface Player {
     healing_potions: HealingPotion[],
     antidote_potions: AntidotePotion[],
     enhancer_potions: EnhancerPotion[],
+    ingredients: Ingredient[]
   },
   tasks: Task[]
 }
