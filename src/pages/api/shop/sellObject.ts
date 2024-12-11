@@ -81,7 +81,7 @@ export default async function handlerSell(req : NextApiRequest, res : NextApiRes
         // Save player changes
         await player.save();
 
-        const playerPopulated = await populatePlayer();
+        const playerPopulated = await populatePlayer(player.email);
 
         return res.status(200).send({
             status: "OK",
