@@ -17,7 +17,7 @@ import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
 
 
 const Shop = () => {
-	const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [player, setPlayer] = useState<Player>();
   const [showingProducts, setShowingProducts] = useState<Product[] | []>([]);
   const [allProducts, setAllProducts] = useState<AllProducts | null>(null);
@@ -36,15 +36,15 @@ const Shop = () => {
   //Set products from local storage
   useEffect(() => {
     const localStorageProducts = localStorage.getItem('cartProducts');
-    
-    if (localStorageProducts) {
-        const parsedLocalStorageProducts = JSON.parse(localStorageProducts);
-        console.log("Productos cargados desde localStorage", parsedLocalStorageProducts);
-        setCartProducts(parsedLocalStorageProducts);
-    }
-}, []);
 
-//Save products in local storage
+    if (localStorageProducts) {
+      const parsedLocalStorageProducts = JSON.parse(localStorageProducts);
+      console.log("Productos cargados desde localStorage", parsedLocalStorageProducts);
+      setCartProducts(parsedLocalStorageProducts);
+    }
+  }, []);
+
+  //Save products in local storage
   useEffect(() => {
 
     localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
@@ -60,7 +60,7 @@ const Shop = () => {
 
       console.log("RESULT PRODUCTS");
       console.log(result);
-      
+
 
       // Save all in localStorage
       localStorage.setItem('Products', JSON.stringify(result));
@@ -94,27 +94,27 @@ const Shop = () => {
     }
   };
 
-  const localStorageProductsHandler = (products:any) => {
+  const localStorageProductsHandler = (products: any) => {
     setAllProducts(products);
     setShowingProducts(products.weapons);
   }
-  
+
   useEffect(() => {
     if (shopTooltips.length > 0) {
-        const timeout = setTimeout(() => {
-            const newTooltips = shopTooltips.slice(1);
-            setShopTooltips(newTooltips);
-        }, 1500);
+      const timeout = setTimeout(() => {
+        const newTooltips = shopTooltips.slice(1);
+        setShopTooltips(newTooltips);
+      }, 1500);
 
-        return () => clearTimeout(timeout);
+      return () => clearTimeout(timeout);
     }
-}, [shopTooltips]);
+  }, [shopTooltips]);
 
 
   const checkProducts = async () => {
     const products: any = await localStorage.getItem('Products');
     const parsedProducts = JSON.parse(products);
-    
+
     if (products !== null) {
 
       // El item existe en LocalStorage
@@ -122,21 +122,21 @@ const Shop = () => {
       localStorageProductsHandler(parsedProducts);
       setAllProducts(parsedProducts);
       setShowingProducts(parsedProducts.weapons)
-  } else {
+    } else {
       // El item no existe en LocalStorage
       fetchProducts();
       console.log('El item no existe');
     }
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchPlayer();
     checkProducts();
-  },[]);
+  }, []);
 
-	if (loading) {
+  if (loading) {
     return <Loading />;
-	}
+  }
 
   const buyButton = () => {
     setIsVisibleBuyModal(true);
@@ -145,7 +145,7 @@ const Shop = () => {
   const closeModal = () => {
     setIsVisibleBuyModal(false);
     document.documentElement.style.overflow = "";
-  } 
+  }
 
   const sellButton = () => {
     setIsVisibleSellModal(true);
@@ -161,7 +161,7 @@ const Shop = () => {
     // Hide scrollbar
     htmlElement.style.overflow = 'scroll';
     htmlElement.style.scrollbarWidth = 'none';
-    
+
     const css = `
         ::-webkit-scrollbar {
             width: 0;
@@ -175,76 +175,76 @@ const Shop = () => {
     document.head.appendChild(styleSheet);
 
     return () => {
-        // Reset values
-        htmlElement.style.overflow = '';
-        htmlElement.style.scrollbarWidth = '';
-        document.head.removeChild(styleSheet);
+      // Reset values
+      htmlElement.style.overflow = '';
+      htmlElement.style.scrollbarWidth = '';
+      document.head.removeChild(styleSheet);
     };
-}, []);
+  }, []);
 
   if (loading && !player && !allProducts && !showingProducts) {
     return <Loading />;
   } else if (!loading && player && allProducts && showingProducts) {
     return (
       <Layout>
-        <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
-        <MainShopContainer>
+        <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)' }}>
+          <MainShopContainer>
 
-          <LeftMainContainer
-            setDisplayingScreen={setDisplayingScreen}
-            allProducts={allProducts}
-            setShowingProducts={setShowingProducts}
-            player={player}
-          />
-          
-          <MiddleMainContainer />
+            <LeftMainContainer
+              setDisplayingScreen={setDisplayingScreen}
+              allProducts={allProducts}
+              setShowingProducts={setShowingProducts}
+              player={player}
+            />
 
-          <RightMainContainer 
-            products={showingProducts} 
-            displayingScreen={displayingScreen} 
-            allProducts={allProducts} 
-            setShowingProducts={setShowingProducts} 
-            cartProducts={cartProducts} 
-            setCartProducts={setCartProducts}
-            onClickBuy={buyButton}
-            onClickSell={sellButton}
-            setProduct={setProduct}
-            player={player}
-            setPlayer={setPlayer}
-            setSellingItem={setSellingItem}
-            sellingItem={sellingItem}
-            setSellingImage={setSellingImage}
-            sellingImage={sellingImage}
-            setShopTooltips={setShopTooltips}
-          />
+            <MiddleMainContainer />
 
-        </MainShopContainer>
-        { isVisibleBuyModal ? (
-          
-          <BuyingModal
-            onclick={closeModal}
-            product={product}
-            player={player}
-            setPlayer={setPlayer}
-            setHaveBuy={setHaveBuy}
-            setShopTooltips={setShopTooltips}
-            
-          /> ) : null }
-        { isVisibleSellModal ? (
-          <SellingModal
-            onClickSell={declineSellButton}
-            sellingItem={product}
-            player={player}
-            setPlayer={setPlayer}
-            setHaveSell={setHaveSell}
-            setShopTooltips={setShopTooltips}
-            setSellingImage={setSellingImage}
-            setSellingItem={setSellingItem}
-          />
-          ) : null }
+            <RightMainContainer
+              products={showingProducts}
+              displayingScreen={displayingScreen}
+              allProducts={allProducts}
+              setShowingProducts={setShowingProducts}
+              cartProducts={cartProducts}
+              setCartProducts={setCartProducts}
+              onClickBuy={buyButton}
+              onClickSell={sellButton}
+              setProduct={setProduct}
+              player={player}
+              setPlayer={setPlayer}
+              setSellingItem={setSellingItem}
+              sellingItem={sellingItem}
+              setSellingImage={setSellingImage}
+              sellingImage={sellingImage}
+              setShopTooltips={setShopTooltips}
+            />
+
+          </MainShopContainer>
+          {isVisibleBuyModal ? (
+
+            <BuyingModal
+              onclick={closeModal}
+              product={product}
+              player={player}
+              setPlayer={setPlayer}
+              setHaveBuy={setHaveBuy}
+              setShopTooltips={setShopTooltips}
+
+            />) : null}
+          {isVisibleSellModal ? (
+            <SellingModal
+              onClickSell={declineSellButton}
+              sellingItem={product}
+              player={player}
+              setPlayer={setPlayer}
+              setHaveSell={setHaveSell}
+              setShopTooltips={setShopTooltips}
+              setSellingImage={setSellingImage}
+              setSellingItem={setSellingItem}
+            />
+          ) : null}
           <div className='w-[24%] fixed top-[30%] right-[2%] z-20'>
-            { shopTooltips.map((shopTooltip, index) => (
-                <ShopTooltip image={shopTooltip.image} itemName={shopTooltip.itemName} key={index} action={shopTooltip.action}/>
+            {shopTooltips.map((shopTooltip, index) => (
+              <ShopTooltip image={shopTooltip.image} itemName={shopTooltip.itemName} key={index} action={shopTooltip.action} />
             ))}
           </div>
         </div>
