@@ -5,6 +5,7 @@ import EmptyCard from "./Card/EmptyCard";
 import ProductVerticalSeparator from "./ProductVerticalSeparator";
 import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
 import { Player } from "@/_common/interfaces/Player";
+import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 interface ProductRowContainerProps {
   cards: Product[]; // Espera un array de objetos con la interfaz Product
@@ -13,7 +14,7 @@ interface ProductRowContainerProps {
   setCartProducts: (loaded: Product[]) => void;
   cartProducts: Product[];
   player: Player;
-  setShopTooltips: any;
+  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
 const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
