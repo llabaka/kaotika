@@ -2,6 +2,7 @@
 import Player from "./models/PlayerModel";
 // import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../db/connection";
+import { Ingredient } from "@/_common/interfaces/shop/Product";
 
 const mockSession: any = {
     user: {
@@ -80,7 +81,53 @@ export const populatePlayer = async (email: string) => {
     // await playerPopulated.inventory.populate('antidote_potions', { 'profiles': 0 });
     // await playerPopulated.inventory.populate('antidote_potions.recovery_effect', { 'profiles': 0 });
     // await playerPopulated.inventory.populate('enhancer_potions', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+    //await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
 
-    return playerPopulated;
+    const returnPlayer = await updateIngredientsWithQuantity(playerPopulated);
+
+    console.log("INGREDIENTS");
+    console.log(returnPlayer.inventory.ingredients);
+    
+    
+    return returnPlayer;
+}
+
+interface IngredientQuantity {
+    _id: string;
+    qty: number;
+}
+
+const updateIngredientsWithQuantity = async(playerPopulated: any) => {
+    //Asignamos ingredient y añadimos atributo quantity
+    const inputIngredientIds =  playerPopulated.inventory.ingredients;
+
+    const ingredientQuantites: any = [];
+
+    inputIngredientIds.forEach((ingredient: any) => {
+        const indexFound = ingredientQuantites.findIndex((item: any) => item._id.equals(ingredient._id));
+       
+        if (indexFound !== -1) {
+            ingredientQuantites[indexFound].qty++;
+        }
+        else {
+            ingredientQuantites.push({_id: ingredient._id, qty: 1 });
+        }
+    });
+
+
+    const {ingredients} = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+
+   
+
+    const ingredientQuantitiesPopulated = ingredientQuantites.map((item: any) => {
+        const object = ingredients.filter((ingredient: any) => item._id.equals(ingredient._id))[0];
+       
+        return {...object.toObject(), qty: item.qty};
+
+    });
+
+    const returnPlayer = {...playerPopulated.toObject()};
+    returnPlayer.inventory.ingredients = ingredientQuantitiesPopulated;
+   
+    return returnPlayer;
 }
