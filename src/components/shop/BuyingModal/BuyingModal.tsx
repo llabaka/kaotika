@@ -23,6 +23,7 @@ const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopT
   const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
   const imageFake = "/images/equipment/armors/armor_20.png"
   const buttonImage = "/images/shop/ManagePlayerButton.png";
+  const alertImage = "/images/shop/AlertIcon.png";
 
   const addToolTip = (image: string, itemName: string, action: string) => {
     setShopTooltips((prevTooltips: ShopTooltipProps[]) => [...prevTooltips, { image, action, itemName }]);
@@ -60,7 +61,7 @@ const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopT
       }
     } else {
       // Show not enough gold message
-      addToolTip(product!.image!, product!.name!, "not enough gold to buy:");
+      addToolTip(alertImage, product!.name!, "not enough gold to buy:");
     }
 
     setIsLoading(false);
