@@ -1,5 +1,5 @@
 
-export const mockSession = {
+export const mockSession: any = {
     user: {
       name: 'Asier',
       email: 'asier.arguinchona@ikasle.aeg.eus',
