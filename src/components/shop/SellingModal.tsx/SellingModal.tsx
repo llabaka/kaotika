@@ -8,142 +8,141 @@ import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 // Open Modal boolean 
 // product
-interface  SellingModalProps {
-    sellingItem: Product | null;
-	onClickSell : any;
-    player: Player,
-    setPlayer: (loaded: Player) => void;
-    setSellingItem: (loaded: Product) => void;
-    setSellingImage: (loaded: string) => void;
-    setHaveSell: any;
-    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+interface SellingModalProps {
+  sellingItem: Product | null;
+  onClickSell: any;
+  player: Player,
+  setPlayer: (loaded: Player) => void;
+  setSellingItem: (loaded: Product) => void;
+  setSellingImage: (loaded: string) => void;
+  setHaveSell: any;
+  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
-const SellingModal = ({sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips} : SellingModalProps) => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
- 
-    const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
-    const buttonImage = "/images/shop/ManagePlayerButton.png";
+const SellingModal = ({ sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips }: SellingModalProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        document.getElementsByTagName('html')[0].style.overflow = 'hidden';
+  const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
+  const buttonImage = "/images/shop/ManagePlayerButton.png";
 
-        return(() => {
-            document.getElementsByTagName('html')[0].style.overflow = 'auto';
-        });
+  useEffect(() => {
+    document.getElementsByTagName('html')[0].style.overflow = 'hidden';
 
-    }, []);
+    return (() => {
+      document.getElementsByTagName('html')[0].style.overflow = 'auto';
+    });
 
-    // Check if player has the item
-    const checkItemInInventory = (): Boolean => {
-        if (!sellingItem) return false;
+  }, []);
 
-        const inventoryCategories = Object.values(player.inventory);
+  // Check if player has the item
+  const checkItemInInventory = (): Boolean => {
+    if (!sellingItem) return false;
 
-        // Find Item in all categories of the inventory
-        for (const type of inventoryCategories) {
-            if (Array.isArray(type) && type.some(playerInventoryItem => playerInventoryItem._id === sellingItem._id)) {
-                return true;
-            }
-        }
-        return false;
-    };
+    const inventoryCategories = Object.values(player.inventory);
 
-    const addToopltip = (image: string, itemName: string, action: string) => {
-        setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
+    // Find Item in all categories of the inventory
+    for (const type of inventoryCategories) {
+      if (Array.isArray(type) && type.some(playerInventoryItem => playerInventoryItem._id === sellingItem._id)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const addToopltip = (image: string, itemName: string, action: string) => {
+    setShopTooltips((prevTooltips: ShopTooltipProps[]) => [...prevTooltips, { image, action, itemName }]);
+  }
+
+
+  const sellButtonHandler = async () => {
+    setIsLoading(true);
+
+    if (!sellingItem) return false;
+
+    const playerHaveItem = checkItemInInventory();
+
+    if (playerHaveItem) {
+      console.log("SELL ITEM");
+      const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
+      const json = await response.json();
+
+      if (!response.ok) {
+        console.log(JSON.stringify(json));
+        addToopltip("", json.error, "Error");
+        setIsLoading(false);
+        onClickSell(); // Cierra el modal
+        return;
+      }
+
+      const updatePlayer = json.data;
+      setPlayer(updatePlayer);
+
+      //Unselect selling item
+      setSellingItem({} as Product);
+      setSellingImage('');
+      addToopltip(sellingItem.image!, sellingItem.name!, "sold");
+    } else {
+      console.log("PLAYER DON'T HAVE THIS ITEM");
     }
 
+    // Cerrar el modal
+    setIsLoading(false);
+    setHaveSell(true);
+    onClickSell();
+  };
 
-    const sellButtonHandler = async() => {
-        setIsLoading(true);
+  return (
 
-        if (!sellingItem) return false;
+    isLoading ? <Loading /> :
+      <div className="w-full h-[120%] absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
 
-        const playerHaveItem = checkItemInInventory();
+        <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">
+          <Image
+            src={buyingFrame}
+            fill
+            alt="Buying frame"
+            sizes='(max-width: 953px) 100vw'
+          />
 
-        if (playerHaveItem) {
-            console.log("SELL ITEM");
-            const response = await sellingProductClient(player._id, sellingItem._id!, sellingItem.type!);
-            const json = await response.json();
+          <p className="text-[34px] text-center z-10 text-white">Are you sure you want to sell the
+            <span className="text-orange-400"> {sellingItem?.name}</span> for <span className="text-orange-400">{Math.floor(sellingItem!.value / 3)} g</span></p>
+          <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
+            {/* DIV PARA IMAGEN Y BOTONES */}
+            <div className="w-[34%] h-[90%] relative">
+              <Image
+                src={sellingItem?.image!}
+                fill
+                alt="item_image"
+                sizes="(max-width: 300px) 100vw"
+              />
 
-            if(!response.ok){   
-                console.log(JSON.stringify(json));
-                addToopltip("", json.error, "Error");
-                setIsLoading(false);
-                onClickSell(); // Cierra el modal
-                return;
-            }
-
-            const updatePlayer = json.data;
-            setPlayer(updatePlayer);
-
-            //Unselect selling item
-            setSellingItem({} as Product);
-            setSellingImage('');
-            addToopltip(sellingItem.image!, sellingItem.name!, "sold");
-        } else {
-            console.log("PLAYER DON'T HAVE THIS ITEM");
-        }
-
-        // Cerrar el modal
-        setIsLoading(false);
-        setHaveSell(true);
-        onClickSell(); 
-    };
-
-
-    return (
-
-        isLoading ? <Loading/> : 
-        <div className="w-full h-[120%] absolute top-0 z-10 bg-black bg-opacity-70 flex items-center justify-center" id="buy_modal">
-            
-            <div className="w-[42%] h-[44%] flex justify-center flex-col px-[2%] py-[2%] relative z-0">
-                <Image 
-                    src={buyingFrame}
-                    fill
-                    alt="Buying frame"
-                    sizes='(max-width: 953px) 100vw'
-                    />
-                    
-                <p className="text-[34px] text-center z-10 text-white">Are you sure you want to sell the
-                    <span className="text-orange-400"> {sellingItem?.name}</span> for <span className="text-orange-400">{sellingItem?.value} g</span></p>
-                <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
-                    {/* DIV PARA IMAGEN Y BOTONES */}
-                    <div className="w-[34%] h-[90%] relative">
-                        <Image 
-                            src={sellingItem?.image!}
-                            fill
-                            alt="item_image"
-                            sizes="(max-width: 300px) 100vw"
-                            />
-                            
-                    </div>
-                    <div className="w-[50%] h-[90%] flex flex-col items-center justify-center">
-                        <div onClick={sellButtonHandler} className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer">
-                            <Image
-                                src={buttonImage}
-                                fill
-                                alt="Button image"
-                                sizes="(max-width: 300px) 100vw"
-                                />
-                            <p className="z-20 text-3xl text-green-400 font-bold ">CONFIRM</p>
-                        </div>
-                        <div className="w-[85%] h-[35%] relative flex items-center justify-center hover:scale-110 transition-all cursor-pointer"
-                            onClick={onClickSell}>
-                            <Image
-                                src={buttonImage}
-                                fill
-                                alt="Button image"
-                                sizes="(max-width: 300px) 100vw"
-                                />
-                            <p className="z-20 text-3xl text-medievalRed font-bold">DECLINE</p>
-                        </div>
-                    </div>
-
-                </div>
             </div>
+            <div className="w-[50%] h-[90%] flex flex-col items-center justify-center">
+              <div onClick={sellButtonHandler} className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer">
+                <Image
+                  src={buttonImage}
+                  fill
+                  alt="Button image"
+                  sizes="(max-width: 300px) 100vw"
+                />
+                <p className="z-20 text-3xl text-green-400 font-bold ">CONFIRM</p>
+              </div>
+              <div className="w-[85%] h-[35%] relative flex items-center justify-center hover:scale-110 transition-all cursor-pointer"
+                onClick={onClickSell}>
+                <Image
+                  src={buttonImage}
+                  fill
+                  alt="Button image"
+                  sizes="(max-width: 300px) 100vw"
+                />
+                <p className="z-20 text-3xl text-medievalRed font-bold">DECLINE</p>
+              </div>
+            </div>
+
+          </div>
         </div>
-    )
-}   
+      </div>
+  )
+}
 
 export default SellingModal;

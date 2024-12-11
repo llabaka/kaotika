@@ -60,7 +60,7 @@ try {
         if(type !== 'ingredient') {
             if(player.level < product.min_lvl){
                 return res.status(400).send({
-                    error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
+                    error: `not enough level to buy:`
                 });
             }
 
@@ -69,7 +69,7 @@ try {
 
             if(existingProduct){
                 return res.status(400).send({
-                    error: `The player actually have the object with the id ${productId} in the inventory`
+                    error: ` the object in the inventory`
                 })
             }
         }
@@ -107,7 +107,7 @@ try {
 
         await player.save();
 
-        const playerPopulated = await populatePlayer();
+        const playerPopulated = await populatePlayer(player.email);
 
         return res.status(200).send({
             status: "OK",

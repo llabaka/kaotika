@@ -3,13 +3,15 @@ import { useState } from "react";
 
 interface ShopIconsInterface {
     setDisplayingScreen: (loaded:number) => void;
+    isTicketPressed: boolean;
+    isDollarPressed: boolean;
+    isCartPressed: boolean;
+    setIsTicketPressed: (loaded:boolean) => void;
+    setIsDollarPressed: (loaded:boolean) => void;
+    setIsCartPressed: (loaded:boolean) => void;
 }
 
-const ShopIcons:React.FC<ShopIconsInterface> = ({setDisplayingScreen}) =>{
-
-    const [isTicketPressed, setIsTicketPressed] = useState(true);
-    const [isDollarPressed, setIsDollarPressed] = useState(false);
-    const [isCartPressed, setIsCartPressed] = useState(false);
+const ShopIcons:React.FC<ShopIconsInterface> = ({setDisplayingScreen, isTicketPressed, isDollarPressed, isCartPressed, setIsTicketPressed, setIsDollarPressed, setIsCartPressed}) =>{
 
     const handleOnPressTicket = () =>  {
         setIsTicketPressed(true);

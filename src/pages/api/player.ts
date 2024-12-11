@@ -1,37 +1,56 @@
 
 import Player from "./models/PlayerModel";
-import { mockSession } from "@/__tests__/__mocks__/mockSession";
+// import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../db/connection";
+import { Ingredient } from "@/_common/interfaces/shop/Product";
 
+const mockSession: any = {
+    user: {
+        name: 'Asier',
+        email: 'asier.arguinchona@ikasle.aeg.eus',
+        image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
+    },
+    accessToken: 'fake-acces-token',
+    refreshToken: 'fake-refresh-token',
+    expires: '',
+    email: 'asier.arguinchona@ikasle.aeg.eus'
+}
 
 export default async function handlerPlayer(req: any, res: any) {
     try {
 
         // Connect to DB
-        console.log("Conectando to mongo...");
+        console.log("Connecting to mongo...");
         await connectDB();
         console.log("Connected to mongo.");
 
-        const populatedPlayer = await populatePlayer();
+        const player = await Player.findOne({email: mockSession.email});
+
+        if (!player) {
+            console.error("Player was not found");
+            return res.status(404).json({ error: "Player was not found" });
+        }
+
+        const populatedPlayer = await populatePlayer(player.email);
 
         console.log("PLAYER ID AFTER POPULATE");
         console.log(populatedPlayer._id);
 
         return res.status(200).json(populatedPlayer);
-        } catch (err: any) {
+    } catch (err: any) {
         console.error("Error fetching player:", err.message);
         return res.status(500).json({ error: "Internal Server Error" });
-        }
+    }
 }
 
-export const populatePlayer = async () => {
+export const populatePlayer = async (email: string) => {
     
     console.log("ABOUT TO POPULATE PLAYER");
     
-    const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
+    const playerPopulated = await Player.findOne({email: email}).populate('profile').exec();
 
     if (!playerPopulated) {
-        throw new Error('Player not found');
+        throw new Error("Player was not found");
       }
 
     console.log("PLAYER BEFORE POPULATED");
@@ -62,7 +81,53 @@ export const populatePlayer = async () => {
     // await playerPopulated.inventory.populate('antidote_potions', { 'profiles': 0 });
     // await playerPopulated.inventory.populate('antidote_potions.recovery_effect', { 'profiles': 0 });
     // await playerPopulated.inventory.populate('enhancer_potions', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+    //await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
 
-    return playerPopulated;
+    const returnPlayer = await updateIngredientsWithQuantity(playerPopulated);
+
+    console.log("INGREDIENTS");
+    console.log(returnPlayer.inventory.ingredients);
+    
+    
+    return returnPlayer;
+}
+
+interface IngredientQuantity {
+    _id: string;
+    qty: number;
+}
+
+const updateIngredientsWithQuantity = async(playerPopulated: any) => {
+    //Asignamos ingredient y añadimos atributo quantity
+    const inputIngredientIds =  playerPopulated.inventory.ingredients;
+
+    const ingredientQuantites: any = [];
+
+    inputIngredientIds.forEach((ingredient: any) => {
+        const indexFound = ingredientQuantites.findIndex((item: any) => item._id.equals(ingredient._id));
+       
+        if (indexFound !== -1) {
+            ingredientQuantites[indexFound].qty++;
+        }
+        else {
+            ingredientQuantites.push({_id: ingredient._id, qty: 1 });
+        }
+    });
+
+
+    const {ingredients} = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+
+   
+
+    const ingredientQuantitiesPopulated = ingredientQuantites.map((item: any) => {
+        const object = ingredients.filter((ingredient: any) => item._id.equals(ingredient._id))[0];
+       
+        return {...object.toObject(), qty: item.qty};
+
+    });
+
+    const returnPlayer = {...playerPopulated.toObject()};
+    returnPlayer.inventory.ingredients = ingredientQuantitiesPopulated;
+   
+    return returnPlayer;
 }

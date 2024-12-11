@@ -1,5 +1,5 @@
 
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Model, Schema } from "mongoose";
 import Armor from "./ArmorModel";
 import Weapon from "./WeaponsModel";
 import Helmet from "./HelmetModel";
@@ -8,6 +8,11 @@ import Artifact from "./ArtifactsModel";
 import Boot from "./BootsModel";
 import Ring from "./RingsModel";
 import Ingredient from "./IngredientsModel";
+
+const IngredientSubSchema = new mongoose.Schema({
+  ingredient: { type: Schema.Types.ObjectId, ref: Ingredient, required: true },
+  qty: { type: Number, required: true, min: 1 } // Cantidad mínima de 1
+}, { _id: false }); // _id: false para evitar generar un ID para cada subdocumento
 
 const PlayerSchema = new mongoose.Schema({
   name: { type: String, required: true },

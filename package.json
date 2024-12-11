@@ -1,13 +1,15 @@
 {
   "name": "kaotika",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --verbose"
+    "test": "jest --verbose",
+    "test:backend": "jest BackendTests --verbose",
+    "test:frontend": "jest FrontendTests --verbose"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

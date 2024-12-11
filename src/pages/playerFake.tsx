@@ -82,12 +82,17 @@ const PlayerPage = () => {
       const fetchPlayerData = async () => {
         try {
           setLoading(true);
-          const res = await fetch(`/api/player/check-registration?email=${session.user?.email}`);
+          const res = await fetch('/api/player')
+          console.log("RES EN PLAYER.TSX");
+          console.log(res);
+          
           if (res.status === 200) {
             const response = await res.json();
-            setCurrentEquipment(response.data.equipment);
-            console.log(response.data)
-            setPlayer(response.data);
+            console.log(response);
+            
+            setCurrentEquipment(response.equipment);
+            console.log(response.equipment)
+            setPlayer(response);
             setIsRegistered(true);
           } else if (res.status === 404) {
             const response = await res.json();

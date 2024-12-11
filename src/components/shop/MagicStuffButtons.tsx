@@ -4,7 +4,7 @@ import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
 import { Product } from '@/_common/interfaces/shop/Product';
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
 
-interface EquipmentButtonsInterface {
+interface IngredientsContainerButtonsInterface {
   allProducts: AllProducts;
   setShowingProducts: (loaded: Product[]) => void;
   setDisplayingScreen: (loaded: number) => void;
@@ -13,63 +13,38 @@ interface EquipmentButtonsInterface {
   setIsCartPressed: (loaded: boolean) => void;
 }
 
-const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
+const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
   const [activeButton, setActiveButton] = useState(0);
 
   const buttons = [
-    { id: 0, label: 'WEAPONS' },
-    { id: 1, label: 'ARMORS' },
-    { id: 2, label: 'BOOTS' },
-    { id: 3, label: 'HELMETS' },
-    { id: 4, label: 'RINGS' },
-    { id: 5, label: 'SHIELDS' },
-    { id: 6, label: 'ARTIFACTS' }
+    { id: 0, label: 'INGREDIENTS' },
+    { id: 1, label: 'CONTAINER' }
   ];
 
   const handleButtonClick = (buttonId: number) => {
 
-    // Change active button
-    if (activeButton !== buttonId) {
-      setActiveButton(buttonId);
+    if (buttonId === 0) {
+      if (!DISPLAY_SCREEN.BUY) {
+        setDisplayingScreen(DISPLAY_SCREEN.BUY);
+        setIsTicketPressed(true);
+        setIsCartPressed(false);
+        setIsDollarPressed(false);
+      }
+
+      // Vaciar los productos antes de cargar los nuevos
+      setShowingProducts([]);
+
+      switch (buttonId) {
+        case 0:
+          setShowingProducts(allProducts!.ingredients);
+          break;
+        default:
+          setShowingProducts([]); // En caso de que no haya selección válida
+          break;
+      }
     }
 
-    if (!DISPLAY_SCREEN.BUY) {
-      setDisplayingScreen(DISPLAY_SCREEN.BUY);
-      setIsTicketPressed(true);
-      setIsCartPressed(false);
-      setIsDollarPressed(false);
-    }
-
-    // Vaciar los productos antes de cargar los nuevos
-    setShowingProducts([]);
-
-    switch (buttonId) {
-      case 0:
-        setShowingProducts(allProducts!.weapons);
-        break;
-      case 1:
-        setShowingProducts(allProducts!.armors);
-        break;
-      case 2:
-        setShowingProducts(allProducts!.boots);
-        break;
-      case 3:
-        setShowingProducts(allProducts!.helmets);
-        break;
-      case 4:
-        setShowingProducts(allProducts!.rings);
-        break;
-      case 5:
-        setShowingProducts(allProducts!.shields);
-        break;
-      case 6:
-        setShowingProducts(allProducts!.artifacts);
-        break;
-      default:
-        setShowingProducts([]); // En caso de que no haya selección válida
-        break;
-    }
   };
 
   return (
@@ -77,8 +52,8 @@ const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, se
       {buttons.map(({ id, label }) => (
         <button
           key={id}
-          onClick={() => handleButtonClick(id)}
           className={`w-[98%] h-16 flex relative items-center justify-center mb-4 transform transition-transform ${activeButton !== id ? 'hover:scale-105' : ''}`}
+          onClick={() => handleButtonClick(id)}
         >
           <Image
             src="/images/shop/ManagePlayerButton.png"
@@ -99,4 +74,4 @@ const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, se
   );
 };
 
-export default EquipmentButtons;
+export default MagicStuffButtons;

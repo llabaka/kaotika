@@ -9,6 +9,12 @@ import { mockProduct } from '../__mocks__/mockProduct';
 import { mockShopTooltip } from '../__mocks__/mockShopTooltip';
 import PlayerStatsButtons from '@/components/shop/PlayerStatsButtons';
 
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {}); // Silence console logs
+  jest.spyOn(console, 'error').mockImplementation(() => {}); // Silence console errors
+  jest.spyOn(console, 'warn').mockImplementation(() => {}); // Silence console warnings
+});
+
 global.fetch = jest.fn() as jest.Mock;
 
 beforeEach(() => {

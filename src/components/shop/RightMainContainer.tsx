@@ -8,30 +8,34 @@ import SellingContainer from "./SellingContainer";
 import CartScreenMainTab from "./CartScreenMainTab";
 import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem, setSellingImage, sellingImage, setShopTooltips}) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem, setSellingImage, sellingImage, setShopTooltips, selectedMainTab, setSelectedMainTab }) => {
 
-	return (
-		<div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
-			{displayingScreen === DISPLAY_SCREEN.BUY ? (
-				<>
-					<MainNavigator 
-						allProducts={allProducts}
-						setShowingProducts={setShowingProducts} />
-					<ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player} setShopTooltips={setShopTooltips}/>
-				</>
-			) : displayingScreen === DISPLAY_SCREEN.SELL ? (
-				<>
-					<SellingHeaders />
-					<SellingContainer player={player} onClickSell={onClickSell} setProduct={setProduct} setSellingItem={setSellingItem} sellingItem={sellingItem} setSellingImage={setSellingImage} sellingImage={sellingImage}/>
-				</>
-			) : displayingScreen === DISPLAY_SCREEN.CART ? (
-				<>
-					<CartScreenMainTab/>
-					<CartMainContainer cartProducts={cartProducts} setCartProducts={setCartProducts} player={player} setPlayer={setPlayer}/>
-				</>
-			) : null}
-		</div>
-	);
+  return (
+    <div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
+      {displayingScreen === DISPLAY_SCREEN.BUY ? (
+        <>
+          <MainNavigator
+            allProducts={allProducts}
+            setShowingProducts={setShowingProducts}
+            selectedMainTab={selectedMainTab}
+            setSelectedMainTab={setSelectedMainTab}
+          />
+
+          <ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player} setShopTooltips={setShopTooltips} />
+        </>
+      ) : displayingScreen === DISPLAY_SCREEN.SELL ? (
+        <>
+          <SellingHeaders />
+          <SellingContainer player={player} onClickSell={onClickSell} setProduct={setProduct} setSellingItem={setSellingItem} sellingItem={sellingItem} setSellingImage={setSellingImage} sellingImage={sellingImage} />
+        </>
+      ) : displayingScreen === DISPLAY_SCREEN.CART ? (
+        <>
+          <CartScreenMainTab />
+          <CartMainContainer cartProducts={cartProducts} setCartProducts={setCartProducts} player={player} setPlayer={setPlayer} setShopTooltips={setShopTooltips} />
+        </>
+      ) : null}
+    </div>
+  );
 };
 
 export default RightMainContainer;

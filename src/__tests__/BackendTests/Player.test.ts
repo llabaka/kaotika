@@ -1,78 +1,89 @@
 /**
  * @jest-environment node
- */
+*/
 
-import { NextApiRequest, NextApiResponse } from "next";
-import handlerPlayer from "@/pages/api/player";
-import Player from "@/pages/api/models/PlayerModel";
-import { mockSession } from "@/__tests__/__mocks__/mockSession";
-import connectDB from "../../../db/connection";
+import { createMocks } from "node-mocks-http";
+import mongoose from "mongoose";
+import PlayerModel from "@/pages/api/models/PlayerModel";
+import handlerPlayer from "@/pages/api/player";  // Ajusta la ruta a tu controlador
+import handleObjectIdPlayer from "@/pages/api/shop/playerObjectID";
+import { mockPlayers } from "../__mocks__/mockPlayers";
+import * as sampleController from "../PlayerUtils/player.controller";
+import { PlayerSampleModel } from "../PlayerUtils/playerSample.model";
+import { populatedPlayer } from "../__mocks__/mockPopulatedPlayer";
+import { mockPlayer } from "../__mocks__/mockPlayer";
 
-// Mock de la conexión a la base de datos y del modelo Player
-jest.mock("../../../db/connection", () => jest.fn());
-jest.mock("../../pages/api/models/PlayerModel", () => ({
-  findOne: jest.fn(),
-  populate: jest.fn(),
-}));
+beforeAll(() => {
+  jest.spyOn(console, 'log').mockImplementation(() => {}); // Silence console logs
+  jest.spyOn(console, 'error').mockImplementation(() => {}); // Silence console errors
+  jest.spyOn(console, 'warn').mockImplementation(() => {}); // Silence console warnings
+});
 
-describe("handlerPlayer API", () => {
-    it("should return a 200 status with the player details", async () => {
-      // Mock de la función de conexión a la base de datos
-      (connectDB as jest.Mock).mockResolvedValueOnce(true);
-  
-      // Simular un "documento" Mongoose con el método populate
-      const mockPopulate = jest.fn().mockReturnThis(); // Simula el método populate
-      const mockPlayer = {
-        _id: "12345",
-        gold: 1000,
-        level: 10,
-        email: mockSession.email,
-        equipment: {},
-        inventory: [],
-        populate: mockPopulate, // Simula populate en el documento
-      };
-  
-      // Mock de la función 'findOne' del modelo 'Player' para devolver el mock del jugador
-      (Player.findOne as jest.Mock).mockResolvedValueOnce(mockPlayer);
-  
-      // Simulación de un request y response
-      const req = {} as NextApiRequest;
-      const res = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn(),
-      } as unknown as NextApiResponse;
-  
-      // Llamada a la función handlerPlayer
-      await handlerPlayer(req, res);
-  
-      // Verificar que la respuesta sea 200 y contenga los datos esperados
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith({
-        _id: "12345",
-        gold: 1000,
-        level: 10,
-      });
-  
-      // Verificar si 'populate' fue llamado correctamente
-      expect(mockPopulate).toHaveBeenCalledTimes(1);  // Verifica que populate haya sido llamado
-      expect(Player.findOne).toHaveBeenCalledWith({ email: mockSession.email });
+afterAll(async () => {
+  mongoose.disconnect();  // Desconectar de la base de datos después de todas las pruebas
+  jest.resetAllMocks();  // Limpiar los mocks después de cada test
+});
+
+afterEach(() => {
+  jest.restoreAllMocks(); // Restablece todos los mocks después de cada prueba
+});
+
+describe('GET /api/player', () => {
+
+  ////////////////////////// ARRANGE //////////////////////////
+
+  it('should return status 200 and response player data', async () => {
+    // Crear los mocks de solicitud y respuesta
+    const { req, res } = createMocks({
+      method: 'GET',
     });
   
-    // Test para verificar el manejo de errores (ejemplo: jugador no encontrado)
-    it("should return a 500 status if player is not found", async () => {
-      // Mock para simular que el jugador no existe
-      (Player.findOne as jest.Mock).mockResolvedValueOnce(null);
+    // Mockear el método findOne del modelo PlayerSampleModel para que devuelva mockPlayer
+    jest.spyOn(PlayerSampleModel, 'findOne').mockResolvedValue(mockPlayer);
   
-      const req = {} as NextApiRequest;
-      const res = {
-        status: jest.fn().mockReturnThis(),
-        json: jest.fn(),
-      } as unknown as NextApiResponse;
+    ////////////////////////// ACT //////////////////////////
+
+    // Call the handler
+    await handlerPlayer(req, res);
   
-      await handlerPlayer(req, res);
+    ////////////////////////// ASSERT //////////////////////////
+
+    // Verify status code to be 200
+    expect(res.statusCode).toBe(200);
   
-      // Verificar que se retorna el status 500 y un mensaje de error
-      expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Internal Server Error" });
-    });
+    // Verificar que la respuesta contenga la propiedad 'gold' con el valor esperado
+    const responseData = JSON.parse(res._getData());  // Obtener los datos de la respuesta
+
+    expect(responseData).toHaveProperty('_id', responseData._id);  // Expected value of _id
+    expect(responseData).toHaveProperty('gold', responseData.gold);  // Expected value of gold
+    expect(responseData).toHaveProperty('level', responseData.level);   // Expected value of level
+    expect(responseData).toHaveProperty('inventory', responseData.inventory);  // Expected value of inventory
+
   });
+
+  it('should return status 404 when player is not found by email', async () => {
+    // Crear los mocks de solicitud y respuesta
+    const { req, res } = createMocks({
+      method: 'GET',
+      query: { email: 'asier.arguinchona21@ikasle.aeg.eus' }, // Simulamos que el email se pasa por query
+    });
+  
+    // Mockear el método findOne del modelo PlayerModel para que devuelva null (jugador no encontrado)
+    jest.spyOn(PlayerModel, 'findOne').mockResolvedValue(null);
+  
+    ////////////////////////// ACT //////////////////////////
+  
+    // Llamar al controlador
+    await handleObjectIdPlayer(req, res);
+  
+    ////////////////////////// ASSERT //////////////////////////
+  
+    // Verificar que el código de estado sea 404
+    expect(res.statusCode).toBe(404);
+  
+    // Verificar que la respuesta contenga el mensaje de error esperado
+    const responseData = JSON.parse(res._getData());  // Obtener los datos de la respuesta
+    expect(responseData).toHaveProperty('error', 'Player was not found');
+  });
+
+});
