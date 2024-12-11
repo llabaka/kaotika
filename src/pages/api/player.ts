@@ -28,11 +28,11 @@ export const populatePlayer = async () => {
     
     console.log("ABOUT TO POPULATE PLAYER");
     
-    const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
+    const playerPopulated = await Player.findOne({email: 'asier.arguinchona@ikasle.aeg.eus'}).populate('profile').exec();
 
     if (!playerPopulated) {
         throw new Error('Player not found');
-      }
+    }
 
     console.log("PLAYER BEFORE POPULATED");
     console.log(playerPopulated);

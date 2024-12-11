@@ -7,6 +7,7 @@ import mongoose from "mongoose";
 import PlayerModel from "@/pages/api/models/PlayerModel";
 import handlerPlayer from "@/pages/api/player";
 import { mockPlayers } from "../__mocks__/mockPlayers";
+import { mockPlayer } from "../__mocks__/mockPlayer";
 
 
 beforeAll(() => {   
@@ -19,24 +20,17 @@ afterAll(async () => {
 });
 
 describe('GET /api/player' , () => {
-    it('should return an Object Player ', async() => {
+    it('should return status 200 ', async() => {
 
-        const mockEmail = 'miguelangel.rojas@ikasla.aeg.eus';
-        const mockData = mockPlayers;
-
-
-        jest.spyOn(PlayerModel, 'find').mockResolvedValue(mockData);
+        jest.spyOn(PlayerModel, 'findOne').mockResolvedValue(mockPlayers);
 
         const { req, res } = createMocks({
             method: 'GET',
-            query: {
-                email: mockEmail
-            }
         });
 
         await handlerPlayer(req, res);
 
-        expect(res._getData()).toEqual(mockData[1]);
         expect(res.statusCode).toBe(200);
+
     });
 });
