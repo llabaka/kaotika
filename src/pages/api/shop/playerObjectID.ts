@@ -1,7 +1,5 @@
 import Player from "../models/PlayerModel";
-import { mockSession } from "@/__tests__/__mocks__/mockSession";
 import connectDB from "../../../../db/connection";
-
 
 export default async function handleObjectIdPlayer(req: any, res: any) {
     try {

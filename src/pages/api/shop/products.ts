@@ -13,7 +13,7 @@ import { Product } from "@/_common/interfaces/shop/Product";
       "/api/shop/products/ingredients",
     ];
   
-    const URL = "http://localhost:3000";
+    const URL = "https://anatidaephobia-shop.vercel.app/";
 
     try {
       // Realiza todas las solicitudes de forma paralela
