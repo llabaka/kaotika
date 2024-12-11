@@ -8,17 +8,20 @@ interface Product {
     type: string;
 }
 
+export const updateBuyProducts = (cartProducts: any[]): Product[] => {
+    return cartProducts.map((cartProduct) => ({
+        productId: cartProduct._id!,
+        type: cartProduct.type!,
+    }));
+};
+
 const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartProducts, player, setPlayer}) => {
     const [buyProducts, setBuyProducts] = useState<Product[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     useEffect(() => {
 
-        const updatedBuyProducts = cartProducts.map(cartProduct => ({
-            productId: cartProduct._id!,
-            type: cartProduct.type!
-        }));
-
+        const updatedBuyProducts =  updateBuyProducts(cartProducts);
         setBuyProducts(updatedBuyProducts);
 
     }, [cartProducts]);
@@ -73,6 +76,7 @@ const CartBuyButtonContainer:React.FC<CartInterface> = ({setCartProducts, cartPr
         <div className="flex h-[15%] w-[90%] justify-center items-center">
             <div className=" flex h-[65%] w-[25%] items-center justify-center " >
                 <button className="flex-col relative h-full w-full flex items-center justify-center z-1 text-orange-400 text-4xl mr-3 hover:scale-105 transition-all"
+                    data-testid={"BuyCartButton"}
                     onClick={handleBuyAllButton}>
                     <Image
                     src="/images/shop/ManagePlayerButton.png"
