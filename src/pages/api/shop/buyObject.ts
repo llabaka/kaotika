@@ -25,84 +25,84 @@ const modelMap : Record<string, any> = {
 
 export default async function handlerBuy(req : NextApiRequest, res : NextApiResponse) {
     
-    const { playerId, products} = req.body;
+const { playerId, products} = req.body;
 
-    if(!playerId || !products || products.length === 0){
-        return res.status(400).send({
-            error: `Faltan parametros requeridos playerId: ${playerId} products: ${products}`
+if(!playerId || !products || products.length === 0){
+    return res.status(400).send({
+        error: `Faltan parametros requeridos playerId: ${playerId} products: ${products}`
+    });
+}
+
+try {
+    // Connect TO DB
+    connectDB();
+
+    // Search player
+    const player = await PlayerModel.findById(playerId);
+    if(!player){
+        return res.status(404).send({
+            error: `Player with the id ${playerId} not found`
         });
     }
 
-    try {
-        // Connect TO DB
-        connectDB();
-
-        // Search player
-        const player = await PlayerModel.findById(playerId);
-        if(!player){
+    let totalCost = 0;
+    const purchasedProducts = [];
+    
+    for(const {type, productId} of products){
+        // Search product in DB
+        const product = await searchProductByType(type, productId);
+        if(!product){
             return res.status(404).send({
-                error: `Player with the id ${playerId} not found`
+                error: `Product with the id ${productId} with type ${type} not found`
             });
         }
 
-        let totalCost = 0;
-        const purchasedProducts = [];
-        
-        for(const {type, productId} of products){
-            // Search product in DB
-            const product = await searchProductByType(type, productId);
-            if(!product){
-                return res.status(404).send({
-                    error: `Product with the id ${productId} with type ${type} not found`
-                });
-            }
-
-            if(type !== 'ingredient') {
-                if(player.level < product.min_lvl){
-                    return res.status(400).send({
-                        error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
-                    });
-                }
-
-                const existingProduct = player.inventory[type+'s'].find((item : ObjectId) => item.toString() === productId) ;
-                
-
-                if(existingProduct){
-                    return res.status(400).send({
-                        error: `The player actually have the object with the id ${productId} in the inventory`
-                    })
-                }
-            }
-
-        
-            if(player.gold < totalCost + product.value){
+        if(type !== 'ingredient') {
+            if(player.level < product.min_lvl){
                 return res.status(400).send({
-                    error: `The player dont have gold to buy product`
+                    error: `The player level ${player.level} is lower to buy ${product.min_lvl}`
                 });
             }
 
-            const inventoryCategory = type + "s";
-            if(!player.inventory[inventoryCategory]){
+            const existingProduct = player.inventory[type+'s'].find((item : ObjectId) => item.toString() === productId) ;
+            
+
+            if(existingProduct){
                 return res.status(400).send({
-                    error: `Inventory category ${inventoryCategory} not exists`
-                });
+                    error: `The player actually have the object with the id ${productId} in the inventory`
+                })
             }
-
-            purchasedProducts.push({
-                type,
-                productId
-            });   
-        
-            totalCost += product.value;
         }
 
-        // Update Player
-        player.gold -= totalCost;
-        purchasedProducts.forEach(({type, productId}) => {
-            const inventoryCategory = type + "s";
-            player.inventory[inventoryCategory].push(productId);
-            
-        });
+    
+        if(player.gold < totalCost + product.value){
+            return res.status(400).send({
+                error: `The player dont have gold to buy product`
+            });
+        }
+
+        const inventoryCategory = type + "s";
+        if(!player.inventory[inventoryCategory]){
+            return res.status(400).send({
+                error: `Inventory category ${inventoryCategory} not exists`
+            });
+        }
+
+        purchasedProducts.push({
+            type,
+            productId
+        });   
+    
+        totalCost += product.value;
+    }
+
+    // Update Player
+    player.gold -= totalCost;
+    purchasedProducts.forEach(({type, productId}) => {
+        const inventoryCategory = type + "s";
+        player.inventory[inventoryCategory].push(productId);
+        
+    });
 
 
         await player.save();

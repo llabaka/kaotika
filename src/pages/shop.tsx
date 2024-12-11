@@ -190,11 +190,12 @@ const Shop = () => {
         <div className=" text-medievalSepia bg-cover bg-center min-h-screen" style={{ backgroundImage: 'url(/images/map.jpg)'}}>
         <MainShopContainer>
 
-          <LeftMainContainer 
-          setDisplayingScreen={setDisplayingScreen} 
-          allProducts={allProducts} 
-          setShowingProducts={setShowingProducts} 
-          player={player}/>
+          <LeftMainContainer
+            setDisplayingScreen={setDisplayingScreen}
+            allProducts={allProducts}
+            setShowingProducts={setShowingProducts}
+            player={player}
+          />
           
           <MiddleMainContainer />
 
@@ -215,11 +216,11 @@ const Shop = () => {
             setSellingImage={setSellingImage}
             sellingImage={sellingImage}
             setShopTooltips={setShopTooltips}
-            />
+          />
 
         </MainShopContainer>
         { isVisibleBuyModal ? (
-
+          
           <BuyingModal
             onclick={closeModal}
             product={product}
@@ -228,22 +229,21 @@ const Shop = () => {
             setHaveBuy={setHaveBuy}
             setShopTooltips={setShopTooltips}
             
-            /> ) : null }  
-        { isVisibleSellModal ? ( 
-          <SellingModal 
-            onClickSell={declineSellButton} 
-            sellingItem={product} 
-            player={player} 
+          /> ) : null }
+        { isVisibleSellModal ? (
+          <SellingModal
+            onClickSell={declineSellButton}
+            sellingItem={product}
+            player={player}
             setPlayer={setPlayer}
             setHaveSell={setHaveSell}
             setShopTooltips={setShopTooltips}
             setSellingImage={setSellingImage}
             setSellingItem={setSellingItem}
-            /> 
+          />
           ) : null }
           <div className='w-[24%] fixed top-[30%] right-[2%] z-20'>
             { shopTooltips.map((shopTooltip, index) => (
-                
                 <ShopTooltip image={shopTooltip.image} itemName={shopTooltip.itemName} key={index} action={shopTooltip.action}/>
             ))}
           </div>
@@ -251,7 +251,6 @@ const Shop = () => {
       </Layout>
     )
   } else {
-    console.log("ESTA EN ELSE");
     return <Loading />;
   }
 }
