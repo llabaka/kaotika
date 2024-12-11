@@ -31,6 +31,7 @@ const CardLeftContainer = ({ min_lvl, value, image, name, description, _id, onCl
 
     // Change color depending on player's level
     const minLevelClass = player.level >= (min_lvl || 0) ? 'text-green-400' : 'text-red-600';
+    const enoughGold = player.gold >= value ? '': 'text-red-500';
 
     return (
         <div className="flex flex-col relative w-[65%] h-[100%] items-center">
@@ -39,7 +40,7 @@ const CardLeftContainer = ({ min_lvl, value, image, name, description, _id, onCl
                 <div className={` text-[35px] font-bold w-[20%] pr-[6%] ${minLevelClass}`}
                     data-testid={`min_lvl_${_id}`}>{min_lvl}</div>
                 <div className="flex justify-around w-[36%] h-[75%] mt-5 items-center text-right">
-                    <p className="text-white w-[65%] text-[25px] font-bold mr-1"
+                    <p className={`w-[65%] text-[25px] font-bold mr-1 ${enoughGold}`}
                         data-testid={`product_value_${_id}`}>{value}</p>
                     <div className="w-[35%] h-[55%] mt-1 mr-1">
                         <div className="relative w-full h-full">
