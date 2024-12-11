@@ -18,7 +18,7 @@ interface LeftMainContainerInterface {
   player: Player
   setShowingProducts: (loaded: Product[]) => void;
   displayingScreen: Number;
-	selectedMainTab: number;
+  selectedMainTab: number;
   setSelectedMainTab: (loaded: number) => void;
 }
 
@@ -68,13 +68,13 @@ const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplaying
         <>
           {/* Replace this with your other component */}
           <MagicStuffButtons
-          allProducts={allProducts}
-          setShowingProducts={setShowingProducts}
-          setDisplayingScreen={setDisplayingScreen}
-          setIsTicketPressed={setIsTicketPressed}
-          setIsDollarPressed={setIsDollarPressed}
-          setIsCartPressed={setIsCartPressed}
-        />
+            allProducts={allProducts}
+            setShowingProducts={setShowingProducts}
+            setDisplayingScreen={setDisplayingScreen}
+            setIsTicketPressed={setIsTicketPressed}
+            setIsDollarPressed={setIsDollarPressed}
+            setIsCartPressed={setIsCartPressed}
+          />
         </>
       )}
     </div>

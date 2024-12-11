@@ -13,7 +13,7 @@ interface IngredientsContainerButtonsInterface {
   setIsCartPressed: (loaded: boolean) => void;
 }
 
-const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed}) => {
+const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
   const [activeButton, setActiveButton] = useState(0);
 
@@ -22,6 +22,30 @@ const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({allP
     { id: 1, label: 'CONTAINER' }
   ];
 
+  const handleButtonClick = (buttonId: number) => {
+
+    if (buttonId === 0) {
+      if (!DISPLAY_SCREEN.BUY) {
+        setDisplayingScreen(DISPLAY_SCREEN.BUY);
+        setIsTicketPressed(true);
+        setIsCartPressed(false);
+        setIsDollarPressed(false);
+      }
+
+      // Vaciar los productos antes de cargar los nuevos
+      setShowingProducts([]);
+
+      switch (buttonId) {
+        case 0:
+          setShowingProducts(allProducts!.ingredients);
+          break;
+        default:
+          setShowingProducts([]); // En caso de que no haya selección válida
+          break;
+      }
+    }
+
+  };
 
   return (
     <div className="flex-col justify-start items-center w-10/12 h-80 mt-1 max-h-[400px] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
@@ -29,6 +53,7 @@ const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({allP
         <button
           key={id}
           className={`w-[98%] h-16 flex relative items-center justify-center mb-4 transform transition-transform ${activeButton !== id ? 'hover:scale-105' : ''}`}
+          onClick={() => handleButtonClick(id)}
         >
           <Image
             src="/images/shop/ManagePlayerButton.png"
