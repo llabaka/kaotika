@@ -8,11 +8,18 @@ export default async function handlerPlayer(req: any, res: any) {
     try {
 
         // Connect to DB
-        console.log("Conectando to mongo...");
+        console.log("Connecting to mongo...");
         await connectDB();
         console.log("Connected to mongo.");
 
-        const populatedPlayer = await populatePlayer();
+        const player = await Player.findOne({email: mockSession.email});
+
+        if (!player) {
+            console.error("Player was not found");
+            return res.status(404).json({ error: "Player was not found" });
+        }
+
+        const populatedPlayer = await populatePlayer(player.email);
 
         console.log("PLAYER ID AFTER POPULATE");
         console.log(populatedPlayer._id);
@@ -24,14 +31,14 @@ export default async function handlerPlayer(req: any, res: any) {
         }
 }
 
-export const populatePlayer = async () => {
+export const populatePlayer = async (email: string) => {
     
     console.log("ABOUT TO POPULATE PLAYER");
     
-    const playerPopulated = await Player.findOne({email: mockSession.email}).populate('profile').exec();
+    const playerPopulated = await Player.findOne({email: email}).populate('profile').exec();
 
     if (!playerPopulated) {
-        throw new Error('Player not found');
+        throw new Error("Player was not found");
       }
 
     console.log("PLAYER BEFORE POPULATED");
