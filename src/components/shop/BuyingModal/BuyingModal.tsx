@@ -98,7 +98,8 @@ const BuyingModal = ({product, onclick, player, setPlayer, setHaveBuy, setShopTo
                     <div className="w-[50%] h-[90%] flex flex-col items-center justify-center">
                         <div className="w-[85%] h-[35%] relative mb-[12%] flex items-center justify-center hover:scale-110 transition-all cursor-pointer"
                             data-testid={'ConfirmButton'}
-                            onClick={buyButtonHandler}>
+                            onClick={buyButtonHandler}
+                        >
                             <Image
                                 src={buttonImage}
                                 fill

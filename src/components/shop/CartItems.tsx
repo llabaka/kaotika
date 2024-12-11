@@ -12,15 +12,18 @@ const CartItems:React.FC<CartItemsInterface> = ({cartProducts, setCartProducts, 
 
     return(
         <div className="h-[85%] w-[90%] text-xl overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
-           {cartProducts.map((item, index) => (
-                    <div key={index} className="flex w-[100%] h-[23%] items-center justify-between bg-black bg-opacity-50 rounded-lg mt-2">
+            {cartProducts.map((item, index) => (
+                    <div key={index} className="flex w-[100%] h-[23%] items-center justify-between bg-black bg-opacity-50 rounded-lg mt-2"
+                        data-testid={`cart_item_${item._id}`}>
                         {/* Imagen del objeto */}
                         <div className="w-[12%] h-[100%] ml-3">
-                            <img src={item.image} alt={item.name} className="w-full h-full object-fill" />
+                            <img src={item.image} alt={item.name} className="w-full h-full object-fill" 
+                                data-testid={`cart_item_${item.image}}`}    
+                            />
                         </div>
-                       
+                    
                         {/* Nombre del objeto */}
-                        <div className="flex w-[35%] h-[80%] text-3xl text-orange-300 ml-2 justify-start items-center">{item.name}</div>
+                        <div className="flex w-[35%] h-[80%] text-3xl text-orange-300 ml-2 justify-start items-center" data-testid={`cart_item_${item.name}`}>{item.name}</div>
 
                         {item.type === "ingredient" ? (
                         <div className="flex w-[13%] items-center space-x-2">

@@ -100,7 +100,7 @@ const CardLeftContainer = ({min_lvl, value, image, name, description, _id, onCli
                     onClick={onClickBuy}
                     id={`buy_button_${_id}`}
                     data-testid={`buy_${_id}`}
-                    disabled={isDisableButton}
+                    // disabled={isDisableButton}
                     >
                         Buy
                 </button>
