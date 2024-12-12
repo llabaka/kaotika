@@ -6,12 +6,13 @@ const ShopTooltip = ({ image, action, itemName }: ShopTooltipProps) => {
 
   return (
     <div className="h-32 bg-black bg-opacity-90 flex items-center justify-around relative mt-2" data-testid={'ShopTooltip'}>
-      <div className="w-[50%] h-full relative mr-2">
+      <div className="w-[30%] h-full relative mr-2">
         <div className="flex relative w-full h-full">
           <Image
             src={image}
             alt=""
             fill
+            className="rounded-full"
           />
         </div>
       </div>
