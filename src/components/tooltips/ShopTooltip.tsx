@@ -15,7 +15,7 @@ const ShopTooltip = ({ image, action, itemName }: ShopTooltipProps) => {
           />
         </div>
       </div>
-      <p className="text-white text-2xl">You have {action} <span className="text-orange-400">{itemName} </span>!! </p>
+      <p className="font-bold text-white text-2xl">You have {action} <span className="text-orange-400">{itemName} </span>!! </p>
     </div>
   );
 }

@@ -14,6 +14,7 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const alertImage = "/images/shop/AlertIcon.png";
+  const purchaseImage = "/images/shop/CheckIconSepia.png";
 
   useEffect(() => {
 
@@ -60,14 +61,14 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
       setCartProducts([]);
 
       //Not enough gold to buy in cart
-      addTooltip("", "", "bought all the products in the cart");
+      addTooltip(purchaseImage, "", "successfully bought all the products in the cart");
       setIsLoading(false);
     } else {
       console.log("not enough gold");
       setIsLoading(false);
 
       //Not enough gold to buy in cart
-      addTooltip(alertImage, "", "not enough gold to buy");
+      addTooltip(alertImage, "", "not enough gold to buy all the products");
       return;
     }
   };
@@ -97,10 +98,6 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
               BUY ALL
             </span>
           </button>
-
-
-
-
         </div>
       </div>
   )
