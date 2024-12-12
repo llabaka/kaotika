@@ -1,6 +1,6 @@
 import { Product } from "@/_common/interfaces/shop/Product";
 import CardItem from "./CardItem";
-import React, { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import EmptyCard from "./Card/EmptyCard";
 import ProductVerticalSeparator from "./ProductVerticalSeparator";
 import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
@@ -15,9 +15,10 @@ interface ProductRowContainerProps {
   cartProducts: Product[];
   player: Player;
   setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+  setQty: React.Dispatch<SetStateAction<number>>;
 }
 
-const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
+const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty}) => {
 
   const [isAnimating, setIsAnimating] = useState(true);
 
@@ -37,7 +38,16 @@ const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClic
       {cards.map((card, index) => (
         <React.Fragment key={index}>
           {/* Render EmptyCard if card.image is empty, otherwise render CardItem */}
-          {card.image ? <CardItem card={card} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player} setShopTooltips={setShopTooltips}/> : <EmptyCard card={card}/>}
+          {card.image ? <CardItem 
+                          card={card} 
+                          onClickBuy={onClickBuy} 
+                          setProduct={setProduct} 
+                          setCartProducts={setCartProducts} 
+                          cartProducts={cartProducts} 
+                          player={player} 
+                          setShopTooltips={setShopTooltips}
+                          setQty={setQty}
+                        /> : <EmptyCard card={card}/>}
           {/* Show separator if it's NOT the last item */}
           {index < cards.length - 1 && (
             card.image 

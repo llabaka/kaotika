@@ -46,6 +46,7 @@ describe('Buy button functionality', () => {
     const mockSetPlayer = jest.fn();
     const mockSetHaveBuy = jest.fn();
     const mockSetShopTooltips = jest.fn();
+    const mockSetQty = jest.fn();
 
     // Render the component
     render(
@@ -57,6 +58,7 @@ describe('Buy button functionality', () => {
         cartProducts={mockCartProducts}
         player={mockPlayer}
         setShopTooltips={mockSetShopTooltips}
+        setQty={mockSetQty}
       />
     );
 
@@ -69,6 +71,7 @@ describe('Buy button functionality', () => {
         setPlayer={mockSetPlayer}
         setHaveBuy={mockSetHaveBuy}
         setShopTooltips={mockSetShopTooltips}
+        qty={1}
       />
     );
 
@@ -107,6 +110,7 @@ describe('Buy button functionality', () => {
         setPlayer={mockSetPlayer}
         setHaveBuy={mockSetHaveBuy}
         setShopTooltips={mockSetShopTooltips}
+        qty={1}
       />
     );
 

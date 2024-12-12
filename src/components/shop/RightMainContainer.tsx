@@ -8,7 +8,7 @@ import SellingContainer from "./SellingContainer";
 import CartScreenMainTab from "./CartScreenMainTab";
 import RightContainerInterface from "@/_common/interfaces/shop/RightContainerInterface";
 
-const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem, setSellingImage, sellingImage, setShopTooltips, selectedMainTab, setSelectedMainTab }) => {
+const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displayingScreen, allProducts, setShowingProducts, cartProducts, setCartProducts, onClickBuy, setProduct, player, onClickSell, setPlayer, setSellingItem, sellingItem, setSellingImage, sellingImage, setShopTooltips, selectedMainTab, setSelectedMainTab, setQty }) => {
 
   return (
     <div className="flex flex-col justify-start items-center w-9/12 bg-transparent p-1 rounded-md mr-2">
@@ -21,7 +21,16 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
             setSelectedMainTab={setSelectedMainTab}
           />
 
-          <ProductsContainer products={products} onClickBuy={onClickBuy} setProduct={setProduct} setCartProducts={setCartProducts} cartProducts={cartProducts} player={player} setShopTooltips={setShopTooltips} />
+          <ProductsContainer 
+            products={products} 
+            onClickBuy={onClickBuy} 
+            setProduct={setProduct} 
+            setCartProducts={setCartProducts} 
+            cartProducts={cartProducts} 
+            player={player} 
+            setShopTooltips={setShopTooltips}
+            setQty={setQty}
+          />
         </>
       ) : displayingScreen === DISPLAY_SCREEN.SELL ? (
         <>

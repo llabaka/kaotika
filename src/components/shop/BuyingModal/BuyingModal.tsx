@@ -15,9 +15,10 @@ interface BuyingModalProps {
   setPlayer: any;
   setHaveBuy: any;
   setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+  qty: number;
 }
 
-const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopTooltips }: BuyingModalProps) => {
+const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopTooltips, qty}: BuyingModalProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
@@ -43,10 +44,14 @@ const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopT
     if (playerGold > productValue) {
 
       if (product !== null) {
-        const response = await buyProductClient(player._id, [{ type: product.type!, productId: product._id! }]);
+        const productData = { type: product.type, productId: product._id};
+        const quantity = product.type === 'ingredient' ? qty : 1;
+        const products = Array(quantity).fill(productData);
+
+        const response = await buyProductClient(player._id, products);
         const json = await response.json();
 
-        if (!response.ok) {
+        if(!response.ok) {
           console.log(JSON.stringify(json));
           addToolTip(alertImage, product.name!, json.error);
           setIsLoading(false);
@@ -84,7 +89,7 @@ const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopT
             sizes='(max-width: 953px) 100vw'
           />
 
-          <p className="text-[34px] text-center z-10 text-white">Are you sure you want to buy the
+          <p className="text-[34px] text-center z-10 text-white">Are you sure you want to buy <span className="text-orange-400">{qty > 1 ? qty : null } </span>the
             <span className="text-orange-400"> {product?.name}</span> for <span className="text-orange-400">{product?.value} g</span> ?</p>
           <div className="w-[95%] h-[68%] flex justify-around items-center ml-[3%]">
             {/* DIV PARA IMAGEN Y BOTONES */}

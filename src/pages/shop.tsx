@@ -34,6 +34,7 @@ const Shop = () => {
   const [sellingItem, setSellingItem] = useState<Product>({} as Product);
   const [sellingImage, setSellingImage] = useState('');
   const [selectedMainTab, setSelectedMainTab] = useState<number>(0);
+  const [ingredientQtyToBuy, setIngredientQtyToBuy] = useState<number>(1);
 
   //Set products from local storage
   useEffect(() => {
@@ -223,6 +224,7 @@ const Shop = () => {
               setShopTooltips={setShopTooltips}
               selectedMainTab={selectedMainTab}
               setSelectedMainTab={setSelectedMainTab}
+              setQty={setIngredientQtyToBuy}
             />
 
           </MainShopContainer>
@@ -235,7 +237,7 @@ const Shop = () => {
               setPlayer={setPlayer}
               setHaveBuy={setHaveBuy}
               setShopTooltips={setShopTooltips}
-
+              qty={ingredientQtyToBuy}
             />) : null}
           {isVisibleSellModal ? (
             <SellingModal

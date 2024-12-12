@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { SetStateAction, useEffect, useRef, useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { Product } from "@/_common/interfaces/shop/Product";
@@ -15,9 +15,10 @@ interface ProductsContainerInterface {
   cartProducts: Product[];
   player: Player;
   setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+  setQty: React.Dispatch<SetStateAction<number>>;
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips}) => {
+const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty}) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
     // Referencia para el contenedor del ProductsContainer
@@ -111,6 +112,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
             setCartProducts={setCartProducts}
             player={player}
             setShopTooltips={setShopTooltips}
+            setQty={setQty}
             />
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />

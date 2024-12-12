@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CardRigthContainer from "./Components/CardRigthContainer";
 import { CardProp, Product } from "@/_common/interfaces/shop/Product";
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import EffectsContainer from "./Components/effectsContainer";
 import CardLeftContainer from "./Components/CardLeftContainer";
@@ -11,18 +11,19 @@ interface ProductInterface {
     props: Product,
     onClickBuy: () => void;
     onClickAddToCart: () => void;
-    player: Player
+    player: Player;
+    qtyCard: number;
+    setQtyCard: React.Dispatch<SetStateAction<number>>;
 }
 
-const Card = ({props, onClickBuy, onClickAddToCart, player} : ProductInterface) => {
+const Card = ({props, onClickBuy, onClickAddToCart, player, qtyCard, setQtyCard} : ProductInterface) => {
     // State for render Attributes based on type
     const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
     const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
     const [baseDamage, setBaseDamage] = useState<number | null>(null);
     const [effects, setEffects] = useState<string[]>([]);
     const [isEquipment, setIsEquipment] = useState<boolean>(false);
-
-
+    
     const CardImageRoute = '/images/shop/EquipmentCleanPNG.png';
 
     let icon = '/images/icons/up.png';
@@ -89,7 +90,7 @@ const Card = ({props, onClickBuy, onClickAddToCart, player} : ProductInterface) 
                     <CardRigthContainer attributes={props.modifiers} extra_attribute={extraAtribute} weaponDie={weaponDamage} baseDamage={baseDamage}/>
                 ) : null }
                 { !isEquipment ? (
-                    <EffectsContainer effects={effects}/> 
+                    <EffectsContainer effects={effects} qtyCard={qtyCard} setQtyCard={setQtyCard}/> 
                 ): null
                 }
                 

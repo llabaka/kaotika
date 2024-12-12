@@ -3,6 +3,7 @@ import { Player } from "../Player";
 import { AllProducts } from "./AllProducts";
 import { Product } from "./Product";
 import { ShopTooltipProps } from "./ShopTooltip";
+import { SetStateAction } from "react";
 
 export default interface RightContainerInterface {
 	products: Product[];
@@ -23,4 +24,5 @@ export default interface RightContainerInterface {
 	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 	selectedMainTab: number;
     setSelectedMainTab: (loaded: number) => void;
+	setQty: React.Dispatch<SetStateAction<number>>;
 }

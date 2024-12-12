@@ -3,6 +3,7 @@ import Card from "./Card/Card"
 import { Product } from "@/_common/interfaces/shop/Product";
 import { handleAddToCart } from "./helpers/HandleAddToCart";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
+import { SetStateAction, useState } from "react";
 
 const alertImage = "/images/shop/AlertIcon.png";
 
@@ -14,13 +15,16 @@ interface CardItemProps {
     cartProducts: Product[];
     player: Player;
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+    setQty: React.Dispatch<SetStateAction<number>>;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips }) => {
+const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty}) => {
+    const [qtyCard, setQtyCard] = useState<number>(1);
 
     const handleOnClickBuy = () => {
         onClickBuy();
         setProduct(card);
+        setQty(qtyCard);
     }
 
     const addTooltip = (image: string, itemName: string, action: string) => {
@@ -95,7 +99,14 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
 
     return (
         <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition z-20 mt-1 mb-1" data-testid={"CardItem"}>
-            <Card props={card} onClickBuy={handleOnClickBuy} onClickAddToCart={handleAddToCart} player={player} />
+            <Card 
+                props={card} 
+                onClickBuy={handleOnClickBuy} 
+                onClickAddToCart={handleAddToCart} 
+                player={player}
+                setQtyCard={setQtyCard}
+                qtyCard={qtyCard}
+            />
         </div>
     )
 }
