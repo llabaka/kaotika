@@ -7,7 +7,7 @@ const SellingContainer: React.FC<SellingContainerInterface> = ({ player, onClick
     return(
     <div className="justify-center flex w-full h-[85%]">
         {/* Inventory Contaienr */}
-        <InventoryContainer player={player} setSellingImage={setSellingImage} setSellingItem={setSellingItem} setProduct={setProduct}/>
+        <InventoryContainer player={player} setSellingImage={setSellingImage} setSellingItem={setSellingItem} setProduct={setProduct} sellingItem={sellingItem}/>
 
         {/* Empty Space */}
         <div className="flex-col w-[3%]"></div>

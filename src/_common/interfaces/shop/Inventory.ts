@@ -6,4 +6,5 @@ export default interface InventoryContainerInterface {
     setSellingImage: (loaded: string) => void;
     setSellingItem: (loaded: Product) => void;
     setProduct: (loaded: Product) => void;
+    sellingItem: Product;
 }

@@ -89,14 +89,14 @@ const CardLeftContainer = ({ min_lvl, value, image, name, description, _id, onCl
           {description}</p>
       </div>
       <div className="h-[12%] w-[100%] flex justify-around">
-        <button className="text-white text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center hover:text-orange-500"
+        <button className="font-bold text-black text-xl ml-5 w-[36%] h-[90%] rounded-full flex items-center justify-center hover:text-white transition-all"
           onClick={onClickAddToCart}
           id={_id}
           data-testid={`add_basket_${_id}`}
         >
           <p className="ml-2">Add to Cart</p>
         </button>
-        <button className="text-white text-xl mr-6 w-[36%] h-[90%] rounded-full flex items-center justify-center hover:text-orange-500"
+        <button className="font-bold text-black text-xl mr-6 w-[36%] h-[90%] rounded-full flex items-center justify-center hover:text-white transition-all"
           onClick={onClickBuy}
           id={`buy_button_${_id}`}
           data-testid={`buy_${_id}`}
