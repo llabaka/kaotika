@@ -33,6 +33,9 @@ describe('complete buy flux', () => {
         const mockClick = jest.fn();
         const addToCart = jest.fn();
 
+        const mockQtyCard = 1;
+        const mockSetQtyCard = jest.fn();
+
         // Render two Card components
         render(
             <>
@@ -41,12 +44,16 @@ describe('complete buy flux', () => {
                     onClickBuy={mockClick}
                     onClickAddToCart={addToCart}
                     player={mockPlayer}
+                    setQtyCard={mockSetQtyCard}
+                    qtyCard={mockQtyCard}
                 />
                 <Card
                     props={mockProduct2}
                     onClickBuy={mockClick}
                     onClickAddToCart={addToCart}
                     player={mockPlayer}
+                    setQtyCard={mockSetQtyCard}
+                    qtyCard={mockQtyCard}
                 />
             </>
         );
@@ -149,6 +156,7 @@ describe('complete buy flux', () => {
                 setHaveBuy={mockSetHaveBuy}
                 setPlayer={mockSetPlayer}
                 setShopTooltips={mockSetShopTooltips}
+                qty={1}
             />
         );
         

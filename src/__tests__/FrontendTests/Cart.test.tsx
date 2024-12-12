@@ -25,7 +25,8 @@ describe('Add To Cart functionality', () => {
         const mockSetCartProducts = jest.fn(); // Mocked setter function
         const mockOnClickBuy = jest.fn();
         const mockSetProduct = jest.fn();
-        const mockSetShopTooltips = jest.fn;
+        const mockSetShopTooltips = jest.fn();
+        const mockSetQty = jest.fn();
     
         // Render the component
         render(
@@ -37,10 +38,11 @@ describe('Add To Cart functionality', () => {
                 cartProducts={mockCartProducts}
                 player={mockPlayer}
                 setShopTooltips={mockSetShopTooltips}
+                setQty={mockSetQty}
             />
         );
     
-        const addButton = screen.getByText('Add Basket');
+        const addButton = screen.getByText('Add to Cart');
         fireEvent.click(addButton);
     
         // Verify that the setCartProducts function is called with the updated cart
