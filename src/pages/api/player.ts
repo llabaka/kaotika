@@ -5,129 +5,129 @@ import connectDB from "../../../db/connection";
 import { Ingredient } from "@/_common/interfaces/shop/Product";
 
 const mockSession: any = {
-    user: {
-        name: 'Asier',
-        email: 'asier.arguinchona@ikasle.aeg.eus',
-        image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
-    },
-    accessToken: 'fake-acces-token',
-    refreshToken: 'fake-refresh-token',
-    expires: '',
-    email: 'asier.arguinchona@ikasle.aeg.eus'
+  user: {
+    name: 'Asier',
+    email: 'asier.arguinchona@ikasle.aeg.eus',
+    image: "https://lh3.googleusercontent.com/a/ACg8ocIqIoDtJVejSbjrzV889fEhqGR-ILGc99C0-YgY88b11zuiXfk=s96-c",
+  },
+  accessToken: 'fake-acces-token',
+  refreshToken: 'fake-refresh-token',
+  expires: '',
+  email: 'asier.arguinchona@ikasle.aeg.eus'
 }
 
 export default async function handlerPlayer(req: any, res: any) {
-    try {
+  try {
 
-        // Connect to DB
-        console.log("Connecting to mongo...");
-        await connectDB();
-        console.log("Connected to mongo.");
+    // Connect to DB
+    console.log("Connecting to mongo...");
+    await connectDB();
+    console.log("Connected to mongo.");
 
-        const player = await Player.findOne({ email: mockSession.email });
+    const player = await Player.findOne({ email: mockSession.email });
 
-        if (!player) {
-            console.error("Player was not found");
-            return res.status(404).json({ error: "Player was not found" });
-        }
-
-        const populatedPlayer = await populatePlayer(player.email);
-
-        console.log("PLAYER ID AFTER POPULATE");
-        console.log(populatedPlayer._id);
-
-        return res.status(200).json(populatedPlayer);
-    } catch (err: any) {
-        console.error("Error fetching player:", err.message);
-        return res.status(500).json({ error: "Internal Server Error" });
+    if (!player) {
+      console.error("Player was not found");
+      return res.status(404).json({ error: "Player was not found" });
     }
+
+    const populatedPlayer = await populatePlayer(player.email);
+
+    console.log("PLAYER ID AFTER POPULATE");
+    console.log(populatedPlayer._id);
+
+    return res.status(200).json(populatedPlayer);
+  } catch (err: any) {
+    console.error("Error fetching player:", err.message);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 }
 
 export const populatePlayer = async (email: string) => {
 
-    console.log("ABOUT TO POPULATE PLAYER");
+  console.log("ABOUT TO POPULATE PLAYER");
 
-    const playerPopulated = await Player.findOne({ email: email }).populate('profile').exec();
+  const playerPopulated = await Player.findOne({ email: email }).populate('profile').exec();
 
-    if (!playerPopulated) {
-        throw new Error("Player was not found");
-    }
+  if (!playerPopulated) {
+    throw new Error("Player was not found");
+  }
 
-    console.log("PLAYER BEFORE POPULATED");
-    console.log(playerPopulated);
+  console.log("PLAYER BEFORE POPULATED");
+  console.log(playerPopulated);
 
-    // Poblamos el equipo
-    await playerPopulated.equipment.populate('armor', { 'profiles': 0 });
-    await playerPopulated.equipment.populate('weapon', { 'profiles': 0 });
-    await playerPopulated.equipment.populate('artifact', { 'profiles': 0 });
-    // await playerPopulated.equipment.populate('healing_potion', { 'profiles': 0 });
-    // await playerPopulated.equipment.populate('antidote_potion', { 'profiles': 0 });
-    // await playerPopulated.equipment.populate('enhancer_potion', { 'profiles': 0 });
-    // await playerPopulated.equipment.antidote_potion.populate('recovery_effect');
-    await playerPopulated.equipment.populate('ring', { 'profiles': 0 });
-    await playerPopulated.equipment.populate('helmet', { 'profiles': 0 });
-    await playerPopulated.equipment.populate('shield', { 'profiles': 0 });
-    await playerPopulated.equipment.populate('boot', { 'profiles': 0 });
+  // Poblamos el equipo
+  await playerPopulated.equipment.populate('armor', { 'profiles': 0 });
+  await playerPopulated.equipment.populate('weapon', { 'profiles': 0 });
+  await playerPopulated.equipment.populate('artifact', { 'profiles': 0 });
+  // await playerPopulated.equipment.populate('healing_potion', { 'profiles': 0 });
+  // await playerPopulated.equipment.populate('antidote_potion', { 'profiles': 0 });
+  // await playerPopulated.equipment.populate('enhancer_potion', { 'profiles': 0 });
+  // await playerPopulated.equipment.antidote_potion.populate('recovery_effect');
+  await playerPopulated.equipment.populate('ring', { 'profiles': 0 });
+  await playerPopulated.equipment.populate('helmet', { 'profiles': 0 });
+  await playerPopulated.equipment.populate('shield', { 'profiles': 0 });
+  await playerPopulated.equipment.populate('boot', { 'profiles': 0 });
 
-    // Poblamos el inventario
-    await playerPopulated.inventory.populate('helmets', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('shields', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('weapons', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('boots', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('rings', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('armors', { 'profiles': 0 });
-    await playerPopulated.inventory.populate('artifacts', { 'profiles': 0 });
-    // await playerPopulated.inventory.populate('healing_potions', { 'profiles': 0 });
-    // await playerPopulated.inventory.populate('antidote_potions', { 'profiles': 0 });
-    // await playerPopulated.inventory.populate('antidote_potions.recovery_effect', { 'profiles': 0 });
-    // await playerPopulated.inventory.populate('enhancer_potions', { 'profiles': 0 });
-    //await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+  // Poblamos el inventario
+  await playerPopulated.inventory.populate('helmets', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('shields', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('weapons', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('boots', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('rings', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('armors', { 'profiles': 0 });
+  await playerPopulated.inventory.populate('artifacts', { 'profiles': 0 });
+  // await playerPopulated.inventory.populate('healing_potions', { 'profiles': 0 });
+  // await playerPopulated.inventory.populate('antidote_potions', { 'profiles': 0 });
+  // await playerPopulated.inventory.populate('antidote_potions.recovery_effect', { 'profiles': 0 });
+  // await playerPopulated.inventory.populate('enhancer_potions', { 'profiles': 0 });
+  //await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
 
-    const returnPlayer = await updateIngredientsWithQuantity(playerPopulated);
+  const returnPlayer = await updateIngredientsWithQuantity(playerPopulated);
 
-    console.log("INGREDIENTS");
-    console.log(returnPlayer.inventory.ingredients);
+  console.log("INGREDIENTS");
+  console.log(returnPlayer.inventory.ingredients);
 
 
-    return returnPlayer;
+  return returnPlayer;
 }
 
 interface IngredientQuantity {
-    _id: string;
-    qty: number;
+  _id: string;
+  qty: number;
 }
 
 const updateIngredientsWithQuantity = async (playerPopulated: any) => {
-    //Asignamos ingredient y añadimos atributo quantity
-    const inputIngredientIds = playerPopulated.inventory.ingredients;
+  //Asignamos ingredient y añadimos atributo quantity
+  const inputIngredientIds = playerPopulated.inventory.ingredients;
 
-    const ingredientQuantites: any = [];
+  const ingredientQuantites: any = [];
 
-    inputIngredientIds.forEach((ingredient: any) => {
-        const indexFound = ingredientQuantites.findIndex((item: any) => item._id.equals(ingredient._id));
+  inputIngredientIds.forEach((ingredient: any) => {
+    const indexFound = ingredientQuantites.findIndex((item: any) => item._id.equals(ingredient._id));
 
-        if (indexFound !== -1) {
-            ingredientQuantites[indexFound].qty++;
-        }
-        else {
-            ingredientQuantites.push({ _id: ingredient._id, qty: 1 });
-        }
-    });
-
-
-    const { ingredients } = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+    if (indexFound !== -1) {
+      ingredientQuantites[indexFound].qty++;
+    }
+    else {
+      ingredientQuantites.push({ _id: ingredient._id, qty: 1 });
+    }
+  });
 
 
+  const { ingredients } = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
 
-    const ingredientQuantitiesPopulated = ingredientQuantites.map((item: any) => {
-        const object = ingredients.filter((ingredient: any) => item._id.equals(ingredient._id))[0];
 
-        return { ...object.toObject(), qty: item.qty };
 
-    });
+  const ingredientQuantitiesPopulated = ingredientQuantites.map((item: any) => {
+    const object = ingredients.filter((ingredient: any) => item._id.equals(ingredient._id))[0];
 
-    const returnPlayer = { ...playerPopulated.toObject() };
-    returnPlayer.inventory.ingredients = ingredientQuantitiesPopulated;
+    return { ...object.toObject(), qty: item.qty };
 
-    return returnPlayer;
+  });
+
+  const returnPlayer = { ...playerPopulated.toObject() };
+  returnPlayer.inventory.ingredients = ingredientQuantitiesPopulated;
+
+  return returnPlayer;
 }
