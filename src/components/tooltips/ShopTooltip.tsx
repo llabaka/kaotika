@@ -10,7 +10,7 @@ const ShopTooltip = ({ image, action, itemName }: ShopTooltipProps) => {
         <div className="flex relative w-full h-full">
           <Image
             src={image}
-            alt="image of item"
+            alt=""
             fill
           />
         </div>

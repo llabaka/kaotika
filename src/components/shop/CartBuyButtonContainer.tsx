@@ -59,6 +59,8 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
       console.log("Realiza compra desde carrito y lo vacia");
       setCartProducts([]);
 
+      //Not enough gold to buy in cart
+      addTooltip("", "", "bought all the products in the cart");
       setIsLoading(false);
     } else {
       console.log("not enough gold");

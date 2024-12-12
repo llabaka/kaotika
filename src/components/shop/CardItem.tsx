@@ -8,7 +8,7 @@ const alertImage = "/images/shop/AlertIcon.png";
 
 interface CardItemProps {
     card: Product;
-    onClickBuy : () => void;
+    onClickBuy: () => void;
     setProduct: any;
     setCartProducts: any;
     cartProducts: Product[];
@@ -16,7 +16,7 @@ interface CardItemProps {
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips } ) => {
+const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips }) => {
 
     const handleOnClickBuy = () => {
         onClickBuy();
@@ -24,7 +24,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
     }
 
     const addTooltip = (image: string, itemName: string, action: string) => {
-        setShopTooltips((prevTooltips : ShopTooltipProps[]) => [...prevTooltips, {image, action, itemName}]);
+        setShopTooltips((prevTooltips: ShopTooltipProps[]) => [...prevTooltips, { image, action, itemName }]);
     }
 
     const isProductInInventory = (inventory: any, productId: string) => {
@@ -34,7 +34,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
                 // Verificar si la categoría es un array
                 if (Array.isArray(inventory[category])) {
                     // Buscar si algún objeto en la categoría tiene el mismo product_id
-                    const productExists = inventory[category].some((item:any) => item._id === productId);
+                    const productExists = inventory[category].some((item: any) => item._id === productId);
                     if (productExists) {
                         return true; // El producto ya está en el inventario
                     }
@@ -52,6 +52,13 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
 
         console.log(productExistsInInventory);
 
+        if (player.gold < card.value) {
+            addTooltip(alertImage, card.name!, "not enough gold to buy:");
+            return;
+        } else if (player.level < card.min_lvl!) {
+            addTooltip(alertImage, card.name!, "not enough level to buy:");
+            return;
+        }
 
         if (productExistsInInventory && card.type != 'ingredient') {
             console.log("El producto ya existe en el inventario AL INTENTAR AÑADIR AL CARRITO.");
@@ -59,7 +66,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
             return;
         }
 
-        
+
         if (!isProductInCart) {
 
             // Si el producto no está en el carrito, agregarlo con quantity 1
@@ -70,8 +77,8 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
             addTooltip(card.image!, card.name!, "added the next item to the cart:");
         } else {
             // Si el producto ya existe, actualizar su cantidad (si no tiene el atributo quantity, añadirlo)
-            if(card.type === "ingredient") {
-                setCartProducts((prevCartProducts : Product[] | []) =>
+            if (card.type === "ingredient") {
+                setCartProducts((prevCartProducts: Product[] | []) =>
                     prevCartProducts.map((product) =>
                         product._id === card._id
                             ? { ...product, quantity: product.quantity ? product.quantity + 1 : 1 }
@@ -80,15 +87,15 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
                 );
                 addTooltip(card.image!, card.name!, "added the next item to the cart:");
             }
-          
+
         }
 
-      
+
     }
 
-    return(
+    return (
         <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition z-20 mt-1 mb-1" data-testid={"CardItem"}>
-            <Card props={card} onClickBuy={handleOnClickBuy} onClickAddToCart={handleAddToCart} player={player}/>
+            <Card props={card} onClickBuy={handleOnClickBuy} onClickAddToCart={handleAddToCart} player={player} />
         </div>
     )
 }
