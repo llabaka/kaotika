@@ -6,10 +6,6 @@ import CartProductsInterface, { CartItemsInterface } from "@/_common/interfaces/
 
 const CartItems: React.FC<CartItemsInterface> = ({ cartProducts, setCartProducts, handleRemoveItem, handleUpdateQuantity }) => {
 
-	// const [products, setProducts] = useState<Product[] | []>(cartProducts);
-
-
-
 	return (
 		<div className="h-[85%] w-[90%] text-xl overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
 			{cartProducts.map((item, index) => (
