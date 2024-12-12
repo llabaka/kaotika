@@ -75,6 +75,7 @@ describe('complete buy flux', () => {
         expect(itemInCart1).toBeInTheDocument();
         expect(itemInCart2).toBeInTheDocument();
 
+        const mockSetShopTooltips = jest.fn();
         // Render CartBuyButtonContainer
         render(
             <CartBuyButtonContainer
@@ -82,6 +83,7 @@ describe('complete buy flux', () => {
                 setCartProducts={mockSetCartProducts}
                 setPlayer={mockSetPlayer}
                 player={mockPlayer}
+                setShopTooltips={mockSetShopTooltips}
             />
         );
 

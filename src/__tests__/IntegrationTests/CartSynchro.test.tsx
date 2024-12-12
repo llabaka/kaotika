@@ -46,9 +46,9 @@ describe('Cart integration testing', () => {
         (buyProductClient as jest.Mock).mockResolvedValue(mockBackendResponse);
 
         ////////////////////////// ACT //////////////////////////
-
+        const mockSetShopTooltips = jest.fn();
         // Render the CartContainer component
-        render(<CartContainer cartProducts={mockCartProducts} setCartProducts={mockSetCartProducts} player={mockPlayer} setPlayer={mockSetPlayer}/>);
+        render(<CartContainer cartProducts={mockCartProducts} setCartProducts={mockSetCartProducts} player={mockPlayer} setPlayer={mockSetPlayer} setShopTooltips={mockSetShopTooltips}/>);
 
         // Verify button is rendered
         const buyButton = screen.getByTestId("CartBuyButton");
@@ -91,6 +91,7 @@ describe('Cart integration testing', () => {
     
         const mockSetCartProducts = jest.fn();
         const mockSetPlayer = jest.fn();
+        const mockSetShopTooltips = jest.fn();
     
         ////////////////////////// ACT //////////////////////////
 
@@ -100,6 +101,7 @@ describe('Cart integration testing', () => {
                 setCartProducts={mockSetCartProducts}
                 player={mockPlayerWithoutGold}
                 setPlayer={mockSetPlayer}
+                setShopTooltips={mockSetShopTooltips}
             />
         );
     
