@@ -107,7 +107,7 @@ const Shop = () => {
       const timeout = setTimeout(() => {
         const newTooltips = shopTooltips.slice(1);
         setShopTooltips(newTooltips);
-      }, 1500);
+      }, 2000);
 
       return () => clearTimeout(timeout);
     }
