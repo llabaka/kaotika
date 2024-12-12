@@ -71,6 +71,7 @@ const Shop = () => {
       //Set all equipments
       setAllProducts(result);
 
+      setShowingProducts(result.weapons);
 
     } catch (err: any) {
       setError(err.message);
