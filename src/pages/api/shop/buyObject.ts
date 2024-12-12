@@ -12,123 +12,123 @@ import WeaponsModel from "../models/WeaponsModel";
 import { ObjectId } from "mongoose";
 import { populatePlayer } from "../player";
 
-const modelMap : Record<string, any> = {
-    armor: ArmorModel,
-    artifact: ArtifactsModel,
-    boot: BootsModel,
-    helmet: HelmetModel,
-    ring: RingsModel,
-    shield: ShieldsModel,
-    weapon: WeaponsModel,
-    ingredient: IngredientsModel,
+const modelMap: Record<string, any> = {
+	armor: ArmorModel,
+	artifact: ArtifactsModel,
+	boot: BootsModel,
+	helmet: HelmetModel,
+	ring: RingsModel,
+	shield: ShieldsModel,
+	weapon: WeaponsModel,
+	ingredient: IngredientsModel,
 }
 
-export default async function handlerBuy(req : NextApiRequest, res : NextApiResponse) {
-    
-const { playerId, products} = req.body;
+export default async function handlerBuy(req: NextApiRequest, res: NextApiResponse) {
 
-if(!playerId || !products || products.length === 0){
-    return res.status(400).send({
-        error: `Faltan parametros requeridos playerId: ${playerId} products: ${products}`
-    });
-}
+	const { playerId, products } = req.body;
 
-try {
-    // Connect TO DB
-    connectDB();
+	if (!playerId || !products || products.length === 0) {
+		return res.status(400).send({
+			error: `Faltan parametros requeridos playerId: ${playerId} products: ${products}`
+		});
+	}
 
-    // Search player
-    const player = await PlayerModel.findById(playerId);
-    if(!player){
-        return res.status(404).send({
-            error: `Player with the id ${playerId} not found`
-        });
-    }
+	try {
+		// Connect TO DB
+		connectDB();
 
-    let totalCost = 0;
-    const purchasedProducts = [];
-    
-    for(const {type, productId} of products){
-        // Search product in DB
-        const product = await searchProductByType(type, productId);
-        if(!product){
-            return res.status(404).send({
-                error: `Product with the id ${productId} with type ${type} not found`
-            });
-        }
+		// Search player
+		const player = await PlayerModel.findById(playerId);
+		if (!player) {
+			return res.status(404).send({
+				error: `Player with the id ${playerId} not found`
+			});
+		}
 
-        if(type !== 'ingredient') {
-            if(player.level < product.min_lvl){
-                return res.status(400).send({
-                    error: `not enough level to buy:`
-                });
-            }
+		let totalCost = 0;
+		const purchasedProducts = [];
 
-            const existingProduct = player.inventory[type+'s'].find((item : ObjectId) => item.toString() === productId) ;
-            
+		for (const { type, productId } of products) {
+			// Search product in DB
+			const product = await searchProductByType(type, productId);
+			if (!product) {
+				return res.status(404).send({
+					error: `Product with the id ${productId} with type ${type} not found`
+				});
+			}
 
-            if(existingProduct){
-                return res.status(400).send({
-                    error: ` the object in the inventory`
-                })
-            }
-        }
+			if (type !== 'ingredient') {
+				if (player.level < product.min_lvl) {
+					return res.status(400).send({
+						error: `not enough level to buy:`
+					});
+				}
 
-    
-        if(player.gold < totalCost + product.value){
-            return res.status(400).send({
-                error: `The player dont have gold to buy product`
-            });
-        }
-
-        const inventoryCategory = type + "s";
-        if(!player.inventory[inventoryCategory]){
-            return res.status(400).send({
-                error: `Inventory category ${inventoryCategory} not exists`
-            });
-        }
-
-        purchasedProducts.push({
-            type,
-            productId
-        });   
-    
-        totalCost += product.value;
-    }
-
-    // Update Player
-    player.gold -= totalCost;
-    purchasedProducts.forEach(({type, productId}) => {
-        const inventoryCategory = type + "s";
-        player.inventory[inventoryCategory].push(productId);
-        
-    });
+				const existingProduct = player.inventory[type + 's'].find((item: ObjectId) => item.toString() === productId);
 
 
-        await player.save();
+				if (existingProduct) {
+					return res.status(400).send({
+						error: ` the object in the inventory`
+					})
+				}
+			}
 
-        const playerPopulated = await populatePlayer(player.email);
 
-        return res.status(200).send({
-            status: "OK",
-            data: playerPopulated
-        })
-    }
-    catch (error){
+			if (player.gold < totalCost + product.value) {
+				return res.status(400).send({
+					error: `The player dont have gold to buy product`
+				});
+			}
 
-        console.error("Error during the buy: ", error);
-        return res.status(500).send({
-            error: "Intern error of server"
-        });
-    }
+			const inventoryCategory = type + "s";
+			if (!player.inventory[inventoryCategory]) {
+				return res.status(400).send({
+					error: `Inventory category ${inventoryCategory} not exists`
+				});
+			}
+
+			purchasedProducts.push({
+				type,
+				productId
+			});
+
+			totalCost += product.value;
+		}
+
+		// Update Player
+		player.gold -= totalCost;
+		purchasedProducts.forEach(({ type, productId }) => {
+			const inventoryCategory = type + "s";
+			player.inventory[inventoryCategory].push(productId);
+
+		});
+
+
+		await player.save();
+
+		const playerPopulated = await populatePlayer(player.email);
+
+		return res.status(200).send({
+			status: "OK",
+			data: playerPopulated
+		})
+	}
+	catch (error) {
+
+		console.error("Error during the buy: ", error);
+		return res.status(500).send({
+			error: "Intern error of server"
+		});
+	}
 }
 
 const searchProductByType = async (type: string, productId: string) => {
-    const Model = modelMap[type];
+	const Model = modelMap[type];
 
-    if(!Model){
-        throw new Error(`Type of product not expected: ${type}`);
-    }
+	if (!Model) {
+		throw new Error(`Type of product not expected: ${type}`);
+	}
 
-    return await Model.findById(productId);
+	return await Model.findById(productId);
 }

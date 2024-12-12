@@ -6,23 +6,23 @@ import CartProductsInterface from "@/_common/interfaces/shop/CartProductsInterfa
 import calculateTotalPrice from "./helpers/CalculatePrice";
 import { Product } from "@/_common/interfaces/shop/Product";
 
-const Cart:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) => {
+const Cart: React.FC<CartProductsInterface> = ({ cartProducts, setCartProducts }) => {
 
     const [totalPrice, setTotalPrice] = useState<number>(0);
 
     const handleRemoveItem = (id: string) => {
-        setCartProducts((prevItems:Product[]) => prevItems.filter((item:Product) => item._id !== id));
-        console.log("HANDLE REMOVE ITEM", id);        
-      };
+        setCartProducts((prevItems: Product[]) => prevItems.filter((item: Product) => item._id !== id));
+        console.log("HANDLE REMOVE ITEM", id);
+    };
 
     const updateQuantity = (id: string, delta: number) => {
-    setCartProducts((prevItems:Product[]) =>
-        prevItems.map((item) =>
-        item._id === id && item.type === "ingredient"
-            ? { ...item, quantity: Math.max(item.quantity! + delta, 0) }
-            : item
-        )
-    );
+        setCartProducts((prevItems: Product[]) =>
+            prevItems.map((item) =>
+                item._id === id && item.type === "ingredient"
+                    ? { ...item, quantity: Math.max(item.quantity! + delta, 0) }
+                    : item
+            )
+        );
     };
 
     useEffect(() => {
@@ -33,13 +33,13 @@ const Cart:React.FC<CartProductsInterface> = ({cartProducts, setCartProducts}) =
             return newTotalPrice;
         });
     }, [cartProducts, setCartProducts]);
-    
+
 
     return (
         <div className="flex flex-col h-[75%] w-[90%] text-xl items-center justify-center" data-testid={'Cart'}>
-            <CartItems cartProducts={cartProducts} setCartProducts={setCartProducts} handleRemoveItem={handleRemoveItem} handleUpdateQuantity={updateQuantity}/>
-            <CartSeparator/>
-            <CartTotal cartProducts={cartProducts}/>
+            <CartItems cartProducts={cartProducts} setCartProducts={setCartProducts} handleRemoveItem={handleRemoveItem} handleUpdateQuantity={updateQuantity} />
+            <CartSeparator />
+            <CartTotal cartProducts={cartProducts} />
         </div>
 
     )

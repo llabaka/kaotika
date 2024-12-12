@@ -24,7 +24,7 @@ export default async function handlerPlayer(req: any, res: any) {
         await connectDB();
         console.log("Connected to mongo.");
 
-        const player = await Player.findOne({email: mockSession.email});
+        const player = await Player.findOne({ email: mockSession.email });
 
         if (!player) {
             console.error("Player was not found");
@@ -44,14 +44,14 @@ export default async function handlerPlayer(req: any, res: any) {
 }
 
 export const populatePlayer = async (email: string) => {
-    
+
     console.log("ABOUT TO POPULATE PLAYER");
-    
-    const playerPopulated = await Player.findOne({email: email}).populate('profile').exec();
+
+    const playerPopulated = await Player.findOne({ email: email }).populate('profile').exec();
 
     if (!playerPopulated) {
         throw new Error("Player was not found");
-      }
+    }
 
     console.log("PLAYER BEFORE POPULATED");
     console.log(playerPopulated);
@@ -87,8 +87,8 @@ export const populatePlayer = async (email: string) => {
 
     console.log("INGREDIENTS");
     console.log(returnPlayer.inventory.ingredients);
-    
-    
+
+
     return returnPlayer;
 }
 
@@ -97,37 +97,37 @@ interface IngredientQuantity {
     qty: number;
 }
 
-const updateIngredientsWithQuantity = async(playerPopulated: any) => {
+const updateIngredientsWithQuantity = async (playerPopulated: any) => {
     //Asignamos ingredient y añadimos atributo quantity
-    const inputIngredientIds =  playerPopulated.inventory.ingredients;
+    const inputIngredientIds = playerPopulated.inventory.ingredients;
 
     const ingredientQuantites: any = [];
 
     inputIngredientIds.forEach((ingredient: any) => {
         const indexFound = ingredientQuantites.findIndex((item: any) => item._id.equals(ingredient._id));
-       
+
         if (indexFound !== -1) {
             ingredientQuantites[indexFound].qty++;
         }
         else {
-            ingredientQuantites.push({_id: ingredient._id, qty: 1 });
+            ingredientQuantites.push({ _id: ingredient._id, qty: 1 });
         }
     });
 
 
-    const {ingredients} = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
+    const { ingredients } = await playerPopulated.inventory.populate('ingredients', { 'profiles': 0 });
 
-   
+
 
     const ingredientQuantitiesPopulated = ingredientQuantites.map((item: any) => {
         const object = ingredients.filter((ingredient: any) => item._id.equals(ingredient._id))[0];
-       
-        return {...object.toObject(), qty: item.qty};
+
+        return { ...object.toObject(), qty: item.qty };
 
     });
 
-    const returnPlayer = {...playerPopulated.toObject()};
+    const returnPlayer = { ...playerPopulated.toObject() };
     returnPlayer.inventory.ingredients = ingredientQuantitiesPopulated;
-   
+
     return returnPlayer;
 }

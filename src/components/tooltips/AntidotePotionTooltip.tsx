@@ -13,19 +13,19 @@ const AntidotePotionTooltip: React.FC<Props> = ({ element, equiped }): React.Rea
         <div className="p-4">
           <h1 className="text-3xl mb-2 text-darkSepia">{element.name}</h1>
           <p className="text-2xl mb-2 font-light">{element.description}</p>
-          <p className="text-3xl mb-2 text-darkSepia">Recovery {element.recovery_effect.type}</p>         
-          <p className="text-2xl mb-2 ">{element.recovery_effect.name}</p> 
+          <p className="text-3xl mb-2 text-darkSepia">Recovery {element.recovery_effect.type}</p>
+          <p className="text-2xl mb-2 ">{element.recovery_effect.name}</p>
         </div>
-        {equiped 
-        ?
-        <div className="p-4">
-          <h1 className="text-3xl mb-2 text-orange-500">{equiped.name}</h1>
-          <p className="text-2xl mb-2 font-light">{equiped.description}</p>
-          <p className="text-3xl mb-2 text-darkSepia">Recovery {equiped.recovery_effect.type}</p>         
-          <p className="text-2xl mb-2 ">{equiped.recovery_effect.name}</p> 
-        </div>
-        : null } 
-      </div>       
+        {equiped
+          ?
+          <div className="p-4">
+            <h1 className="text-3xl mb-2 text-orange-500">{equiped.name}</h1>
+            <p className="text-2xl mb-2 font-light">{equiped.description}</p>
+            <p className="text-3xl mb-2 text-darkSepia">Recovery {equiped.recovery_effect.type}</p>
+            <p className="text-2xl mb-2 ">{equiped.recovery_effect.name}</p>
+          </div>
+          : null}
+      </div>
     </div>
   )
 }

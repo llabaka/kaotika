@@ -8,8 +8,8 @@ import { Player } from "@/_common/interfaces/Player";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 
 interface ProductsContainerInterface {
-	products: Product[];
-  onClickBuy : () => void;
+  products: Product[];
+  onClickBuy: () => void;
   setProduct: any;
   setCartProducts: (loaded: Product[]) => void
   cartProducts: Product[];
@@ -18,15 +18,15 @@ interface ProductsContainerInterface {
   setQty: React.Dispatch<SetStateAction<number>>;
 }
 
-const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty}) => {
+const ProductsContainer: React.FC<ProductsContainerInterface> = ({ products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
 
   const [visibleCount, setVisibleCount] = useState(0);
-    // Referencia para el contenedor del ProductsContainer
-    const containerRef = useRef<HTMLDivElement | null>(null);
+  // Referencia para el contenedor del ProductsContainer
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setVisibleCount(0); // Resetear visibleCount a 0
-    
+
     if (products.length > 0) {
       let interval = setInterval(() => {
         setVisibleCount((prevCount) => {
@@ -48,7 +48,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
   }, [products]);
 
 
-    const visibleProducts = products.slice(0, visibleCount);
+  const visibleProducts = products.slice(0, visibleCount);
 
   const emptyCardMock: Product = {
     _id: "asdadsasdasd",
@@ -98,22 +98,22 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
     }
   }, [products]);
 
-    return (
-      <div 
+  return (
+    <div
       data-testid={'products_container'}
       ref={containerRef} // Asignamos la referencia aquí
       className="flex-col justify-start items-center w-full h-full mt-1 max-h-[full] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-orange-100 [&::-webkit-scrollbar-thumb]:bg-orange-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-orange-400 pr-2">
-        <BlankHorizontalSeparator />
+      <BlankHorizontalSeparator />
       {partitionedCards.map((group, index) => (
         <div key={index}>
-          <ProductRowContainer cards={group} onClickBuy={onClickBuy} 
+          <ProductRowContainer cards={group} onClickBuy={onClickBuy}
             setProduct={setProduct}
             cartProducts={cartProducts}
             setCartProducts={setCartProducts}
             player={player}
             setShopTooltips={setShopTooltips}
             setQty={setQty}
-            />
+          />
           {index < partitionedCards.length - 1 ? (
             <ProductHorizontalSeparator />
           ) : (
@@ -122,7 +122,7 @@ const ProductsContainer:React.FC<ProductsContainerInterface> = ({products, onCli
         </div>
       ))}
     </div>
-); 
+  );
 }
 
 export default ProductsContainer;

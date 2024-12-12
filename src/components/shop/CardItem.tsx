@@ -18,7 +18,7 @@ interface CardItemProps {
     setQty: React.Dispatch<SetStateAction<number>>;
 }
 
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty}) => {
+const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
     const [qtyCard, setQtyCard] = useState<number>(1);
 
     const handleOnClickBuy = () => {
@@ -99,10 +99,10 @@ const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCa
 
     return (
         <div className="flex w-[31%] bg-transparent text-center items-center justify-center text-white hover:scale-105 transition z-20 mt-1 mb-1" data-testid={"CardItem"}>
-            <Card 
-                props={card} 
-                onClickBuy={handleOnClickBuy} 
-                onClickAddToCart={handleAddToCart} 
+            <Card
+                props={card}
+                onClickBuy={handleOnClickBuy}
+                onClickAddToCart={handleAddToCart}
                 player={player}
                 setQtyCard={setQtyCard}
                 qtyCard={qtyCard}

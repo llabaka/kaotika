@@ -8,7 +8,7 @@ const CartScreenMainTab = () => {
       <div className="relative w-full h-[120px] justify-content text-center ">
 
         <div className="justify-center flex items-center text-center h-full relative z-1">
-            <p className="text-6xl ">CART</p>  
+          <p className="text-6xl ">CART</p>
         </div>
 
         <Image

@@ -4,62 +4,62 @@ import SellButton from './SellButton';
 
 const SellingButtons: React.FC<SellingButtonsInterface> = ({ sellingItem, player, onClickSell }) => {
 
-    // Check if there is no sellingItem
-    const noSellingItem = !sellingItem || Object.keys(sellingItem).length === 0;
+	// Check if there is no sellingItem
+	const noSellingItem = !sellingItem || Object.keys(sellingItem).length === 0;
 
-    // Selling Price 1/3 value
-    const sellingPrice = Math.floor(sellingItem.value / 3);
+	// Selling Price 1/3 value
+	const sellingPrice = Math.floor(sellingItem.value / 3);
 
-    // Choose an item text if no items selected
-    if (noSellingItem) {
-        return (
-            <div className="flex flex-col w-full h-[20%] mt-[5%] items-center justify-center">
-                <span className="text-orange-300 text-3xl font-bold">CHOOSE AN ITEM TO SELL</span>
-            </div>
-        );
-    }
+	// Choose an item text if no items selected
+	if (noSellingItem) {
+		return (
+			<div className="flex flex-col w-full h-[20%] mt-[5%] items-center justify-center">
+				<span className="text-orange-300 text-3xl font-bold">CHOOSE AN ITEM TO SELL</span>
+			</div>
+		);
+	}
 
-    return (
-        <div className="flex flex-col w-full h-[20%] mt-[5%] items-center">
-            {/* Gaining Gold Text */}
-            <div className="flex w-full h-[20%] justify-start mb-[2%]">
-                <span className="ml-[15%] text-orange-300 text-3xl font-bold">Gaining Gold</span>
-            </div>
+	return (
+		<div className="flex flex-col w-full h-[20%] mt-[5%] items-center">
+			{/* Gaining Gold Text */}
+			<div className="flex w-full h-[20%] justify-start mb-[2%]">
+				<span className="ml-[15%] text-orange-300 text-3xl font-bold">Gaining Gold</span>
+			</div>
 
-            {/* Buttons Container */}
-            <div className="flex w-full h-[40%] items-center">
-                <div className='w-[35%] h-full mr-[15%] ml-[8%]'>
-                    <div className="flex relative w-full h-full items-center justify-center">
-                        <Image
-                            src="/images/shop/ManagePlayerButton.png"
-                            alt="Selling Item Frame"
-                            fill
-                            sizes='(max-width: 426px) 100vw'
-                        />
-                        {/* Selling Price */}
-                        <div className=" flex justify-end z-10 text-orange-400 text-4xl hover:text-orange-200transition mr-[5%] mb-[3%] w-[50%]">
-                            + {sellingPrice}
-                        </div>
+			{/* Buttons Container */}
+			<div className="flex w-full h-[40%] items-center">
+				<div className='w-[35%] h-full mr-[15%] ml-[8%]'>
+					<div className="flex relative w-full h-full items-center justify-center">
+						<Image
+							src="/images/shop/ManagePlayerButton.png"
+							alt="Selling Item Frame"
+							fill
+							sizes='(max-width: 426px) 100vw'
+						/>
+						{/* Selling Price */}
+						<div className=" flex justify-end z-10 text-orange-400 text-4xl hover:text-orange-200transition mr-[5%] mb-[3%] w-[50%]">
+							+ {sellingPrice}
+						</div>
 
-                        {/* Coin Image */}
-                        <div className='z-10  justify-center items-center'>
-                            <Image
-                                src="/images/shop/CoinsIcon.png"
-                                alt="Gold"
-                                width={24}
-                                height={24}
-                                className="ml-2"
-                                style={{ height: 'auto', width: 'auto' }}
-                            />
-                            </div>
-                    </div>
-                </div>
+						{/* Coin Image */}
+						<div className='z-10  justify-center items-center'>
+							<Image
+								src="/images/shop/CoinsIcon.png"
+								alt="Gold"
+								width={24}
+								height={24}
+								className="ml-2"
+								style={{ height: 'auto', width: 'auto' }}
+							/>
+						</div>
+					</div>
+				</div>
 
-                {/* Sell Button */}
-                <SellButton sellingItem={sellingItem} player={player} onClickSell={onClickSell}/>
-            </div>
-        </div>
-    )
+				{/* Sell Button */}
+				<SellButton sellingItem={sellingItem} player={player} onClickSell={onClickSell} />
+			</div>
+		</div>
+	)
 }
 
 export default SellingButtons;

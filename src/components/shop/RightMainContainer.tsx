@@ -21,13 +21,13 @@ const RightMainContainer: React.FC<RightContainerInterface> = ({ products, displ
             setSelectedMainTab={setSelectedMainTab}
           />
 
-          <ProductsContainer 
-            products={products} 
-            onClickBuy={onClickBuy} 
-            setProduct={setProduct} 
-            setCartProducts={setCartProducts} 
-            cartProducts={cartProducts} 
-            player={player} 
+          <ProductsContainer
+            products={products}
+            onClickBuy={onClickBuy}
+            setProduct={setProduct}
+            setCartProducts={setCartProducts}
+            cartProducts={cartProducts}
+            player={player}
             setShopTooltips={setShopTooltips}
             setQty={setQty}
           />
