@@ -36,15 +36,15 @@ const ShopIcons:React.FC<ShopIconsInterface> = ({setDisplayingScreen, isTicketPr
 
     return (
         <div className="flex flex-col justify-center items-center w-6/12 rounded-md">
-            <div className="flex justify-around w-full">
-                <button onClick={handleOnPressTicket} title='Shop' className="w-10 h-10 rounded-full flex justify-center items-center">
-                    <i className={`bx bxs-purchase-tag-alt text-2xl transition transform ${isTicketPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
+            <div className="flex justify-around w-full h-16">
+                <button onClick={handleOnPressTicket} title='Shop' className="w-16 h-full flex justify-center items-center">
+                    <i className={`bx bxs-purchase-tag-alt text-4xl transition transform ${isTicketPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
                 </button>
-                <button onClick={handleOnPressDollar} title='Sell' className="w-10 h-10 rounded-full flex justify-center items-center">
-                    <i className={`bx bx-dollar-circle text-2xl transition transform ${isDollarPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
+                <button onClick={handleOnPressDollar} title='Sell' className="w-16 h-full flex justify-center items-center">
+                    <i className={`bx bx-dollar-circle text-4xl transition transform ${isDollarPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
                 </button>
-                <button onClick={handleOnPressCart} title='Cart' className="w-10 h-10 rounded-full flex justify-center items-center">
-                    <i className={`bx bxs-cart text-2xl transition transform ${isCartPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
+                <button onClick={handleOnPressCart} title='Cart' className="w-16 h-full flex justify-center items-center">
+                    <i className={`bx bxs-cart text-4xl transition transform ${isCartPressed ? 'scale-150 text-orange-400' : ' text-gray-400'} hover:text-orange-400`}></i>
                 </button>
             </div>
         </div>
