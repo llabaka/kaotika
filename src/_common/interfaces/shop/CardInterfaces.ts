@@ -46,8 +46,8 @@ export interface ProductInterface {
 export interface CardItemInterface {
     card: Product;
     onClickBuy: () => void;
-    setProduct: any;
-    setCartProducts: any;
+    setProduct: (loaded: Product) => void;
+    setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>
     cartProducts: Product[];
     player: Player;
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
@@ -58,7 +58,7 @@ export interface ProductRowContainerInterface {
     cards: Product[]; // Espera un array de objetos con la interfaz Product
     onClickBuy: () => void;
     setProduct: any;
-    setCartProducts: (loaded: Product[]) => void;
+    setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>
     cartProducts: Product[];
     player: Player;
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;

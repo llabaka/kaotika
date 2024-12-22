@@ -62,7 +62,7 @@ const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, s
     if (!isProductInCart) {
 
       // Si el producto no está en el carrito, agregarlo con quantity 1
-      setCartProducts((prevCartProducts: Product[] | []) => [
+      setCartProducts((prevCartProducts) => [
         ...prevCartProducts,
         { ...card, quantity: 1 }
       ]);
@@ -70,7 +70,7 @@ const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, s
     } else {
       // Si el producto ya existe, actualizar su cantidad (si no tiene el atributo quantity, añadirlo)
       if (card.type === "ingredient") {
-        setCartProducts((prevCartProducts: Product[] | []) =>
+        setCartProducts((prevCartProducts) =>
           prevCartProducts.map((product) =>
             product._id === card._id
               ? { ...product, quantity: product.quantity ? product.quantity + 1 : 1 }
