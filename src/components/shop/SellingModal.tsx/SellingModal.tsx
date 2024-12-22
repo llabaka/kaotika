@@ -1,4 +1,3 @@
-import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
