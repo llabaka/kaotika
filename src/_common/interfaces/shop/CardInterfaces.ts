@@ -2,6 +2,7 @@ import { SetStateAction } from "react";
 import { Modifier } from "../Modifier";
 import { Player } from "../Player";
 import { RenderObject } from "./RenderObject";
+import { Product } from "./Product";
 
 export default interface CardLeftContainerInterface {
     min_lvl: number | null;
@@ -28,6 +29,15 @@ export interface CardRightContainerInterface {
 
 export interface EffectsContainerProps {
     effects: string[];
+    qtyCard: number;
+    setQtyCard: React.Dispatch<SetStateAction<number>>;
+}
+
+export interface ProductInterface {
+    props: Product,
+    onClickBuy: () => void;
+    onClickAddToCart: () => void;
+    player: Player;
     qtyCard: number;
     setQtyCard: React.Dispatch<SetStateAction<number>>;
 }

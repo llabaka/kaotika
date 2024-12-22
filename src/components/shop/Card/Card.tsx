@@ -1,22 +1,12 @@
 import Image from "next/image";
 import CardRigthContainer from "./Components/CardRigthContainer";
-import { CardProp, Product } from "@/_common/interfaces/shop/Product";
-import { useState, useEffect, SetStateAction } from "react";
+import React, { useState, useEffect } from "react";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import EffectsContainer from "./Components/effectsContainer";
 import CardLeftContainer from "./Components/CardLeftContainer";
-import { Player } from "@/_common/interfaces/Player";
+import { ProductInterface } from "@/_common/interfaces/shop/CardInterfaces";
 
-interface ProductInterface {
-	props: Product,
-	onClickBuy: () => void;
-	onClickAddToCart: () => void;
-	player: Player;
-	qtyCard: number;
-	setQtyCard: React.Dispatch<SetStateAction<number>>;
-}
-
-const Card = ({ props, onClickBuy, onClickAddToCart, player, qtyCard, setQtyCard }: ProductInterface) => {
+const Card: React.FC<ProductInterface> = ({ props, onClickBuy, onClickAddToCart, player, qtyCard, setQtyCard }) => {
 	// State for render Attributes based on type
 	const [extraAtribute, setExtraAtribute] = useState<RenderObject | null>(null);
 	const [weaponDamage, setWeaponDamage] = useState<string | null>(null);
