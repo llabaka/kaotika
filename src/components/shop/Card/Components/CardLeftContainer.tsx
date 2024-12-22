@@ -1,4 +1,4 @@
-import CardLeftContainerInterface from "@/_common/interfaces/shop/CardLeftContainerInterface";
+import CardLeftContainerInterface from "@/_common/interfaces/shop/CardInterfaces";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 

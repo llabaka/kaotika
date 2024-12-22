@@ -11,3 +11,7 @@ export default interface CardLeftContainerInterface {
     onClickAddToCart: () => void;
     player: Player
 }
+
+export interface ProgressBarProps {
+    value?: number; // Valor entre -100 y 100
+}

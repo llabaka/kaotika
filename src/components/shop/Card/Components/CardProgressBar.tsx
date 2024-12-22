@@ -1,10 +1,7 @@
+import { ProgressBarProps } from '@/_common/interfaces/shop/CardInterfaces';
 import React from 'react';
 
-interface ProgressBarProps {
-  value?: number; // Valor entre -100 y 100
-}
-
-const CardProgressBar = ({ value }: ProgressBarProps) => {
+const CardProgressBar: React.FC<ProgressBarProps> = ({ value }) => {
   const MAX_VALUE = 50;
   const MIN_VALUE = -50;
 
