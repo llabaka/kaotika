@@ -1,3 +1,4 @@
+import { SetStateAction } from "react";
 import { Modifier } from "../Modifier";
 import { Player } from "../Player";
 import { RenderObject } from "./RenderObject";
@@ -23,4 +24,10 @@ export interface CardRightContainerInterface {
     extra_attribute: RenderObject | null;
     weaponDie: string | null;
     baseDamage: number | null;
+}
+
+export interface EffectsContainerProps {
+    effects: string[];
+    qtyCard: number;
+    setQtyCard: React.Dispatch<SetStateAction<number>>;
 }

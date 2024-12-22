@@ -1,10 +1,5 @@
+import { EffectsContainerProps } from '@/_common/interfaces/shop/CardInterfaces';
 import React, { SetStateAction, useEffect, useState } from 'react';
-
-interface EffectsContainerProps {
-  effects: string[];
-  qtyCard: number;
-  setQtyCard: React.Dispatch<SetStateAction<number>>;
-}
 
 const EffectsContainer: React.FC<EffectsContainerProps> = ({ effects, qtyCard, setQtyCard }) => {
   const [words, setWords] = useState<string[]>([]);
