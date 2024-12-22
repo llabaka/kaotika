@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import { MainNavigatorInterface } from "@/_common/interfaces/shop/MainContainerInterfaces";
+import { MainNavigatorInterface } from "@/_common/interfaces/shop/RightContainerInterface";
 
-const MainNavigator: React.FC<MainNavigatorInterface> = ({ allProducts, setShowingProducts, setSelectedMainTab, selectedMainTab }) => {
+const MainNavigator: React.FC<MainNavigatorInterface > = ({ allProducts, setShowingProducts, setSelectedMainTab, selectedMainTab }) => {
 
   // Función para manejar el clic en los botones
   const handleButtonClick = (index: number) => {

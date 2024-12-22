@@ -13,15 +13,33 @@ export default interface RightContainerInterface {
 	setCartProducts: (loaded: Product[]) => void;
 	onClickBuy: () => void;
 	onClickSell: () => void;
-    setProduct: (loaded: Product) => void;
+	setProduct: (loaded: Product) => void;
 	player: Player;
 	setPlayer: any
-    setSellingItem: (loaded: Product) => void;
+	setSellingItem: (loaded: Product) => void;
 	sellingItem: Product;
-    setSellingImage: (loaded: string) => void;
+	setSellingImage: (loaded: string) => void;
 	sellingImage: String;
 	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 	selectedMainTab: number;
-    setSelectedMainTab: (loaded: number) => void;
+	setSelectedMainTab: (loaded: number) => void;
+	setQty: React.Dispatch<SetStateAction<number>>;
+}
+
+export interface MainNavigatorInterface {
+	allProducts: AllProducts;
+	setShowingProducts: (loaded: Product[]) => void;
+	selectedMainTab: number;
+	setSelectedMainTab: (loaded: number) => void;
+}
+
+export interface ProductsContainerInterface {
+	products: Product[];
+	onClickBuy: () => void;
+	setProduct: any;
+	setCartProducts: (loaded: Product[]) => void
+	cartProducts: Product[];
+	player: Player;
+	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 	setQty: React.Dispatch<SetStateAction<number>>;
 }

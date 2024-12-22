@@ -1,22 +1,9 @@
-import React, { SetStateAction, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import ProductRowContainer from "./ProductRowContainer";
 import ProductHorizontalSeparator from "./ProductHorizontalSeparator";
 import { Product } from "@/_common/interfaces/shop/Product";
 import BlankHorizontalSeparator from "./BlankHorizontalSeparator";
-import { ArmorShop } from "@/_common/interfaces/shop/Product";
-import { Player } from "@/_common/interfaces/Player";
-import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
-
-interface ProductsContainerInterface {
-  products: Product[];
-  onClickBuy: () => void;
-  setProduct: any;
-  setCartProducts: (loaded: Product[]) => void
-  cartProducts: Product[];
-  player: Player;
-  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
-  setQty: React.Dispatch<SetStateAction<number>>;
-}
+import { ProductsContainerInterface } from "@/_common/interfaces/shop/RightContainerInterface";
 
 const ProductsContainer: React.FC<ProductsContainerInterface> = ({ products, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
 
