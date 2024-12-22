@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
-import { Product } from "@/_common/interfaces/shop/Product";
 import { MainNavigatorInterface } from "@/_common/interfaces/shop/MainContainerInterfaces";
-
-const navigatorImage = require('./../../assets/MainNavigator.png')
 
 const MainNavigator: React.FC<MainNavigatorInterface> = ({ allProducts, setShowingProducts, setSelectedMainTab, selectedMainTab }) => {
 
