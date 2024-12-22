@@ -1,26 +1,13 @@
 import 'boxicons/css/boxicons.min.css';
 import ShopIcons from './ShopIcons';
-import Image from 'next/image';
 import PlayerStatsButtons from './PlayerStatsButtons';
 import ButtonsSeparator from './ButtonsSeparator';
 import EquipmentButtons from './EquipmentButtons';
 import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
-import { Product } from '@/_common/interfaces/shop/Product';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import { Player } from '@/_common/interfaces/Player';
 import { useState } from 'react';
 import MagicStuffButtons from './MagicStuffButtons';
-
-interface LeftMainContainerInterface {
-  setDisplayingScreen: (loaded: number) => void;
-  allProducts: AllProducts;
-  player: Player
-  setShowingProducts: (loaded: Product[]) => void;
-  displayingScreen: Number;
-  selectedMainTab: number;
-  setSelectedMainTab: (loaded: number) => void;
-}
+import LeftMainContainerInterface from '@/_common/interfaces/shop/LeftContainerInterface';
 
 const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplayingScreen, allProducts, setShowingProducts, player, selectedMainTab, setSelectedMainTab }) => {
 
