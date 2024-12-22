@@ -21,3 +21,7 @@ export interface ShopIconsInterface {
     setIsDollarPressed: (loaded: boolean) => void;
     setIsCartPressed: (loaded: boolean) => void;
 }
+
+export interface PlayerStatsButtonInterface {
+    player: Player;
+}

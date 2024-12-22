@@ -1,11 +1,7 @@
-import { Player } from '@/_common/interfaces/Player';
+import { PlayerStatsButtonInterface } from '@/_common/interfaces/shop/LeftContainerInterfaces';
 import Image from 'next/image';
 
-interface PlayerStatsButtonsProps {
-  player: Player;
-}
-
-const PlayerStatsButtons: React.FC<PlayerStatsButtonsProps> = ({ player }) => {
+const PlayerStatsButtons: React.FC<PlayerStatsButtonInterface> = ({ player }) => {
   return (
     <div className="flex flex-col justify-center items-center w-10/12 h-32">
       <div className="flex flex-col justify-center items-center space-y-2 w-[100%] h-40">
