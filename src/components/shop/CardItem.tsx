@@ -1,24 +1,12 @@
-import { Player } from "@/_common/interfaces/Player";
 import Card from "./Card/Card"
 import { Product } from "@/_common/interfaces/shop/Product";
-import { handleAddToCart } from "./helpers/HandleAddToCart";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
+import { CardItemInterface } from "@/_common/interfaces/shop/CardInterfaces";
 
 const alertImage = "/images/shop/AlertIcon.png";
 
-interface CardItemProps {
-  card: Product;
-  onClickBuy: () => void;
-  setProduct: any;
-  setCartProducts: any;
-  cartProducts: Product[];
-  player: Player;
-  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
-  setQty: React.Dispatch<SetStateAction<number>>;
-}
-
-const CardItem: React.FC<CardItemProps> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
+const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
   const [qtyCard, setQtyCard] = useState<number>(1);
 
   const handleOnClickBuy = () => {

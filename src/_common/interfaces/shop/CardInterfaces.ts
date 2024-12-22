@@ -3,6 +3,7 @@ import { Modifier } from "../Modifier";
 import { Player } from "../Player";
 import { RenderObject } from "./RenderObject";
 import { Product } from "./Product";
+import { ShopTooltipProps } from "./ShopTooltip";
 
 export default interface CardLeftContainerInterface {
     min_lvl: number | null;
@@ -40,4 +41,15 @@ export interface ProductInterface {
     player: Player;
     qtyCard: number;
     setQtyCard: React.Dispatch<SetStateAction<number>>;
+}
+
+export interface CardItemInterface {
+    card: Product;
+    onClickBuy: () => void;
+    setProduct: any;
+    setCartProducts: any;
+    cartProducts: Product[];
+    player: Player;
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+    setQty: React.Dispatch<SetStateAction<number>>;
 }
