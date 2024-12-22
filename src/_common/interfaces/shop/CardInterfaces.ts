@@ -1,4 +1,6 @@
+import { Modifier } from "../Modifier";
 import { Player } from "../Player";
+import { RenderObject } from "./RenderObject";
 
 export default interface CardLeftContainerInterface {
     min_lvl: number | null;
@@ -12,6 +14,13 @@ export default interface CardLeftContainerInterface {
     player: Player
 }
 
-export interface ProgressBarProps {
+export interface ProgressBarInterface {
     value?: number; // Valor entre -100 y 100
+}
+
+export interface CardRightContainerInterface {
+    attributes: Modifier | null;
+    extra_attribute: RenderObject | null;
+    weaponDie: string | null;
+    baseDamage: number | null;
 }

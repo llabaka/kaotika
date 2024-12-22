@@ -1,17 +1,8 @@
-import { Modifier } from "@/_common/interfaces/Modifier";
 import { RenderObject } from "@/_common/interfaces/shop/RenderObject";
 import AttributeAndProgressBar from "./AttributeAndProgressBar";
-import { useEffect, useState } from "react";
+import { CardRightContainerInterface } from "@/_common/interfaces/shop/CardInterfaces";
 
-interface CardRigthContainerProps {
-  attributes: Modifier | null;
-  extra_attribute: RenderObject | null;
-  weaponDie: string | null;
-  baseDamage: number | null;
-}
-
-
-const CardRigthContainer = ({ attributes, extra_attribute, weaponDie, baseDamage }: CardRigthContainerProps) => {
+const CardRightContainer: React.FC<CardRightContainerInterface> = ({ attributes, extra_attribute, weaponDie, baseDamage }) => {
 
   const renderArray: RenderObject[] = [{
     name: 'Charisma',
@@ -54,4 +45,4 @@ const CardRigthContainer = ({ attributes, extra_attribute, weaponDie, baseDamage
   )
 }
 
-export default CardRigthContainer
+export default CardRightContainer
