@@ -25,3 +25,12 @@ export interface ShopIconsInterface {
 export interface PlayerStatsButtonInterface {
     player: Player;
 }
+
+export interface EquipmentButtonsInterface {
+    allProducts: AllProducts;
+    setShowingProducts: (loaded: Product[]) => void;
+    setDisplayingScreen: (loaded: number) => void;
+    setIsTicketPressed: (loaded: boolean) => void;
+    setIsDollarPressed: (loaded: boolean) => void;
+    setIsCartPressed: (loaded: boolean) => void;
+}

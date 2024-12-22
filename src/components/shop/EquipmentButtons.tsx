@@ -1,17 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import { Product } from '@/_common/interfaces/shop/Product';
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
-
-interface EquipmentButtonsInterface {
-  allProducts: AllProducts;
-  setShowingProducts: (loaded: Product[]) => void;
-  setDisplayingScreen: (loaded: number) => void;
-  setIsTicketPressed: (loaded: boolean) => void;
-  setIsDollarPressed: (loaded: boolean) => void;
-  setIsCartPressed: (loaded: boolean) => void;
-}
+import { EquipmentButtonsInterface } from '@/_common/interfaces/shop/LeftContainerInterfaces';
 
 const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
