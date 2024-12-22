@@ -1,4 +1,3 @@
-import { SelectedButton } from "@/components/shop/MainNavigator";
 import { Player } from "../Player";
 import { AllProducts } from "./AllProducts";
 import { Product } from "./Product";

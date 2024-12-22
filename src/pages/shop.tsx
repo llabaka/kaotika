@@ -13,7 +13,6 @@ import { DISPLAY_SCREEN } from '@/constants/shopConstants';
 import { useEffect, useState } from 'react';
 import ShopTooltip from '@/components/tooltips/ShopTooltip';
 import { ShopTooltipProps } from '@/_common/interfaces/shop/ShopTooltip';
-import { SelectedButton } from '@/components/shop/MainNavigator';
 
 
 

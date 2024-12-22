@@ -2,21 +2,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { AllProducts } from "@/_common/interfaces/shop/AllProducts";
 import { Product } from "@/_common/interfaces/shop/Product";
+import { MainNavigatorInterface } from "@/_common/interfaces/shop/MainContainerInterfaces";
 
 const navigatorImage = require('./../../assets/MainNavigator.png')
 
-export interface SelectedButton {
-  index: number;
-}
-
-interface MainNavigatorProps {
-  allProducts: AllProducts;
-  setShowingProducts: (loaded: Product[]) => void;
-  selectedMainTab: number;
-  setSelectedMainTab: (loaded: number) => void;
-}
-
-const MainNavigator = ({ allProducts, setShowingProducts, setSelectedMainTab, selectedMainTab }: MainNavigatorProps) => {
+const MainNavigator: React.FC<MainNavigatorInterface> = ({ allProducts, setShowingProducts, setSelectedMainTab, selectedMainTab }) => {
 
   // Función para manejar el clic en los botones
   const handleButtonClick = (index: number) => {
