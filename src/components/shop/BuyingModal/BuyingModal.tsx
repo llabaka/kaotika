@@ -1,24 +1,11 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { Product } from "@/_common/interfaces/shop/Product";
-import { Player } from "@/_common/interfaces/Player";
+import { useState } from "react";
 import { buyProductClient } from "./buyProductClient";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 import Loading from "@/components/Loading";
+import BuyingModalInterface from "@/_common/interfaces/shop/BuyingModalInterface";
 
-// Open Modal boolean 
-// product
-interface BuyingModalProps {
-  product: Product | null;
-  onclick: () => void;
-  player: Player;
-  setPlayer: any;
-  setHaveBuy: any;
-  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
-  qty: number;
-}
-
-const BuyingModal = ({ product, onclick, player, setPlayer, setHaveBuy, setShopTooltips, qty }: BuyingModalProps) => {
+const BuyingModal: React.FC<BuyingModalInterface> = ({ product, onclick, player, setPlayer, setHaveBuy, setShopTooltips, qty }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
