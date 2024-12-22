@@ -1,8 +1,6 @@
 import React from "react";
 import Image from "next/image";
 
-const navigatorImage = require('./../../assets/MainNavigator.png')
-
 const SellingHeaders = () => {
   return (
     <div className="flex flex-col items-center bg-transparent w-full mx-auto">
