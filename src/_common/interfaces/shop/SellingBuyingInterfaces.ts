@@ -7,7 +7,7 @@ export default interface BuyingModalInterface {
     product: Product | null;
     onclick: () => void;
     player: Player;
-    setPlayer: any;
+    setPlayer: (loaded: Player) => void;
     setHaveBuy: any;
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
     qty: number;

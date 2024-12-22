@@ -4,8 +4,8 @@ import { ShopTooltipProps } from "./ShopTooltip";
 
 export default interface CartInterface {
     cartProducts: Product[];
-	setCartProducts: any;
+    setCartProducts: React.Dispatch<React.SetStateAction<Product[]>>
     player: Player;
-    setPlayer: any;
+    setPlayer: (loaded: Player) => void;
 	setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
 }
