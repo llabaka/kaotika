@@ -1,21 +1,8 @@
-import { Player } from "@/_common/interfaces/Player";
-import { Product } from "@/_common/interfaces/shop/Product";
+import CardLeftContainerInterface from "@/_common/interfaces/shop/CardLeftContainerInterface";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-interface CardLeftContainerProps {
-  min_lvl: number | null;
-  value: number;
-  image: string;
-  name: string;
-  description: string;
-  _id: string;
-  onClickBuy: () => void;
-  onClickAddToCart: () => void;
-  player: Player
-}
-
-const CardLeftContainer = ({ min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart, player }: CardLeftContainerProps) => {
+const CardLeftContainer: React.FC<CardLeftContainerInterface> = ({ min_lvl, value, image, name, description, _id, onClickBuy, onClickAddToCart, player }) => {
   const [isDisableButton, setIsDisableButton] = useState<boolean>(false);
 
   useEffect(() => {
