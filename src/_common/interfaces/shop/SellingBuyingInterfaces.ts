@@ -12,3 +12,14 @@ export default interface BuyingModalInterface {
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
     qty: number;
 }
+
+export interface SellingModalInterface {
+    sellingItem: Product | null;
+    onClickSell: any;
+    player: Player,
+    setPlayer: (loaded: Player) => void;
+    setSellingItem: (loaded: Product) => void;
+    setSellingImage: (loaded: string) => void;
+    setHaveSell: any;
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+}

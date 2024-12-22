@@ -1,25 +1,13 @@
 import { Player } from "@/_common/interfaces/Player";
 import { Product } from "@/_common/interfaces/shop/Product";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sellingProductClient } from "./sellingProductClient";
 import Loading from "@/components/Loading";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
+import { SellingModalInterface } from "@/_common/interfaces/shop/SellingBuyingInterfaces";
 
-// Open Modal boolean 
-// product
-interface SellingModalProps {
-  sellingItem: Product | null;
-  onClickSell: any;
-  player: Player,
-  setPlayer: (loaded: Player) => void;
-  setSellingItem: (loaded: Product) => void;
-  setSellingImage: (loaded: string) => void;
-  setHaveSell: any;
-  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
-}
-
-const SellingModal = ({ sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips }: SellingModalProps) => {
+const SellingModal: React.FC<SellingModalInterface> = ({ sellingItem, onClickSell, player, setPlayer, setSellingItem, setSellingImage, setHaveSell, setShopTooltips }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const buyingFrame = "/images/shop/BuyingFrameWithBG.png";

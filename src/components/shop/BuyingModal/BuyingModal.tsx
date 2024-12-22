@@ -3,7 +3,7 @@ import { useState } from "react";
 import { buyProductClient } from "./buyProductClient";
 import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
 import Loading from "@/components/Loading";
-import BuyingModalInterface from "@/_common/interfaces/shop/BuyingModalInterface";
+import BuyingModalInterface from "@/_common/interfaces/shop/SellingBuyingInterfaces";
 
 const BuyingModal: React.FC<BuyingModalInterface> = ({ product, onclick, player, setPlayer, setHaveBuy, setShopTooltips, qty }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
