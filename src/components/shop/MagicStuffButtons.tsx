@@ -1,19 +1,9 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { AllProducts } from '@/_common/interfaces/shop/AllProducts';
-import { Product } from '@/_common/interfaces/shop/Product';
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
+import { ButtonsInterface } from '@/_common/interfaces/shop/LeftContainerInterfaces';
 
-interface IngredientsContainerButtonsInterface {
-  allProducts: AllProducts;
-  setShowingProducts: (loaded: Product[]) => void;
-  setDisplayingScreen: (loaded: number) => void;
-  setIsTicketPressed: (loaded: boolean) => void;
-  setIsDollarPressed: (loaded: boolean) => void;
-  setIsCartPressed: (loaded: boolean) => void;
-}
-
-const MagicStuffButtons: React.FC<IngredientsContainerButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
+const MagicStuffButtons: React.FC<ButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
   const [activeButton, setActiveButton] = useState(0);
 

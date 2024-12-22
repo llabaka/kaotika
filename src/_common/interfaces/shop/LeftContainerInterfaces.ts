@@ -26,7 +26,7 @@ export interface PlayerStatsButtonInterface {
     player: Player;
 }
 
-export interface EquipmentButtonsInterface {
+export interface ButtonsInterface {
     allProducts: AllProducts;
     setShowingProducts: (loaded: Product[]) => void;
     setDisplayingScreen: (loaded: number) => void;

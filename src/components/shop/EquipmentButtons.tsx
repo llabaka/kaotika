@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
-import { EquipmentButtonsInterface } from '@/_common/interfaces/shop/LeftContainerInterfaces';
+import { ButtonsInterface } from '@/_common/interfaces/shop/LeftContainerInterfaces';
 
-const EquipmentButtons: React.FC<EquipmentButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
+const EquipmentButtons: React.FC<ButtonsInterface> = ({ allProducts, setShowingProducts, setDisplayingScreen, setIsCartPressed, setIsDollarPressed, setIsTicketPressed }) => {
 
   const [activeButton, setActiveButton] = useState(0);
 
