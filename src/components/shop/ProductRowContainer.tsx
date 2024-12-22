@@ -1,24 +1,11 @@
-import { Product } from "@/_common/interfaces/shop/Product";
 import CardItem from "./CardItem";
-import React, { SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import EmptyCard from "./Card/EmptyCard";
 import ProductVerticalSeparator from "./ProductVerticalSeparator";
 import ProductEmptyVerticalSeparator from "../ProductVerticalEmptySeparator";
-import { Player } from "@/_common/interfaces/Player";
-import { ShopTooltipProps } from "@/_common/interfaces/shop/ShopTooltip";
+import { ProductRowContainerInterface } from "@/_common/interfaces/shop/CardInterfaces";
 
-interface ProductRowContainerProps {
-  cards: Product[]; // Espera un array de objetos con la interfaz Product
-  onClickBuy: () => void;
-  setProduct: any;
-  setCartProducts: (loaded: Product[]) => void;
-  cartProducts: Product[];
-  player: Player;
-  setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
-  setQty: React.Dispatch<SetStateAction<number>>;
-}
-
-const ProductRowContainer: React.FC<ProductRowContainerProps> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
+const ProductRowContainer: React.FC<ProductRowContainerInterface> = ({ cards, onClickBuy, setProduct, setCartProducts, cartProducts, player, setShopTooltips, setQty }) => {
 
   const [isAnimating, setIsAnimating] = useState(true);
 

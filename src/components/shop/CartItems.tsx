@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Product } from "@/_common/interfaces/shop/Product";
-import CartProductsInterface, { CartItemsInterface } from "@/_common/interfaces/shop/CartProductsInterface";
+import  { CartItemsInterface } from "@/_common/interfaces/shop/CartProductsInterface";
 
 const CartItems: React.FC<CartItemsInterface> = ({ cartProducts, setCartProducts, handleRemoveItem, handleUpdateQuantity }) => {
 

@@ -53,3 +53,14 @@ export interface CardItemInterface {
     setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
     setQty: React.Dispatch<SetStateAction<number>>;
 }
+
+export interface ProductRowContainerInterface {
+    cards: Product[]; // Espera un array de objetos con la interfaz Product
+    onClickBuy: () => void;
+    setProduct: any;
+    setCartProducts: (loaded: Product[]) => void;
+    cartProducts: Product[];
+    player: Player;
+    setShopTooltips: React.Dispatch<React.SetStateAction<ShopTooltipProps[]>>;
+    setQty: React.Dispatch<SetStateAction<number>>;
+}

@@ -1,7 +1,6 @@
 import { Product } from "@/_common/interfaces/shop/Product";
 import InventoryContainerInterface from "@/_common/interfaces/shop/Inventory";
 import Image from 'next/image';
-import { useEffect } from "react";
 
 const InventoryContainer: React.FC<InventoryContainerInterface> = ({ player, setSellingImage, setSellingItem, setProduct, sellingItem }) => {
 	// Combina todas las propiedades de arrays en un solo array
