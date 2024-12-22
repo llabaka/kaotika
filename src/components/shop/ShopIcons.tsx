@@ -1,15 +1,5 @@
+import { ShopIconsInterface } from "@/_common/interfaces/shop/LeftContainerInterfaces";
 import { DISPLAY_SCREEN } from "@/constants/shopConstants";
-import { useState } from "react";
-
-interface ShopIconsInterface {
-  setDisplayingScreen: (loaded: number) => void;
-  isTicketPressed: boolean;
-  isDollarPressed: boolean;
-  isCartPressed: boolean;
-  setIsTicketPressed: (loaded: boolean) => void;
-  setIsDollarPressed: (loaded: boolean) => void;
-  setIsCartPressed: (loaded: boolean) => void;
-}
 
 const ShopIcons: React.FC<ShopIconsInterface> = ({ setDisplayingScreen, isTicketPressed, isDollarPressed, isCartPressed, setIsTicketPressed, setIsDollarPressed, setIsCartPressed }) => {
 

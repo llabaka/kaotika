@@ -11,3 +11,13 @@ export default interface LeftMainContainerInterface {
     selectedMainTab: number;
     setSelectedMainTab: (loaded: number) => void;
 }
+
+export interface ShopIconsInterface {
+    setDisplayingScreen: (loaded: number) => void;
+    isTicketPressed: boolean;
+    isDollarPressed: boolean;
+    isCartPressed: boolean;
+    setIsTicketPressed: (loaded: boolean) => void;
+    setIsDollarPressed: (loaded: boolean) => void;
+    setIsCartPressed: (loaded: boolean) => void;
+}

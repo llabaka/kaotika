@@ -7,7 +7,7 @@ import SellerSeparator from './SellerSeparator';
 import Seller from './Seller';
 import { useState } from 'react';
 import MagicStuffButtons from './MagicStuffButtons';
-import LeftMainContainerInterface from '@/_common/interfaces/shop/LeftContainerInterface';
+import LeftMainContainerInterface from '@/_common/interfaces/shop/LeftContainerInterfaces';
 
 const LeftMainContainer: React.FC<LeftMainContainerInterface> = ({ setDisplayingScreen, allProducts, setShowingProducts, player, selectedMainTab, setSelectedMainTab }) => {
 
