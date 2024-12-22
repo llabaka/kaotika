@@ -9,7 +9,6 @@ const BuyingModal: React.FC<BuyingModalInterface> = ({ product, onclick, player,
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const buyingFrame = "/images/shop/BuyingFrameWithBG.png";
-  const imageFake = "/images/equipment/armors/armor_20.png"
   const buttonImage = "/images/shop/ManagePlayerButton.png";
   const alertImage = "/images/shop/AlertIcon.png";
 
