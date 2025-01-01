@@ -72,6 +72,7 @@ const CardLeftContainer: React.FC<CardLeftContainerInterface> = ({ min_lvl, valu
             overflowY: "scroll",
             scrollbarWidth: "none",
             msOverflowStyle: "none",
+            lineHeight: "1.1",
           }}>
           {description}</p>
       </div>

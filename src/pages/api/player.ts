@@ -13,7 +13,7 @@ const mockSession: any = {
   accessToken: 'fake-acces-token',
   refreshToken: 'fake-refresh-token',
   expires: '',
-  email: 'asier.arguinchona@ikasle.aeg.eus'
+  email: 'asier.arguinchona.fake@ikasle.aeg.eus'
 }
 
 export default async function handlerPlayer(req: any, res: any) {
