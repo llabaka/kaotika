@@ -20,10 +20,10 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
 
     const updatedBuyProducts = cartProducts.map(cartProduct => ({
       productId: cartProduct._id!,
-      type: cartProduct.type!
+      type: cartProduct.type!,
     }));
 
-    setBuyProducts(updatedBuyProducts);
+    setBuyProducts(prevBuyProducts => [...prevBuyProducts, ...updatedBuyProducts]);
 
   }, [cartProducts]);
 
