@@ -23,7 +23,7 @@ const CartBuyButtonContainer: React.FC<CartInterface> = ({ setCartProducts, cart
       type: cartProduct.type!,
     }));
 
-    setBuyProducts(prevBuyProducts => [...prevBuyProducts, ...updatedBuyProducts]);
+    setBuyProducts(updatedBuyProducts);
 
   }, [cartProducts]);
 

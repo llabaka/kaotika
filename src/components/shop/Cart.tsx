@@ -14,17 +14,26 @@ const Cart: React.FC<CartProductsInterface> = ({ cartProducts, setCartProducts }
     setCartProducts((prevItems: Product[]) => prevItems.filter((item: Product) => item._id !== id));
     console.log("HANDLE REMOVE ITEM", id);
   };
-
   const updateQuantity = (id: string, delta: number) => {
-    setCartProducts((prevItems: Product[]) =>
-      prevItems.map((item) =>
-        item._id === id && item.type === "ingredient"
-          ? { ...item, quantity: Math.max(item.quantity! + delta, 0) }
-          : item
-      )
-    );
+    setCartProducts((prevItems: Product[]) => {
+      if (delta === 1) {
+        // Añadir un nuevo objeto si no existe en el carrito
+        const newItem = prevItems.find(item => item._id === id && item.type === "ingredient");
+        return newItem ? [...prevItems, newItem] : prevItems; // Solo añade si existe en la lista original
+      } else if (delta === -1) {
+        // Eliminar solo una instancia del objeto
+        const indexToRemove = prevItems.findIndex(item => item._id === id && item.type === "ingredient");
+        if (indexToRemove !== -1) {
+          const updatedItems = [...prevItems];
+          updatedItems.splice(indexToRemove, 1); // Elimina solo una instancia
+          return updatedItems;
+        }
+        return prevItems; // Si no se encuentra el objeto, no modifica el carrito
+      }
+      return prevItems;
+    });
   };
-
+  
   useEffect(() => {
     setTotalPrice((prevTotal) => {
       const newTotalPrice = calculateTotalPrice(cartProducts);
