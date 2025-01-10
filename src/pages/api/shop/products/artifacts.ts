@@ -1,5 +1,5 @@
 import connectDB from "../../../../../db/connection";
-import Artifacts from "../../models/ArtifactsModel";
+import Talismans from "../../models/ArtifactsModel";
 
 export default async function handler(req: any, res: any) {
   try {
@@ -13,7 +13,10 @@ export default async function handler(req: any, res: any) {
       ],
     };
 
-    const artifacts = await Artifacts.find(filter);
+    const artifacts = await Talismans.find(filter);
+    console.log("TALISMANS");
+    console.log(artifacts);
+
     return res.status(200).json({ artifacts });
   } catch (err: any) {
     console.error("Error fetching artifacts:", err.message);

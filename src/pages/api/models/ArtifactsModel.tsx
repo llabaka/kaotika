@@ -9,7 +9,7 @@ const modifiersSchema = new mongoose.Schema({
   strength: { type: Number, required: true },
 }, { _id: false }); // `false` para no crear un `_id` separado para los subdocumentos
 
-const artifactsSchema = new mongoose.Schema({
+const talismansSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   type: { type: String, required: true },
@@ -21,4 +21,4 @@ const artifactsSchema = new mongoose.Schema({
   isActive: { type: Boolean, required: true },
 }, { timestamps: true }); // Agrega campos `createdAt` y `updatedAt` automáticamente
 
-export default mongoose.models.Artifacts || mongoose.model("Artifacts", artifactsSchema);
+export default mongoose.models.Talismans || mongoose.model("Talismans", talismansSchema);

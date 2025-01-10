@@ -13,7 +13,7 @@ export default async function handler(req: any, res: any) {
     "/api/shop/products/ingredients",
   ];
 
-  const URL = "https://anatidaephobia-shop.vercel.app/";
+  const URL = "http://localhost:3000";
 
   try {
     // Realiza todas las solicitudes de forma paralela

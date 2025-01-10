@@ -45,7 +45,7 @@ export default async function handlerPlayer(req: any, res: any) {
 
 export const populatePlayer = async (email: string) => {
 
-  console.log("ABOUT TO POPULATE PLAYER");
+  //console.log("ABOUT TO POPULATE PLAYER");
 
   const playerPopulated = await Player.findOne({ email: email }).populate('profile').exec();
 
@@ -53,8 +53,8 @@ export const populatePlayer = async (email: string) => {
     throw new Error("Player was not found");
   }
 
-  console.log("PLAYER BEFORE POPULATED");
-  console.log(playerPopulated);
+  //console.log("PLAYER BEFORE POPULATED");
+  //console.log(playerPopulated);
 
   // Poblamos el equipo
   await playerPopulated.equipment.populate('armor', { 'profiles': 0 });
@@ -85,8 +85,8 @@ export const populatePlayer = async (email: string) => {
 
   const returnPlayer = await updateIngredientsWithQuantity(playerPopulated);
 
-  console.log("INGREDIENTS");
-  console.log(returnPlayer.inventory.ingredients);
+  //console.log("INGREDIENTS");
+  //console.log(returnPlayer.inventory.ingredients);
 
 
   return returnPlayer;
