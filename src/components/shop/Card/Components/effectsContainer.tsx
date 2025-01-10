@@ -29,7 +29,7 @@ const EffectsContainer: React.FC<EffectsContainerProps> = ({ effects, qtyCard, s
   }
 
   const decreaseQty = () => {
-    if (qtyCard > 0) {
+    if (qtyCard > 1) {
       setQtyCard(prevQtyCard => prevQtyCard -= 1);
     }
   }

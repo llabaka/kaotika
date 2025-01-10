@@ -36,7 +36,7 @@ const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, s
     return false; // El producto no está en el inventario
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (qtyCard : number) => {
     // Verificar si el producto ya está en el carrito
     const isProductInCart = cartProducts.some(product => product._id === card._id);
 
@@ -60,29 +60,26 @@ const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, s
 
 
     if (!isProductInCart) {
-
-      // Si el producto no está en el carrito, agregarlo con quantity 1
+      // Si el producto no está en el carrito, agregarlo tantas veces como indique su cantidad
       setCartProducts((prevCartProducts: Product[] | []) => [
         ...prevCartProducts,
-        { ...card, quantity: 1 }
+        ...Array(card.quantity || qtyCard).fill({ ...card, quantity: 1 })
       ]);
+      console.log(card);
       addTooltip(card.image!, card.name!, "added the next item to the cart:");
     } else {
-      // Si el producto ya existe, actualizar su cantidad (si no tiene el atributo quantity, añadirlo)
+      // Si el producto ya existe, agregarlo tantas veces como su cantidad adicional
       if (card.type === "ingredient") {
-        setCartProducts((prevCartProducts: Product[] | []) =>
-          prevCartProducts.map((product) =>
-            product._id === card._id
-              ? { ...product, quantity: product.quantity ? product.quantity + 1 : 1 }
-              : product
-          )
-        );
+        setCartProducts((prevCartProducts: Product[] | []) => {
+          const additionalProducts = Array(card.quantity || qtyCard).fill({
+            ...card,
+            quantity: 1
+          });
+          return [...prevCartProducts, ...additionalProducts];
+        });
         addTooltip(card.image!, card.name!, "added the next item to the cart:");
       }
-
     }
-
-
   }
 
   return (
@@ -90,7 +87,7 @@ const CardItem: React.FC<CardItemInterface> = ({ card, onClickBuy, setProduct, s
       <Card
         props={card}
         onClickBuy={handleOnClickBuy}
-        onClickAddToCart={handleAddToCart}
+        onClickAddToCart={() => handleAddToCart(qtyCard)}
         player={player}
         setQtyCard={setQtyCard}
         qtyCard={qtyCard}
